@@ -1,0 +1,48 @@
+* AS "별칭명" 키워드
+: 쿼리 결과에서 열 또는 테이블에 대한 별칭(alias)을 정의하는 데 사용
+
+- 결과 테이블의 컬럼 이름을 변경하거나 의미를 추가하여 가독성 높임
+
+-  쌍따옴표("") 생략 가능 :
+		1) 대소문자 구분이 필요 없는 경우
+	
+		2) 열 이름이나 테이블 이름에 특수 문자가 없는 경우
+
+		3) 열 이름이나 테이블 이름에 띄어쓰기가 없는 경우
+			- 띄어쓰기가 포함되는 경우에는 별칭을 지정할 때 쌍따옴표를 사용
+
+
+- AS 생략 가능: 	1) 열 별칭 생략: 열이름 별칭명
+			SELECT column_name alias_name
+			FROM table_name;
+
+		2) 테이블 별칭 생략: 테이블명 별칭명
+			(일부 데이터베이스에서 AS 키워드 없이 테이블 별칭 가능)
+			SELECT t.column_name
+			FROM table_name t;
+
+
+
+-  NVL(column, replacement_value) AS adjusted_col
+  : NVL 함수를 사용하여 컬럼의 NULL 값을 대체하고, 대체한 값을 새로운 별칭으로 지정
+
+ex) salary 컬럼의 NULL 값을 0으로 대체하고, 
+    이 결과를 adjusted_salary라는 별칭을 가진 새로운 컬럼으로 표시
+	SELECT name, NVL(salary, 0) AS adjusted_salary FROM employees;
+
+	1. 컬럼 별칭
+		SELECT column_name AS alias_name
+		FROM table_name;
+
+	2. 테이블 별칭
+		SELECT column_name
+		FROM table_name AS alias_name;
+
+	3. 함수 별칭 : 함수 호출 결과 열이름이 "별칭명"으로 대체됨
+		SELECT COUNT(*) AS total_count
+		FROM table_name;
+
+
+
+
+

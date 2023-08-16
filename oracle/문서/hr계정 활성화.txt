@@ -1,7 +1,28 @@
 hr계정 활성화
 
+# 시스템 권한을 가진 사용자로 로그인
+	- sqlplus: Oracle 데이터베이스에 접속하고 SQL 쿼리를 실행하기 위한 명령
+	- system은 시스템 관리자 계정 중 하나로, 
+	  일반적으로 시스템 관리 작업을 수행할 수 있는 권한을 가짐.
 c:\> sqlplus  system/oracle
 
+# HR 사용자 계정 활성화
+	- HR 사용자 계정이 잠긴 상태에서 활성화되어, 로그인 가능해짐
+	- alter user 사용자계정명: 사용자계정에 대한 속성을 변경하는 명령어
+	- account unlock: 계정을 잠금 상태에서 해제하도록 지시 => 로그인 가능해짐
 SQL> alter user hr account unlock;
+
+
+# HR 사용자 계정의 비밀번호 변경
+	- identified by 비밀번호: 계정의 비밀번호를 설정
 SQL> alter user hr identified by 1234;
+
+
+# 변경된 비밀번호로 HR 계정에 연결
+	- conn 계정명/비밀번호: 데이터베이스에 연결하는 명령어
 SQL> conn  hr/1234
+
+
+
+
+

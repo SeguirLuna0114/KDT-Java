@@ -1,0 +1,26 @@
+* concatenation 연산자: 컬럼과 문자열을 연결하는 데 사용되는 연산자
+
+- 문자열 값을 결합하여 하나의 새로운 문자열을 생성하는 데에 활용됨
+	(즉, 결과는 하나의 열을 가진 테이블이 출력됨)
+- 두 개의 값 사이에 '||' 기호를 사용하여 concatenation 수행
+	1. 두개의 문자열 결합
+		ex) SELECT 'Hello' || 'World' AS concatenated_string FROM dual;
+			- HelloWorld"라는 결과를 생성
+
+	2. 열(Column) 값과 문자열을 결합
+		ex) SELECT ename || 'is a' || job FROM emp;
+			- ename열과 job열을 'is a'라는 문자열을 사이에 두고 결합
+
+		ex) SELECT first_name || ' ' || last_name AS full_name FROM employees;
+			- first_name"과 "last_name" 열의 값을 공백을 사이에 두고 결합
+
+- 문자열과 다른 데이터유형의 값을 결합하려 하면, 자동변환되지X
+	=> 데이터타입 변환  함수 사용
+	ex) SELECT 'Age: ' || TO_CHAR(age) AS age_string FROM person;
+		-  "age" 열을 문자열로 변환하기 위해 TO_CHAR 함수를 사용
+
+	
+
+
+
+
