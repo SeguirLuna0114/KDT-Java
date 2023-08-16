@@ -1,0 +1,16 @@
+o MySQL 접속을 위한 URL 형식
+
+jdbc:mysql://<호스트>:<포트>/<데이터베이스>?<파라미터>
+	- <호스트>: MySQL 데이터베이스가 호스팅되는 서버의 주소 또는 IP
+	- <포트>: MySQL 서버의 포트 번호입니다. 기본적으로 3306번(기본 포트인 경우 생략가능)
+	- <데이터베이스>: 접속하려는 데이터베이스의 이름
+	- <파라미터>: 선택적으로 연결 설정을 제어하는 여러 가지 매개변수를 포함
+		     일반적으로 사용되는 매개변수는 user, password, useSSL
+			ex) ?user=yourusername&password=yourpassword";
+	* 단, 사용자 이름과 비밀번호를 URL에 포함시키는 방식은 좋지X
+	 => Connection객체에 username과 passwd를 매개변수로 전달
+		ex) Connection con = DriverManager.getConnection(url, "user", "passwd");
+
+
+ex)	로컬 MySQL 서버에 있는 "mydatabase"라는 데이터베이스에 접속
+	jdbc:mysql://localhost:3306/mydatabase
