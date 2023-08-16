@@ -1,0 +1,7 @@
+* 큐(Queue) : FIFO(First Input First Output)구조
+
+          -----------------
+
+  입력-->                            ---> 출력
+  offer()                                     poll()
+          -----------------

@@ -1,0 +1,11 @@
+﻿* 자바 실행 순서
+
+Test.java  (소스 프로그램, 원시프로그램)
+
+	     <--- 컴파일러(javac.exe)
+                   c:\> javac  Test.java
+
+Test.class (자바기계어, 자바 바이트코드)
+
+                 <--- 자바가상머신(JVM : java.exe)
+                  c:\> java Test

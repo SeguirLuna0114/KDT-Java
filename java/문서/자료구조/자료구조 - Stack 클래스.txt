@@ -1,0 +1,79 @@
+* 자료구조(Data Structure)
+   java.util.*;
+
+   ex) Set, List, Vector, Map, Queue, Stack etc
+
+# 제네릭(Generic) <>
+  : 데이터 타입을 일반화하여, 자료구조에 1가지 자료형의 데이터만 저장할 수 있도록 함
+
+vi. 스택(Stack) 클래스
+ " 후입선출(LIFO - Last-In-First-Out) 원칙에 따라 요소를 저장하는 자료구조 "
+
+   1.	LIFO(Last Input First Output) 구조
+       	: 마지막(최근에)으로 입력된 자료가 가장 먼저 출력되는 구조
+
+   2.	주로 함수 호출, 임시 데이터 저장, 괄호 짝 맞추기 등 다양한 상황에서 사용
+
+   3. 	스택은 배열(Array)을 사용하여 구현하거나 연결 리스트(Linked List)를 이용하여 구현가능
+
+	- 데이터를 일시적으로 저장하기 위해 사용되는 추상적인 자료구조
+	- Stack클래스의 부모 클래스는 Vector클래스
+		=> Vector클래스의 메소드를 사용할 수 있음(ex. empty(), isEmpty())
+
+
+# 스택 클래스 객체 생성 방법
+case1)	제네릭을 사용X 스택 클래스 객체 생성
+	- 제네릭을 사용하지 않았기에, 모든 종류의 객체를 저장 가능
+
+ex)     // java.util.Stack 클래스 사용
+        Stack stack1 = new Stack();	
+	
+
+case2)	제네릭을 사용하는 스택 클래스 객체 생성
+ex)	// 정수 스택 생성
+        Stack<Integer> intStack = new Stack<>();
+
+ex)	// 문자열 스택 생성
+        Stack<String> stringStack = new Stack<>();
+
+
+
+# 스택 클래스 주요 메소드
+	1. E push(E item): 스택에 새로운 요소(데이터)를 추가하는 메소드 
+			  	- 새로운 요소는 스택의 맨 위에 추가됨
+				- 요소가 추가될 때마다 스택의 크기가 증가
+
+	2. E Pop: 스택에서 맨 위에 있는 요소를 제거하고 반환하는 메소드
+				- 가장 최근에 추가된 요소가 삭제
+				- 스택이 비어있는 경우 EmptyStackException이 발생
+				(따라서, 스택이 비어있는지isEmpty() 확인 후 사용)
+
+	3. E peek() (또는 Top): 스택의 맨 위에 있는 요소를 반환하는 메소드
+				- 스택에서 요소를 제거하지 않고 해당 요소를 조회만 함
+				- 스택이 비어있는 경우 EmptyStackException이 발생
+				(따라서, 스택이 비어있는지isEmpty() 확인 후 사용)
+
+	4. boolean isEmpty(): 스택이 비어 있는지 여부를 확인하는 메소드
+		스택이 비어 있으면 true를 반환하고, 데이터가 하나라도 있으면 false를 반환
+
+	5. int search(Object o): 스택에서 주어진 객체(o)를 찾고, 
+				해당 객체가 스택으로부터 얼마나 떨어져있는지 정수로 반환
+				맨위 요소(1)부터 거리를 세고 순서대로 반환하며
+				객체를 찾지 못한 경우 -1 반환
+
+
+# Stack클래스의 저장된 데이터를 출력하는 방법
+case)	isEmpty() 메소드와 pop() 메소드를 활용
+	- isEmpty() 메소드를 활용하여 스택이 비어있는지 먼저 확인
+	- 스택에 데이터를 모두 삭제하면서 출력하고 싶다면 pop() 메소드를 사용
+
+ex)	while (!stack.isEmpty()) {
+		// 데이터를 역순으로 출력가능
+            	int item = stack.pop();
+            	System.out.print(item + " ");
+        }
+
+
+
+
+

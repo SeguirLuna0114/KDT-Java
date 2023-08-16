@@ -1,0 +1,82 @@
+* 소켓(Socket)을 이용한 클라이언트-서버 통신
+: 네트워크를 통해 데이터를 주고받을 수 있는 방법 중 하나
+
+* 클라이언트 소켓(Socket Client) 구현
+: 클라이언트 소켓은 서버에 연결하여 데이터를 송수신
+- 연결된 소켓을 통해 서버로부터 데이터를 읽어오거나 데이터를 보낼 수 있음
+
+1. 서버에 접속(연결)하기 위한 클라이언트의 Socket 객체 선언
+2. 데이터 송수신을 위한 입출력 스트림 선언
+try {
+3. Socket(String host, int port)생성자로 Socket객체 생성하여 서버에 연결
+4. 데이터 송수신을 위한 입출력 스트림 생성
+5. 서버와 데이터 송수신
+} catch(Exception e) {
+	try {
+		6. 사용한 스트림과 소켓을 닫아 리소스를 해제
+
+--------------------------------------------------------------------------------------
+
+import java.io.*;
+import java.net.*;
+
+public class Client {
+
+    public static void main(String[] args) {
+
+	// 1. 서버에 접속(연결)하기 위한 클라이언트의 Socket 객체 선언
+	Socket socket = null;
+
+	// 2. 입출력 스트림 선언
+	// 서버로 데이터를 보내기 위한 DataOutputStream 객체를 선언하고 초기화
+	DataOutputStream dos = null;
+	// 서버로부터 데이터를 받기 위한 DataInputStream 객체를 선언하고 초기화
+	DataInputStream dis = null;
+
+        try {
+            	// 3. Socket(String host, int port)생성자로 Socket객체 생성하여 서버에 연결
+	    	// String "localhost"는 접속하려는 컴퓨터IP주소. 포트번호는 서버와 동일
+            	Socket socket = new Socket("localhost", 8080); 
+
+            	// 4. 데이터 송수신을 위한 입출력 스트림 생성
+	    	// - 서버로 데이터를 보내기 위한 DataOutputStream 객체를 생성
+		dos = new DataOutputStream(socket.getOutputStream());
+		// - 서버로부터 데이터를 받기 위한 DataInputStream 객체를 생성
+		dis = new DataInputStream(socket.getInputStream());
+
+            	// 5. 서버와 데이터 송수신
+		while(true) {
+			// 사용자로부터 문자열을 입력받아 message 변수에 저장
+			System.out.print("Client input Message : ");
+			String message = Socket_TalkStatement_BRreadLine.readString();
+
+			// 입력받은 메시지를 UTF-8 형식으로 인코딩하여 서버에 전송
+			dos.writeUTF(message);
+
+			// DataInputStream을 통해 서버로부터 받은 데이터를 읽어와 출력
+			System.out.println("Server Message : " + dis.readUTF());
+		}
+        } catch(Exception e) {
+		try {
+			// 6. 사용한 스트림과 소켓을 닫아 리소스를 해제
+			dos.close();
+			dis.close();
+			socket.close();
+		} catch (IOException io) {
+			System.out.println(io);
+		}
+
+---------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,29 @@
+메소드 다형성(polymorphism)
+: 부모 추상 클래스를 상속 받으면, 자식 클래스들은 추상 메소드를 모두 메소드 오버라이딩 해서
+   동일한 이름을 갖고 있으나, 서로 다른 내용으로 동작하는 것을 메소드 다형성이라 함
+- 공통된 인터페이스를 제공하고 실제 메소드를 구현을 하위클래스에 맡기는 역할 
+
+* 다형성 : 서로 다른 클래스의 객체들을 하나의 공통된 슈퍼클래스의 객체로 취급할 수 있는 능력
+
+추상클래스
+
+abstract class  AbsClass{
+	        abstract void draw();
+    	    }
+
+
+class Tri  extends AbsClass{          
+   void draw(){  
+    }
+}     
+                  
+class  Rect extends AbsClass{
+     void draw(){
+    }
+}  
+
+class Cicle extends AbsClass{                        
+      void draw(){
+    }	
+}
+

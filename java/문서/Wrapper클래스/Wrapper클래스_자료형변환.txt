@@ -1,0 +1,80 @@
+* Wrapper 클래스
+다양한 자료형 변환을 사용 할때 많이 쓴다.
+- 다른 데이터타입을 감싸서(래핑하여) 새로운 객체를 만드는 클래스
+
+----------------------------------------------------------
+자바의 기본 데이터형		Wrapper 클래스
+(primitive types)           	
+boolean				Boolean
+byte				Byte
+short				Short
+int				Integer
+long				Long
+float				Float
+double				Double
+char				Character
+----------------------------------------------------------
+
+### 인수의 개수가 정확하지 않은 경우 오류처리 방법
+ex) if (args.length != 2) {
+	System.out.println("값의 수가 부족 합니다.");
+	System.exit(0); // 프로그램을 강제 종료
+    }
+ -args.length: 전달된 인수를 담은 배열(args)의 길이
+ -System.exit(0): 프로그램 강제 종료 메소드
+   -'0': 정상적인 종료를 의미(이 코드 실행시, 프로그램 종료)
+
+## Wrapper 클래스를 이용한 자료형 변환
+(기본 자료형 <--> 참조형)
+
+- 자바에서는 기본 데이터타입(int, char, boolean, double)등에 대응하는 Wrapper클래스 제공
+- 목적: 기본 데이터타입을 객체로 다루기 위함
+
+- 기본데이터타입은 null을 표현할 수 없으나, 
+  Wrapper클래스는 객체이기에 null을 할당하여 나타낼 수 있음
+
+-args : 프로그램 실행 시 전달된 인수(arguments)를 담는 배열
+-실행) run configuration -> arguments에 인수 입력 -> apply -> run
+-main(String[] args): 입력한 인수가 문자열 배열에 저장됨
+
+
+# String클래스의 valueof메소드
+- string.valueOf()메소드: 기본데이터타입과 Wrapper클래스 객체를 "문자열"로 변환 시 사용
+case 1) 기본데이터타입 -> 문자열
+	int num = 42;
+	String numString = String.valueOf(num); // "42"
+
+case 2) Wrapper클래스 -> 문자열
+	Integer integerObj = Integer.valueOf(42);
+	String numString = String.valueOf(integerObj); // "42"
+
+case 3) *기본 데이터타입 -> Wrapper클래스로 변환하는 경우에도 사용
+	(모든 기본 데이터타입을 해당하는 Wrapper클래스로 변환 가능)
+	1) int -> Integer
+		int num = 42;
+		Integer integerObj = Integer.valueOf(num);
+
+	2) double -> Double
+		double doubleValue = 3.14;
+		Double doubleObj = Double.valueOf(doubleValue);
+
+	3) boolean -> Boolean
+		boolean boolValue = true;
+		Boolean boolObj = Boolean.valueOf(boolValue);
+
+### parseXxx()메소드 : "문자열"을 해당하는 기본 데이터 타입으로 변환
+- Integer.parseInt()메소드 : 문자열 -> int(정수)로 변환
+
+- Double.parseDouble()메소드 : 문자열 -> double(부동소수점값)으로 변환
+
+- Boolean.parseBoolean()메소드: 문자열 -> boolean(논리형)으로 변환
+	-문자열의 대소문자는 무시
+	-true 또는 false와 같은 키워드가 아니면(논리값이 아니면) false로 처리
+
+
+#Boolean 클래스: boolean에 대응되는 클래스. 논리값을 포함하고 처리
+
+#Character 클래스: char에 대응되는 클래스. 문자를 포함하고 처리
+
+
+

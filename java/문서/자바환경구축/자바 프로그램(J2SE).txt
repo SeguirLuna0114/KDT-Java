@@ -1,0 +1,32 @@
+﻿* 자바 프로그램(J2SE)
+   
+  다운로드 : http://www.oracle.com/kr   
+
+  J2SE = JDK(Java Developerment Kit)
+              : 컴파일러(javac.exe),
+ 	   자바가상머신(java.exe)
+
+                   +
+
+         JRE(Java Runtime Environment)
+         : 자바 실행환경 제공
+           (클래스 형태의 라이브러리로 제공됨)
+
+
+* 패스(path)설정
+  
+         내컴퓨터 우클릭/속성/고급시스템설정/고급탭/환경 변수
+
+         /시스템 변수/새로만들기/ 
+         변수이름  JAVA_HOME
+         변수값    C:\Program Files\Java\jdk버전
+
+         path 편집/변수값 뒤에 
+         (세미콜론);%JAVA_HOME%\bin
+
+
+
+* java 8 api  documentation
+
+  https://docs.oracle.com/javase/8/docs/api/index.html?java/lang/package-summary.html
+ 

@@ -1,0 +1,34 @@
+﻿* java.awt와 javax.swing 비교
+
+java.awt	javax.swing
+
+Frame		JFrame
+Panel 		JPanel
+Button		JButton
+Choice		JComboBox
+
+Checkbox	JCheckBox
+	       	JRadioButton
+
+List		JList
+TextField	JTextField
+		JPasswordField
+
+TextArea	JTextArea
+
+		JScrollPane(스크롤바 생성해줌)
+		  ex) JList, JTextArea, JTable, JTree
+
+		JOptionPane (메세지 박스 출력)
+
+		JColorChooser
+
+		JTable
+
+		JTree
+
+		JTabbedPane
+
+Scrollbar	JSlider
+
+		

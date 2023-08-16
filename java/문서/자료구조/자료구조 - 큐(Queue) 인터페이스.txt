@@ -1,0 +1,120 @@
+* 자료구조(Data Structure)
+   java.util.*;
+
+   ex) Set, List, Vector, Map, Queue, Stack etc
+
+# 제네릭(Generic) <>
+  : 데이터 타입을 일반화하여, 자료구조에 1가지 자료형의 데이터만 저장할 수 있도록 함
+
+v. 큐(Queue) 인터페이스 - LinkedList (상속받는 클래스)
+ "선입선출(FIFO - First-In-First-Out) 원칙에 따라 요소를 저장하는 자료구조"
+
+-------------------------------------------------------
+  입력-->                            ---> 출력
+  offer()                                     poll()
+-------------------------------------------------------
+
+   	1. FIFO(First Input First Output) 구조
+      	   : 먼저 입력된 자료가 먼저 출력되는 구조
+
+	2. Queue 인터페이스를 구현하는 주요 클래스
+	   : LinkedList, ArrayDeque, PriorityQueue
+		- LinkedList와 ArrayDeque는 일반적으로 FIFO 큐를 구현하는데 사용
+		- PriorityQueue는 우선순위 큐를 구현하는데 사용
+
+# 큐 인터페이스 객체 생성
+case1)	제네릭을 사용하지 않고 객체 생성하는 방법
+	- 제네릭을 사용하지 않는 경우에는 큐에 다양한 타입의 요소를 저장가능
+	- 다운캐스팅 필요: 요소를 꺼내 사용할 때마다 형변환을 직접 명시적으로 해줘야 함
+
+ex)	제네릭을 사용하지 않고 큐 객체 생성
+	Queue queue = new LinkedList();
+
+        // 큐에 요소 추가
+        queue.add(10);
+        queue.offer("Hello"); 
+	// 제네릭을 사용하지 않기 때문에 다양한 타입의 요소를 추가할 수 있음
+
+        	// 큐에서 요소 제거
+        Object removedElement = queue.remove(); 
+	// 큐에서 꺼내면 Object 타입으로 반환됨
+
+
+case2)	제네릭을 사용하고 객체 생성하는 방법
+	- 제네릭을 사용해 명시한 데이터 타입의 요소만 저장가능
+	- 다운캐스팅이 자동으로 이루어짐: 요소를 꺼내 사용할 때 형변환을 해줄필요X
+
+ex)	제네릭을 사용하여 Integer 타입 요소를 저장하는 큐 객체 생성
+	Queue<Integer> queue = new LinkedList<>();
+	// 큐에는 Integer타입의 요소만 저장 가능
+
+        // 큐에 요소 추가
+        queue.add(10);
+        queue.offer(20);
+
+        // 큐에서 요소 제거
+        int removedElement = queue.remove();
+
+
+
+# 큐(Queue) 인터페이스의 주요 메소드
+
+- boolean add(E element): 큐에 요소를 추가. 
+			큐가 용량 제한을 초과하거나 요소추가할 수 없는 경우 예외 발생
+- boolean offer(E element): 큐에 요소를 추가
+			큐가 용량 제한을 초과하는 경우 false를 반환하고, 
+			정상적으로 추가되면 true를 반환
+
+- E remove(): 큐의 맨 앞의 요소를 제거하고 반환.
+		큐가 비어있는 경우 예외 발생
+- E poll(): 큐의 맨 앞의 요소를 제거하고 반환
+		큐가 비어있는 경우 null을 반환
+
+- E element(): 큐의 맨 앞의 요소를 반환. 삭제하지 않고도 해당 요소 확인가능. 
+	       큐가 비어있는 경우 예외를 발생
+- E peek(): 큐의 맨 앞의 요소를 반환. 삭제하지 않고도 해당 요소를 확인가능.
+	    큐가 비어있는 경우 null을 반환
+
+- boolean isEmpty():  큐에 저장된 요소가 있는지 없는지를 확인
+		   큐가 비어있을 때 true를 반환하고, 요소가 하나라도 존재하면 false를 반환
+
+
+# 큐의 데이터 출력하는 방법
+case1)	큐의 요소를 순차적으로 삭제하면서 출력
+	* E poll(): 큐의 맨 앞의 요소를 제거하고 반환
+	- poll()메소드로 큐의 요소를 삭제하면 큐는 비어있게 됨.
+	   =>  큐가 비어있을 때까지 데이터를 삭제하며 반환
+
+	1) isEmpty()메소드를 사용하여 비어있는지 확인
+ex)	while (!queue.isEmpty()) {	// 큐가 비어있지 않는 동안
+        	String element = queue.poll();	
+		// 큐의 요소를 제거하고 반환된 값을 element에 할당
+            	System.out.print(element+"\t");
+	}
+
+ex)	while (!queue.isEmpty()) {	// 큐가 비어있지 않는 동안
+            	System.out.print(queue.poll()+"\t"); // 큐에서 데이터를 삭제하며 꺼내옴
+	}
+
+
+	2) peek()메소드를 사용하여 null값이 반환되는지 확인(비어있는지 확인)
+	* E peek(): 큐의 맨 앞의 요소를 반환. 큐가 비어있는 경우 null을 반환
+ex)	while (queue.peek() != null) { 		// 큐가 비어있지 않다면
+		System.out.println(queue.poll()); // 큐에서 데이터를 삭제하며 꺼내옴
+	}
+
+
+case2)	큐의 요소를 순차적으로 읽어서 출력하는 방법
+	* E peek(): 큐의 맨 앞의 요소를 반환. 큐가 비어있는 경우 null을 반환
+	- 큐의 요소를 '읽기만 하면서' 출력하는 방법
+	- 큐의 요소를 모두 읽은 후에도 큐는 그대로 유지됨
+
+ex)	while (!queue.isEmpty()) {
+		// 큐의 요소를 읽음
+            	System.out.println(queue.peek());
+		// 큐의 요소를 읽은 후에는 삭제해야 다음 요소를 읽을 수 있음
+            	queue.poll();
+        }
+
+
+

@@ -1,0 +1,51 @@
+﻿* 각 이벤트(Event)가 발생되는 경우 
+
+i. ActionEvent가 발생 하는 경우
+  1. Button을 클릭할때
+  2. List의 항목(item)을 더블클릭 할때
+  3. TextField에 값 입력후 엔터키를 누를때
+  4. MenuItem을 선택(클릭)할때
+
+
+ii. ItemEvent가 발생하는 경우
+    1. List의 항목(item)을 선택(클릭)하는 경우
+    2. Checkbox의 item을 선택/해제할때
+    3. Choice의 item을 선택할때
+
+
+iii. AdjustmentEvent가 발생하는 경우
+     1. Scrollbar가 움직일때
+
+iv. WindowEvent
+
+v. MouseEvent
+
+   MouseMotionEvent
+
+
+* Event 처리하는 순서
+  1. 각 Component에 발생하는 Event종류 파악 및 
+     해당 Listener 인터페이스를 상속 받는다.
+  
+    ex) 버튼을 클릭한 경우
+        class ButtonTest implements ActionListener{
+
+        }
+
+   2. 상속한 Listener인터페이스 안에 들어있는 
+       추상메소드를   오버라이딩 한다.
+
+     ex) class ButtonTest implements ActionListener{
+
+       	   public void actionPerformed(ActionEvent e){
+
+	   }
+         }
+
+   3. 이벤트를 발생시킨 컴퍼넌트와 Listener인터페이스를 
+       상속받은 클래스를 이용한 객체를 연결한다.
+
+
+
+
+

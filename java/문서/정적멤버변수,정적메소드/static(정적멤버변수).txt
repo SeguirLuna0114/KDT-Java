@@ -1,0 +1,110 @@
+*  static : 공유
+ex)  class StaticTest{
+          int   a;           	 //인스턴스 멤버변수
+          static  int   b;    	 //정적 멤버변수(공유영역에 저장)
+
+          public  static  void  check(){  // 정적 메소드
+          } 
+          public static void main(String[] args){
+	  //정적 멤버변수는 클래스로 접근 가능
+	     System.out.println(StaticTest.b); 
+	     StaticTest.check();
+         }
+      }
+
+# 정적 멤버 (Static Member)
+: 클래스에 고정된 멤버로서 객체를 생성하지 않고 사용할 수 있는 필드와 메소드
+- 클래스명과 함께 도트 연산자(.)로 접근
+	static int plus(intx, int y) {...}
+	int result = Calculator.plus(10,5)	//클래스명.메소드명
+
+- 정적 필드, 정적 메소드 "객체X, 클래스명만으로도 호출 가능"
+  1) 정적 필드 및 상수: 객체 없이 클래스만으로도 사용가능한 필드(static이 붙은 필드)
+	"클래스명.정적필드명"으로 접근
+	-모든 객체들이 공유하는 데이터를 저장하는 변수
+	-메모리 저장 위치: 메소드 영역(Static Area)에 저장
+	-값을 공유: 모든 인스턴스에서 공유하기 때문에, 
+		    설정값이나 카운터, 공통으로 사용되는 상수 등을 저장하는데 유용
+
+### 정적 필드를 사용하는 경우
+* 모든 객체들이 "공유"하는 변수인 경우
+ex) 어플리케이션 전역 설정값, 공용상수
+ex) 전체 카운트 - 객체 생성시 전체 카운트 증가
+	public class Counter {
+		// 정적 필드: 전체 카운트를 유지하기 위한 필드
+    		private static int totalCount; 
+
+		// 인스턴스 필드: 개별 카운트를 유지하기 위한 필드
+    		private int count; 
+
+    		public Counter() {
+        		totalCount++; // 객체가 생성될 때마다 전체 카운트 증가
+    		}
+
+
+ 2) 정적 메소드: 객체 없이 클래스만으로도 호출 가능한 메소드(static이 붙은 메소드)
+	-형식) public static void 정적메소드명() {...}
+	  	-"static" 키워드 사용하여 선언
+		-public 키워드 사용하여, 메서드를 공개적으로 접근 가능하게
+
+	-메소드 오버라이딩X
+
+	"클래스.정적메소드명"으로 메소드 호출
+	-정적메소드 내에서는 정적필드만 사용 가능
+		ClassName.staticMethod();  // 정적 메서드 호출
+		(정적 메서드 내부에서는 인스턴스 멤버에 직접접근X)
+		why? 정적 메소드는 클래스가 메모리에 로딩될 때 이미 생성되어있어 클래스 영역에 속함. 
+		     그러나, 객체의 인스턴스는 개별적으로 생성되어 힙메모리에 저장됨
+		     =>따라서 정적메소드에선 클래스영역에 속하는 정적필드만 접근 가능
+
+	-정적 메서드에서는 this 레퍼런스 변수를 사용하지 못함
+	  (this는 개별적인 객체를 의미 => 정적 필드는 공유되기에 사용x)
+		private static int a = 10;
+		public static void printA() {
+		System.out.println(a);
+		// 정적 메서드에서는 this를 사용하지 못함
+		//System.out.println(this.a); }	//컴파일 에러 발생
+
+
+### 정적 메소드를 사용하는 경우
+* 객체의 인스턴스(상태)와 독립적으로 클래스의 정보와 매개변수로 동작하는 기능 구현
+  - 정적메소드는 클래스레벨에 속해, 객체의 인스턴스와 독립적으로 동작
+
+* 객체의 인스턴스 생성 없이도 클래스명만으로도 호출 가능 => 유틸리티 메소드로 사용
+  - 공통적인 기능을 제공하는 메소드 구현
+  ex) 수학 함수, 문자열 처리
+ex)	public class StringUtils {
+    		// 정적 메소드: 문자열 뒤집기
+    		public static String reverseString(String str) {
+       			 StringBuilder reversed = new StringBuilder(str);
+        		 return reversed.reverse().toString();
+    		}
+
+    		// 정적 메소드: 문자열의 길이 반환
+    		public static int getStringLength(String str) {
+        		return str.length();
+    		}
+	}
+
+* 생성자의 초기화 작업이 복잡한 경우, 정적 메소드 사용하여 초기화를 도와줌
+ex)	public class DateUtils {
+    		// 정적 메소드: 문자열로부터 날짜 객체 생성
+    		public static Date parseDate(String dateString) {
+        		SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
+        		try {
+            			return date.parse(dateString);
+        		} catch (ParseException e) {
+            			e.printStackTrace();
+            			return null;
+        		}
+   		 }
+	}
+
+
+
+
+
+
+
+  
+

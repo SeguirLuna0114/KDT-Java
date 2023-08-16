@@ -1,0 +1,99 @@
+* 문자열 관련 클래스 
+String
+StringBuffer
+StringTokenizer
+---------------------------------------------------------------------------------
+
+* StringBuffer 클래스
+
+ StringBuffer sb = new StringBuffer("자바");
+
+sb1         ----->	   gemini  is beautiful1004
+sb2         ----->
+// sb1과 sb2는 같은 내용을 가리키고 있음
+(Stack영역)	                 (Heap영역)
+
+- 문자열을 다루는데 사용되는 변경가능한 문자열 버퍼를 제공
+  (String클래스는 문자열 변경 불가)
+- 문자열을 수정/변경하거나 연결(append)하는 작업을 수행
+
+- 기본용량(capacity): 빈 객체 생성시, 기본용량은 16
+		     capacity = length + 16
+- 초기길이(length): 빈 객체 생성기에는 길이0
+
+- StringBuffer클래스의 상위(부모)클래스는 Object클래스
+   => 상위클래스(Object클래스)의 메소드를 상속받아서 사용 가능
+
+- StringBuffer클래스의 객체 생성 방법
+1) 기본 생성자를 사용하여 빈 객체 생성
+	StringBuffer sb = new StringBuffer();
+	- 빈 상태로 시작하여, 문자열을 이어붙이거나 변경 가능
+2) "문자열"로 초기화 된 객체 생성
+	StringBuffer sb = new StringBuffer("Hello");
+	- StringBuffer(String str) 생성자를 호출
+	- 설정한 "Hello"라는 문자열로 초기화되어 시작 
+	   => 이후 추가적으로 문자열 이어붙이거나 변경 가능
+
+
+## StringBuffer 메서드
+1. append(String str): 문자열을 StringBuffer객체의 끝에 추가
+	-문자열을 뒤에 이어붙이는 방식
+	- 반환값은 StringBuffer 객체 자체 => 메서드 체이닝 활용 가능
+	- 숫자를 삽입하는 경우, 자동으로 데이터타입을 문자열로 변환(int -> str)
+
+2. insert(int offset, String str): 지정한 offset위치에 문자열 삽입
+	- 기존 문자열의 중간(offset위치)에 새로운 문자열을 삽입하는 방식
+	- 반환값은 StringBuffer 객체 자체 => 메서드 체이닝 활용 가능
+		StringBuffer sb1 = new StringBuffer("gemini is beautiful");
+		sb1.insert(10, "very");
+		System.out.println(sb1);
+		// gemini is verybeautiful
+	- 숫자를 삽입하는 경우, 자동으로 데이터타입을 문자열로 변환(int -> str)
+		sb1.insert(0, 1004);
+		System.out.println(sb1);
+		// 1004gemini is verybeautiful
+
+3. delete(int start, int end): 지정한 범위(start부터 end-1까지)의 문자열 일부를 삭제
+	- 반환값은 StringBuffer 객체 자체 => 메서드 체이닝 활용 가능
+
+4. replace(int start, int end, String str) 
+   : 지정한 범위(start부터 end-1까지)의 문자를 새로운 문자열(str)로 대체
+	- 반환값은 StringBuffer 객체 자체 => 메서드 체이닝 활용 가능
+
+5. toString(): StringBuffer 객체를 String으로 변환하여 반환
+	- 문자열 불변성을 유지하고자 할 때 사용
+
+6. capacity(): StringBuffer 객체의 내부 버퍼의 용량(capacity)을 반환
+	- 용량은 현재 문자열의 길이보다 크거나 같음
+
+7. length(): StringBuffer 객체의 문자열 길이를 반환
+
+
+
+
+- 특징
+	1. 가변성(변경 가능): StringBuffer객체는 생성 후에도 내부 문자열 수정 가능
+			    => 문자열 삽입 / 추가 / 변경 등 자유롭게 수행
+	2. Thread-Safe(스레드 안정성) : 동기화되어 여러 스레드가 동시에 접근하여 변경 방지
+	3. 문자열 다루기 위한 다양한 메서드 제공
+	4. 큰 문자열 처리에 유용: 문자열 수정 시, 내부 버퍼 크기를 조정해 성능 향상
+       *5. 가변적이기에, 원래 객체의 상태를 변경/수정해도, 새로운 문자열 객체를 생성하지X
+	   기존에 할당된 heap메모리 영역의 버퍼를 변경
+	  (Buffer : heap메모리 영역에 할당된 일시적으로 데이터를 저장하는 임시 메모리 영역)
+
+### StringBuffer클래스에 없는 메소드(ex. 대문자/소문자 변환) 사용방법
+  - 대문자로 변환하기 위해, String 클래스의 toUpperCase() 메서드 사용해야 함
+
+방법1) StringBuffer 클래스는 toString() 메서드를 통해 String 객체로 변환가능       		StringBuffer stringBuffer = new StringBuffer("hello, world!");        		String result = stringBuffer.toString().toUpperCase();
+	// toString() 메서드를 통해 String 객체로 변환
+        System.out.println(result);
+ 
+방법2) StringBuffer객체를 String객체로 변환하여 사용
+- String 클래스의 생성자 중 하나인 String(StringBuffer buffer)를 활용해서,
+  StringBuffer객체를 -> String객체로 변환하여 사용
+	StringBuffer sb1 = new StringBuffer("Hello, World!");
+	// new String(sb1)을 통해 sb1을 String으로 변환
+	String str = new String(sb1);
+	System.out.println(str);
+
+

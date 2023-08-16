@@ -1,0 +1,28 @@
+* GUI 프로그램
+
+java.awt.*   
+
+Object - Component - Button
+                     Checkbox
+                     Choice
+	             Label
+                     List
+		     Scrollbar
+		     Canvas
+                               TextComponent - TextField
+				TextArea 
+
+                               Container - Window - Dialog - FileDialog
+                                                              Frame
+                                                              Panel -  Applet
+
+* 배치관리자(Layout Manager)
+  
+Window, Dialog, FileDialog, Frame의 기본 배치관리자
+--> BorderLayout 관리자
+
+Panel, Applet의 기본 배치관리자 
+--> FlowLayout 관리자
+
+
+	                 

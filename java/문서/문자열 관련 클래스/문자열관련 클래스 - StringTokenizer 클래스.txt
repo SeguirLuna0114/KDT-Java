@@ -1,0 +1,50 @@
+* 문자열 관련 클래스 
+String
+StringBuffer
+StringTokenizer
+---------------------------------------------------------------------------------
+
+* StringTokenizer 클래스
+: 문자열을 특정 구분자(delimiter)를 이용해서 파싱한 다음 토큰을 구하는 경우 사용
+- 텍스트 파싱(text parsing)작업에 사용
+   (특히, CSV(Comma-Separated Values)파일이나 텍스트 파일에서 데이터 추출시 사용)
+-파싱(Parsing): 주어진 데이터에서 정보를 추출하거나 의미를 해석하는 과정
+-토큰(Token): 문자열을 작은 단위로 나눈 것 의미(구분자로 파싱된 문자열)
+
+- String.split()메소드와 비슷
+  => 단, 기존 코드와 호환성을 유지해야 할 경우에는 StringTokenizer클래스 사용
+
+### StringTokenizer 생성자
+1) public StringTokenizer(String str, String delim)
+: 주어진 문자열(str)을 지정한 구분자(delim)로 분리하는 StringTokenizer객체 생성
+	- str: 분리하고자 하는 대상의 문자열
+	- delim: 분리를 위한 구분자(delimiter)로 사용할 문자열(, / "" / #)
+
+ex)	// StringTokenizer 객체생성
+	StringTokenizer str = new StringTokenizer(String str, String delim)
+
+2) public StringTokenizer(String str, String delim, boolean returnDelims)
+- returnDelims: boolean값으로 true인 경우 구분자 자체도 토큰으로 간주하여 결과에 포함시킴
+
+ex)	// StringTokenizer 객체 생성
+	StringTokenizer str 
+		= new StringTokenizer(String str, String delim, boolean returnDelims)
+
+
+### StringTokenizer 클래스 메소드
+1. int countTokens() 메서드
+	: StringTokenizer 객체에 남아 있는 토큰의 개수를 반환
+   	- 아직 처리되지 않은 토큰의 수를 알려줌
+
+2. String nextToken(): 다음 토큰을 반환
+	- hasMoreTokens()메서드로 확인한 후, nextToken()메서드를 사용해 토큰을 가져옴
+
+3. boolean hasMoreTokens()
+	: 아직 처리되지 않은 토큰이 남아있는지 확인하고, 남아있으면 true 아니면 false를 반환
+	-StringTokenizer 객체에 아직 처리되지 않은 토큰이 남아있는지 확인(True,false)
+
+ex)	while (str.hasMoreTokens()) { // 토큰이 있으면 true => while문 실행
+		// 차례대로 파싱된 문자열을 얻어온다.
+		System.out.print(str.nextToken()+"\t");
+	}
+

@@ -1,0 +1,84 @@
+* 제네릭(Generic)           JDK 5.x
+: 클래스나 메서드에서 사용할 데이터 타입을 미리 지정하는 방법
+
+- 자료구조에 한가지 자료형의 데이터만 저장 하도록 해주는 역할
+
+	Vector  v = new Vector();
+
+	Vector<String>  v = new Vector<String>();
+	Vector<Integer>  v = new Vector<Integer>();
+	Vector<Double>  v = new Vector<Double>();
+
+
+case1)	제네릭을 사용하지 않고 객체 생성한 경우
+	- 여러 자료형의 데이터를 저장할 수 있음
+	- 모든 데이터가 Object로 업캐스팅 되기 때문에, 컴파일러가 데이터타입을 확인X
+	- 형변환 필요: 데이터를 꺼낼 때마다, 데이터 타입에 맞게 다운캐스팅을 수행해야 함
+
+ex)	Vector  v = new Vector();
+
+	v.add("Hello");       // String
+	v.add(42);            // Integer
+	v.add(3.14);          // Double
+	v.add(true);          // Boolean
+
+	// 데이터를 가져올 때는 명시적인 형변환이 필요함
+	String str = (String) v.get(0);
+	int number = (int) v.get(1);
+	double floatingPoint = (double) v.get(2);
+	boolean bool = (boolean) v.get(3);
+
+
+case2)	제네릭을 사용하여 객체 생성한 경우
+	- 제네릭 타입을 사용하여 클래스를 정의하고 
+	  객체를 생성할 때 해당 제네릭 타입을 구체화하여 사용
+	- 클래스의 멤버 변수 또는 메서드의 타입이 구체화된 타입으로 결정됨
+	  => 컬렉션 클래스에서 데이터를 꺼낼 때는 제네릭으로 설정된 자료형을 생략가능
+	- 제네릭으로 설정한 자료형으로 데이터를 가져올때는 명시적인 다운캐스팅 필요X
+
+ex) 	Vector<String>  v = new Vector<String>();
+	
+	vec.add("Apple");
+        vec.add("banana");
+        vec.add("oRANGE");
+
+        String temp;
+        for (int i = 0; i < vec.size(); i++) {
+	    // 다운캐스팅 없이 그대로 String 타입으로 할당 가능
+            temp = vec.get(i);
+        }
+
+
+* 제네릭 타입 매개변수T
+" 다양한 타입의 데이터를 저장하고 처리 가능 "
+- T(Type): 클래스나 메소드를 정의할 때 실제로 사용할 타입을 나타내는 역할
+
+- T는 실제 사용할 타입에 따라 다양한 자료형으로 대체 가능
+	ex)	T가 Integer인 경우, GenericClass<Integer>로
+		T가 String인 경우, GenericClass<String>으로 사용됨
+
+- 타입 매개변수화(Parametric Polymorphism): T를 사용하여 클래스나 메서드를 정의하면, 
+  해당 클래스나 메서드에서는 T가 실제로 사용되는 곳에서 사용된 타입으로 대체되어 동작
+	ex)	public class GenericClass<T> {
+			// T는 실제 사용할 타입으로 대체됨
+    			private T member;
+
+    			public void setValue(T value) {
+        			member = value;
+    			}
+
+    			public T getValue() {
+        			return member;
+    			}
+		}
+
+
+
+
+
+	
+
+
+
+
+

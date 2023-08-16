@@ -1,0 +1,71 @@
+* Thread클래스 우선순위
+
+* Thread클래스 우선순위 메소드
+1. int getPriority(): 스레드의 현재 우선순위를 가져옴
+	- 반환값은 Thread.MIN_PRIORITY (1)부터 
+   	  Thread.MAX_PRIORITY (10)까지의 우선순위를 나타내는 정수
+
+ex)	// 스레드의 우선순위 가져오기
+        int priority1 = thread1.getPriority();
+	System.out.println("Thread 1의 우선순위: " + priority1);
+ex)	// 현재 스레드의 우선순위 가져오기
+	int priority = Thread.currentThread().getPriority();
+	System.out.println("현재 스레드의 우선순위: " + priority);
+
+	
+2. void setPriority(int newPriority); 스레드의 우선순위를 설정
+		- newPriority 매개변수에는 스레드에 할당할 우선순위를 지정
+	- 우선순위는 Thread.MIN_PRIORITY(1)부터 
+	  Thread.MAX_PRIORITY(10)까지의 범위로 지정가능
+	- 기본적으로 스레드는 중간 우선순위인 Thread.NORM_PRIORITY (5)로 설정됨
+
+ex)	Thread thread1 = new Thread();
+	// 스레드의 우선순위 결정
+ 	thread1.setPriority(Thread.MAX_PRIORITY); // 최고 우선순위인 10으로 설정
+
+
+* Thread클래스 우선순위관련 정적상수
+- 스레드의 우선순위는 1부터 10까지의 범위를 가짐
+1. int MIN_PRIORITY (값 1)
+	: 스레드의 "최저" 우선순위를 나타내는 정적 상수
+ex)	ThreadPriorityControl tl = new ThreadPriorityControl();
+	// 새로운 스레드 생성 시 우선순위 설정
+	Thread first = new Thread(tl, "first1");
+	// 최저 우선순위로 설정
+	first.setPriority(Thread.MIN_PRIORITY);			// 우선순위: 1
+	// 우선순위 가져올때, getPriority()메소드 사용
+	System.out.println("first priority = " + first.getPriority());
+
+
+2. int NORM_PRIORITY (값 5)
+	: 스레드의 "중간" 우선순위를 나타내는 정적 상수
+	- 우선순위를 설정하지 않은 경우 기본적으로 스레드는
+	  중간 우선순위인 Thread.NORM_PRIORITY (5)로 설정됨
+ex)	ThreadPriorityControl tl = new ThreadPriorityControl();
+	Thread second = new Thread(tl, "second1");
+	second.setPriority(Thread.MIN_PRIORITY);			// 우선순위: 1
+	// 우선순위 출력시, getPriority()메소드 사용
+	System.out.println("second priority = " + second.getPriority());
+
+
+3. int MAX_PRIORITY (값 10)
+	: 스레드의 "최고" 우선순위를 나타내는 정적 상수
+ex)	ThreadPriorityControl tl = new ThreadPriorityControl();
+	Thread third = new Thread(tl, "thrid1");
+	third.setPriority(Thread.MIN_PRIORITY);			// 우선순위: 1
+	// 우선순위 출력시, getPriority()메소드 사용
+	System.out.println("third priority = " + third.getPriority());
+
+
+
+
+
+
+
+
+
+
+
+
+
+

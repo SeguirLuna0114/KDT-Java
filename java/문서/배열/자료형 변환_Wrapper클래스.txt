@@ -1,0 +1,31 @@
+[자료형 변환]
+## Wrapper 클래스를 이용한 자료형 변환(기본 자료형 <--> 참조형)
+- 자바에서는 기본 데이터타입(int, char, boolean, double)등에 대응하는 Wrapper클래스 제공
+- 목적: 기본 데이터타입을 객체로 다루기 위함
+- 기본데이터타입은 null을 표현할 수 없으나, 
+  Wrapper클래스는 객체이기에 null을 할당하여 나타낼 수 있음
+-args : 프로그램 실행 시 전달된 인수(arguments)를 담는 배열
+-실행) run configuration -> arguments에 인수 입력 -> apply -> run
+-main(String[] args): 입력한 인수가 문자열 배열에 저장됨
+
+##주요 Wrapper클래스
+#Integer 클래스: int에 대응되는 클래스. 정수 값을 포함하고 처리
+  -Integer.parserInt(String s) 메서드: 문자열을 정수(int)로 변환하는 정적 메서드
+   -Integer.intValue() 메서드: Integer객체의 값을 int로 반환 
+  -Integer.toString(int i) 메서드: 정수값을 문자열로 변환
+   -.equals(Object obj) 메서드: 다른 객체와 Integer객체의 값을 비교하는 메서드
+   -Integer.MAX_VALUE: 데이터 타입의 최대값을 나타내는 상수
+  -Integer.MIN_VALUE: 데이터 타입의 최소값을 나타내는 상수
+#Double 클래스: double에 대응되는 클래스. 실수 값을 포함하고 처리
+#Boolean 클래스: boolean에 대응되는 클래스. 논리값을 포함하고 처리
+#Character 클래스: char에 대응되는 클래스. 문자를 포함하고 처리
+
+
+### 인수의 개수가 정확하지 않은 경우 오류처리 방법
+ex) if (args.length != 2) {
+	System.out.println("값의 수가 부족 합니다.");
+	System.exit(0); // 프로그램을 강제 종료
+    }
+ -args.length: 전달된 인수를 담은 배열(args)의 길이
+ -System.exit(0): 프로그램 강제 종료 메소드
+   -'0': 정상적인 종료를 의미(이 코드 실행시, 프로그램 종료)

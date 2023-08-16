@@ -1,0 +1,129 @@
+Wrapper클래스 - 박싱과 언박싱
+
+* Wrapper클래스 : 기본 데이터타입을 객체로 감싸는 클래스
+		(기본 데이터타입을 객체로 다룰 수 있게 함)
+
+* stack메모리: 기본 데이터타입/지역변수와 메서드 호출 시 생성되는 임시 데이터 저장 영역
+		stack메모리에 heap메모리의 주소값이 저장됨
+* heap메모리: 객체와 동적으로 할당된 데이터를 저장하는 영역
+
+* Object
+
+1) 박싱(Boxing) : 기본 데이터 타입의 값을 Wrapper클래스의 객체로 변환하는 과정 의미
+	- heap메모리를 박스로 생각하고,
+	  stack메모리에 저장된 기본데이터 값을 heap메모리로 복사하는 것
+	( 박싱된 객체들은 heap메모리에, 객체를 가리키는 참조변수는 stack메모리에 저장)
+
+	- 사용하는 경우: 컬렉션에 기본데이터타입 저장시
+			제네릭에서 기본 데이터타입을 지원하지 않아 Wrapper클래스 사용할때
+
+	- new 연산자를 사용해 객체 생성하면, 해당 객체는 heap메모리에 할당
+	- 박싱된 객체도 new 연산자를 통해 heap메모리에 할당됨
+	- 박싱된 객체를 포함하는 변수는 해당 객체의 참조가 stack메모리에 저장됨
+	  (변수가 객체를 직접 포함X, 객체의 참조(주소값)를 가리키는 것
+ex)	Integer num = new Integer(42); 
+	// Integer 객체가 Heap 메모리에 할당됨
+	// num은 stack메모리에 저장되며, 객체의 heap메모리 주소를 가리킴
+
+	ex)	int -> Integer 
+	n01 = 10     	  박싱 
+	num01    	 -------->   	10
+	(Stack영역)		      (Heap영역)
+
+## 자동 박싱(AutoBoxing): 기본 데이터 타입 값을 해당 Wrapper클래스 객체로 "자동" 형변환
+	// int값(42)을 Integer객체에 대입할 때, 자동박싱이 발생함
+	// int값을 Integer객체로 자동 변환하여 Integer객체의 변수에 저장
+	ex)	Integer wrappedInt = 42; // 오토박싱(int -> Integer) 발생
+
+	-자동방식 발생 조건 : 기본 데이터타입 값을 해당하는 Wrapper클래스 객체로 할당
+
+	ex) int형(n01)을 Integer객체로 수동 박싱하려 함
+		num01 = new Integer(n01);
+	  - 자동박싱이 지원되기에, Integer클래스로 변수가 선언된 경우
+	   int를 Integer 객체로 변환할 때 명시적인 new Integer() 생성자를 사용할 필요X
+
+
+2) 언박싱(Unboxing) : Wrapper클래스의 객체에서 기본 데이터타입의 값을 가져오는 과정
+		     (객체로 감싸져 있는 값을 다시 기본 데이터타입으로 변환하는 것)
+	- heap메모리를 박스로 생각하고,
+	  heap메모리에 있는 데이터를 stack메모리로 가져오는 것
+
+	-사용하는 경우: 컬렉션에서 Wrapper클래스에 저장된 값을 꺼내 기본데이터타입으로 사용
+			제네릭에서 Wrapper클래스를 사용해야 하지만, 값으로 기본 타입 사용시
+		*****Object타입의 참조변수에 저장된 값(Wrapper클래스의 객체)을 
+		     해당하는 기본 데이터타입으로 변환시 사용	
+
+	- 주로, Wrapper클래스가 제공하는 메소드를 사용하여 이루어짐
+	* Integer클래스 + intValue()메소드 => Integer객체에 저장된 정수값 -> int 변환
+	* Double클래스+doubleValue()메소드 => Double객체에 저장된 실수값 -> double변환
+
+	- 메소드와 관련됨 : 메소드의 반환값이 object형일 때
+
+	ex)	Integer -> int
+	              	가리키는 상태
+	num02 		--------->  	 20
+	n02 = 20 	<-------- 	   
+		  	 언박싱
+	(Stack영역)		      (Heap영역)
+
+## 자동 언박싱(Auto-unboxing): Wrapper클래스 객체를 해당하는 기본 데이터타입으로 자동 변환
+	// Integer객체에 저장된 값을 int변수(primitiveInt)에 대입할 때 자동 언박싱 이루어짐
+	ex)	Integer wrappedInt = 42;
+		int primitiveInt = wrappedInt; // 오토언박싱(Integer -> int) 발생
+		// wrappedInt에 저장된 42를 int로 자동변환 =>int변수(primitiveInt)에 저장
+
+	- 자동 언박싱 발생 조건: Wrapper 클래스의 객체 값을 기본 데이터 타입 변수에 할당
+
+	- Integer 클래스의 객체를 int변수에 할당 => 자동 언박싱 발생
+	- Integer 클래스의 객체와 문자열과 함께 사용되면, 자동으로 문자열로 변환됨
+	- int와 Integer 타입이 연산되는 경우, Integer 타입의 값이 자동으로 int로 변환
+
+	ex) 수동 언박싱 시도 - Integer 객체(num02)의 값을 int로 수동으로 언박싱 시도
+		n02   = num02.intValue();
+	   - 자동 언박싱이 지원되기 때문에, Integer를 int로 변환할 때 
+	      명시적인 .intValue() 메소드를 사용할 필요가 없음
+	
+
+
+# 자료형 변환
+1) 문자열 -> 숫자 변환
+	"20"  --->  20 
+방법1.	Integer.parseInt()메소드: 문자열 -> 정수 변환
+	int num = Integer.parseInt("20");	// 문자열을 정수로 변환 => num에 저장
+
+방법2.	Integer객체로 박싱 & intValue()메소드로 언박싱
+	1) 박싱-Integer객체를 생성하여 문자열을 박싱
+	// Integer객체 in01은 문자열 데이터를 박싱하는 것
+	Integer in01 = new Integer("20");   
+	// in01은 문자열 데이터를 감싸는 Integer객체를 가리키는 참조변수
+	// 새로운 Integer객체가 heap메모리에 생성되고, 그 안에 문자열 "20"이 복사되어 저장
+	
+	2) 언박싱
+	// intValue()메소드 : Integer객체에 저장된 정수 값을 받아옴	
+	int num01 = in01.intValue();		//num01에는 정수20이 저장됨
+
+2) 숫자 -> 문자열 변환
+	20  --->  "20"
+방법1.	String.valueOf()메소드 : 매개변수로 전달된 값을 해당하는 문자열로 변환
+ex)	String s = String.valueOf(20);	
+	// 정수20을 매개변수로 받아 -> 문자열 s에 "20"할당
+
+방법2.	Integer객체로 박싱 & toString()메소드로 언박싱
+	1) 박싱 - Integer객체를 생성하여 정수 값을 매개변수로 넘겨줌
+	// 새로운 Integer객체가 heap메모리에 생성되고, 그 안에 숫자 20이 복사되어 저장됨
+	Integer in = new Integer(20);	
+	// Integer객체(in)은 int형 데이터를 감싸는 Integer객체를 가리키는 참조변수
+	
+	2) 언박싱 - Integer객체를 통해 정수 -> 문자열로 변환
+	// Integer객체.toString()메소드: Integer객체에 저장된 정수 값을 문자열로 반환
+	String s = in.toString();   	// s에는 20이라는 문자열이 저장됨   
+
+방법3.  문자열 결합(concatenation) : 정수 -> 문자열
+	- int(정수)에 빈 문자열("")을 연결해서(+) 숫자를 문자열로 변환 
+	- 숫자와 문자열의 덧셈 연산은 숫자를 문자열로 자동 변환 
+ex)	20 -->  20 + ""
+	// 20 + ""는 "20"이라는 문자열을 생성
+
+
+
+

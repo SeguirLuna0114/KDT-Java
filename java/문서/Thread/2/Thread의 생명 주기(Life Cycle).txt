@@ -1,0 +1,12 @@
+* Thread의 생명 주기(Life Cycle)
+
+Runnable :  새로 생성한 Thread를 start하면 Runnable 상태가 됨.
+                 실행 가능한 상태( start() 메소드 호출한 상태)
+
+Running : CPU를 점유하고 run() 메소드 내의 명령문을 실행하는 
+	  상태. 실행상태(run() 메소드를 실행한 상태)
+
+Block : 특정 메소드의 호출에 의해서 현재 실행중인 Thread가 
+          CPU의 제어권을 잃어버린 상태.
+
+Dead : run() 메소드의 명령 수행이 끝났을 경우

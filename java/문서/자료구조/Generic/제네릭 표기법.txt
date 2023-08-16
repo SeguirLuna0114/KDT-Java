@@ -1,0 +1,13 @@
+  * Generic(제네릭) 표기법
+    - JDK 1.5이후부터 지원
+
+  List<String> list = new ArrayList<String>();
+
+  List<Integer> list = new ArrayList<Integer>();
+
+  List<Double> list = new ArrayList<Double>();
+
+  Vector<String>  v =  new Vector<String>();
+
+  Map<String, String> m = new  HashMap<String, String>();
+

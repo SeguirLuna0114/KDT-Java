@@ -1,0 +1,209 @@
+* Data 입.출력 처리
+
+  import  java.io.*;
+
+
+o Byte Stream(바이트 스트림) : 1바이트(byte) 단위로 데이터를 처리하는 입출력 스트림
+	- 모든 종류의 데이터를 처리할 수 있음.
+	  주로 이진 파일(이미지, 동영상)을 처리하는데 사용
+	- 자바에서 바이트 스트림을 다루는 기본적인 클래스
+		: InputStream, OutputStream
+
+
+o Byte Stream에 관련된 클래스(1Byte 입.출력 처리)
+
+  InputStream  - FileInputStream
+  (입력)          FilterInputStream  -  BufferedInputStream
+	         DataInputStream  		       	           	          	          	                      	         
+                 ObjectInputStream
+
+  
+  OutputStream - FileOutputStream
+  (출력)          FilterOutputStream  -  BufferedOutputStream    		 				         DataOutputStream
+	         PrintStream
+	         ObjectOutputStream
+
+
+o 입출력 스트림 사용시, 항상 try-catch 블록을 이용하여 예외 처리 해주는 것이 좋음
+	  => 입출력 스트림은 IOException을 발생시킬 수 있고,
+	     이는 반드시 예외 처리를 해주어야 하는 Checked Exception으로 처리해야 함
+ex)	// FileInputStream의 생성자 호출,
+	// is.read() 메서드 호출은 모두 예외 처리를 필요
+        try {
+            // InputStream 객체 생성
+            InputStream is = new FileInputStream("파일경로");
+
+            // 입력 작업 수행
+            int data;
+            while ((data = is.read()) != -1) {
+                System.out.print((char) data); // 바이트를 문자로 변환하여 출력
+            }
+
+            // 스트림 사용 후 close() 메서드를 호출하여 자원을 해제
+            is.close();
+        } catch (IOException e) {
+            // 예외 처리
+            e.printStackTrace();
+
+-------------------------------------------------------------------------------------
+
+o InputStream 클래스
+: 바이트 스트림을 처리하기 위한 추상 클래스
+- 추상 클래스이므로 직접적으로 객체를 생성X. 서브클래스의 인스턴스를 생성
+	- InputStream의 서브클래스: FileInputStream, ByteArrayInputStream, 
+				  BufferedInputStream, DataInputStream
+
+o InputStream 클래스 객체생성방법
+case1)	표준 입력(Standard Input)을 이용해 InputStream의 객체생성
+	"System.in을 이용하여 InputStream객체 생성"
+	- 표준 입력은 자바에서 기본적으로 제공되는 스트림
+	   => 별도의 객체생성 필요X. 바로 사용 가능
+	* System.in: 표준입력 장치인 키보드로 부터 입력 받는것을 의미
+		     바이트스트림으로 데이터를 제공
+ex)	InputStream is = System.in;
+	// 키보드로부터 값을 입력 받음
+	int inputValue;
+	try {
+		// read()메소드: 1바이트를 읽어들여서 ascii 코드(0~127)값으로 casting
+		inputValue = is.read();
+	} catch (IOException io){
+		System.out.print(io.getMessage());
+	}
+
+
+case2) 	InputStream클래스를 이용해 객체 생성
+	- InputStream은 추상 클래스이므로 직접적으로 객체를 생성X
+	  => InputStream을 상속해 구체화한 서브클래스의 인스턴스를 생성
+
+ex)	InputStream inputStream = new FileInputStream("파일경로");
+
+
+o InputStream 클래스의 주요 메서드
+1. int read(): 바이트 스트림에서 1바이트를 읽어들이고, 
+		읽어들인 바이트에 해당하는 ASCII 코드 값(0부터 127 사이의 정수)을 반환
+	- 파일의 끝에 도달하면 -1(EOF를 나타내는 값)을 반환
+	- 데이터가 없다면 블로킹되며, 데이터 입력될 때까지 기다림
+
+	- read()메소드 호출 시, 예외처리가 필요
+	 => try~catch구문 사용하여 catch (IOException e)예외처리
+
+
+ex)	while ((data = inputStream.read()) != -1) {
+                System.out.println("읽어들인 ASCII 코드: " + data);
+		// (char)캐스팅 => int 타입의 data를 char(2바이트) 타입으로 변환
+                System.out.println("읽어들인 문자: " + (char) data);
+        }
+
+
+2. int read(byte[] b): 바이트 배열 b의 크기만큼 데이터를 읽고, 
+		      읽어들인 바이트수를 반환
+	- 파일의 끝에 도달하면 -1(EOF를 나타내는 값)을 반환
+	- 읽어들일 데이터가 없으면 현재까지 읽은 바이트 수를 반환
+
+-----------------------------------------------------------------------------------
+
+o FileInputStream클래스
+: 파일을 바이트 단위로 읽기 위해 사용되는 바이트 기반 입력 스트림(InputStream) 클래스
+
+- 파일로부터 바이트 데이터를 읽을 때 유용
+- 이미지, 비디오, 오디오 등의 바이너리 데이터를 처리할 때 사용
+
+ex)	// FileInputStream 객체 선언(외부에서 객체 선언 추천)
+	FileInputStream fis = null;
+
+	try{
+	       // FileInputStream 객체 생성 및 할당
+            fis = new FileInputStream("example.txt");
+
+            int data;
+            while ((data = fis.read()) != -1) {
+                // 읽은 바이트 데이터를 처리
+                System.out.print((char) data); // 바이트를 문자로 변환하여 출력
+            }
+        } catch (FileNotFoundException e) {
+            	e.printStackTrace();
+
+        } catch (IOException e) {
+            	e.printStackTrace();
+
+        } finally {
+		// FileInputStream 닫기
+            	fis.close();
+
+
+o FileInputStream클래스 생성자
+	-FileNotFoundException 예외: 주어진 경로에 해당하는 파일을 찾을 수 없는 경우 발생
+1. FileInputStream(String name): 주어진 파일 경로(문자열)에 해당하는 파일을 열어 읽어옴
+	- 파일의 경로를 나타내는 문자열을 인자로 받음 => 직접전달
+	FileInputStream fis = new FileInputStream("example.txt");
+
+ex)	// 위 코드를 두줄로 작성가능
+	String filePath = "example.txt";
+	FileInputStream fis = new FileInputStream(filePath);
+
+ 	- try ~ catch ~ finally문 에서 사용시(대개)
+	FileInputStream 객체는 try문 외부에서 "선언"하고,
+	try문 내에서 "객체를 할당(주소값 할당)" 함	=> finally문 내에서 사용 가능
+
+ex)	// FileInputStream 객체 선언
+	FileInputStream file = null;
+	try {
+		file = new FileInputStream("read.txt");	
+
+
+2. FileInputStream(File file): 주어진 File 객체에 해당하는 파일을 열어 읽어옴
+	- 1) File클래스 객체를 인자로 받음
+	- 2) File클래스 객체를 생성하고, 해당 파일을 가리키도록 전달
+	
+	-  파일의 정보를 더 많이 조작해야 할 때 유용
+	  (파일의 크기, 경로 등을 확인하거나 파일의 존재 여부를 미리 확인하고자 할 때)
+
+ex)	File file = new File("example.txt");
+	FileInputStream fis = new FileInputStream(file);
+
+
+o FileInputStream클래스 주요 메소드
+1. int read() throws IOException
+	: FileInputStream으로부터 한 바이트를 읽고, 읽은 바이트값을 반환
+	- 만일 더이상 읽을 바이트가 없다면 -1을 반환
+ex) inputValue = file.read();
+
+2. int read(byte[] b) throws IOException
+	: 주어진 바이트 배열 b[]에 최대 b.length만큼 바이트를 읽어 데이터를 b[]에 저장한 후,
+	 읽은 바이트 수를 반환하며, 더 이상 읽을 바이트가 없을 경우 -1을 반환
+ex)	파일을 끝까지 읽어들이는 방법
+ 	while ((inputValue = file.read()) != -1) {
+		System.out.print((char) inputValue);
+	}
+
+
+-------------------------------------------------------------------------------------
+
+o FileOutputStream
+: 파일에 바이트 단위로 데이터를 쓰기 위해 사용
+
+
+o 생성자
+1. FileOutputStream(String name) throws FileNotFoundException
+	: 주어진 파일 경로를 나타내는 문자열로부터 파일을 생성하거나 염
+ex)         // FileOutputStream 객체 생성
+            FileOutputStream fos = new FileOutputStream("example.txt");
+2. FileOutputStream(File file) throws FileNotFoundException
+	: 주어진 File 객체로부터 파일을 생성하거나 염
+
+
+o 주요 메소드
+1. void write(int b) throws IOException
+	: FileOutputStream에 한 바이트를 씁니다. 주어진 값 b의 하위 8비트를 파일에 작성
+ex)	// File에 저장된 모든 데이터를 스트림을 통해
+	// 읽어 들여 다른File에 저장
+	while ((input = fr.read()) != -1) {
+		System.out.print((char) input); // 화면에 출력 부분
+		fw.write(input); // 다른 파일에 쓰는 부분
+	}
+
+2. void write(byte[] b) throws IOException: 주어진 바이트 배열 b의 모든 바이트를 파일에 작성
+
+3. void close() throws IOException: FileOutputStream과 연관된 리소스를 닫음 
+
+

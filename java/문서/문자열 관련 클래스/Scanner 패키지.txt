@@ -1,0 +1,35 @@
+Scanner 패키지
+
+- 객체 생성
+	Scanner 	  sc  = new Scanner(System.in);
+      //Scanner 객체명 = new Scanner(System.in);
+			*System.in : 입력한 값을 Byte단위로 읽는 것
+
+- 입력 받는 type
+	1. Reference Type
+	   //	>> Class Type - String Class
+		* 입력받는 방식 다름
+	  	String 문자열_space = sc.next();
+			- 문자열 입력시, 공백 전까지만 받음(공백 = 구분자)
+		String 문자열_Enter = sc.nextLine(); ***
+			- 문자열 입력시, Enter입력 전까지 받음(Enter = 구분자)
+			- 한 줄을 통째로 입력받아옴. 사용자 입력 완료하려면 개행문자 입력해야함
+			- "개행문자를 포함한 모든 문자열을 반환"
+			* 따라서, nextInt()메소드와 함께 사용될 경우,
+				Scanner.nextLine();으로 개행문자를 1번 소진해야 함
+			ex)	int N = sc.nextInt();
+				// 개행 문자 소진
+				 => 그 다음줄부터 nextLine()메소드로 문자 한번에 입력
+    				sc.nextLine();
+				String StrN = sc.nextLine();
+
+	2. Primitive Type
+	   // 	>> Boolean Type
+		boolean 부울 = sc.nextBoolean();	
+
+		>> Numeric Type
+		//  >>	>> Integer Type
+		byte 바이트 = sc.nextByte();
+		short 쇼트 = sc.nextShort();
+		int 정수 = sc.nextInt();
+		long  롱 = sc.nextLong();

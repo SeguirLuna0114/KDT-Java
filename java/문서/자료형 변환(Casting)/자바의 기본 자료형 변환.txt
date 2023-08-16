@@ -1,0 +1,32 @@
+﻿*자바의 기본 자료형 변환
+  자바의 기본 자료형 변수들 사이의 변환
+
+
+자료형 크기 순서
+ byte(1) < short(2)  < int(4)  <  long(8)  <  float(4)  <  double(8)
+
+*float 타입은 부동 소수점 숫자를 표현하는 데 사용되며, 32비트로 값을 저장합니다. long 타입은 부호 있는 정수를 표현하는 데 사용되며, 64비트로 값을 저장합니다. 따라서 float 타입을 long 타입으로 변환하는 것은 데이터의 손실 없이는 불가능
+
+#묵시적 형변환
+자동 형변환 : 컴파일러가 자동으로 한 자료형을 다른 자료형 변환해주는 변환을 의미
+             작은 자료형 데이터를 -> 큰 자료형 변수에 저장하는 경우   
+	     ex)   char -> int
+	          int -> float
+		  int -> double
+		  float -> double
+		ex) int num = 10;
+		long bigNum = num;
+		ex) char ch = 'A';
+		int asiiValue = ch;
+
+#명시적 형변환
+강제 형변환 : 프로그래머가 직접 자료형 변환을 해야되는 변환을 의미
+	     형변환 연산자를 사용하여 한 자료형을 다른 자료형으로 명시적으로 변환
+             큰 자료형 데이터를 작은 자료형 변수에 저장하는 경우
+		  <타입> 변수 = (<타입>) 표현식;
+	     ex)  int -> char         ex) char c = (char)97;
+                  double -> int       ex) int a =  (int) 3.14;     	            		           
+   	          double -> float
+		-표현식을 강제 변환하고자 하는 타입으로 명시적으로 캐스팅
+	ex) int num = 10;
+	long bigNum = (long) num; // int -> long

@@ -1,0 +1,27 @@
+* 클래스(class)
+	-구성: 필드, 생성자, 메서드
+
+* 패키지(package) : 관련있는 클래스를 묶어 놓은것
+ 
+* java.lang 패키지 - 기본 패키지
+                        - 자바에서 가장 사용 빈도가 높은
+                          클래스를 묶어 놓은 패키지
+                         ex) java.lang.String
+			      java.lang.System
+			      java.lang.Integer
+
+
+ * 기본 패키지(java.lang)외의 패키지는 import해서 사용 해야함.
+   ex)  import  java.util.Date;
+         import  java.util.Random;
+         import  java.util.*;
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,30 @@
+﻿* 유용한 단축키
+
+   윈도우즈 탐색기 = 윈도우키 +  E
+
+   복사 = Ctrl + C
+
+   잘라내기 = Ctrl + X
+
+   붙여넣기 = Ctrl  + V
+
+
+* DOS 명령어
+c:\> dir            	<-- 현재 디렉토리 안에 목록 출력(대소문자 구별X)
+
+c:\> cd           	 <-- cd(change directory) : 디렉토리 변경
+
+c:\> Users\admin>cd..    <--  한단계 상위 디렉토리로  이동
+c:\> cd Users                 <-- Users 디렉토리로 이동
+c:\Users>d:                    <-- d 디라이버로 이동
+c:\> Users\admin>cd\    <--- 최상위 디렉토리로 이동
+
+* ip주소 확인
+c:\> ipconfig
+
+* 네트워크 점검
+c:\> ping   kbs.co.kr
+
+
+
+

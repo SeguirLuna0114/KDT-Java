@@ -1,0 +1,115 @@
+* 보조스트림(Secondary Stream)
+: 데이터를 입출력하기 위해 '기본 스트림'과 '함께 사용'되는 스트림의 일종
+- 기본 스트림과 결합하여 데이터를 효율적으로 처리하고 다양한 기능을 제공
+
+- 기본 스트림과 함께 사용되며, 기본 스트림을 보조해서 데이터를 읽고 쓰는 작업을 처리
+  => 데이터를 추가적으로 '가공'하거나 '다른 형식으로 변환'하기 위해 기능을 제공
+	* 기본 스트림은 파일, 네트워크 연결, 키보드 입력 등과 같은
+	 실제 데이터 원본 또는 대상과 직접 연결
+
+- 특징
+	1. 체이닝(Chaining): 보조스트림은 기본 스트림에 연결(체인)하여 사용
+		=> 기본 스트림에서 처리된 데이터가 보조스트림으로 전달되어 추가적인 처리를 수행
+
+	2. 기본스트림에 기능 추가
+		ex) 데이터를 버퍼링하여 입출력 성능을 향상
+		     데이터를 압축 또는 암호화
+
+	3. 각 언어와 라이브러리에 따라 다양한 보조스트림이 제공됨
+		- 입력과 출력에 대한 보조스트림이 존재 + 특정 형식 처리를 위한 보조스트림 제공
+
+		ex) 파일 읽고 쓸 경우(FileInputStream, FileOutputStream)
+		   보조스트림인 BufferedReader와 BufferedWriter를 체인으로 연결하여
+		   텍스트 파일을 효율적으로 읽고 쓸 수 있음
+
+------------------------------------------------------------------------------------
+o DataOutputStream
+: 보조스트림. 기본 자료형의 데이터를 출력할 때 사용
+- 바이트 스트림을 처리
+   다양한 자료형의 데이터를 바이트형태로 변환하여 출력 스트림에 전달
+- 데이터를 기록할 때는 해당 자료형의 크기에 맞춰 바이트로 변환하여 출력됨
+-  OutputStream 클래스의 확장형
+- 파일 스트림을 사용한 후에는 반드시 close() 메서드를 호출하여 스트림을 닫아 리소스를 해제
+- try-catch 블록으로 에러 처리
+
+o DataOutputStream 객체생성
+-  DataOutputStream 객체를 생성하기 위해서는 출력 대상이 되는 OutputStream 객체가 필요
+	// 1. 파일에 데이터를 출력(저장)하기 위한 FileOutputStream 객체 생성
+        FileOutputStream fos = new FileOutputStream("data.bin");
+
+        // 2. DataOutputStream으로 FileOutputStream을 래핑하여 데이터를 기록할 준비
+	// FileOutputStream 객체를 argument로 받는 DataOutputStream 객체 생성
+        DataOutputStream dos = new DataOutputStream(fileOutputStream);
+
+	// => 인라인 선언(변수 선언하면서 동시에 객체 생성 및 초기화) 가능
+	DataOutputStream dos = new DataOutputStream(new FileOutputStream("data.bin"));
+
+            // 스트림 닫기
+       dos.close();
+
+o DataOutputStream 주요 메서드
+- writeInt(int v): int 형식의 데이터를 바이트 스트림으로 출력
+	ex)	 dataOutputStream.writeInt(42);
+
+- writeLong(long v): long 형식의 데이터를 바이트 스트림으로 출력합니다.
+
+- writeDouble(double v): double 형식의 데이터를 바이트 스트림으로 출력합니다.
+	ex)	dataOutputStream.writeDouble(3.14);
+
+- writeUTF(String str): 문자열을 바이트 스트림으로 출력
+		        문자열은 UTF-8 형식으로 인코딩됩니다.
+	ex)	dos.writeUTF("gemini");
+
+- flush(): 버퍼에 남아있는 모든 데이터를 출력 스트림으로 보냄
+
+- close(): 스트림을 닫고 리소스를 해제
+
+------------------------------------------------------------------------------------
+
+o DataInputStream
+: 보조스트림. 기본 자료형의 데이터를 바이트 스트림으로부터 읽어올 때 사용
+- 기본 자료형 데이터를 바이트로 변환하여 입력 스트림으로부터 읽어올 수 있음
+- InputStream 클래스의 확장형
+- 파일 스트림을 사용한 후에는 반드시 close() 메서드를 호출하여 스트림을 닫아 리소스를 해제
+- try-catch 블록으로 에러 처리
+
+o DataInputStream 객체 생성 방법
+- DataInputStream 객체를 생성하기 위해서는 읽어올 데이터가 있는 InputStream 객체가 필요
+-  FileInputStream 객체를 생성하여 DataInputStream 생성자에 전달
+	// 1.FileInputStream으로 데이터를 읽기 위한 객체를 생성 
+	// : InputStream 객체로부터 데이터를 읽기 위한 FileInputStream 객체 생성
+	FileInputStream fis = new FileInputStream("data.bin");
+
+	// 2. DataInputStream으로 FileInputStream을 래핑하여 기본 자료형 데이터 읽기 준비
+	DataInputStream dis = new DataInputStream(fis);
+
+	// => 인라인 선언(변수 선언하면서 동시에 객체 생성 및 초기화) 가능
+	DataInputStream dis = new DataInputStream(new FileInputStream("data.bin"));
+
+         // 스트림 닫기
+         dis.close();
+
+o DataInputStream 주요 메소드
+  * 기본 자료형 데이터 읽기
+- readBoolean(): boolean 형식의 데이터를 바이트 스트림으로부터 읽어옵니다.
+
+- readByte(): byte 형식의 데이터를 바이트 스트림으로부터 읽어옵니다.
+
+- readShort(): short 형식의 데이터를 바이트 스트림으로부터 읽어옵니다.
+
+- readInt(): int 형식의 데이터를 바이트 스트림으로부터 읽어옵니다.
+
+- readLong(): long 형식의 데이터를 바이트 스트림으로부터 읽어옵니다.
+
+- readFloat(): float 형식의 데이터를 바이트 스트림으로부터 읽어옵니다.
+
+- readDouble(): double 형식의 데이터를 바이트 스트림으로부터 읽어옵니다.
+	ex)	double doubleValue = dis.readDouble();
+
+- readUTF(): 문자열을 바이트 스트림으로부터 읽어옴. 문자열은 UTF-8 형식으로 인코딩되어야 함
+	ex)	String stringValue = dis.readUTF();
+
+- close(): 스트림을 닫고 리소스를 해제
+
+
+

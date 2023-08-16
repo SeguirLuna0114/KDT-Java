@@ -1,0 +1,19 @@
+* 그래픽 프로그램
+ 
+  CUI (Console User Interface)
+
+  GUI(Graphic User Interface) :  java.awt.*
+
+                                         javax.swing.*
+
+                                         javafx.*
+
+
+  Component : 그래픽 프로그램을 구성하는(부품역할하는) 클래스
+
+  Container : 각 컴포넌트를 담을 수 있는 그릇 역할을 하는 클래스
+  	ex)
+  	Frame : 큰 그릇 역할을 하는 컨테이너(반드시 1개이상이 필요함)
+
+  	Panel  : 작은 그릇 역할을 하는 컨테이너(선택 사항)
+                         배치를 쉽게하기 위해서 사용함.

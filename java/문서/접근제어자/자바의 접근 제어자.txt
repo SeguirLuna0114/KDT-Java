@@ -1,0 +1,81 @@
+* 자바의 접근 제어자(Access modifier)
+     public, 생략(default접근제어자), private, protected
+: 클래스의 멤버(변수, 메소드)가 어떤 범위에서 접근 가능한지 지정하는 키워드
+- 클래스의 멤버를 적절하게 보호함으로써 코드의 안정성 높일 수 있음
+- 필드, 생성자, 메소드 앞에 붙을 수 있음
+
+<형식>------------------------------------------------------
+접근제어자	          void
+(접근지정자)     공유      자료형       메소드명(매개변수)
+
+public          static     void         check(){
+
+	 return   값;
+}
+------------------------------------------------------------
+
+-----------------------------------------------------------------------------------
+접근제어자  	자신의클래스  	같은패키지(같은파일)     하위클래스       다른패키지
+
+private 	O	      	 X	   	        X                X
+
+생략(default)   	O      	       	O            		X	         X
+
+protected      	O              	O             		O	         X
+
+public         	O     	       	O	    		O	         O
+-----------------------------------------------------------------------------------
+
+
+1. public
+: 어떤 클래스에서든 접근 가능(클래스 외부에서도 접근 가능)
+- 가장 넓은접근 허용. 외부 클래스 접근 허용
+ex) public class MyClass {
+    	public int publicVar; // 다른 클래스에서 접근 가능한 변수
+    	public void publicMethod() {
+        	// 다른 클래스에서 접근 가능한 메서드
+    	}
+    }
+
+2. protected
+: 동일 패키지내의 클래스와 해당 클래스를 상속받는 다른 패키지의 클래스에서 접근 가능
+ex) class MyBaseClass {
+    	protected int protectedVar; 
+	// 동일 패키지 또는 상속 관계의 클래스에서 접근 가능한 변수
+    	
+	protected void protectedMethod() {
+        	// 동일 패키지 또는 상속 관계의 클래스에서 접근 가능한 메서드
+    	}
+    }
+
+    class MyDerivedClass extends MyBaseClass {
+    	void someMethod() {
+        	protectedVar = 10; // MyBaseClass를 상속받았기 때문에 접근 가능
+        	protectedMethod(); // MyBaseClass를 상속받았기 때문에 접근 가능
+    	}
+    }
+
+
+3. default(혹은 아무런 접근 제어자도 지정X경우): 동일한 패키지 내의 클래스에서만 접근가능
+-같은 패키지 내에서는 필드에 "직접" 접근 가능(package-private)
+ex) class MyClass {
+    	int defaultVar; // 동일 패키지에서만 접근 가능한 변수
+    	void defaultMethod() {
+        	// 동일 패키지에서만 접근 가능한 메서드
+    	}
+    }
+
+
+4. private: 동일 클래스 내에서만 접근 가능(외부X)
+- 비공개 클래스. 자신의 클래스 내에서만 접근 가능
+ex) class MyClass {
+    	private int privateVar; // 동일 클래스 내에서만 접근 가능한 변수
+    	private void privateMethod() {
+        	// 동일 클래스 내에서만 접근 가능한 메서드
+    	}
+    }
+
+
+
+
+

@@ -1,0 +1,168 @@
+* 스레드(Thread)
+: 한 가지 작업을 실행하기 위해 순차적으로 실행할 코드를 이어놓은 것
+
+- 프로그램 실행 흐름을 나타내는 기본단위(1개의 process를 구성하는 논리적인 작업 단위)
+
+-특징) 각 스레드는 독립적인 실행 경로를 가지며, 자신만의 스택 메모리를 갖고 작업 수행
+	=> 각 스레드는 서로 다른 작업을 동시에 수행 가능.
+	ex) 메인스레드는 사용자와의 상호작용 담당, 별도의 스레드는 파일 다운로드, 계산 처리
+
+-사용하는 경우) 동시에 여러작업을 수행해야 하는 경우
+
+* 멀티스레딩(Multithreading): 하나의 프로세스 내에서 여러 스레드를 생성하고 실행하는 기술
+  		- 메인 스레드(Main Thread)가 시작되고, 
+		  이후에 추가적인 스레드를 생성하여 병렬적으로 실행
+		- 여러 스레드가 동시에 실행O. 단, 실행순서는 보장되지X
+
+
+* 자바에서 Thread를 생성하는 방법
+case1)	Thread 클래스 상속받아서 새로운 스레드 생성
+	- 스레드를 직접다룸 => 비교적 간단함.
+	- 단, 자바는 단일상속만 허용해서 다른 클래스는 상속X
+ex)	class MyThread extends Thread {
+		// 스레드 클래스 상속받음
+    		public void run() {
+        		// 스레드가 실행할 작업 내용
+        		System.out.println("Hello, I am a thread!");
+    		}
+	}
+
+	public class Main {
+    		public static void main(String[] args) {
+			// 새롭게 생성한 스레드 클래스의 객체 생성
+        		MyThread thread = new MyThread();
+			// start() 메서드를 호출하여 스레드를 시작
+        		thread.start(); // 스레드 시작
+    		}
+	}
+
+
+case2)	Runnable 인터페이스 구현하여 스레드 생성
+	- Runnable인터페이스는 run()메소드를 구현해야 함
+	- Runnable 인터페이스를 구현한 클래스의 객체를 
+	  Thread 클래스의 생성자에 전달하여 새로운 스레드를 생성
+	- 장점) 다른 클래스를 상속받는 경우에도 스레드기능 추가 가능
+ex)	class MyRunnable implements Runnable {
+		// Runnable인터페이스를 상속받아 구현한 클래스 생성
+
+		// run()메소드 구현 - 스레드가 실행할 작업내용을 정의
+    		public void run() {
+        		// 스레드가 실행할 작업 내용
+       			 System.out.println("Hello, I am a thread!");
+    		}
+	}
+
+	public class Main {
+    		public static void main(String[] args) {
+			// 1. Runnable인터페이스를 구현한 클래스의 객체 생성
+        		MyRunnable myRunnable = new MyRunnable();
+			
+			// 2. Thread 클래스의 생성자에 myRunnable 객체를 전달하여,
+			      새로운 스레드클래스의 객체(thread) 생성
+        		Thread thread = new Thread(myRunnable);
+
+			// start() 메서드를 호출하여 스레드를 시작
+        		thread.start(); // 스레드 시작
+    		}
+	}
+
+	
+	- 람다 표현식을 사용해서 Runnable 객체를 생성 가능
+ex)    		public static void main(String[] args) {
+        		Runnable myRunnable = () -> System.out.println("Hello, I am a thread!");
+
+        		Thread thread = new Thread(myRunnable);
+        		thread.start();
+    		}
+	}
+
+
+# 스레드 생성자
+ Thread(Runnable target, String threadName) 생성자
+: 스레드를 생성할 때 스레드의 실행 내용을 Runnable 객체로 지정하면서, 
+  스레드의 이름을 설정
+  - target: Runnable인터페이스를 구현한 클래스의 객체명. 스레드가 실행할 작업 내용을 정의
+  - threadName: 생성되는 스레드의 이름을 지정	
+
+
+
+# 스레드 실행
+- start()메소드 : 스레드 시작 시, start()메소드를 호출해야 새로운 스레드가 생성되고,
+		run()메소드가 호출되어 작업이 수행됨
+	- 스레드의 실행을 요청하는 메서드
+	- start()메소드 호출시 runnable상태가 되어 run()메소드가 자동으로 호출됨
+
+
+- interrupt()메소드 : 스레드 중지(종료).
+	- 다른 스레드에게 해당 스레드를 인터럽트(중단)하도록 요청해서,
+	  스레드가 일시적으로 중단 되거나 InterruptException예외를 발생시킴
+	- 단, 스레드를 안전하게 종료하기 위해서는 적절한 종료 메커니즘을 구현해야함
+
+- sleep(milliseconds) 메서드
+	: 스레드를 일시적으로 지정된 시간 동안 일시 중지(paused)하는 역할
+	" sleep() 메소드를 사용해 프로그래머가 강제로 block 상태로 만듦"
+	- milliseconds 매개변수 : 스레드를 일시 중지할 시간을 밀리초 단위로 지정
+	- InterruptedException 예외를 던질 수 있음 => "반드시 예외처리(try~catch)"
+
+	1) 스레드의 실행 간격을 조절하는데 사용 in run()메소드
+	: 스레드가 일정 시간마다 작업을 수행하도록 하기위해
+	ex) 특정 동작이 1초마다 발생하도록 하기위해 사용
+	ex) 주기적으로 어떤 작업을 수행하도록 할 때 사용
+		for (int i = 1; i <= 5; i++) {
+            		System.out.println("Task " + i + " is being executed.");
+            	try {
+                	// 1초마다 작업을 수행하도록 스레드를 일시 중지
+                	Thread.sleep(1000);
+            	} catch (InterruptedException e) {
+                	e.printStackTrace();
+
+	2) 시간 기반의 동작을 구현할 때(타이밍 기능) <- Timer클래스 사용하는 것 추천
+	ex) 특정 동작을 지정된 시간 후에 실행 / 반복적으로 실행
+	        int countDown = 10; // 타이머 초기값 (초)
+        	while (countDown > 0) {
+            		System.out.println("Remaining time: " + countDown + " seconds");
+            		try {
+                		Thread.sleep(1000); // 1초 동안 스레드를 일시 중지
+            		} catch (InterruptedException e) {
+               			e.printStackTrace();
+            		}
+			countDown--;	
+
+	3) 스레드 간의 순서조절(실행 시점을 제어) : 여러 스레드가 병렬로 실행될 때, 
+			       특정 스레드의 실행을 조절하거나 지연시키기 위해 사용
+    		public static void main(String[] args) {
+        		Thread first = new Thread(new MyRunnable(), "first");
+       			Thread second = new Thread(new MyRunnable(), "second");
+
+        		first.start();
+        		try {
+            			// first 스레드의 실행이 끝날 때까지 기다림
+            			first.join();
+        		} catch (InterruptedException e) {
+            			e.printStackTrace();
+        		}
+        		second.start();
+    		}
+
+	class MyRunnable implements Runnable {
+    		@Override
+    		public void run() {
+			// 현재 CPU를 점유한 Thread 출력
+			// getName()메소드를 활용해 각 스레드의 이름과 함께 출력
+        		for (int i = 1; i <= 5; i++) {
+      				System.out.println(Thread.currentThread().getName() + " : " + i);
+            			try {
+                			// 출력후,Thread.sleep(1000)을 호출하여 
+					// 1초 동안 스레드를 block 상태
+                			Thread.sleep(1000); // (단위: 1/1000 초)
+            			} catch (InterruptedException e) {
+                			e.printStackTrace();
+
+
+
+
+
+
+
+
+

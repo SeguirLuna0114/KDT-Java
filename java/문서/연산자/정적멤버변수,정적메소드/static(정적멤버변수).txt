@@ -1,0 +1,35 @@
+*  static : 공유
+
+  ex)
+      class StaticTest{
+          int   a;           	 //인스턴스 멤버변수
+          static  int   b;    	 //정적 멤버변수(공유영역에 저장)
+
+          public  static  void  check(){  // 정적 메소드
+          } 
+
+          public static void main(String[] args){
+	  //정적 멤버변수는 클래스로 접근 가능
+	     System.out.println(StaticTest.b); 
+	     StaticTest.check();
+         }
+
+      }
+
+* 정적 메소드 사용시 유의할점
+
+   1. 정적 메소드에서는 this 레퍼런스 변수를 사용할 수 없다.
+
+   2. 정적 메소드에서는 일반적인 변수를 사용할 수 없다.
+      정적 메소드에서는 정적멤버변수만 사용가능함
+
+   3. 정적 메소드는 메소드 오버라이딩되지 않는다.
+
+
+
+
+
+
+
+  
+

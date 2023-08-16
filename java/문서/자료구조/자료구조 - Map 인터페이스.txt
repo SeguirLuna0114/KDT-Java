@@ -1,0 +1,200 @@
+* 자료구조(Data Structure)
+   java.util.*;
+
+   ex) Set, List, Vector, Map, Queue, Stack etc
+
+# 제네릭(Generic) <>
+  : 데이터 타입을 일반화하여, 자료구조에 1가지 자료형의 데이터만 저장할 수 있도록 함
+
+iv. Map 인터페이스  - HashMap, HashTable (상속받는 클래스)
+  "key-value쌍을 저장하는 자료구조"
+  "특정 key에 대응하는 값(value)를 검색하고 저장하는데 사용"
+		   - 자주 사용되는 구현 클래스: HashMap, TreeMap, LinkedHashMap
+
+    1. 여러가지 자료형의 Data를 모두 저장할 수 있다.
+      ex) int, double, char, boolean, String etc
+    2. Data를 저장할 때 Key, Value 를 동시에 저장한다.
+	- 키(Key)와 값(Value)을 하나의 쌍으로 저장
+
+    3. key 값은 고유해야하며, 중복이 되면 안된다.(동일한 키를 두번이상 저장X)
+      	- 만약에 중복된 key가 있으면, 가장 마지막에 설정된 value만 사용할 수 있다.
+		(동일한 키를 사용하여 다른 값을 저장하면, 이전 값은 대체됨)
+	- 그러나, 값(value)은 중복 저장이 가능
+
+    4. value값은 중복이 되어도 상관없다.
+
+    5. Map은 요소를 저장하는 순서X
+	- 저장순서와 반복순서가 동일하지 않을 수 있음
+	- 만일, 순서가 중요한 경우, TreeMap이나 LinkedHashMap을 사용
+
+
+# HashTable
+" Map인터페이스를 구현한 해시테이블 자료구조"
+" 키-값 쌍을 추가, 조회, 삭제, 확인 "
+" 키(key)와 값(value)쌍을 저장하며, 키를 기반으로 데이터에 빠르게 접근 가능"
+- Hashtable은 스레드에 안전한 컬렉션 => 여러 스레드 동시 접근 수정 가능
+- 무인자 타입(raw type)사용 가능: 제네릭 도입 전이기에, 무인자타입으로 사용가능
+- Hashtable은 키와 값에 null을 허용
+	=> 하지만 null 키를 사용하여 값을 저장하면 NullPointerException이 발생,
+	   null 값을 가진 키로부터 값을 조회하면 null을 반환
+- 순서 보장 X: Hashtable은 데이터를 순서대로 저장하지 않음
+- 주요 메소드: put(), get(), remove(), containsKey(), keySet()
+		(주로 키-값 쌍을 추가, 조회, 삭제, 확인)
+
+# HashMap
+" Map인터페이스를 구현한 해시맵 자료구조"
+" 데이터를 빠르게 검색하고 관리하기 위해 많이 사용"
+" 키(key)와 값(value)쌍을 저장하며, 키를 기반으로 데이터에 빠르게 접근 가능"
+- 동기화되지 않음: HashMap은 스레드에 안전하지 않음
+		=> 멀티스레드 환경에서 동시에 접근하여 수정하는 경우 문제가 발생
+- 제네릭(Generic) 타입 사용하여 HashMap 선언하는 것 권장
+- null 허용: 키와 값에 null을 허용
+		=> null 키를 사용하여 값을 저장할 수 있고, null 값을 가진 키로부터 값을 조회가능
+- 순서 보장 X: HashMap은 데이터를 순서대로 저장X
+
+
+
+# Map인터페이스의 주요 메소드
+	- int size(): Map에 저장된 key-value쌍의 개수를 반환
+	- boolean isEmpty(): Map이 비어있는지 확인.
+		    	    비어있으면 true를 반환하고, 그렇지 않으면 false를 반환
+
+	- boolean containsKey(Object key): 지정된 key값이 Map에 존재하는지 확인
+				 존재하면 true를 반환하고, 그렇지 않으면 false를 반환
+	- boolean containsValue(Object value): 지정된 value값이 Map에 존재하는지 확인
+				 존재하면 true를 반환하고, 그렇지 않으면 false를 반환
+
+	- V put(K key, V value): 지정된 키와 값을 Map에 추가
+				이미 동일한 키가 존재하는 경우, 새로운 값으로 대체됨
+
+	- V remove(Object key): 지정된 키와 연결된 값을 제거.
+			      만약 해당 키가 존재하지 않으면 아무런 동작도 수행X
+
+	- V get(Object key): 지정된 키에 해당하는 값을 반환. 
+			     해당 키가 존재하지 않으면 null을 반환
+
+	- Set<K> keySet(): Map에 저장된 모든 키들의 Set을 반환
+			  Set은 중복을 허용하지X. 반환된 Set을 통해 Map의 모든 key에 접근 가능
+		ex)       	 // keySet()을 통해 모든 키들을 담고 있는 Set을 가져옴
+        		Set<String> keys = studentScores.keySet();
+
+        		// keySet()을 사용하여 Map의 모든 키에 접근
+        		for (String key : keys) {
+	
+	- Collection<V> values(): Map에 저장된 값들의 Collection을 반환
+		   Collection은 중복을 허용. 순서가 있는 자료구조
+		   반환된 Collection을 통해 Map의 모든 Value에 접근 가능
+        		ex)	// values()를 통해 모든 값들을 담고 있는 Collection을 가져옵니다.
+        		Collection<Integer> scores = studentScores.values();
+
+        		// values()를 사용하여 Map의 모든 값에 접근합니다.
+        		for (int score : scores) {
+            			System.out.println("점수: " + score);
+        		}
+
+
+# Map 인터페이스 객체생성
+	- Map 인터페이스는 추상 인터페이스이기에, 직접 객체 생성이 불가능
+	  => Map 인터페이스를 구현한 클래스를 활용하여 Map 객체 생성
+	# Map인터페이스를 구현한 클래스
+		1. HashMap: 가장 일반적으로 사용되는 Map의 구현 클래스
+			    	- key와 value를 해시테이블에 저장
+				- 빠른 검색과 삽입을 제공. 순서보장X
+		2. TreeMap: 키를 정렬된 순서로 저장하는 Map 구현 클래스
+				- 키의 정렬에 기반하여 값을 접근하는 데 유용
+		3. LinkedHashMap: 입력 순서를 보존하는 Map 구현 클래스
+				- 삽입된 순서대로 값을 접근 가능
+		4. HashTable: HashMap과 비슷하지만, 동기화(synchronization)를 지원하여
+			      멀티스레드 환경에서 안전하게 사용 가능
+		5. ConcurrentHashMap: 멀티스레드 환경에서 안전하게 사용 가능
+
+
+case1) Map 인터페이스로 변수를 선언하고 각 구현 클래스의 객체를 할당하여 사용(업캐스팅)
+ex)	// HashMap 객체 생성
+        Map<String, Integer> hashMap = new HashMap<>();	
+	// 다이아몬드 연산자(<>)를 사용하여 타입을 생략 가능
+	Map<String, Integer> hashMap = new HashMap<String, Integer>();
+	// 키는 String타입, 값은 Integer타입으로 선언.
+
+ex)     // TreeMap 객체 생성
+        Map<String, Integer> treeMap = new TreeMap<>();
+
+ex)     // LinkedHashMap 객체 생성
+        Map<String, Integer> linkedHashMap = new LinkedHashMap<>();
+
+case2) 데네릭을 사용하지 않고 무인자 타입(raw type)으로 객체 선언&생성
+ex)	HashMap hm = new HashMap();
+
+
+# Map 데이터 출력 방법
+case1)	System.out.println(Map인터페이스 객체명);
+	- Map객체에 저장된 모든 key-value값을 출력
+ex)	HashMap hm = new HashMap();	
+	System.out.println(hm);
+	// HashMap객체에 저장된 모든 key-value를 출력
+
+
+case2)	Map에 저장된 key값만 출력 with keySet()메소드
+	- Set<K> keySet() 메소드: Map에 저장된 모든 키들의 Set을 반환
+ex)     // HashMap 객체 생성
+        Map<String, String> hashMap = new HashMap<>();
+	hashMap.put("city", "seoul");
+
+	// Map에 저장된 모든 키를 가져와서 Set으로 저장
+        Set<String> keys = hashMap.keySet();
+
+        // Set에 있는 모든 키를 출력
+        for (String key : keys) {
+            System.out.println("Key: " + key);
+        }
+
+
+case3)	key값을 아는 경우 - V get(Object key) 메소드를 사용해 key값으로 데이터 출력
+	- V get(Object key) 메소드: 지정된 키에 해당하는 값을 반환
+ex)	// 제네릭이 Stirng으로 지정된 경우
+	Map<String, String> hashMap = new HashMap<>();
+ 	String value1 = hashMap.get("woman");		// 다운캐스팅시, 자료형생략O
+
+ex)	// 제네릭이 선언되지 않은 경우
+	Hashtable ht = new Hashtable();
+	String Val = (String) ht.get("포도");		// 다운캐스팅
+	// 다운캐스팅시 자료형 생략 불가능
+
+ex)	다운캐스팅 + 언박싱
+	Integer it = (Integer) ht.get("count");		// 다운캐스팅(Object -> Integer)
+	int i = it.intValue();				// 언박싱(Integer -> int)
+
+	// 다운캐스팅 + 언박싱
+	int ii = ((Integer) ht.get("count")).intValue();	
+
+
+case4) key값을 모르는 경우 - Enumeration 인터페이스 활용
+	- 열거형(Enumeration) : Hashtable의 키(Key)를 열거하는데 사용되는 인터페이스
+	- keys() 메서드를 사용하여 Hashtable의 모든 키를 가져옴
+
+	#Enumeration 인터페이스:  Vector와 Properties에서 사용되는 인터페이스로, 
+				컬렉션의 요소를 반복하는데 사용
+	- boolean hasMoreElements() 메소드:  다음 요소가 있는지 확인하는 메소드
+			 요소가 남아있으면 true를 반환하고, 요소가 더 이상 없으면 false를 반환
+	- E nextElement() 메소드: 다음 요소를 반환하는 메소드
+				다음 요소가 없는경우 NoSuchElementException 발생
+
+
+ex)	Enumeration Enum = ht.keys();		// Map의 모든 key를 구해옴
+	// Hashtable에 저장된 모든 키(key)들을 담고 있는 Enumeration 객체를 생성하여 반환
+
+	while (Enum.hasMoreElements()) {
+		// Object형으로 저장해도 처리되기는 함.
+		// 한가지 자료형으로 작성되지X. 여러 자료형으로 작성됨(자료형이 혼용됨)
+		// => 따라서, Object형으로 작성해야 함
+		Object k = Enum.nextElement();
+		Object v = ht.get(k);
+			
+		// Hashtable은 무인자 타입으로 선언 => 키와 값이 모두 Object 타입으로 반환됨
+		// => 각 값을 다운캐스팅하여 원하는 타입으로 반환하여 사용
+		String k = (String)Enum.nextElement();		
+		String v = (String)ht.get(k);				
+			
+		System.out.println(k + " : " + v);
+
+

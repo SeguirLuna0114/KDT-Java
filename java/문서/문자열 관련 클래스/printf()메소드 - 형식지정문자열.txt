@@ -1,0 +1,44 @@
+printf()메소드 & 형식 지정 문자열
+=> 원하는 형식으로 출력 가능
+
+# 형식 지정 문자열
+- '%' 기호와 다른 문자들로 구성됨. 각 문자는 출력될 데이터의 형식을 지정
+- '%n' : 형식지정 문자열에서 사용되는 줄바꿈 문자로, 다음 출력이 새로운 줄에서 시작되게 함
+1. '%d' : 정수(int)를 10진수로 출력
+ex)		System.out.printf("Integer: %d %n", 42);
+				=> Integer: 42	// 정수를 10진수(%d)로 출력
+
+2. '%o' : 정수(int)를 8진수로 출력
+ex)		System.out.printf("Octal: %o %n", 42);
+				=> Octal: 52	// 정수를 8진수(%o)로 출력
+
+3. '%x'(소문자) or '%X'(대문자) : 정수(int)를 16진수로 소문자/대문자로 출력
+ex)		System.out.printf("Hexadecimal (lowercase): %x %n", 42);
+				=> Hexadecimal (lowercase): 2a	// 16진수를 소문자로
+ex)		System.out.printf("Hexadecimal (uppercase): %X%n", 42);
+				=> Hexadecimal (uppercase): 2A	// 16진수를 대문자로 출력
+
+
+4. '%f' : 부동 소수점 숫자(double)를 소수점 아래 6자리까지 출력
+ex)		System.out.printf("Floating-point(6 decimal): %f %n", 123.456789);
+				=> Floating-point (6 decimal): 123.456789
+
+5. '%nf' : 부동 소수점 숫자(double)를 소수점 아래 n자리까지 (반올림하여) 출력
+ex)		System.out.printf("Floating-point (2 decimal places): %.2f %n", 123.456789);
+				=> Floating-point (2 decimal places): 123.46
+
+		cf> 올림을 하고싶은 경우에는 , Math.ceil()메소드를 사용
+		    -소수점아래 2자리까지 올림: Math.celi(number * 100) / 100
+					     printf("%.2f", Math.celi(number * 100) / 100)
+
+6. '%e' or '%E' : 부동 소수점 숫자(double)를 지수 형태로 소문자/대문자로 출력
+ex)		System.out.printf("Exponential (lowercase): %e %n", 123.456789);
+				=> Exponential (lowercase): 1.234568e+02
+ex)		System.out.printf("Exponential (uppercase): %E %n", 123.456789);
+				=> Exponential (uppercase): 1.234568E+02
+
+
+7. '%s' : 문자열 출력
+ex)		System.out.printf("String: %s %n", "Hello, Java!");
+				=> String: Hello, Java!
+

@@ -1,0 +1,19 @@
+* 메소드 오버라이딩(Method Overriding)
+   부모 클래스로 부터 상속받은 메소드를 자식 클래스에서
+   재정의 해서 사용하는것
+
+class A{
+  public void check(){
+     System.out.println("부모 메소드");
+  }
+}
+
+
+class B extends A{
+   public void check(){  	// 메소드 오버라이딩
+     System.out.println("자식 메소드");
+  }
+}
+  
+Spring , JSP 할 때도 계속 따라가는 개념이므로 
+잘 익혀둬야 한다.

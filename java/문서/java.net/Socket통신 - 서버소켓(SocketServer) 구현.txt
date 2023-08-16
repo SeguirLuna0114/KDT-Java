@@ -1,0 +1,194 @@
+* 소켓(Socket)을 이용한 클라이언트-서버 통신
+: 네트워크를 통해 데이터를 주고받을 수 있는 방법 중 하나
+
+* 서버 소켓(Socket Server) 구현
+: 서버 소켓은 클라이언트의 연결 요청을 받아들이고 처리하는 역할 수행
+
+1. 서버 포트정보를 간직하고 클라이언트 연결을 제어하는 ServerSocket 객체를 선언
+2. 접속에 관한 정보를 간직하고 클라이언트와 실제 연결을 나타내는 Socket 객체 선언
+3. 클라이언트에게 데이터 보내고 받기위한 입출력스트림 객체 선언
+try {
+4. 서버 소켓 객체 생성 with 포트번호 => 클라이언트 연결 받을 때 사용
+   - 서버소켓객체생성은 try문 밖에서 해도 됨(단, accpet()메소드는 try문 내에서만 구현)
+5. 클라이언트의 연결 요청 대기(serverSocket.accept()메소드) 
+   - 연결이 되면 클라이언트와 통신할 소켓인 clientSocket 객체를 반환
+6. 클라이언트로부터 데이터 주고받기위한 입출력스트림 객체 생성
+7. 입출력스트림 객체를 통해 데이터 입출력
+   - 클라이언트로부터 데이터를 읽고, 클라이언트에게 데이터를 전송
+8. 통신에 사용된 객체 스트림 및 소켓 해제(클라이언트와의 연결을 종료)
+
+--------------------------------------------------------------------------------------
+import java.io.*;
+import java.net.*;
+
+public class Server {
+
+    public static void main(String[] args) {
+
+	// 1. 서버 포트정보를 간직하고 클라이언트 연결을 제어하는 ServerSocket 객체를 선언
+	ServerSocket serverSocket = null;
+	// 2. 접속에 관한 정보를 간직하고 클라이언트와 실제 연결을 나타내는 Socket 객체 선언
+	Socket socket = null;
+
+	// 3. 클라이언트에게 데이터 보내고 받기위한 입출력스트림 객체 선언
+	ObjectOutputStream oos = null;
+	ObjectInputStream ois = null;
+
+        try {
+            // 4. 서버 소켓 객체 생성 with 포트번호 => 클라이언트 연결 받을 때 사용
+	    // ServerSocket(int port)
+            ServerSocket serverSocket = new ServerSocket(8080); 
+            System.out.println("서버가 시작되었습니다.");
+	    System.out.println("Wait Client......");
+
+            while (true) {
+                // 5. 클라이언트의 연결 요청 대기(serverSocket.accept()메소드)
+		// - 클라이언트가 연결될 때까지 블로킹
+		// - 연결이 되면 클라이언트와 통신할 소켓인 clientSocket 객체를 반환
+                Socket clientSocket = serverSocket.accept();
+                System.out.println("클라이언트가 연결되었습니다.");
+
+		// 클라이언트의 IP 주소를 얻어옴
+		System.out.println("Clinet IP : "
+				 + socket.getInetAddress().getHostAddress());
+	
+
+                // 6. 클라이언트로부터 데이터 주고받기위한 입출력스트림 객체 생성
+		// 클라이언트로 객체를 보내기 위한 ObjectOutputStream 객체를 생성
+		oos = new ObjectOutputStream(socket.getOutputStream());
+		// 클라이언트로부터 객체를 받기 위한 ObjectInputStream 객체를 생성
+		ois = new ObjectInputStream(socket.getInputStream());
+
+		// 7. 입출력스트림 객체를 통해 데이터 입출력
+		// 클라이언트로부터 받은 객체를 읽어와 문자열로 변환한 후, 해당 문자열을 출력
+		System.out.println(ois.readObject().toString() + "님이 접속하셨습니다");
+
+		// 초기 메시지를 클라이언트로 전송
+		oos.writeObject(msg);
+		// 현재 날짜를 객체로 만들어 클라이언트로 전송
+		oos.writeObject(new Date());
+		// 문자열 객체를 클라이언트로 전송
+		oos.writeObject(new String("Java Network Programming"));
+
+		// 8. 통신에 사용된 객체 스트림 및 소켓 해제(클라이언트와의 연결을 종료)
+		// 통신에 사용된 객체 스트림 해제
+		oos.close();
+		ois.close();
+		// 소켓 객체 해제(클라이언트와의 연결을 종료)
+		socket.close();
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+---------------------------------------------------------------------------------------
+
+
+* 입출력 스트림 사용
+Case1) DataOutputStream을 사용하여 데이터를 전송
+
+// 1. 클라이언트에게 데이터 "데이터 전송"하기 위한 출력스트림 선언
+OutputStream os;
+DataOutputStream dos;
+
+// 2. 클라이언트에게 보낼 메시지 객체 생성
+String msg = "Hello, Client";
+
+try {
+	os = socket.getOutputStream();
+	// 현재 접속한 클라이언트에게 데이터 전송을 위한 출력 스트림을 생성
+	dos = new DataOutputStream(os);
+
+	// 3. 데이터 전송
+	// writeUTF(msg) 메소드를 사용하여 msg 변수에 저장된 메시지를 클라이언트에게 전송
+	dos.writeUTF(msg);
+
+	// 4. 스트림 및 소켓 해제
+	dos.close();
+
+	// .close()를 사용하여 서버와 클라이언트와의 연결을 끊고 Socket 객체를 해제
+	socket.close();
+} catch (Exception e) {
+	
+
+
+case2) ObjectStream을 사용하여 Object타입으로 데이터를 주고받음
+
+// 1. 입출력 스트림 선언
+// 객체를 클라이언트로 보내기 위한 ObjectOutputStream 객체를 선언
+ObjectOutputStream oos = null;
+// 클라이언트로부터 객체를 받기 위한 ObjectInputStream 객체를 선언
+ObjectInputStream ois = null;
+
+
+// 서버는 계속해서 클라이언트의 연결을 대기하며, 연결이 성립되면 아래의 코드 블록을 실행
+while (true) {
+
+	// 2. 입출력 스트림 객체 생성
+	// 클라이언트로 객체를 보내기 위한 ObjectOutputStream 객체를 생성
+	oos = new ObjectOutputStream(socket.getOutputStream());
+	// 클라이언트로부터 객체를 받기 위한 ObjectInputStream 객체를 생성
+	ois = new ObjectInputStream(socket.getInputStream());
+
+	// 3. 데이터 입출력
+	// 클라이언트로부터 받은 객체를 읽어와 문자열로 변환한 후, 해당 문자열을 출력
+	System.out.println(ois.readObject().toString() + "님이 접속하셨습니다");
+
+	//클라이언트로 데이터를 전송
+	// 초기 메시지를 클라이언트로 전송
+	oos.writeObject(msg);
+	// 현재 날짜를 객체로 만들어 클라이언트로 전송
+	oos.writeObject(new Date());
+	// 문자열 객체를 클라이언트로 전송
+	oos.writeObject(new String("Java Network Programming"));
+
+	// 4. 스트림 및 소켓 해제
+	// 통신에 사용된 객체 스트림 해제
+	oos.close();
+	ois.close();
+	// 소켓 객체 해제(클라이언트와의 연결을 종료)
+	socket.close();
+
+
+
+case3) DataStream을 사용해 데이터를 주고받음
+
+// 1.입출력 스트림 선언
+// 클라이언트로부터 데이터를 받기 위한 DataInputStream 객체를 선언하고 초기화
+DataInputStream dis = null;
+// 클라이언트로 데이터를 보내기 위한 DataOutputStream 객체를 선언하고 초기화
+DataOutputStream dos = null;
+
+try {
+	// 2. 입출력 스트림 객체 생성
+	// 클라이언트로부터 데이터를 받기 위한 DataInputStream 객체를 생성
+	dis = new DataInputStream(socket.getInputStream());
+	// 클라이언트로 데이터를 보내기 위한 DataOutputStream 객체를 생성
+	dos = new DataOutputStream(socket.getOutputStream());
+
+	// 무한 루프
+	while (true) {
+		// 3. 데이터 입출력
+		// 클라이언트로부터 받은 데이터를 읽어와 출력
+		System.out.println("Client Message : " + dis.readUTF());
+				
+		// 서버에서 입력할 메시지를 출력
+		System.out.print("Server input message : ");
+		// 서버에서 키보드로부터 문자열을 입력받아 message 변수에 저장
+		String message = Socket_TalkStatement_BRreadLine.readString();
+		//  입력받은 메시지를 UTF-8 형식으로 인코딩하여 클라이언트로 전송
+		dos.writeUTF(message);
+	}
+} catch (Exception e) {
+	try{
+		// 4. 사용한 스트림과 socket객체를 닫아 리소스 해제
+		dis.close();
+		dos.close();
+		socket.close();
+} catch (IOException io) {
+	System.out.println(io);
+
+
+

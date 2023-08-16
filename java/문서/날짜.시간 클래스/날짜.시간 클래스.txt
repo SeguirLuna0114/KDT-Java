@@ -1,0 +1,103 @@
+* 날짜, 시간 관련 클래스 : Date, Timestamp
+
+## SimpleDateFormat 클래스
+  java.text.SimpleDateFormat 클래스 : 날짜를 원하는 형식으로 포맷하고 문자열로 변환하거나
+				  문자열을 파싱하여 날짜 객체로 변환하는데 사용되는 클래스
+	- java.text.DateFormat클래스를 상속받음
+	- 인스턴스화(클래스의 객체생성) 한 후, 원하는 날짜와 시간 형식 패턴을 지정
+	  ex) SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+# Date
+  java.util.Date 클래스 : 날짜와 시간을 다루기 위한 기본 클래스
+	- 시간 흐름에 따른 특정 순간의 타임스탬프를 나타냄
+	  ex) Mon Jul 24 11:08:39 KST 2023
+
+	- 날짜 Date를 원하는 형식의 문자열로 변환(포맷팅)
+	  : SimpleDateFormat을 활용하여 원하는 포맷으로 날짜,시간 출력
+	ex)	SimpleDateFormat sd =
+			 new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss EEE요일");
+		// 시간 출력 형식 지정
+		Date date = new Date();		// Date클래스 객체 생성
+		// SimpleDateFormat의 format메소드 사용하여 출력
+		System.out.println(sd.format(date));
+
+
+# Timestamp
+  java.sql.Timestamp 클래스 : 데이터베이스에서 날짜와 시간을 저장하거나 가져오는 경우 사용
+	- java.util.Date클래스를 상속받음(시스템에 따라 타임스탬프 형식으로 날짜,시간 저장)
+	- long형(64비트)으로 표현 => 시간을 일련번호로 변환하여 비교하거나 저장
+	- Date의 모든 기능을 상속받으면서, 데이터베이스 시스템과 상호작용에 유용
+	- 년, 월, 일, 시, 분, 초와 나노초까지의 시간 정보를 가지며, 높은 정밀도를 제공
+
+	- Timestamp 객체 생성 방법
+	ex)	Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+		- System.currentTimeMillis(): 현재 시간을 long형의 밀리초 단위로 반환
+		- 이 값을 활용하여 시간과 관련된 작업 수행 가능
+
+	- Timestamp를 원하는 형식의 문자열로 변환
+	  : SimpleDateFormat을 활용하여 원하는 포맷으로 날짜,시간 출력
+	ex)	SimpleDateFormat st = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		// 시간 출력 형식 지정("yyyy-MM-dd HH:mm:ss")
+		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+		// 현재 시간으로 Timestamp 객체생성
+		System.out.println(simpleStamp.format(timestamp));
+
+	- 현재시간이 아닌 다른 시간으로 초기화 or 특정 시간 값을 가진 객체 생성
+	ex)	Timestamp = Timestamp.valueOf("2023-07-24 13:45:30");
+		// 2023년 7월 24일 13시 45분 30초에 해당하는 Timestamp 객체 생성
+	ex)	Date date = new Date(); // 현재 시간의 Date 객체
+		Timestamp timestamp = new Timestamp(date.getTime());
+
+
+# Calendar
+  java.util.Calendar 클래스 : 날짜와 시간을 계산하고 조작하는 다양한 메서드 제공
+	- 추상 클래스 => 직접 객체 생성이 불가능
+	  ex) 	Calendar c1 = new Calendar();	// 오류발생
+	- 특정 날짜의 연, 월, 일, 시 분, 초 등을 쉽게 조작하거나 계산하는 작업수행
+	- GregorianCalendar 클래스: 이 클래스를 상속받는 구체적인 클래스
+
+	- Calendar클래스의 인스턴스(객체) 생성 방법
+	  (Calendar 클래스는 추상클래스 = 직접객체생성X)
+		1) Calendar클래스의 정적메서드 getInstance() 사용 
+		   => Calendar클래스의 구체적인 구현체 반환
+		    ex) Calendar c = Calendar.getInstance();	// Calendar 객체 생성
+			// 현재 날짜와 시간정보를 가진 calendar객체 c가 생성됨
+
+		2) GregorianCalendar 객체 생성
+		   ex) GregorianCalendar gregorianCalendar = new GregorianCalendar();
+			// GregorianCalendar클래스는 Calendar클래스의 구현체
+		* 업캐스팅(Upcasting)
+		  : 하위 클래스의 객체를 상위 클래스의 객체로 캐스팅하는 방법
+		    상위클래스명  객체명  = new   하위클래스명();
+		  - 상속 관계에 있는 클래스 사이에서 자식 클래스의 인스턴스를 
+		    부모 클래스의 참조변수로 참조
+		  - 자식 클래스를 부모 클래스로 묵시적으로 형변환하는 방법
+
+	- Calendar클래스에서 요일을 나타내는 직접적인 필드X
+	  => But, 요일정보를 얻을 수 있는 필드는 존재
+		(1) Calendar.DAY_OF_WEEK 필드
+		    : 일요일(1) ~ 토요일(7)까지의 요일 나타냄
+		    - calendar.get(Calendar.DAY_OF_WEEK) : 현재 요일에 해당하는 숫자
+		(2) Calendar.SUNDAY, Calendar.MONDAY, ..., Calendar.SATURDAY
+		    : 각 일요일(1)~토요일(7)까지의 상수
+
+  java.util.GreforianCalendar 클래스 : Calendar클래스의 구현체
+	- 그레고리안 달력을 기반으로 하는 달력 제공
+
+	- GregorianCalendar클래스의 인스턴스(객체) 생성방법
+		ex) Calendar c2 = new GregorianCalendar();
+
+	- GregorianCalendar 클래스를 특정 날짜로 설정하기
+	  ex)	GregorianCalendar greCal 
+				= new GregorianCalendar(2023, Calendar.JULY, 24);
+	 	// 특정 날짜와 시간 정보 얻기
+		int year = gregorianCalendar.get(Calendar.YEAR);
+		int month = gregorianCalendar.get(Calendar.MONTH)+1;
+		// 달력의 월은 0부터 11까지의 범위를 갖기에, +1을 해서 나타냄
+		int dayOfMonth = gregorianCalendar.get(Calendar.DAY_OF_MONTH);
+		// 해당 월의 날짜(일) 정보를 가져옴
+		int dayOfWeek = gregorianCalendar.get(Calendar.DAY_OF_WEEK);
+		// 해당 날짜의 요일정보를 가져옴
+		
+
+

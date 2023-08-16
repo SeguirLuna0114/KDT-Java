@@ -1,0 +1,47 @@
+* Swing에서 이벤트 처리(정리)
+
+I. 스윙에서 ActionEvent가 발생하는 경우(javax.swing.*)
+
+   1. 버튼(JButton)을 클릭할때
+
+   2. 텍스트 필드(JTextField, JPasswordField)에 값입력후 엔트키 
+      누를때
+
+   3. 메뉴아이템(JMenuItem)를 클릭할때
+
+   4. JComboBox의 아이템을 클릭할때
+
+
+
+II. 스윙에서 ItemEvent가 발생하는 경우(javax.swing.*)
+
+   1. 체크박스(JCheckBox)의 항목(item)을 선택이나 해제할때
+
+   2. 라디오버튼(JRadioButton)을 선택할때
+
+   3. 콤보박스(JComboBox)의 항목(item)을 선택할때
+
+
+
+III. ChangeEvent 발생하는 경우
+
+    1.JTabbedPane의 탭을 선택할때
+    2.JSlider의 bar를 움직일때
+
+
+
+IV. ListSelectionEvent 발생하는 경우
+    
+    1. JList의 item을 선택 할때
+
+
+
+V. MouseEvent
+
+
+
+VI. MouseMotionEvent
+
+
+
+   
