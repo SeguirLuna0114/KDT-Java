@@ -1,0 +1,27 @@
+http://www.oracle.com/kr
+
+sys, system / oracle
+
+
+c:\> sqlplus  scott/tiger
+
+c:\> sqlplus  system/oracle
+SQL> show user
+SQL> alter user scott account unlock;
+
+SQL> connect scott/tiger   (계정전환)
+SQL> show user
+SQL> select * from tab; (테이블 목록출력)
+SQL> quit; (종료)
+
+c:\> sqlplus  scott/tiger
+
+
+
+
+
+
+
+
+
+

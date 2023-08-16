@@ -1,0 +1,1335 @@
+Oracle SQL 정리
+
+ 
+
+ 
+
+ 
+
+SQL
+SQL문
+SELECT
+DML(데이터 조작어)
+INSERT, UPDATE, DELETE
+DDL(데이터 정의어) IMPLICIT COMMIT
+CREATE, ALTER, DROP, RENAME, TRUNCATE
+TCL(트랜잭션 제어)
+COMMIT, ROLLBACK, SAVEPOINT
+DCL(데이터 제어어)IMPLICIT COMMIT
+GRANT, REVOKE
+
+ 
+
+ 
+
+[1] Writing Basic SQL Statements 
+
+
+1. SELECT 기본 문장( 선택, 프로잭션, 조인)
+   SELECT [DISTINCT] { *, column [alias], ... }
+   FROM table ;
+   
+2. SELECT 예제
+   SELECT * FROM dept ;
+   SELECT deptno, loc FROM dept ;
+   SELECT ename, sal, 12 * (sal + 100) FROM emp ;
+   * Null 값과 연산을 하면 Null이 나온다.
+
+ 
+
+3. Column Alias 예제
+   SELECT ename AS nme, sal salary
+   FROM emp ;
+   SELECT ename "Name", sal*12 "Annual Salary"
+   FROM emp ;
+   * 대소문자를 구분하고 공백있는 컬럼 Alias를 만들고 싶을땐 " "로 막는다.
+   * AS는 안 써도 된다.
+   * WHERE, GROUP BY절에는 안된다.  ORDER BY 절에는 사용 가능.
+
+
+4. Concatenation 연산자 (|| : pipeline 2개)
+   SELECT ename||job "Employees" FROM emp ;
+   --> ename 데이터와 job 데이터가 붙어서 출력된다.
+   
+5. 문자열을 데이터로 출력할때
+   SELECT ename||' '||'is a'||' '||job "Employee Details"
+   FROM emp ;
+   * 문자열은 ' '로 막고, 컬럼 Alias는 " "로 막는다.
+   
+6. DISTINCT keyword : 중복된 Row를 하나로 만들어 준다. 자동 SORTING[ASC] 
+   SELECT DISTINCT deptno
+   FROM emp ;
+   * DISTINCT 대신 UNIQUE를 써도 된다.
+   
+7. SQL*Plus Log On 방법
+   * UserName, PassWord, HostString에 일일이 입력해도 되지만,
+     UserName에 username/password@HostString이라고 입력하면 된다.
+   * UNIX상에서 command로 들어 갈 때는 sqlplus username/password 만 입력하면된다.
+
+
+8. 테이블 구조보는 SQL Command (DESC)
+   SQL> DESC dept : Column Name, Null?, Data Type  display 
+
+ 
+
+9. SQL*Plus Editing Commands( 다음 행까지 계속하려면 -(하이픈)으로 연결한다.)
+   ① A[PPEND] text      : 현재 line의 마지막 문장 뒤에 text를 붙인다. 
+   ② C[HANGE]/old/new  : 현재 line의 old text를 new text로 바꾼다.
+   ③ C[HANGE]/text/     : 현재 line을 text를 삭제한다. 
+   ④ CL[EAR] BUFF[ER] : buffer의 내용을 모두 지운다.
+   ⑤ DEL                : 현재 line을 지운다.
+   ⑥ DEL n              : n번째 line을 지운다.
+   ⑦ DEL m n           : m ~ n번째 line을 지운다.
+   ⑧ I[NPUT]            : 현재 line 다음에 line이 제한없이 추가된다.
+   ⑨ I[NPUT] text       : 현재 line 다음에 line이 추가되면서 text가 들어간다.
+   ⑩ L[IST]             : buffer전체를 보여준다.
+   ⑪ L[IST] n           : n번째 line을 보여준다.
+   ⑫ R[UN] or /        : SQL, PL/SQL문장을 실행하라!
+   ⑬ n                  : n번째 line을 display하면서 Editing 상태로 해준다.
+   ⑭ n text             : n번째 line이 text로 바뀐다.
+   ⑮ 0 text             : 1번째 line이 추가되면서 text가 1번째 line으로 들어간다.
+* Bald로 표시된 명령어는 line번호를 먼저 수행한 후 실행해야 한다.
+
+
+10. SQL*Plus File Commands
+   ① SAV[E] filename [REP[LACE]|APP[END]] : buffer의 내용을 filename.sql로 저장한다.
+   ② GET filename    : filename.sql을 buffer로 불러온다.
+   ③ START filename  : filename.sql을 실행하라.
+   ④ @filename      : START filename과 같다.
+   ⑤ ED[IT]          : buffer의 내용을 edit program으로 실행한다.
+   ⑥ ED[IT] filename : filename.sql을 edit program으로 실행한다.
+   ⑦ SPO[OL] filename : retrieve data를 filename.lst로 저장한다.
+   ⑧ SPOOL OFF     : SPOOL을 끝내라.
+   ⑨ SPOOL OUT     : retrieve data를 system printer로 출력하라.
+   ⑩ EXIT            : SQL*Plus를 종료한다.
+  * SPOOL 사용법
+    SQL> spool filename
+    SQL> select ...
+    SQL> spool off
+
+ 
+
+11. Special Tip
+     * 잠시 host상태로 나가고 싶을 때.
+        SQL> ! ( $)
+        -- host 상에서 다시 SQL로 들어가려면 exit(lo)
+        -- unix 상에서 env를 치면 오라클 환경을 볼 수 있다.
+
+     * SQL> define -editor
+        --> Editor가 vi인지..다른 edit프로그램인지를 보여준다.
+
+     * line size 바꾸기
+       SQL> SET PAGESIZE 20 -- 한 page를 20line으로 보여준다.
+       -- log off하면 사라진다.
+
+     * NLS값 보기
+       SQL> select * from V$NLS_PARAMETERS
+    
+     * NLS값 바꾸기
+       SQL> ALTER SESSION SET NLS_DATE_FORMAT = 'YYYY-MM-DD'
+       -- SESSION : 현 session동안만 YYYY-MM-DD 포맷으로 사용한다는 뜻.
+            sqlplus가 종료되면 원상태로 복구된다.
+  
+
+
+ 
+
+[2]Restricting and Sorting Data 
+
+
+1. 비교연산자
+   =   : Equal to
+   >   : Grater than
+   >=  : Greater than or equal to
+   <   : Less than
+   <=  : Less than or equal to
+   <>  : Not equal to
+   예) SELECT ename, sal, comm
+       FROM emp
+       WHERE sal <= comm ;
+
+ 
+
+2. 비교연산자 2
+   BETWEEN A AND B ,   IN(list),   LIKE,   IS NULL
+
+ 
+
+3. BETWEEN 연산자( NOT BETWEEN )
+   SELECT ename, sal
+     FROM emp
+    WHERE sal BETWEEN 1000 AND 1500 ; --> sal >= 1000 and sal <= 1500
+
+ 
+
+4. IN 연산자( NOT IN )
+   SELECT emp, ename, sal, mgr
+     FROM emp
+    WHERE mgr IN (7902, 7566, 7788) ; --> mgr = 7902 or mgr = 7566 or mgr = 7788
+
+ 
+
+5. LIKE 연산자( NOT LIKE )
+   예1) SELECT ename
+          FROM emp
+         WHERE ename LIKE 'S%' ;  --> ename이 S로 시작하는 모든 데이터를 찾는다.   
+   예2) SELECT ename
+          FROM emp
+         WHERE ename LIKE '_A%' ;  --> 두 번째 글자가 A인 모든 데이터를 찾는다.
+   예3) SELECT ename
+          FROM emp
+         WHERE ename LIKE '%A/_%B' ESCAPE '/' ;
+        --> '/'는 Escape문자로 정의되었기 때문에 '_'도 문자로 인식한다.
+            즉, ename이 A_로 포함하는 모든 데이터를 찾는다.
+        * ESCAPE는 모든 문자가 가능하다.
+
+ 
+
+6. IS NULL 연산자
+   SELECT ename, mgr
+     FROM emp
+    WHERE mgr IS NULL ;   --> mgr이 null인 데이터를 찾는다.
+
+ 
+
+7. Logical 연산자
+   AND : 두 개의 조건이 모두 만족해야 OK
+   OR  : 한 개의 조건만 만족하면 OK
+   NOT
+
+ 
+
+8. AND 연산자
+   SELECT empno, ename, job, sal
+     FROM emp
+    WHERE sal >= 1100
+      AND job = 'CLERK' ;
+
+ 
+
+9. OR 연산자
+   SELECT empno, ename, job, sal
+     FROM emp
+    WHERE (sal >= 1100 OR job = 'CLERK') ;
+
+ 
+
+10. NOT 연산자
+   SELECT ename, job
+     FROM emp
+    WHERE job NOT IN ('CLERK', 'MANAGER') ;
+   --> NOT (job = 'CLERK OR job = 'MANAGER')
+
+ 
+
+11. 연산자 우선순위( 산술 > 문자 > 비교 > 논리 )
+   1 : 모든 비교 연산자
+   2 : NOT
+   3 : AND  --> False > Null > True
+   4 : OR   --> True > Null > False
+   예) A AND B에서...
+       - A가 False이고 B가 Null이면... False 이다.
+       - A가 True이고 B가 Null이면.... Null이다.
+
+ 
+
+12. SORT (ORDER BY)
+    * ASC는 default값이다.(작은 값부터..)
+    * 값이 Null일 때 가장 큰 값이 된다. (ASC일 때...맨 뒤에 붙는다.)
+    * column alias도 sorting이 된다.
+    예1) SELECT ename, job, deptno, hiredate  "Date"
+           FROM emp
+         ORDER BY hiredate["Date" or  4 ] ;
+
+    예2) SELECT ename, job, deptno, hiredate
+           FROM emp
+         ORDER BY hiredate DESC ;
+
+    예3) SELECT empno, ename, sal*12 annsal
+           FROM emp
+         ORDER BY empno, annsal ; * select 절에 없는 열을 기준으로 정렬 가능.
+    예4) SELECT ename, deptno, sal
+           FROM emp
+         ORDER BY deptno, sal DESC 
+
+
+ 
+
+ 
+
+[3] Single-Row Functions
+
+
+ 1. Character Functions
+    ①LOWER( column|expression )
+  LOWER('String') --> string : 소문자로 변환
+    ②UPPER( column|expression )
+  UPPER('String') --> STRING : 대문자로 변환
+    ③INITCAP( column|expression ) 
+  INITCAP('string') --> String : 첫글자만 대문자이고 나머지글자는 소문자로 변환
+    ④CONCAT( column1|expression1 ,column2|expression2 )
+  CONCAT('Good','String') --> GoodString : ||와 같은 역할을 한다.
+    ⑤SUBSTR(column|expression, m [,n]) : m값이 음수면 문자값의 끝부터..)
+  SUBSTR('String',1,3) --> Str : 1번째부터 3개의 문자를 리턴한다.
+    ⑥LENGTH( column|expression )
+  LENGTH('String') --> 6 : 문자열의 길이를 리턴한다.
+    ⑦INSTR( column|expression, )
+  INSTR('String','r') --> 3 : 문자열에 'r'이 몇번째 위치하고 있나를 리턴한다.
+    ⑧LPAD( column|expression,n,'string' ) : n 은 전체 길이
+  LPAD('String',10,'*') --> ****String
+       : 10자리수중에 모자란 자리수를 '*'로 왼쪽에 채운다.(문자,숫자 가능!!!)
+    ⑨ RPAD('String',10,'*') --> String****
+       : 10자리수중에 모자란 자리수를 '*'로 오른쪽에 채운다.(문자,숫자 가능!!!)
+    ⑩ LTRIM('  String') --> 'String' : 문자열의 왼쪽 공백을 버린다.
+    ⑪ RTRIM('String  ') --> 'String' : 문자령의 오른쪽 공백을 버린다.
+    * TRIM(leading/tailing/both,  trim_character FROM trim_source )
+ TRIM( 'S' FROM 'SSMITH') --> MITH
+
+
+2. Number Functions
+   ① ROUND(45.926, 2) --> 45.93 : 소수점 두자리수까지 보여주면서 반올림한다.
+   ② TRUNC(45.926, 2) --> 45.92 : 소수점 두자리까지만 보여주고 나머지는 버린다.
+   ③ MOD(1600,300) --> 100 : 1600을 300으로 나누고 나머지를 리턴한다.
+   * ROUND예제(WHOLE NUMBER:정수)
+     SELECT ROUND(45.923,2), ROUND(45.923,0), ROUND(45.923,-1) FROM DUAL
+     ==> 45.92     46     50
+   * TRUNC예제
+     SELECT TRUNC(45.923,2), TRUNC(45.923), TRUNC(45.923,-1) FROM DUAL
+     ==> 45.92     45(n이 생략된면 일의 자리까지 남기고 버린다.)  40
+   * SYSTEM 날짜를 갖고 오는 방법.
+     SELECT sysdate FROM dual
+  
+3. Date 계산( 날짜를 숫자로 저장)
+   date + number : date에 number만큼 후의 날자를 보여준다.
+   date - number : date에 number만큼 전의 날자를 보여준다.
+   date1 - date2 : date1에서 date2 까지의 총 일수를 보여준다.( date1+date2는 X )
+   date1 + 숫자/24 : date1에서 시간을 더해 날짜를 보여준다.   
+
+
+4. Date Functions
+   MONTHS_BETWEEN('01-SEP-95','11-JAN-94') --> 19.6774194
+     ; 두날짜 사이의 달수를 보여준다.
+   ADD_MONTHS('11-JAN-94', 6) --> 11-JUL-94
+     ; 날짜에 6개월을 더한 날자를 보여준다.
+   NEXT_DAY('01-SEP-95','FRIDAY') --> '08-SEP-95'
+     ; 해당일 다음에 오는 FRIDAY의 일자를 보여준다.
+       ('SUNDAY'는 1, 'MONDAY'는 2...이런식으로 숫자를 써줘도 된다.)
+   LAST_DAY('01-SEP-95') --> '30-SEP-95'
+     ; 해당월의 마지막날자를 보여준다.
+   ROUND('25-JUL-95','MONTH')--> 01-AUG-95  ROUND('25-JUL-95','YEAR')--> 01-JAN-96
+   TRUNC('25-JUL-95','MONTH') --> 01-JUL-95  TRUNC('25-JUL-95','YEAR')  --> 01-JAN-95
+
+
+5. Conversion Functions
+   nlsparams : 십진수, 그룹구분자, 지역 통화 기호, 국제 통화 기호
+   TO_CHAR(date,['format'],[nlsparams]) : date를 format에 맞게 문자열로 변환한다.
+     - Date Format Elements
+       YYYY  --> 1999 (년출력) ,  YEAR  --> nineteen ninety-nine (년출력)
+       MM    --> 12 (월출력) ,  MONTH --> DECEMBER (월출력),  MON --> DEC
+       D     --> 요일을 숫자로 리턴한다.(일요일은 1, 월요일은 2...)
+       DD    --> 07 (달의 일출력)
+       DDD    --> 200 (연의 일출력)그 해의 총 몇 일째인가를 리턴한다.
+       DAY   --> MONDAY (요일출력)  DY-->MON
+       CC    --> 20 (몇 세기인지를 보여준다.)
+       WW    --> 그 해의 몇 번째 주인가를 리턴한다.
+       W     --> 그 달의 몇 번째 주인가를 리턴한다.
+
+     * Element들을 소문자로 쓰면 소문자로 나오고 대문자로 쓰면 대문자로 출력된다.
+      HH or HH12 or HH24 / MI(0-59분) / SS(0-59초)
+
+     * 문자열은 " " 묶어 추가한다 DD " of " MONTH --> 12 of DECEMBER
+     *숫자 접미어는 숫자를 문자로 표기. TH(4->4TH)/ SP(4->FOUR)/ SPTH or THSP(4->FOURTH)
+        ddspth : 14-> fothteenth
+     * /  .  , : 구두점은  결과에  그대로 출력한다. * 공백, 선행제로를 제거하는 fm요소가 있다.
+    TO_CHAR(number,'format',[nlsparams]) : number를 format에 맞게 문자열로 변환한다.
+     - Number Format Elements
+       9 : 999,999 --> 1,234   $: 부동 달러 기호 $99999 -> $1234
+       0 : 099999  --> 001234  99.999EEEE -> 1.234E+03   B: 0값을 공백으로
+       L : L99,999 --> FF1,234 (NLS_CURRENCY에 설정되어있는 값이 L로 보여진다.)
+
+    TO_NUMBER(char,['format'],[nlsparams]) : 숫자형태의 문자열을 숫자로 변한한다.
+    TO_DATE(char,['format'],[nlsparams]):날자형태의 문자열을 format에 맞게 날자형식으로 변환      한다.
+
+ 
+
+6. NVL Funcion : 값이 null일 때 설정값을 보여준다.
+   NVL(number_column, 0)          : null일 때 0을 보여준다.
+   NVL(date_column, '01-JAN-95')  : null일 때 '01-JAN-95'를 보여준다.
+   NVL(character_column, 'Empty') : null일 때 'Empty'를 보여준다.
+   * column Type과 표현식의 type이 반드시 일치해야 한다.
+
+
+7. DECODE Function : CASE or IF-THEN-ELSE 형식과 비슷하다.
+   *DECODE(col/expression, search1, result1 [,search2,result2,…] [,default])  
+             F1 (F2 (F3 (col,arg1),arg2),arg3)
+
+ 
+
+ 
+
+ 
+
+[4] Displaying Data from Multiple Tables  (JOIN)
+
+
+1. EquiJoin : column1과 column2는 Primary Key와 Foreign Key관계인 경우
+    SELECT emp.empno, emp.ename, emp.deptno, dept.deptno, dept.loc
+    FROM emp, dept
+    WHERE emp.deptno = dept.deptno
+
+ 
+
+2. Non-EquiJoin : Join하는 Table 사이에 서로 대응하는 Key가 없는 경우
+                   where절의 Join조건에 '='을 제외한 비교연산자를 사용한다.
+    SELECT e.ename, e.sal, s.grade
+    FROM emp e, salgrade s
+    WHERE e.sal BETWEEN s.losal AND s.hisal
+
+ 
+
+3. Outer Join : 서로 = 되지 않는 row 까지도 모두 보여준다.
+                정보가 없는쪽 컬럼 뒤에 (+)를 붙인다.( =, and 만 사용가능)
+    SELECT e.ename, d.deptno, d.dname
+    FROM emp e, dept d
+    WHERE e.deptno (+) = d.deptno
+    ORDER BY e.deptno
+
+ 
+
+4. Self Join : 같은 Table을 그것이 마치 2개의 Table인 것처럼 Join해서 사용한다.
+    SELECT worker.ename, manager.ename
+    FROM emp worker, emp manager
+    WHERE worker.mgr = manager.empno
+
+ 
+
+5. SET OPERATORS
+    UNION : 중복된 row는 제외하고 보여준다.
+
+    UNION ALL : 중복된 row까지 모두 보여준다.
+
+    INTERSECT : A,B의 중복된 row만 보여준다.
+
+    MINUS : A,B의 중복된 row를 제외한 A row를 보여준다.
+
+ 
+
+ 
+
+ 
+
+[5] Aggregating Data Using Group Functions(그룹함수를 사용한 데이터집계)
+
+
+1. Group Function : 행집합에 적용하여 그룹당 하나의 결과를 생성한다.
+   AVG([DISTINCT|ALL] n)           : 평균값  
+   COUNT({*|[DISTINCT|ALL] expr})  : row수
+   MAX([DISTINCT|ALL] expr)        : 최대값
+   MIN([DISTINCT|ALL] expr)        : 최소값
+   SUM([DISTINCT|ALL] n)           : 합
+   STDDEV([DISTINCT|ALL] x)        : 표준편차
+   VARIANCE([DISTINCT|ALL] x)      : 분산
+   * count(*)를 제외한 모든 Group Function은 Null을 배제하고 수행한다.
+     Null을 포함하고 싶다면 NVL함수를 사용한다.
+   * DISTINCT나 ALL을 쓰지 않으면 Default가 ALL이다.
+   * AVG,SUM, STDDEV, VARIANCE는 반드시 숫자형이다.
+   
+2. 어떤 컬럼에 해당하는 데이터별 그룹함수를 사용할 때
+   SELECT [deptno,] COUNT(ename)
+   FROM emp  --> 이문장은 성립되지 않는다. GROUP BY가 없다.
+   <추가>
+   GROUP BY deptno
+   *일반칼럼과 그룹함수를 같이 쓰면  group by절에 일반칼럼 명시(열 별칭 사용못함)
+   *GROUP BY 열을 SELECT 절에 포함시키지 않아도 된다   
+
+ 
+
+3. 그룹함수는 WHERE절에 올수가 없다.
+   SELECT deptno, AVG(sal)
+   FROM emp
+   WHERE AVG(sal) > 2000
+   GROUP BY deptno
+   --> 이문장은 성립되지 않는다. WHERE절에 그룹함수가 올 수 없다.
+   
+   SELECT deptno, AVG(sal)
+   FROM emp
+   GROUP BY deptno
+   HAVING AVG(sal) > 2000
+   
+4. HAVING : 그룹함수를 조건절에 적용시키기 위해서 사용한다.
+   SELECT job, SUM(sal)
+   FROM emp
+   WHERE job NOT LIKE 'SALES%'
+   GROUP BY job
+   HAVING SUM(sal) > 5000
+   ORDER BY SUM(sal) 
+   *절 평가 순서 : ① WHERE  -> ② GROUP BY절    -> ③ HAVING절
+   *그룹함수는 두번까지 중첩될수 있습니다.  MAX( AVG(SAL))
+
+
+ 
+
+ 
+
+[6] Subqueries( WHERE 절, HAVING 절, FROM 절 )
+
+
+1. Subquery 규칙
+   - 반드시 ()로 묶어야 한다.
+   - 반드시 비교연산자 오른쪽에 위치해야 한다.
+   - ORDER BY 절에는 사용할 수 없다.
+   - 서브쿼리 결과가 한개일때는 Single-Row 비교연산자를 사용해야 한다.
+     ( =, >, >=, <, <=, <> )
+   - 서브쿼리 결과가 여러개일때는 Multi-Row 연산자를 사용해햐 한다.
+
+ 
+
+2. Subquery 사용예1
+   * 반드시 비교연산자 오른쪽에 써야한다.
+   SELECT ename FROM emp
+   WHERE sal > (SELECT sal FROM emp
+                              WHERE empno = 7566)
+                
+3. Subquery 사용예2
+   SELECT ename, job
+   FROM emp
+   WHERE job = (SELECT job
+                FROM emp
+                WHERE empno = 7369)
+   AND
+         sal > (SELECT sal
+                FROM emp
+                WHERE empno = 7876)
+                
+4. Subquery 사용예3
+   SELECT  job, AVG(sal)
+   FROM emp
+   GROUP BY job
+   HAVING AVG(sal) > (SELECT MIN(AVG(sal))
+                      FROM emp
+                      GROUP BY job)
+
+ 
+
+5. Subquery 사용예4 (Subquery 결과가 여러개가 나올때 비교연산자 사용법)
+   SELECT empno, ename
+   FROM emp
+   WHERE sal IN (SELECT MIN(sal)   ( =ANY 와 같음 )
+                 FROM emp
+                 GROUP BY deptno)
+                 
+6. ANY(동의어:SOME)연산자를 사용한 Subquery : 조건중에 한개만 만족하면 OK
+   SELECT empno, ename, job
+   FROM emp
+   WHERE sal < ANY (SELECT sal   --> OR
+                    FROM emp
+                    WHERE job = 'CLERK')
+   AND job <> 'CLERK'
+   
+7. ALL연산자를 사용한 Subquery : 모든 조건을 만족해야 OK
+   SELECT empno, ename, job
+   FROM emp
+   WHERE sal > ALL (SELECT avg(sal)  --> AND
+               FROM emp
+               GROUP BY deptno 
+
+ 
+
+ 
+
+ 
+
+[7] Multiple-Column Subqueries
+
+
+1. Multiple-Column Subquery (Pairwise Subquery)
+   : 서브쿼리의 결과가 두개 이상의 컬럼형식으로 나올 때 비교하는 컬럼도 서브쿼리 컬럼
+     갯수와 형식이 같아야한다.
+   SELECT ename, deptno, sal, comm
+   FROM emp
+   WHERE (sal, NVL(comm,-1)) IN
+                             (SELECT sal, NVL(comm,-1)
+                              FROM emp
+                              WHERE deptno = 30)
+                              
+2. NonPairwise Subquery
+   SELECT ename, deptno, sal, comm
+   FROM emp
+   WHERE sal IN (SELECT sal FROM emp
+                 WHERE deptno = 30)
+   AND
+         NVL(comm,-1) IN (SELECT NVL(comm,-1) FROM emp
+                          WHERE deptno = 30)
+                          
+3. Subquery 안에 Null값이 있을 때...
+   * 매니저가 아닌 사원을 보여주기?
+   SELECT e.ename
+   FROM emp e
+   WHERE e.empno NOT IN
+                 (SELECT m.mgr FROM emp m)                 
+   IN은 Null value가 나와도 한개의 조건만 만족하면 OK이지만,
+   NOT IN은 !=ALL과 같아서 모든조건이 TRUE여만 TRUE인 것이다.   
+   * NOT IN 을 !=ANY 로 바꿔주는게 정답에 가깝다.
+   
+4. FROM절에 사용되는 Subquery
+   SELECT a.ename, a.sal, a.deptno, b.salavg
+   FROM emp a,
+        (SELECT deptno, avg(sal) salavg
+         FROM emp
+         GROUP BY deptno) b
+   WHERE a.deptno = b.deptno
+     AND a.sal > b.salavg
+     
+5. EXISTS : EXISTS 뒤에 나오는 서브쿼리의 결과가 한건이 row라도 있다면 O.K
+   SELECT dname, deptno
+   FROM dept
+   WHERE EXISTS (SELECT * FROM emp
+                 WHERE dept.deptno = emp.deptno)
+  : 행의 존재유무만 확인
+
+ 
+
+ 
+
+ 
+
+[8] Producing Readable Output with SQL*Plus
+
+
+1. Substitution Variable (치환변수)
+   & : 변수가 한 번 사용되고 메모리에서 사라진다.
+   && : 한 번 입력한 변수는 CLEAR하기 전까지 계속 메모리에 남아있다.
+   DEFINE variable=value : CHAR 데이터 유형의 사용자 변수를 생성하여 값을 변수에 할당한다.
+   DEFINE : 현재 DEFINE 된 모든 것들을 보여준다.
+   DEFINE 변수명 : 지정한 변수명의 DEFINE 사항을 보여준다.
+   UNDEFINE 변수명 : 지정한 변수명의 DEFINE 상태를 CLEAR한다.
+   ACCEPT : 변수를 입력하라고 물어보는 Prompt의 Text를 변경할수 있다. USER가
+   입력하는 값을 HIDE시킬수가 있다. DataType의 Format을 변경할수가 있다.
+   * SET VERIFY 는 SQL*PLUS 가 치환변수를 값으로 바꾸기 전후의 명령 텍스트 표시를 토글한다.
+
+
+2. & 치환변수 사용예
+   SELECT empno, ename, sal, deptno
+   FROM emp
+   WHERE empno = &employee_num
+   
+3. && 치환변수 사용 예 --> 한번만 물어보게 된다.   
+   SELECT empno, ename, job, &&column_name
+   FROM emp
+   ORDER BY &column_name
+
+
+4. 변수 값이 character or date value일때 꼭 single quotation mark로 묶어 줘야 한다.
+   SELECT ename, deptno, sal*12
+   FROM emp
+   WHERE job = '&job_title'
+   
+5. 종합적인 예제(실행중에 열이름, 표현식, 텍스트를 지정)
+   --> 어떤 절에나 사용해도 된다.
+   SELECT empno, ename, job, &column_name
+   FROM emp
+   WHERE &condition
+   ORDER BY &order_column
+   
+6. ACCEPT 사용예 (file로 만들어서 START시켜야 한다.)
+   *ACCEPT  variable [datatype] [FORMAT format] [PROMPT text] [HIDE] 
+   ACCEPT dept PROMPT 'Provide the department name: '
+   SELECT *
+   FROM dept
+   WHERE dname = UPPER('&dept')
+   /    
+   Provide the department name: Sales
+   처리된 결과값...
+
+ 
+
+7. 파일로 만들어서 치환변수를 여러개 처리할때 예제
+   test.sql
+   SELECT &1 FROM &2  
+   SQL> @test empno emp
+   ==> &1에 empno, &2에 emp가 들어간다.(define)
+
+   SELECT &2 FROM &4   
+   SQL> @test e empno b emp
+   ==> &1에 e, &2에 empno,&3에 b, &4에 emp가 들어간다.(define)
+
+ 
+
+8. SET command 변수
+   ① ARRAY[SIZE] {20 | n} : 데이터 fatch size
+   ② COLSEP {_ | text} : column seperator
+   ③ FEED[BACK] {6 | n | OFF | ON} : n 개이상의 레코드 반환시 레코드 수를 표시
+   ④ HEA[DING] {OFF | ON} : column heading 출력
+   ⑤ LIN[ESIZE] {80 | n} : 가로 80 으로 출력
+   ⑥ PAGES[IZE] {50 | n} : 세로 50 으로 출력
+   ⑦ LONG {80 | n} : long date type의 데이터를 출력할때 80byte까지만 보여주겠다.
+   ⑧ PAU[SE] {OFF | ON | text} : text에 문자열을 넣으면 pause될 때마다 메시지를   보여준다.
+   ⑨ TERM[OUT] {OFF | ON} : 결과를 화면에 보여주겠는가?
+   ⑩ VERIFY {OFF | ON} : 치환변수의 old값과 new값을 보여주면서 결과가 처리된다.
+   * SHOW {SET command 명} : SET command명의 현재 상태를 보여준다.  SQL> SHOW ECHO)
+   * SHOW ALL : 모든 SET command의 현재 상태를 보여준다.
+   * SET 상태를 바꿔 주려면...   SQL> SET PAUSE ON  <-- 이런식으로 하면 된다.  
+   * DEFINE command나 SET command는 자신의 환경파일(login.sql)에 일괄적으로 처리 할수 있다.
+   * login.sql은 oracle superuser용 환경파일이다.
+   * SQL Plus command가 다음 줄로 이어질 때는 (-)으로 연결한다.
+
+
+9. REPORT 출력 예
+   ① SET PAGESIZE 37 --> 세로 37로 출력
+   ② SET LINESIZE 60 --> 가로 60으로 출력
+   ③ SET FEEDBACK OFF
+   ④ TTITLE 'Employee|Report' --> Top Title을 Employee 다음 줄에 Report를 쓰겠다.
+   ⑤ BTITLE 'Confidential'    --> Bottom Title을 Confidential로 쓰겠다.
+   ⑥ COLUMN job HEADING 'Job|Category' FORMAT A15 : | 은 text를 두줄로 찍는다.  
+      --> job column Heading을 Job 다음줄에 Category로쓰고 15byte의 자리수로
+           만들겠다.
+    형식 :  COL[UMN]  [{column | alias } [option]]   
+     COL[UMN] [column],  COL[UMN] column  CLE[AR],  CLE[AR] COL[UMN] 
+
+    옵션 :  CLE[AR], FOR[MAT] format, HEA[DING] text, JUS[TIFY] {align}, NUL[L] text,
+            NOPRI[NT]:열을 숨김니다 <> PRI[NT],
+            TRU[NCATED] : 첫 행 끝에 표시되는 문자열을 잘라버린다. 
+            WRA[PPED]  : 문자열의 끝을 다음 행으로 줄바꿈합니다.
+  ⑦ REM ** Insert SELECT statement  --> 주석문
+   *BREAKE 명령?
+      
+   
+
+
+[9] Multipulating Data (DML)
+
+
+*트랜젝션 :  논리 작업 단위를 형성하는 DML 문 모음으로 구성된다., DDL문(한개),DCL문(한개)
+
+
+1. INSERT 예제1 
+   : 모든 컬럼에 INSERT할 때는 컬럼명을 쓰지 않아도 되지만 테이블 CREATE시 
+     만들어진 순서대로 입력해야한다.
+   INSERT INTO dept
+   VALUES (50,'AAA','BBB')
+   * NULL 값을 갖는 행 삽입시 열목록에서 열을 생략(암시적)하는 방법과
+     NULL 키워드를 지정(명시적)하는 방법이 있다.
+
+
+2. INSERT 예제2
+   INSERT INTO emp ( empno, ename, job, mgr, hiredate, sal, comm, deptno )
+   VALUES ( 7196, 'GREEN', 'SALESMAN', 7782, SYSDATE, 2000, NULL, 10 )
+   
+3. sql 파일로 만들어서 Argument를 받으면서 INSERT 실행하기.
+   * test.sql 파일
+   ACCEPT department_id PROMPT 'Please enter the department number: '
+   ACCEPT department_name PROMPT 'Please enter the department name: '
+   ACCEPT location PROMPT 'Please enter the location: '
+   INSERT INTO dept ( deptno, dname, loc )
+   VALUES (&department_id, '&department_name', '&location' )
+   
+   SQL> @test = START test
+   Please enter the department number: 90
+   Please enter the department name: PAYROLL
+   Please enter the location: HOUSTON
+   
+   1 row created
+
+
+4. 다른 테이블의 row를 Copy하기(VALUES 절을 사용하지 않는다.)
+   INSERT INTO managers (id, name, salary, hiredate)
+          SELECT empno, ename, sal, hiredate
+          FROM emp
+          WHERE job = 'MANAGER'
+          
+5. UPDATE 예제1
+   UPDATE emp
+   SET deptno = 20,
+       sal = 2500,
+       comm = null
+   WHERE empno = 7782
+   
+6. UPDATE 예제2 (Multiple-Column Subquery를 사용한 예)
+   UPDATE emp
+   SET (job, deptno) = (SELECT job, deptno
+                        FROM emp
+                        WHERE empno = 7499)
+   WHERE empno = 7689
+   
+7. UPDATE 예제3 (다른 테이블에 있는 데이터를 SELECT해서 UPDATE하기)
+   UPDATE employee
+   SET deptno = (SELECT deptno FROM emp WHERE empno = 7788)
+   WHERE job = (SELECT job FROM emp WHERE empno = 7788)
+
+ 
+
+8. DELETE 예제1 (조건에 맞는 데이터 지우기)
+   DELETE FROM dapartment
+   WHERE dname = 'DEVELOPMENT'
+   
+9. DELETE 예제2 (한 테이블의 전체 데이터 삭제)
+   DELETE FROM department
+   
+10. DELETE 규칙
+   * FROM은 옵션이므로 사용하지 않아도 된다.(예: DELETE department)
+   * Primary Key, Forien Key 관계가 설정되어 있는 데이터를 DELETE할때는 문제가 발생 할 수 있다.
+   
+11. COMMIT
+   * 변경된 데이터를 Fix시킨다.
+   * 이전상태의 데이터는 모두 잃게 된다.
+   * 모든 User가 결과를 볼수 있다.
+   * LOCK이 풀린다.
+   * 모든 SavePoint들이 clear된다.
+   * 자동 커밋 : DDL, DCL, 정상 종료시
+
+
+12. ROLLBACK
+   * 변경된 데이터를 undo 시킨다.
+   * Transaction 전단계의 데이터로 돌아간다.
+   * Lock이 풀린다.
+   * 자동 롤백 : 비정상 종료, 시스템 장애
+
+
+13. SAVEPOINT 예제
+   * SAVEPOINT : Transaction이 일어난 곳에 Marking을 할 수가 있다.
+   * 오라클은 자동적으로 눈에 안보이는 savepoint를 찍어 놓는다.
+   SQL> UPDATE.....
+   SQL> SAVEPOINT update_done ;
+   Savepoint created.
+   SQL> INSERT.....
+   SQL> ROLLBACK TO update_done ;
+   Rollback complete.
+   
+14. TABLE LOCK 예제 (DBA가 임으로 TABLE에 LOCK을 걸 수가 있다.)
+
+ 
+
+ 
+
+ 
+
+[10] Creating and Managing Tables (DDL)
+
+
+1. Database Objects
+   TABLE, VIEW, SEQUENCE, INDEX, SYNONYM
+   
+2. Object Naming Rule
+   - 반드시 첫글자는 문자이어야 한다.
+   - 길이는 1 ~ 30 글자 이다.
+   - A-Z, a-z, 0-9, _, $, # 만을 사용할수 있다.
+   - 동일한 Object명이 존재해서는 안된다.(다른 user가 소유한 table과는 중복가능)
+   - 오라클 서버의 예약어는 사용할 수 없다.
+   
+3. CREATING TABLES( create 권한, 저장영역이 필요 )
+   CREATE [GLOBAL TEMPORARY]  TABLE  [schema.]table
+      ( column  datatype [DEFAULT expr] [,...] );
+  *GLOBAL TEMPORARY : 임시 table로 지정, 정의는 모든 세션에서 볼 수 있지만,
+                          데이터는 데이터를 삽입하는 세션에서만 볼 수 있다.
+  * DEFAULT 값: 다른 열의 이름이나, 의사열은 잘못된 값이다.
+  * CREATE TABLE dept
+      ( deptno NUMBER(2), dname VARCHAR2(14), loc VARCHAR2(13),
+        dymd DATE DEFAULT SYSDATE )
+        
+4. Data Dictionary
+   USER_ : 사용자가 소유하는 객체에 대한 정보
+   ALL_   : 사용자가 ACCESS 할 수 있는 모든 TABLE 에 대한 정보
+   DBA_  : DBA 롤을 할당 받은 사용자만 ACCESS 할 수 있다.
+   V$_    : 동적 성능(Performance) 뷰, DB SERVER 성능 및 잠금에 관한 정보.
+
+   * DICT 테이블 안에 모든 data dictionary 정보가 있다.
+   >> 유저가 소유한 개별 객체 유형을 봄.
+       SELECT * FROM USER_TABLES
+   >> 유저가 소유한 TABLE, VIEW, 동의어, 시퀀스를 봄.
+       SELECT DISTINCT object_type
+       FROM USER_OBJECTS ( USER가 ACCESS 할 수 있는 ALL_OBJECTS )
+   >> User가 소유한 TABLE을 설명.
+      SELECT * FROM USER_CATALOG 
+       --> SELECT * FROM cat 이라고 써도 된다.
+   >> 모든 테이블 이름보기         SELECT * FROM TAB
+   >> 컬럼 정보 보기       USER_TAB_COLUMNS
+   
+5. Data Types
+   VARCHAR2(size) : Variable-length character data (1 ~ 4000 bytes)
+   CHAR(size) : Fixed-length character data (1 ~ 2000 bytes)
+   NUMBER(p,s) : p - precision, s - scale
+   DATE : B.C.4712-01-01 ~ A.D.9999.12.31
+   LONG : Variable-length character data (2GB)
+         - 한 table 당 하나  - constraints 사용 못함          
+         - order by, group by에서 사용못함  - 서브쿼리에서 사용할 때 not copy  
+   LONG RAW : Raw binary data of variable length up to 2 gigabytes
+   RAW(size)  : 2000 byte
+   CLOB : Single-byte character data up to 4 gigabytes
+   BLOB : Binary data up to 4 gigabytes
+   BFILE : binary data stored in an external file; up to 4 gigabytes
+   
+6. Subquery를 사용해서 테이블 복사하기(새로운 table 의 datatype 정의는 필요없다)
+   CREATE TABLE dept30
+   AS
+     SELECT empno, ename, sal*12 ANNSAL, hiredate
+     FROM emp
+     WHERE deptno = 30
+     
+   * computed field일때 반드시 컬럼 alias를 줘야 한다. (ANNSAL)
+   * computed 컬럼으로 만들어진 컬럼 타입 NUMBER일 때 기존의 자릿수는 사라지고 
+     최대자리수로 잡힌다.
+   * column, type, data 모든것이 복사된다.(NOT NULL constraints 만 상속된다.)
+   * key constraint는 정의되지 않는다.
+   * WHERE조건을 false가 되게 만들면 데이터는 복사되지 않는다.
+
+
+7. 테이블에 컬럼 추가 하기
+   ALTER TABLE dept30
+   ADD ( job VARCHAR2(9) )
+   -> 열을 추가할 때 모든 행은 초기에 null 값을 가진다.( not null 제약조건 X )
+
+
+8. 테이블에 있는 기존 컬럼 수정하기
+   ALTER TABLE dept30
+   MODIFY ( ename VARCHAR2(15) )
+   
+   * 제약사항.
+     - 숫자타입에서 자릿수를 늘리는건 가능하다.
+     - 숫자타입에서 자릿수를 줄일때는 모든 data가 null이거나 데이터가 한건도 없을  때만 가능하다.
+     - char <--> varchar2 로 바꿀때는 모든 data가 null이거나 데이터가 한건도 없을 때만 가능하다.
+     - default값도 바꿀 수 있다.(기존 default값은 유지된다.)
+     - column name 은 modify 가 안된다.
+=> 열을 추가(ADD), 수정(MODIFY)할 수 있지만 table에서 삭제할 수 없다.
+<oracle 8i 가능>
+ 1.>   ALTER TABLE table SET UNUSED (column);
+   OR
+     ALTER TABLE table SET UNUSED COLUMN column;
+ 2.>ALTER TABLE table  DROP UNUSED COLUMNS;
+
+ 
+
+9. DROP TABLE
+   DROP TABLE dept30
+   
+10. OBJECT 이름 바꾸기
+   RENAME dept TO department
+   
+11. TRUNCATE TABLE
+   TRUNCATE TABLE department
+   * ROLLBACK을 절대로 할 수 없다.
+   * 로그없이 테이블의 전체 데이터가 삭제되고 COMMIT이 된다.
+   * 저장공간을 해제( DELETE 문은 해제할 수 없다.)
+
+
+12. 테이블에 주석문 추가하기
+   COMMENT ON TABLE emp
+   IS 'Employee Information'
+   
+13. 컬럼에 주석문 추가하기
+   COMMENT ON TABLE emp COLUMN emp.ename
+   IS 'Employee Name'
+   
+14. 주석문 삭제하기   
+   COMMENT ON TABLE emp IS ' '
+   
+15. 주석문을 볼수있는 data dictionary
+   * Column
+     ALL_COL_COMMENTS
+     USER_COL_COMMENTS   
+   * Table
+     ALL_TAB_COMMENTS
+     USER_TAB_COMMENTS
+ 
+
+ 
+
+ 
+
+[11] Including Constraints
+
+
+1. 오라클의 Constraint Type
+   NOT NULL : null value를 허용하지 않음.
+   UNIQUE : 유일한 값을 가지면서 null도 허용한다.
+   PRIMARY KEY : NOT NULL, UNIQUE, TABLE당 1개 설정, 참조 당함
+   FOREIGN KEY : Primary에 연결되어 있어서 Primary에 있는 값들만 갖고 있다.(PK,UK 참조)
+   CHECK : 정해진 값 이외의 것이 들어오면 Error
+
+ 
+
+2. Constraint 규칙
+   - Constraint을 생성할 때 이름을 주지 않으면 오라클서버는 SYS_Cn 이라고 이름을 자동 생성한다.
+   - Column level 과 Table level로 Constraint를 정의한다.
+   - constraint를 볼 수 있는 Data Dictionary는 
+     USER_CONSTRAINTS,USER_CONS_COLUMNS 이다.
+
+ 
+
+3. Constraint 정의
+   * Column Level
+     column [CONSTRAINT constraint_name] constraint_type,  
+   * Table Level
+     column,...
+        [CONSTRAINT constraint_name] constraint_type (column, ...),
+        (column, ...),
+   * not null은 반드시 column level로 정의를 내려야 한다.
+
+ 
+
+4. NOT NULL Constraint : column level
+
+ 
+
+5. UNIQUE Constraint : index 자동 생성
+   CREATE TABLE dept (
+      deptno     NUMBER(2),
+      dname      VARCHAR2(14),
+      loc        VARCHAR2(13),
+      CONSTRAINT dept_dname_uk UNIQUE (dname) )
+
+ 
+
+6. PRIMARY KEY Constraint
+   CREATE TABLE dept (
+      deptno     NUMBER(2),
+      dname      VARCHAR2(14),
+      loc        VARCHAR2(13),
+      CONSTRAINT dept_dname_uk UNIQUE (dname) ,
+      CONSTRAINT dept_deptno_pk PRIMARY KEY (deptno) )
+
+ 
+
+7. FOREIGN KEY Constraint
+   CREATE TABLE emp (
+      empno      NUMBER(4),
+      ename      VARCHAR2(10) [CONSTRAINT epm_ename_nn] NOT NULL,
+      job        VARCHAR2(9),
+      mgr        NUMBER(4),
+      hiredate   DATE,
+      sal        NUMBER(7,2),
+      comm       NUMBER(7,2),
+      deptno     NUMBER(7,2) NOT NULL,
+      CONSTRAINT emp_deptno_fk FOREIGN KEY (deptno)
+                 REFERENCES dept (deptno) )
+      --> dept.deptno를 emp.deptno가 Foreign key로 사용하겠다는 뜻.
+   * column level로 정의할 때는...(FOREIGN KEY   키워드는 생략)
+     deptno NUMBER(7,2) NOT NULL
+            CONSTRAINT emp_deptno_fk REFERENCES dept (deptno),
+   * ON DELETE CASCADE
+     Foreign key로 연결된 parent data가 삭제될 때 child data도 모두 삭제 되게 만든다.
+
+ 
+
+8. CHECK Constraint
+   ..., deptno   NUMBER(2),
+                 CONSTRAINT emp_deptno_ck
+                     CHECK (deptno BETWEEN 10 AND 99), ...
+        --> deptno의 값은 10에서 99 사이에 있는 값들만 입력이 가능하다는 뜻.
+   * CURRVAL, NEXTVAL, LEVEL, ROWNUM등 Pseudocolumn엔 허용되지 않는다.
+   * SYSDATE, UID, USER, USERENV 함수들을 호출할수 없다.
+
+   * 제약조건을 추가(ADD), 삭제(DROP)할 수 있지만 수정할 수는 없다.
+   * 제약조건을 설정(ENABLE) 또는 해제(DISABLE)합니다.
+   * MODIFT 절을 사용하여 NOT NULL 제약조건을 추가합니다.
+
+ 
+
+9. ADD Constraint
+   *ALTER TABLE table_name 
+        ADD [CONSTRAINT constraint] type (column),
+   ALTER TABLE emp
+   ADD CONSTRAINT emp_mgr_fk
+       FOREIGN KEY(mgr) REFERENCES emp(empno)
+   * Constraint 수정은 할 수 없다.
+   * not null constraint일 경우 ADD로 하지 않고 MODIFY로 한다.
+     (기존 행에 null data 값이 없어야 한다.)
+
+
+10. DROP Constraint
+   *ALTER TABLE table_name 
+         DROP (PRIMARY KEY| UNIQUE (column) | 
+         CONSTRAINT  constraint) [CASCADE];
+   ALTER TABLE emp
+   DROP CONSTRAINT emp_mgr_fk
+   * Primary를 삭제할 때 Foreign Key관계(종속된 제약조건)의 Constraint까지 DROP 하고 싶으면...
+     ALTER TABLE dept
+     DROP PRIMARY KEY CASCADE
+   * CASCADE CONSTRAINTS 절은 DROP COLUMN 절과 함께 사용됩니다.
+ ALTER TABLE test1 DROP  (pk) CASCADE CONSTRAINTS;
+
+
+11. DISABLE CONSTRAINT(CREATE TABLE, ALTER TABLE 문에서 사용)
+    : ENABLE CONSTRAINT 하기 전까지 실행을 멈춘다.
+    ALTER TABLE emp
+    DISABLE CONSTRAINT emp_empno_pk CASCADE
+
+ 
+
+12. ENABLE CONSTRAINT(CREATE TABLE, ALTER TABLE 문에서 사용)
+    ALTER TABLE emp
+    ENABLE CONSTRAINT emp_empno_pk
+    * ENABLE 할 때는... 모든 data를 체크하기 때문에 시간이 오래 걸린다.*
+
+
+13. USER_CONSTRAINTS Data Dictionary
+    SELECT constraint_name, constraint_type, search_condition
+    FROM user_constraints
+    WHERE table_name = 'EMP'
+
+    --------------------------------------------------------
+    CONSTRAINT_NAME             C  SEARCH_CONDITION
+    ------------------------- -  --------------------------
+    SYS_C00674                    C  EMPNO IS NOT NULL
+    SYS_C00675                    C  DEPTNO IS NOT NULL
+    EMP_EMPNO_PK                P     
+    --------------------------------------------------------
+
+ 
+
+14. USER_CONS_COLUMNS Data Dictionary
+    SELECT constraint_name, column_name
+    FROM user_cons_columns
+    WHERE table_name = 'EMP'
+    --------------------------------------------------------
+    CONSTRAINT_NAME                   COLUMN_NAME
+    EMP_DEPTNO_FK                     DEPTNO
+    EMP_EMPNO_PK                      EMPNO
+    EMP_MGR_FK                         MGR
+    SYS_C00674                         EMPNO
+    SYS_C00675                         DEPTNO
+    --------------------------------------------------------
+
+
+ 
+
+
+[12] Creating Views
+
+
+* Oracle8부터는 View에도 Data를 갖고 있을 수 있다.
+* View를 사용하는 이유?
+  - 데이터베이스 access를 제한한다. 
+  - 복잡한 쿼리를 쉽게 만든다.
+  - 데이터의 독립을 허용하기 위해 
+  - 동일한 데이터로부터 다양한 결과를 얻기 위해
+* view를 만들 때 ORDER BY절을 사용할 수 없다.
+* Simple View에는 DML 문장을 수행 할 수 있지만, 함수 또는 데이터 그룹을 포함하지 못한다.
+  (복합뷰<Complex VIEW> 는 함수 또는 데이터 그룹을 포함할 수 있다.)
+* GROUP함수, GROUP BY절, DISTINCT keyword등을 사용한 view에는 행을 delete 할 수 없다.
+* 뷰를 사용한 데이터 엑세스
+  - USER_VIEWS에서 뷰 정의를 검색한다.(select 문의 텍스트는 LONG 열에 저장된다.)
+  - 뷰의 기본 테이블에 대한 액세스 권한을 확인한다.
+  - 데이터를 기본 테이블에서 검색 또는 갱신한다.
+
+
+1. CREATE VIEW 문장
+   CREATE [OR REPLACE] [FORCE|NOFORCE] VIEW view
+       [ (alias[, alias]...) ]
+   AS subquery
+   [WITH CHECK OPTION [CONSTRAINT constraint]]
+   [WITH READ ONLY]
+   
+   OR REPLACE : 만들려고 하는 view가 이미 존재할 때 recreate한다.
+   FORCE : base table이 존재하지 않아도 view를 강제로 만든다.
+   NOFORCE : base table이 반드시 존재해야만 view를 만들 수 있다.
+   WITH CHECK OPTION : view를 만들 때 where조건에 있는 value를 
+                           View를 통해서 DML 문장으로 수정하는 것을 막는다.
+   WITH READ ONLY : view를 통해서 DML문장을 수행하는 것을 막는다.
+   
+2. Creating View 예제1
+   CREATE VIEW empvu10
+   AS SELECT empno, ename, job
+   FROM emp
+   WHERE deptno = 10 ;
+   --> 이렇게 만들어진 view의 column이름은 empno, ename, job이 된다.
+
+
+3. Creating View 예제2
+   CREATE VIEW salvu30
+   AS SELECT empno employee_number, ename name, sal salary
+   FROM emp
+   WHERE deptno = 30 ;
+   --> column alias를 준 employee_number, name, salary가 view의 column이름이  된다.
+   
+4. VIEW 수정하기 (OR REPLACE)
+   CREATE OR REPLACE VIEW empvu10
+       (employee_number, employee_name, job_title)
+   AS SELECT empno, ename, job
+   FROM emp
+   WHERE deptno = 10 ;
+   
+5. Complex VIEW
+   CREATE VIEW detp_sum_vu
+       (naem, minsal, maxsa, avgsal)
+   AS SELECT d.dname, MIN(e.sal), MAX(e.sal), AVG(e.sal)
+   FROM emp e, dept d
+   WHERE e.deptno = d.deptno
+   GROUP BY d.dname ;
+
+ 
+
+6. WITH CHECK OPTION 사용예
+   CREATE OR REPLACE VIEW empvu20
+   AS SELECT *
+   FROM emp
+   WHERE deptno = 20
+   WITH CHECK OPTION CONSTRAINT empvu20_ck ;(deptno 가 20만 작업 가능)
+   ( constraint name을 주지 않으면 SYS_Cn으로 만들어 진다. )
+   * 예를들어 다음과 같은 update문장을 수행하면 error가 난다.
+   UPDATE empvu20
+   SET deptno = 10
+   WHERE empno = 7788 ;
+   --> ORA-01402: view WITH CHECK OPTION where-clause violation
+   
+7. WITH READ ONLY 사용예
+   CREATE OR REPLACE VIEW empvu10
+       (employee_number, employee_name, job_title)
+   AS SELECT empno, ename, job
+   FROM emp
+   WHERE deptno = 10
+   WITH READ ONLY ;
+   * 예를들어 다음과 같은 DELETE문장을 수행하면 error가 난다.
+   DELETE FROM empvu10
+   WHERE employee_number = 7782 ;
+   --> ORA-01752: Cannot delete from view without exactly one key-preserved table
+   
+8. View 없애기
+   DROP VIEW empvu10 ;
+   
+9. 만들어진 View를 볼때
+   SELECT * FROM salvu30 ;
+ * 인라인 view : FROM 절에 사용,  객체가 아님.
+
+
+10. View를 통한 DML 작업 수행에 관한 규칙
+ *뷰가 다음을 포함한 경우 행을 제거할 수 없슴.
+  - 그룹함수   - GROUP BY절   - DISTINCT  키워드   - 의사열 ROWNUM 키워드
+ *뷰가 다음을 포함한 경우 데이터를 수정할 수 없슴.
+  - 위에서 언급된 모든 조건(제거할 수 없슴)
+  - ROWNUM 의사 열 : 하위 질의에서 반환되는 가 행에 1에서 시작하는 순차값을 할당.
+ *뷰가 다음과 같은 경우 데이터를 추가할 수 없슴.
+  - 뷰가 위에서 언급한 포함하는 경우.(제거, 수정)
+  - 기본 테이블에서 뷰에 의해 선택되지 않은 열에 NOT NULL 제약 조건이 있는 경우.
+
+ 
+
+11. "TOP-N" 분석 수행
+   SELECT [column_list], ROWNUM
+   FROM (SELECT [column_list] FROM table
+          ORDER BY TOP-N_column)
+  WHERE  ROWNUM <= N ( where 절은 < 또는 <= )
+
+ 
+
+
+[13] Other Database Objects (Sequence, Index, Synonym)
+
+
+1. Sequence?
+   - unique한 숫자를 자동으로 부여한다.
+   - 공유 가능하다.
+   - primary key 성격을 갖는다.
+   - cache 설정을 할 수 있기 때문에 빠른 속도를 낼 수 있다.
+   
+2. CREATE SEQUENCE 문장
+   CREATE SEQUENCE sequence
+      [INCREMENT BY n] : default 1
+      [START WITH n]    : default 1
+      [{MAXVALUE n | NOMAXVALUE}]
+      [{MINVALUE n | NOMINVALEU}]
+      [{CYCLE | NOCYCLE}]
+      [{CACHE n | NOCACHE{] ; : default 20개의 cache
+      
+   INCREMENT BY n : n만큼 증가 한다.
+   START WITH n : 처음 시작하는 숫자는 n이다.
+   MAXVALUE n : MAX값은 n이다.
+   NOMAXVALUE : MAX값은 무한대다. (10^27  OR  -1) --> default
+   MINVALUE n : MIN값은 n이다.
+   NOMINVALUE : MIN값은 무한대다. (-(10^26)  OR 1 ) --> default
+   CYCLE | NOCYCLE : MAX나 MIN값으로 갔을때 다시 처음부터 새로 
+                        시작할 건지를 설정한다.  default는 NOCYCLE
+   CACHE n | NOCACHE : n만큼의 CACHE를 줄 것인지를 설정한다. 
+                           --> default는 cache 20으로 잡는다.
+3. CREATE SEQUENCE 예제
+   CREATE SEQUENCE dept_deptno
+       INCREMENT BY 1
+       START WITH 91
+       MAXVALUE 100
+       NOCACHE
+       NOCYCLE ;
+       
+4. USER_SEQUENCES data dictionary
+   SELECT sequence_name, min_value, max_value, increment_by, last_number
+   FROM USER_SEQUENCES ;
+   * last_number는 다음에 sequence 가능 한 숫자를 보여준다.
+   
+5. NEXTVAL 과 CURRVAL
+   NEXTVAL : Sequence가 1개 증가된다.
+   CURRVAL : 현재 sequence 값을 보여준다.
+   
+   * 사용가능
+     - SELECT문장에서 SELECT list
+     - INSERT문장에서 SELECT list, values절 list
+     - UPDATE문장에서 SET절
+      
+   * 사용불가
+     - View의 SELECT list
+     - SELECT문장에서 DISTINCT keyword
+     - SELECT문장에서 GROUP BY, HAVING, ORDER BY절
+     - SELECT, DELETE, UPDATE문장 안에 있는 subquery
+     - CREATE TABLE, ALTER TABLE문장에서 DEFAULT expression
+      
+   * CACHE가 20으로 정의 했을 때...
+     ① INSERT INTO dept
+        VALUES (dept_deptno.NEXTVAL, ...)       --> 1
+     ② SELECT last_number FROM user_squences   --> 21
+     ③ SELECT dept_deptno.CURRVAL FROM dual    --> 1
+     ④ SELECT dept_deptno.NEXTVAL FROM dual    --> 2
+     
+6. SEQUENCE 사용예
+   INSERT INTO dept( deptno, dname, loc )
+   VALUES (dept_deptno.NEXTVAL, 'MARKETING', 'SAN DIEGO')
+   --> 증가된 sequence값이 deptno에 저장된다.
+   
+   * 현재의 sequence값을 보려면...
+     SELECT dept_deptno.CURRVAL FROM dual ;
+   * SELECT에서 sequence값 증가시키기
+     SELECT dept_deptno.NEXTVAL FROM dual ;
+     
+7. SEQUENCE 수정하기
+   ALTER SEQUENCE dept_deptno
+         INCREMENT BY 1
+         MAXVALUE 999999
+         NOCACHE
+         NOCYCLE ;
+   * sequence에 대한 ALTER privilege를 갖고 있어야 한다.
+   * maxvalue가 current value보다 적을 땐 반드시 drop하고 re-create해야 한다.
+   * START WITH 문을 변경할 수 없습니다.( 삭제 후 다시 생성 )
+8. SEQUENCE 제거하기   
+   DROP SEQUENCE dept_deptno ;
+   
+9. INDEX ?
+   - Retrieve를 빨리 하기 위해서
+   - DISK I/O를 줄일수 있다.
+   - 테이블과는 독립적이다.
+    * PRIMARY KEY or UNIQUE constraint 생성시 오라클 서버에서 자동으로 생성되는것과, CREATE 
+
+      INDEX를 사용해서 만들어지는 index가 있다.
+    * INDEX는 많이 만든다고 좋은게 아니다.
+    * INDEX는 이렇때 만드는게 좋다.
+   - WHERE절이나 JOIN조건에 자주나오는 column
+   - column의 범위가 클때
+   - null value를 많이 갖고 있는 column
+   - 전체 row에서 2~4% 정도의 row를 찾을때
+     
+10. CREATE INDEX
+   CREATE INDEX index
+   ON table (column[, column]...) ;    
+   CREATE INDEX emp_ename_idx
+   ON emp (ename) ;
+    
+11. USER_INDEXES and USER_IND_COLUMNS data dictionary
+   SELECT ic.index_name, ic.column_name, ic.column_position, ix.uniqueness
+   FROM user_indexes ix, user_ind_columns ic
+   WHERE ic.index_name = ix.index_name
+     AND ic.table_name = 'EMP' ;
+
+
+12. INDEX 제거하기
+   DROP INDEX emp_ename_idx ;
+    
+13. SYNONYM ?
+   user가 synonym을 사용하면 스키마를 별도로 명시할 필요가 없어진다.
+   
+14. CREATE SYNONYM
+   CREATE [PUBLIC] SYNON 

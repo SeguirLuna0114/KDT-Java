@@ -1,0 +1,7 @@
+hr계정 활성화
+
+c:\> sqlplus  system/oracle
+
+SQL> alter user hr account unlock;
+SQL> alter user hr identified by 1234;
+SQL> conn  hr/1234

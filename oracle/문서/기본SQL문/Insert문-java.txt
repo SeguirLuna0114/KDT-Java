@@ -1,0 +1,72 @@
+* JDBC(Java Database Connectivity)를 사용하여
+   Oracle 데이터베이스에 데이터를 추가(Insert)
+
+
+1. 드라이버 로딩 및 연결설정
+// Oracle JDBC 드라이버 클래스
+String driver = "oracle.jdbc.driver.OracleDriver";
+// url은 데이터베이스 서버와 연결하고, 데이터베이스 객체에 접근하기 위한 정보 포함
+String url = "jdbc:oracle:thin:@localhost:1521:xe";
+
+2. 데이터베이스 연결객체 및 Statement 객체 선언
+// Connection 객체(데이터베이스 연결 객체)를 선언
+// - 연결이 성공적으로 수립될 경우, 이 객체를 통해 데이터베이스 작업 수행 가능
+Connection con = null;
+		
+// Statement 객체(sql문을 실행하기 위한 객체)를 선언
+Statement stmt = null;
+
+// 입력받은 값을 할당할 문자열 변수선언
+String name, email, tel, no;
+
+// 작성한 sql문 변수 선언
+String sql;
+
+try{
+	3. 드라이버 로드 -> 데이터베이스 연결 -> SQL문 실헹할 Statement 객체 생성
+	// JDBC Driver Loading(문자열로 표시된 드라이버 클래스를 로드)
+	Class.forName(driver);
+
+	// DriverManager 클래스의 getConnection()메소드를 사용하여 데이터베이스에 연결을 생성
+	con = DriverManager.getConnection(url, "scott", "tiger");
+			
+	// Connection 객체의 createStatement() 메서드를 사용하여 Statement 객체를 생성
+	stmt = con.createStatement();
+
+
+	4. 사용자 입력 받기-사용자로부터 번호, 이름, 이메일, 전화번호를 입력 받음
+	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+	System.out.println(" customer 테이블에 값 입력하기 .....");
+	System.out.print(" 번호 입력: ");
+	no = br.readLine();		// primary key이기에 중복값X
+	System.out.print(" 이름 입력: ");
+	name = br.readLine(); // 테이블에 추가할 name 필드 값을 입력 받음
+	...
+
+	5. INSERT 쿼리문 작성 및 실행
+	// 입력 받은 값을 사용하여 INSERT 쿼리문을 생성
+	sql = "INSERT into customer(no, name, email, tel) values ";
+	sql += "(" + no + ",'" + name + "','" + email + "','" + tel + "')";
+
+	// Statement 객체의 executeUpdate(sql) 메서드를 이용해
+	// 생성한 쿼리문을 실행하여 데이터베이스에 새로운 값을 추가
+	int res = stmt.executeUpdate(sql); // 데이터베이스 파일에 새로운 값을 추가시킴
+	if (res == 1) {	// true인 경우
+		System.out.println(" Data insert success!! ");
+	} else {
+		System.out.println(" Data insert failed ");
+	}
+
+} catch (Exception e) {
+	System.out.println("데이터베이스 연결 실패!");
+} finally {
+	// 6. 생성한 Statement와 Connection 객체를 닫아서 데이터베이스 연결을 종료
+	try {
+		if (stmt != null)
+			stmt.close();
+		if (con != null)
+			con.close();
+	} catch (Exception e) {
+		System.out.println(e.getMessage());
+	}

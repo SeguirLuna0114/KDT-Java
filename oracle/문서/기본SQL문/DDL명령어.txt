@@ -1,0 +1,73 @@
+☆ DDL명령어 
+
+o 테이블 생성
+  - CREATE TABLE 명령: 데이터를 저장하기 위한 테이블을 생성하는데 사용
+  SQL> create table 테이블명 (컬럼명  데이터타입, 
+		              컬럼명  데이터타입, ......);
+  SQL> create table member01(
+	id  varchar2(20), 
+	name  varchar2(20), 
+	address varchar2(50), 
+	phone  varchar2(20));
+
+* Primary Key(기본키): 테이블 내의 각 행(row)을 유일하게 식별하는데 사용되는 열(column)
+	- 중복되지 않는 값을 가짐 
+	   => 열(column)의 값이 각 행(row)마다 유일. 같은 기본키 값을 가진 두개이상의 행X
+	- 데이터 베이스 내에서 특정 행을 식별하는 데 사용
+	-  NULL 값을 가질 수 없음.
+	- 
+
+
+o 테이블 목록 출력
+   SQL> select  *  from  tab;
+
+
+o 테이블 구조 출력
+  SQL> desc[ribe]  member01;
+
+
+o 테이블 명 변경
+  SQL> alter  table  구테이블명  rename  to  신테이블명;
+  SQL> alter  table  member01  rename  to  member02;
+  ※ SQL> rename  구테이블명  to  신테이블명;  
+	  으로도 테이블명 변경 가능함.
+     SQL> rename  member01   to  member02;
+
+
+o 테이블에 새로운 컬럼 추가 ( add 연산자 )
+  SQL> alter  table  member01 add (password  varchar2(30));
+
+
+o 테이블의 컬럼 수정 ( modify 연산자 )
+  SQL> alter table member01 modify (password  varchar2(50)  not  null);
+  ※ 컬럼이 이미 데이터를 가지고 있을 경우 다른 데이터형
+     으로  변경이 불가능함.
+  ※ 컬럼명은 modify 안됨.
+
+
+o 테이블의 컬럼 삭제 ( drop 연산자 )
+  SQL> alter  table  member01  drop  column  column_name;
+  SQL> alter  table  member01  drop  column  password;
+  cf. alter  table  member01  drop(password);
+
+
+o 제약조건의 삭제
+  SQL> alter  table  member01  drop  primary  key;
+
+
+o 테이블 삭제
+  SQL> drop  table  member01;
+
+cf. 오라클 10g부터는 테이블을 삭제하면     BIN    $4emTP3hqGbvgMGQ9jRYEcw==$0 와 같은
+    임시테이블로 교체된다. 
+
+
+이 임시 테이블을 완전 삭제하는 방법은 ?
+SQL> purge recyclebin; 
+
+처음부터 테이블을 완전하게 삭제하는 방법은 ?
+SQL> drop  table  member01  purge;
+
+
+참조: http://www.oracle.com/technology/pub/articles/10gdba/week5_10gdba.html
+

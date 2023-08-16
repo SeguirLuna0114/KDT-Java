@@ -1,0 +1,12 @@
+* zipcode 복원 하는 방법
+
+1. ORACLE_T0.sql 파일을 C:\> 드라이버로 복사한다.
+
+2. sqlplus명령어 입력한후에 scott/tiger 계정으로 접속한다.
+
+3. zipcode 테이블을 작성한다.
+
+4. SQL> @C:\ORACLE_T0.sql    명령을 실행한다.
+
+5. commit;
+

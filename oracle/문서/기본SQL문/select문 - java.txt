@@ -1,0 +1,75 @@
+* JDBC를 통해 데이터베이스와 상호작용(Select)
+  "customer" 테이블의 데이터를 조회하여 번호, 이름, 이메일, 전화번호를 출력
+
+1. 드라이버 로딩 및 연결설정
+// Oracle JDBC 드라이버 클래스
+String driver = "oracle.jdbc.driver.OracleDriver";
+// url은 데이터베이스 서버와 연결하고, 데이터베이스 객체에 접근하기 위한 정보 포함
+String url = "jdbc:oracle:thin:@localhost:1521:xe";
+
+2. 데이터베이스 연결객체 및 Statement 객체 선언
+// Connection 객체(데이터베이스 연결 객체)를 선언
+Connection con = null;
+		
+// Statement 객체(sql문을 실행하기 위한 객체)를 선언
+Statement stmt = null;
+
+// 데이터베이스 검색 결과에 접근하기 위한 ResultSet 객체 선언
+ResultSet rs = null;
+
+// 데이터베이스에서 얻어온 필드값 저장할 변수 선언
+int no = 0;
+String name, email, tel;
+// SQL문을 저장할 변수 선언
+String sql;
+
+try{
+	3. 드라이버 로드 -> 데이터베이스 연결 -> SQL문 실헹할 Statement 객체 생성
+	// JDBC Driver Loading(문자열로 표시된 드라이버 클래스를 로드)
+	Class.forName(driver);
+			
+	// DriverManager 클래스의 getConnection()메소드를 사용하여 데이터베이스에 연결을 생성
+	con = DriverManager.getConnection(url, "scott", "tiger");
+			
+	// Connection 객체의 createStatement() 메서드를 사용하여 Statement 객체를 생성
+	stmt = con.createStatement();
+
+	4. ResultSet 객체를 생성하고 SELECT 쿼리문 실행
+	//  "customer" 테이블에서 모든 열과 행을 선택하는 SELECT 쿼리문을 생성
+	sql = "SELECT * FROM customer";
+
+	// 생성한 쿼리문을 실행하고 결과를 ResultSet 객체에 저장
+	rs = stmt.executeQuery(sql); // 얻어진 레코드를 가져옴
+
+	5. 결과 출력
+	System.out.printf("번호 \t 이름 \t\t 이메일 \t\t 전화번호 \n");
+	System.out.printf("-----------------------------------------\n");
+	
+	// boolean next()메소드로 
+	// ResultSet 객체에 있는 각 행을 반복하면서 각 필드의 값을 가져와 출력
+	while (rs.next()) {
+		no = rs.getInt("no");
+		name = rs.getString("name");
+		email = rs.getString("email");
+		tel = rs.getString("tel");
+		System.out.printf(" %d \t %s \t %s \t %s\n", no, name, email, tel);
+	}
+} catch (Exception e) {
+	System.out.println("데이터베이스 연결 실패!");
+			
+} finally {
+//	6. 생성한 ResultSet, Statement, Connection 객체를 닫아서 데이터베이스 연결을 종료
+	try {// rs, stmt, con 객체를 close() 메서드를 호출해 해제
+		if (rs != null)
+			rs.close();
+		if (stmt != null)
+			stmt.close();
+		if (con != null)
+			con.close();
+	} catch (Exception e) {
+		System.out.println(e.getMessage());
+	}
+
+
+
+

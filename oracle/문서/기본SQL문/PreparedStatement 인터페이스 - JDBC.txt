@@ -1,0 +1,64 @@
+* PreparedStatement 인터페이스: 미리 컴파일된 SQL 문을 실행하기 위한 객체
+
+	- Statement 인터페이스의 서브인터페이스
+	- SQL 문 내에 ?를 사용하여 매개변수를 나타냄 => 바인딩
+	- PreparedStatement 객체는 여러 번 재사용 가능
+ 
+
+* PreparedStatement 객체 생성방법
+	- PreparedStatement 객체: SQL 쿼리를 미리 준비하여 실행할 때 사용하는 객체
+
+ 1) 데이터베이스에 연결하기 위한 Connection 객체를 획득
+	- Connection객체는 DriverManager.getConnection() 메서드를 사용하여 얻음
+
+
+ 2) 실행할 SQL 쿼리문을 작성
+	- 쿼리 템플릿에 물음표(?)를 사용해서 매개변수 위치 지정 가능
+	ex)	String sql = "INSERT INTO employees (name, age, salary)
+			      VALUES (?, ?, ?)";
+
+ 3) PreparedStatement 객체 생성
+ : Connection 객체를 통해 prepareStatement() 메서드를 호출 => PreparedStatement 객체 생성
+	ex)	PreparedStatement pstmt = connection.prepareStatement(sql);
+
+ 4) SetXxx() 메서드를 사용하여 매개변수 값 바인딩
+ : 데이터 타입에 따라 메소드 실행하며, 매개변수의 위치는 ?의 순서대로 1부터 시작
+	- void setBoolean(int parameterIndex, boolean x)
+				: 주어진 위치의 매개변수에 불리언 값을 설정
+ 	- void setInt(int parameterIndex, int x)
+				: 주어진 위치의 매개변수에 정수 값을 설정
+ 	- void setString(int parameterIndex, String x)
+				: 주어진 위치의 매개변수에 문자열 값을 설정
+
+ 5) executeQuery() 또는 executeUpdate() 메소드를 사용하여 쿼리를 실행
+	- ResultSet executeQuery(): SELECT 쿼리를 실행
+	- int executeUpdate(): INSERT, UPDATE, DELETE 쿼리를 실행. 영향받은 레코드수 반환
+
+ 6) 리소스 사용 후, close()메소드로 자원 해제
+	ex) 	finally {
+            		try {
+                		if (rs != null) rs.close();
+                		if (pstmt != null) pstmt.close();
+                		if (con != null) con.close();
+            		} catch (Exception e) {
+                		e.printStackTrace();
+
+
+ * 주요 메소드
+ 1) ResultSet executeQuery(): SELECT 쿼리를 실행하고, 
+			      실행된 쿼리의 결과를 ResultSet으로 반환
+
+ 2) int executeUpdate(): INSERT, UPDATE, DELETE 쿼리를 실행하고, 
+			 실행된 쿼리의 결과로 영향을 받은 행(레코드)의 수를 반환
+
+ 3) void setXXX(int parameterIndex, XXX value) : 매개변수의 값을 설정
+			- parameterIndex는 쿼리문 내의 '?'의 인덱스 의미(인덱스 1부터 시작)
+
+ 4) void close(): PreparedStatement 객체를 닫고 관련된 리소스를 해제
+
+
+
+
+
+
+

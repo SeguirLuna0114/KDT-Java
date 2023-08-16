@@ -1,0 +1,17 @@
+1. 이클립스에서 awt 사용시 한글 깨짐 문제 해결 방법
+
+
+awt 를 이용해서 컴포넌트에 한글 입력후 실행을 하면 한글이 네모로 나오는 현상이 나온다.
+
+이를 해결하기 위해서 이클립스에서 소스 선택후 Run Configurations --> Arguments --> VM arguments 에 다음을 입력해서 해결.
+
+-Dfile.encoding=MS949
+
+
+
+
+2.  Eclipse Console 에서 한글이 깨지는 문제 해결 방법
+
+Run Confuguration > 작성중인 Application 선택 > Common 탭 으로 이동하여 보면 "Console Encoding"이라는 항목이 있으며, Default 가 inherited되어 있기 때문에
+현재는 Console Encoding이 UTF-8로 설정되어 있을 것이다.
+이것을 Other 옵션에서 EUC-KR 로 바꿔준다.

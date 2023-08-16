@@ -1,0 +1,13 @@
+create table member(name varchar2(20),
+		    gender varchar2(10),
+		    jumin1 varchar2(6),
+                               jumin2 varchar2(7),
+		    address varchar2(100),
+		    buseo  varchar2(20),
+                              sports varchar2(20),
+                              music varchar2(20),
+                              movie varchar2(20),
+		    computer varchar2(20),
+		    intro varchar2(1000)
+		  );
+

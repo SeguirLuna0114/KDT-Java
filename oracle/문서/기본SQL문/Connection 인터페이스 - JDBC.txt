@@ -1,0 +1,61 @@
+* Connection 인터페이스
+: 데이터베이스와의 연결을 나타내는 객체
+	- 서버와의 연결을 설정하고 관리하는 메소드 정의
+	- 예외처리 필요: 데이터베이스 연결 및 작업 과정에서 SQLException과 같은 예외가 발생 가능
+
+
+* Connection 인터페이스 객체 생성 방법
+	" Connection 인터페이스 객체 = 데이터베이스 연결 객체 "
+ 1. JDBC 드라이버 클래스 로드
+	- JDBC를 사용하기위해, 해당 데이터베이스 시스템의 JDBC 드라이버를 먼저 로드
+	ex)	String driver = "oracle.jdbc.driver.OracleDriver";
+		try {
+			Class.forName(driver);
+
+
+ 2. Connection 객체를 선언
+	- 연결이 성공적으로 수립될 경우, 이 객체를 통해 데이터베이스 작업 수행 가능
+	ex)	Connection con = null;
+		try {
+
+
+3. DriverManager 클래스의 getConnection메소드를 사용하여 Connection 객체 생성
+	- Connection getConnection(String url, String user, String password) 메소드 사용
+		- url: 연결 URL, user: 데이터베이스 사용자 이름, password: 비밀번호
+	- 생성한 Connection 객체를 사용하여 데이터베이스에 연결
+	ex)	String url = "jdbc:oracle:thin:@localhost:1521:xe";
+		try {
+			Connection connection 
+				= DriverManager.getConnection(Url, "scott", "tiger");
+
+
+4. 생성한 Connection 객체를 사용하여 데이터베이스 작업을 수행
+	- Statement나 PreparedStatement 생성 및 실행
+	ex)	Statement statement = connection.createStatement();
+		ResultSet resultSet = statement.executeQuery("SELECT * FROM users");	
+		
+		
+* Connection 인터페이스 주요 메소드
+- Connection getConnection(String url, String user, String password) 메소드 
+  	: 데이터베이스와의 연결을 생성 
+	- url: 연결 URL, user: 데이터베이스 사용자 이름, password: 비밀번호
+	ex)	Connection connection 
+			= DriverManager.getConnection(url, "username", "password")
+
+
+- Statement createStatement()메소드
+	: SQL 문을 실행하기 위한 Statement 객체를 생성
+	ex)	Statement statement = connection.createStatement();
+
+
+- PreparedStatement prepareStatement(String sql) 메소드
+	: 미리 준비된 SQL 문을 실행하기 위한 PreparedStatement 객체를 생성
+	ex)	PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+
+- void rollback() 메소드: 트랜잭션을 롤백하여 이전 상태로 되돌림
+	ex)	// 작업 중에 문제가 발생하면 롤백 수행
+                connection.rollback();
+
+
+

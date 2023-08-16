@@ -1,0 +1,3 @@
+AWS에 접속 하기
+
+c:\> sqlplus  scott/tiger@3.36.123.111/xe

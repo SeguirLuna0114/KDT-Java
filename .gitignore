@@ -1,0 +1,75 @@
+## .gitignore
+
+**/.metadata/*
+/.metadata/
+
+
+
+
+## 설치파일
+
+.exe
+**/.exe
+
+.jar
+**/.jar
+
+
+## java
+## java/program dir
+
+java/program/*
+
+
+
+## java/교재 dir
+
+
+
+
+## java/문서
+
+
+
+
+## oracle 
+## oracle/program dir
+
+oracle/program/*
+
+
+
+## oracle/교재
+
+
+
+
+## oracle/문서
+
+
+
+## MySQL
+## MySQL/program
+
+MySQL/program/*
+
+
+
+## 강의_zoom
+
+강의_zoom/*
+
+
+
+## eclipse-workspace
+eclipse-workspace/.metadata/
+eclipse-workspace/.metadata/*
+eclipse-workspace/**/.settings/*
+eclipse-workspace/**/bin/*
+eclipse-workspace/**/.classpath
+eclipse-workspace/**/.project
+
+
+
+
+

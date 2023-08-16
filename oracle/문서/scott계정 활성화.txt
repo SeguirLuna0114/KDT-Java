@@ -1,0 +1,96 @@
+scott계정 활성화 => c:\> sqlplus scott/tiger
+
+// 1. SQLPlus를 실행하여 데이터베이스에 접속
+c:\> sqlplus system/oracle
+SQL*Plus: Release 11.2.0.2.0 Production on 화 8월 8 11:06:58 2023
+
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+
+Connected to:
+Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+
+
+// 2. SQLPlus에서 외부 파일인 scott.sql을 실행
+SQL> @c:\scott.sql
+	// - Widow운영체제에서 scott.sql파일을 C드라이브 하위에 저장했기에, 파일 경로
+	// - @ 기호: SQLPlus와 같은 명령 줄 기반의 도구에서 
+		    외부 스크립트 파일을 실행하는 데 사용되는 명령(해당 파일의 경로를 나타냄)
+
+
+// 3. ALTER USER 명령을 사용하여 scott 계정의 비밀번호를 변경하거나 계정을 잠금 해제
+SQL> alter user scott identified by tiger;
+
+User altered.
+
+
+// 이미 scott계정으로 전환됨
+SQL> conn scott/tiger (scott계정으로 전환)	// 이미 Scott계정이기에 할 필요X
+
+// show user명령을 사용해서 로그인한 사용자 확인
+SQL> show user
+USER is "SCOTT"
+
+// 4. SELECT * FROM TAB 명령으로 데이터베이스 내의 테이블 목록을 조회
+SQL> select * from tab; (테이블 목록)
+TNAME                                                        TABTYPE
+------------------------------------------------------------ --------------
+ CLUSTERID
+----------
+BONUS                                                        TABLE
+
+
+DEPT                                                         TABLE
+
+
+EMP                                                          TABLE
+
+
+
+TNAME                                                        TABTYPE
+------------------------------------------------------------ --------------
+ CLUSTERID
+----------
+SALGRADE                                                     TABLE
+
+
+// select * from [테이블명] 명령으로 테이블의 모든 열과 레코드를 결과로 반환
+SQL> select * from dept;
+
+    DEPTNO DNAME                        LOC
+---------- ---------------------------- --------------------------
+        10 ACCOUNTING                   NEW YORK
+        20 RESEARCH                     DALLAS
+        30 SALES                        CHICAGO
+        40 OPERATIONS                   BOSTON
+
+
+// 5. SQLPlus에서 세션을 종료(간단히 EXIT명령으로도 종료 가능)
+SQL> quit; (종료)
+Disconnected from Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+
+C:\>
+
+/* Oracle이 처음 설치되면 Sys 또는 System계정만 접속 가능하지만,
+    Scott계정을 활성화 한 후에는 Scott계정으로 접속 가능 */
+
+
+// 6. Scott계정으로 접속
+PS C:\> sqlplus scott/tiger
+
+SQL*Plus: Release 11.2.0.2.0 Production on 화 8월 8 11:12:02 2023
+
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+
+Connected to:
+Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+
+
+SQL> show user
+USER is "SCOTT"
+
+
+
+
+
+
+

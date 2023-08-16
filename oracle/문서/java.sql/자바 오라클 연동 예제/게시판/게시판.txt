@@ -1,0 +1,22 @@
+﻿게시판
+
+create table board(
+	no number primary key,
+	writer varchar2(20) not null,
+             passwd varchar2(20) not null,
+	subject varchar2(100) not null,
+	content varchar2(1000) not null,
+	reg_date timestamp );
+
+create sequence board_seq
+start with 1
+increment by 1;
+
+
+글작성 : InsertBoard.java
+글목록 : SelectBoard.java
+글수정 : UpdateBoard.java
+글삭제 : DeleteBoard.java
+
+
+

@@ -1,0 +1,4 @@
+create  table  mem02(id  varchar2(20)  primary key,
+		  passwd  varchar2(20),
+		  name  varchar2(20),
+		  reg_date  date);

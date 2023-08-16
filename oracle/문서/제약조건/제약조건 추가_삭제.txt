@@ -1,0 +1,25 @@
+* 제약조건 추가
+
+   alter table 테이블명 add primary key(empno);
+
+   alter table 테이블명 add unique(ename);
+
+   alter table 테이블명 add foreign key(deptno) references
+        dept(deptno);
+
+   alter table 테이블명 modify 컬럼명 not null;
+
+   alter table 테이블명 add constraint dept01_deptno_pk
+     primary key(deptno);
+
+
+
+* 제약조건 삭제
+
+   alter table 테이블명 drop primary key;
+
+   alter table 테이블명 drop unique(ename);
+
+   alter table 테이블명 drop constraint constraint_name;
+
+

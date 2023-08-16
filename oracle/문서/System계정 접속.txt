@@ -1,0 +1,27 @@
+# Window PowerShell에서
+PS C:\Users\user> sqlplus system/oracle
+
+SQL*Plus: Release 11.2.0.2.0 Production on 화 8월 8 10:37:49 2023
+
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+
+
+Connected to:
+Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+
+SQL> show user
+USER is "SYSTEM"
+
+SQL> select * from tab;
+
+TNAME                                                        TABTYPE
+------------------------------------------------------------ --------------
+ CLUSTERID
+----------
+AQ$DEF$_AQCALL                                               VIEW
+
+174 rows selected.
+
+SQL> quit;
+Disconnected from Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+PS C:\Users\user>

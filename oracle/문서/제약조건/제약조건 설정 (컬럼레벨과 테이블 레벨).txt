@@ -1,0 +1,56 @@
+*  컬럼 레벨 방식으로 제약 조건 설정
+
+create  table  emp01(	
+	empno  number(4)  primary  key,
+	ename  varchar2(15)  not null,
+	job  varchar2(10)  unique,
+ 	deptno  number(4)  references  dept(deptno)  );
+
+
+*  컬럼 레벨 방식으로 제약 조건 설정(constraint 키워드를 사용한 경우)
+
+create  table  emp01(
+	
+	empno  number(4)  constraint  emp01_empno_pk  primary  key,
+
+	ename  varchar2(15)  constraint  emp01_ename_nn  not null,
+
+	job  varchar2(10)  constraint emp01_job_uk  unique,
+
+ 	deptno  number(4)  constraint  emp01_deptno_fk  references  dept(deptno)  );
+
+
+
+
+
+*  테이블 레벨 방식으로 제약조건 설정
+
+create  table  emp01(	
+	empno  number(4),
+	ename  varchar2(15)  not null,
+	job  varchar2(10),
+ 	deptno  number(4),
+	primary  key(empno),
+	unique(job),
+	foreign  key(deptno)  references  dept(deptno)  ); 
+
+
+
+*  테이블 레벨 방식으로 제약조건 설정(constraint 키워드를 사용한 경우)
+
+create  table  emp01(
+	
+	empno  number(4),
+
+	ename  varchar2(15)  constraint  emp01_ename_nn  not null,
+
+	job  varchar2(10),
+
+ 	deptno  number(4),
+
+	constraint  emp01_empno_pk  primary  key(empno),
+
+	constraint  emp01_job_uk  unique(job),
+
+	constraint  emp01_deptno_fk  foreign  key(deptno)  references  dept(deptno)  ); 
+
