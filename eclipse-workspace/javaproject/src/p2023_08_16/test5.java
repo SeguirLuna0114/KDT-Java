@@ -5,18 +5,25 @@ package p2023_08_16;
  */
 public class test5 {
 	
+	static int GCD(int a, int b) {
+		
+		while(b != 0) {
+			int r = a%b;
+			
+			a = b;
+			b = r;
+		}
+		return a;
+	}
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-		StringBuilder sb = new StringBuilder();
+		System.out.println("24와 60의 최대공약수");
+		int n1 = 24;
+		int n2 = 60;
 		
-		sb.append("24와 60의 최대공약수 =");
-		for (int i=2; i<=60; i++) {
-			if(24 % i == 0 && 60 % i == 0) {
-				sb.append(i).append('\n');
-				break;
-			}
-		}
-		System.out.println(sb);
+		int GCD = GCD(n1, n2);
+		System.out.println(GCD);
 	}
 }

@@ -51,6 +51,11 @@ public class ChooseSequence_DFS4_NonDESC {
 			arr[depth] = i;
 			
 			// 다음 자식노드 방문을 위해 at으로 비내림차순 탐색, depth+1로 재귀호출
+			/** - i는 현재 숫자를 그대로 사용하며, 이 숫자를 이용해 다음 단계로 이동
+			 * (현재 단계에서 이미 선택된 숫자와 같은 숫자부터 시작)
+			 * - 다음 단계로 진행하려면 깊이를 1 증가
+			 */
+			
 			DFS_at(i, depth+1);
 		}
 	}
