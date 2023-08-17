@@ -1,26 +1,22 @@
 Oracle SQL 정리
+* SQL문
 
- 
-
- 
-
- 
-
-SQL
-SQL문
+DQL(질의어)
 SELECT
+
 DML(데이터 조작어)
 INSERT, UPDATE, DELETE
+
 DDL(데이터 정의어) IMPLICIT COMMIT
 CREATE, ALTER, DROP, RENAME, TRUNCATE
+
 TCL(트랜잭션 제어)
 COMMIT, ROLLBACK, SAVEPOINT
+
 DCL(데이터 제어어)IMPLICIT COMMIT
 GRANT, REVOKE
 
- 
 
- 
 
 [1] Writing Basic SQL Statements 
 
@@ -143,7 +139,7 @@ GRANT, REVOKE
    >=  : Greater than or equal to
    <   : Less than
    <=  : Less than or equal to
-   <>  : Not equal to
+   <>  : Not equal to (같지않음을 나타내는 비교연산자: !=, <>, ^=)
    예) SELECT ename, sal, comm
        FROM emp
        WHERE sal <= comm ;
