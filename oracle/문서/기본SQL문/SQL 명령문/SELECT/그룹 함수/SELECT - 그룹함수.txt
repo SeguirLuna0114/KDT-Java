@@ -1,0 +1,109 @@
+* 그룹함수(Group Function)
+: 하나 이상의 데이터를 그룹으로 묶어서 연산을 수행하고,
+  하나의 결과로 처리해주는 함수
+
+- 행집합에 적용하여 그룹당 하나의 결과를 생성
+
+- 그룹함수와 일반컬럼은 같이 사용할 수 없음
+  (그룹함수는 결과를 묶어서 하나의 결과(행)로 처리하기 때문)
+- 일반컬럼과 그룹함수는 같이 사용할 수 없으나, 
+  예외적으로 Group By절에 사용되는 컬럼은 그룹함수와 같이 사용 가능
+
+   AVG([DISTINCT|ALL] n)           : 평균값  
+   COUNT({*|[DISTINCT|ALL] expr})  : row수
+   MAX([DISTINCT|ALL] expr)        : 최대값
+   MIN([DISTINCT|ALL] expr)        : 최소값
+   SUM([DISTINCT|ALL] n)           : 합
+   STDDEV([DISTINCT|ALL] x)        : 표준편차
+   VARIANCE([DISTINCT|ALL] x)      : 분산
+
+   * count(*)를 제외한 모든 Group Function은 Null을 배제하고 수행한다.
+     Null을 포함하고 싶다면 NVL함수를 사용한다.
+
+   * DISTINCT나 ALL을 쓰지 않으면 Default가 ALL이다.
+
+   * AVG,SUM, STDDEV, VARIANCE는 반드시 숫자형이다.
+
+
+1. SUM(column_int)
+: 그룹 내의 "숫자 열"의 합계를 계산하는 함수
+	- 주로 GROUP BY 절과 함께 사용되어 특정 열을 기준으로 데이터를 그룹화하고,
+	 그룹 내에서 해당 열의 값들의 합계를 계산
+	-  NULL 값을 무시하고 계산하므로, 
+	  합계를 계산할 때 NULL 값을 가진 행은 합산에 포함되지 않음
+
+ex) 그룹화 없이 전체 테이블의 열의 합계 구하는 SQL
+SELECT SUM(salary) FROM employees;	-- 모든 행의 "salary" 열 값을 합산
+
+
+
+2. AVG(column_int)
+: 숫자 열의 평균 값을 계산하는 데 사용되는 그룹 함수
+	- 주로 GROUP BY 절과 함께 사용되어 특정 열을 기준으로 데이터를 그룹화하고, 
+	  그룹 내에서 해당 열의 값들의 평균을 계산
+	-  NULL 값을 무시하고 계산하므로, 
+	  평균을 계산할 때 NULL 값을 가진 행은 평균에 포함되지 않음
+
+ex) 그룹화 없이 전체 테이블의 열의 평균을 구하는 SQL
+SELECT AVG(salary) FROM employees;		-- "salary" 열 값을 평균
+
+
+
+3. Max()
+: 숫자나 날짜 열에서 최대 값을 찾는 데 사용되는 그룹 함수
+	- 주로 GROUP BY 절과 함께 사용되어 특정 열을 기준으로 데이터를 그룹화하고, 
+	  그룹 내에서 해당 열의 값들의 '최대값'을 계산
+	- 날짜 열 데이터 최대값 : 가장 최근 날짜(내림차순 정렬시 가장 먼저 출력)
+	- 숫자 데이터 최대값: 가장 큰 수
+	- 문자 데이터 최대값: 알파벳이 가장 나중에 나오는 문자(사전 역순: Z,Y,X...)
+
+ex) 사원 테이블에서 가장 최근에 입사한 입사일을 출력하는 SQL문
+SELECT MAX(hiredate) FROM emp;          -- 87/07/13
+SELECT hiredate FROM emp ORDER BY hiredate DESC;    -- 내림차순 정렬(최근날짜순)
+
+ex) 사원 테이블에서 사원명이 알파벳으로 가장 나중에 나오는 사원명을 구하는 SQL문
+SELECT MAX(ename) FROM emp;             -- WARD
+SELECT ename FROM emp ORDER BY ename DESC;    -- 내림차순 정렬(사전역순)
+
+
+
+4. MIN(column)
+: 숫자나 날짜 열에서 최소 값을 찾는 데 사용되는 그룹 함수
+	- 주로 GROUP BY 절과 함께 사용되어 특정 열을 기준으로 데이터를 그룹화하고, 
+	  그룹 내에서 해당 열의 값들의 '최소값'을 계산
+	- 날짜 열 데이터 최대값 : 가장 오래된 날짜(오름차순 정렬시 가장 먼저 출력)
+	- 숫자 데이터 최대값: 가장 작은 수
+	- 문자 데이터 최대값: 알파벳이 가장 먼저 나오는 문자(사전순: A,B,C...)
+
+ex) 사원 테이블에서 가장 먼저 입사한 입사일을 구하는 SQL문
+SELECT MIN(hiredate) FROM emp;          -- 80/12/17
+SELECT hiredate FROM emp ORDER BY hiredate ASC;    -- 오름차순 정렬(가장 이른날짜순)
+
+ex) 사원명이 알파벳으로 가장 먼저 나오는 사원명을 구하는 SQL문
+SELECT MIN(ename) FROM emp;
+SELECT ename FROM emp ORDER BY ename ASC;    -- 오름차순 정렬(사전순)
+
+
+
+5. COUNT()
+: 특정 조건을 만족하는 행의 수를 세는 데 사용되는 그룹 함수
+	- 주로 GROUP BY 절과 함께 사용되어 특정 열을 기준으로 데이터를 그룹화하고, 
+	  그룹 내에서 조건을 만족하는 행의 수를 계산
+
+형식) 	1. COUNT(컬럼명)
+	  : 특정 컬럼의 값이 NULL이 아닌 행의 수를 세는 함수
+	  -  NULL 값을 무시하고 계산
+	ex) SELECT COUNT(customer_id) FROM orders;
+		- customer_id" 컬럼의 값이 NULL이 아닌 행의 수를 셈
+
+	2. COUNT(*)
+	  : 모든 행의 수를 세는 함수
+	  - 테이블 내의 모든 행 수를 세는 데 사용
+	ex) SELECT COUNT(*) FROM products;
+		-  "products" 테이블의 모든 행 수를 셈
+
+
+
+
+
+

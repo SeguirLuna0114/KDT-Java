@@ -1,0 +1,33 @@
+* DECODE 함수
+: 조건에 따라 다른 결과를 반환하거나 값들을 비교하여 대응되는 값을 선택하는 데에 사용
+
+- CASE 문과 유사한 역할(복잡한 조건을 처리해야 할 때는 CASE 문이 더 가독성이 좋음)
+- IF-THEN-ELSE 형식과 비슷
+- 특히 여러 개의 조건을 비교하고자 할 때 유용함
+
+구문)	DECODE(expression, search_value1, result1,
+                 	   search_value2, result2,
+                 		...
+                 	   default_result)
+		- expression: 비교할 표현식 또는 컬럼
+		- search_value1, search_value2, ...: 비교할 값들
+		-  result1, result2, ...: 대응되는 search_value에 대한 결과 값들
+		- default_result: 위의 모든 비교 값에 대한 결과가 없을 경우 반환할 기본 결과 값
+
+
+ex) 'emp' 테이블에서 직급에 따라 등급을 부여
+	SELECT ename, job,
+       		DECODE(job,
+              		'MANAGER', 'High',
+              		'CLERK', 'Low',
+              		'OTHER', 'Normal') AS job_grade
+	FROM emp;
+
+
+
+
+
+
+
+
+

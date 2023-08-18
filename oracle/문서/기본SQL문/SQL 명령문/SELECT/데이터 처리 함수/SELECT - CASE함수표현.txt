@@ -1,0 +1,35 @@
+* CASE 함수/표현
+:  조건에 따라 다른 결과를 반환하는 데 사용되는 유용
+
+- 복잡한 조건 로직을 처리하거나 데이터를 변환하는 데 사용
+
+구문)	 CASE
+    		WHEN condition1 THEN result1
+    		WHEN condition2 THEN result2
+    		...
+    		ELSE default_result
+	 END
+	- condition1, condition2, ...: 조건을 나타내는 표현식
+	- result1, result2, ...: 조건이 참일 경우 반환할 결과 값
+	- default_result: 위의 모든 조건이 거짓일 경우 반환할 기본 결과 값
+
+ex) 직급이 'MANAGER'인 경우 'High', 'CLERK'인 경우 'Low', 그리고 그 외의 경우에는 'Normal'로 job_grade 컬럼에 대응되는 값을 반환
+	SELECT ename, job,
+       		CASE
+           		WHEN job = 'MANAGER' THEN 'High'
+           		WHEN job = 'CLERK' THEN 'Low'
+           		ELSE 'Normal'
+       		END AS job_grade
+	FROM emp;
+
+
+
+
+
+
+
+
+
+
+
+

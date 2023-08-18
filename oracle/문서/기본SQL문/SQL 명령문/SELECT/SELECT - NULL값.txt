@@ -21,14 +21,6 @@
 			    - orders 테이블에서 ship_date 컬럼 값이 NULL이 아닌 경우 선택
 
 
-* NVL(column, replacement_value)함수
-: 주어진 컬럼이 NULL인 경우에 대체할 값을 반환
-
-- NVL: "Null Value"의 약자
-- NULL 값을 다른 값으로 대체하고자 할 때 사용
-
-ex) 사원 테이블(emp)에 소속된 사원들의 연봉(연봉 = 급여(sal) * 12 + 커미션(comm))
-	SELECT ename, job, sal, comm, sal*12 + NVL(comm, 0) FROM emp;
 
 
 
