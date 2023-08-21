@@ -1,0 +1,108 @@
+* ANSI JOIN
+: JOIN 연산을 더 명확하고 가독성 있게 작성할 수 있도록 도와주며, 
+  다양한 종류의 JOIN을 일관되게 사용할 수 있게 해줌
+	- JOIN 조건을 ON 절에 명시하여 명확한 결합 조건을 나타낼 수 있음
+
+* ON절
+: 두 개 이상의 테이블을 조인할 때, 각 테이블의 어떤 열을 기반으로 조인할 것인지를 명시
+	- INNER JOIN, OUTER JOIN, CROSS JOIN 등의 JOIN 유형에서 사용됨
+	- 조인되는 테이블의 열과 해당 열의 값을 비교하는 표현식을 작성
+
+
+* USING (common_column)절
+: 두 테이블 간에 공통된 열의 이름을 명시하여 조인을 수행하는 방식
+	- NATURAL JOIN이나 INNER/OUTER JOIN에서 특정한 열을 기반으로 조인할 때 사용
+	  단, 조인에 사용되는 "열의 이름"이 "두 테이블"에서 정확히 "같아야함"
+	- 공통된 열의 값이 일치하는 행들만 결과로 반환됨
+	- USING 절은 INNER JOIN이나 CROSS JOIN과 함께 사용하는 것을 권장
+		- OUTER JOIN에서는 ON 절을 사용하여 조인 조건을 명시적으로 지정해야 함
+
+구문)	SELECT *
+	FROM table1
+	[NATURAL/INNER/OUTER] JOIN table2
+	USING (common_column);
+		- common_column: 두 테이블 간에 공통된 열의 이름
+
+
+
+* ANSI JOIN 형식
+1. ANSI CROSS JOIN
+: 두 개 이상의 테이블 간의 모든 가능한 조합을 만들어 결과를 반환하는 JOIN 연산
+	- 왼쪽 테이블의 각 행에 오른쪽 테이블의 모든 행을 조합하여 결과를 생성
+	- 두 개의 테이블 간에 가능한 모든 조합을 찾을 때 사용
+구문)	SELECT *
+	FROM table1
+	CROSS JOIN table2;
+	- table1의 각 행마다 table2의 모든 행과 결합하여 결과를 생성
+
+
+2. INNER JOIN
+: 두 개의 테이블 간에 공통된 값들을 기반으로 행을 결합하는 JOIN 유형
+	- 결과는 두 테이블 간에 공통된 값들을 가지고 있는 행들로 구성됨
+
+구문) 	SELECT column1, column2,... 
+	FROM table1
+	INNER JOIN table2
+	ON table1.column = table2.column
+	WHERE 조건;
+	
+	1. 조인 조건에 따라 두 테이블 간에 공통된 값이 있는 행들만 선택
+	2. NULL 값 제외: INNER JOIN은 조인 조건을 만족하지 않는
+			NULL 값을 가진 행들을 제외하고 조인을 수행
+
+
+
+3. NATURAL JOIN
+: 두 테이블 간에 "동일한 이름"을 가진 열들을 기반으로 자동으로 조인하는 연산
+	- 두 테이블에서 동일한 열 이름을 가진 열을 찾아 
+	  해당 열을 기반으로 INNER JOIN을 수행하는 것
+	- 동일한 이름을 가진 열들이 결합 조건으로 사용됨
+
+구문)	SELECT column1, column2,... 
+	FROM table1
+	NATURAL JOIN table2
+	WHERE 조건;
+
+
+
+
+4. OUTER JOIN
+: 공통된 값 뿐만 아니라 한쪽 테이블에만 존재하는 값도 포함하여 행을 결합
+	- 유형: LEFT OUTER JOIN, RIGHT OUTER JOIN, FULL OUTER JOIN
+	- 하나의 테이블에는 값이 있지만 다른 테이블에는 없는 행을 표시하는 데 유용
+		(데이터의 누락된 정보나 NULL 값을 다루는데 유용)
+
+구문)	SELECT column1, column2,... 
+	FROM table1
+	[LEFT/RIGHT/FULL] OUTER JOIN table2
+	ON table1.column = table2.column;
+
+	1) LEFT OUTER JOIN
+	   : 왼쪽 테이블의 모든 행을 결과에 포함시키고,
+	     오른쪽 테이블과 조인되는 행들을 추가로 포함시키는 조인 유형
+		SELECT *
+		FROM table1
+		LEFT OUTER JOIN table2
+		ON table1.column = table2.column;
+
+	2) RIGHT OUTER JOIN
+	   : 오른쪽 테이블의 모든 행을 결과에 포함시키고,
+	     왼쪽 테이블과 조인되는 행들을 추가로 포함시키는 조인 유형
+		SELECT *
+		FROM table1
+		LEFT OUTER JOIN table2
+		ON table1.column = table2.column;
+
+	3) FULL OUTER JOIN
+	   : 두 테이블의 모든 행을 결과에 포함시키며, 
+	     조인되는 행이 없는 경우에도 해당 테이블의 데이터를 보여줌
+		SELECT *
+		FROM table1
+		FULL OUTER JOIN table2
+		ON table1.column = table2.column;
+
+
+
+
+
+
