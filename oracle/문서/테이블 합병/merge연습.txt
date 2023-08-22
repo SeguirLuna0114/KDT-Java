@@ -1,19 +1,54 @@
 * 테이블 구조가 동일한 두 테이블의 MERGE 연습
 
-  MERGE : 구조가 같은 2개의 테이블을 하나의 테이블로 합치는 기능.
-  MERGE명령을 수행할때 기존에 존재하는 행(ROW)이 있으면 새로운     
-  값으로 UPDATE되고, 존재하지 않으면 새로운 행(ROW)으로 추가된다.
+o MERGE 명령문
+  : 구조가 같은 2 개의 테이블을 조합하거나 병합하여 하나의 테이블로 합치는 기능
+	-  주로 두 개의 테이블 사이에서 데이터를 조합하고, 
+	  일치하는 행을 업데이트하거나 새로운 행을 추가하는 작업을 수행할 때 사용
+	- MERGE명령을 수행할때 
+	 기존에 존재하는 행(ROW)이 있으면 새로운 값으로 UPDATE되고,
+	 존재하지 않으면 새로운 행(ROW)으로 추가된다.
+	- 두 테이블의 구조는 일치해야 함
+	   : 열의 수, 열의 이름, 데이터 유형이 동일해야 함
+
+구문)	MERGE INTO target_table USING source_table ON condition
+	WHEN MATCHED THEN
+    		UPDATE SET column1 = value1,
+			   column2 = value2, ...
+	WHEN NOT MATCHED THEN
+    		INSERT (column1, column2, ...)
+		VALUES (value1, value2, ...);
+
+		- target_table: 병합 작업의 대상이 되는 테이블
+				수정 또는 새로운 데이터의 대상이 되며, 병합 후의 결과가 저장됨
+		- source_table: 병합 작업의 소스가 되는 테이블로, target_table과 병합됨
+				대상 테이블로 데이터를 제공하거나 업데이트하는데 사용
+		- condition: 어떤 행들이 일치하는지를 판별하는 조건을 정의
+		- WHEN MATCHED: source_table과 target_table의 행들이 일치할 때 
+				수행할 작업을 정의
+		- WHEN NOT MATCHED: 일치하지 않는 행들에 대한 작업을 정의
+
+  
+# 2개의 테이블을 병합하는 과정
 
 1. create table emp01 as select * from emp;
+	- "emp" 테이블의 모든 데이터를 복사하여 "emp01"이라는 새로운 테이블을 생성
 
 2. create table emp02 as select * from emp where job='MANAGER';
+	- "emp" 테이블에서 직업이 'MANAGER'인 데이터만 선택하여
+	   "emp02"라는 새로운 테이블을 생성
 
 3. update emp02 set job='Test';
+	- "emp02" 테이블에서 모든 레코드의 직업을 'Test'로 업데이트
 
 4. insert into emp02 values(8000, 'ahn', 'top', 7566, '2023/02/09',1200, 10, 20);
+	- "emp02" 테이블에 새로운 레코드를 추가
 
 5. select * from emp02; (확인)
+	- "emp02" 테이블의 내용을 확인
 
+**"emp01" 테이블과 "emp02" 테이블을 병합
+	- 일치하는 경우 "emp01" 테이블을 업데이트하고, 
+	  일치하지 않는 경우 "emp01" 테이블에 새로운 레코드를 삽입
 6. merge into emp01
 	using emp02
 	on(emp01.empno = emp02.empno)
@@ -30,5 +65,10 @@
 		          emp02.mgr,emp02.hiredate, 
 		         emp02.sal, emp02.comm,emp02.deptno);
 
+
 7. select * from emp01; (합병된 결과 확인)
+	- 병합 결과인 "emp01" 테이블의 내용을 확인
+
+
+
 

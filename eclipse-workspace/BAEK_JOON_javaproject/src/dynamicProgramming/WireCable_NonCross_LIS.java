@@ -78,8 +78,25 @@ public class WireCable_NonCross_LIS {
 	 * -  for문은 반대로 A전봇대를 기준으로 이전의 A전봇대들을 살펴보면서 메모이제이션
 	 */
 	static int[] DP;
-	static void UsingFor(int N) {
-		
+	static void UsingFor() {
+		// N을 입력받지 않고도 실행 가능
+		for (int i=0; i<DP.length; i++) {
+			// 해당 위치에서의 최소 개수는 1이기에, 1로 초기화
+			DP[i] = 1;
+			
+			/*
+			 * i번째 전봇대를 기준으로 이전의 전봇대들의
+			 * 전선을 연결하기 위한 탐색
+			 * 이전의 A전봇대 중 B에 연결 가능하려면 i번째의 B전봇대보다 값이 작아야 한다.
+			 * 즉, i번째 전봇대에 연결된 B전봇대는
+			 * 탐색할 j번째 전봇대에 연결된 B전봇대보다 값이 커야함 
+			 */
+			for (int j=0; j<i; j++) {
+				if(wire[i][1] > wire[j][1]) {
+					DP[i] = Math.max(DP[i], DP[j]+1);
+				}
+			}
+		}
 	}
 	
 
@@ -104,13 +121,12 @@ public class WireCable_NonCross_LIS {
 			wire[i][1] = Integer.parseInt(st.nextToken());
 		}
 		
-		// wire배열을 A전봇대 기준으로 정렬 
+		// 첫 번째 원소(A전봇대)를 기준으로 오름차순으로 정렬
 		/** Arrays.sort() 메소드 자체에는 
 		 * 2차원 배열을 정렬해주는 것이 없으므로 
 		 * comparator를 이용하여 다음과 같이 정렬
 		 */
-		Arrays.sort(wire, Comparator<int[]>() {
-			
+		Arrays.sort(wire, new Comparator<int[]>() {			
 			@Override
 			public int compare(int[] wire1, int[] wire2) {
 				return wire1[0] - wire2[0];
@@ -118,6 +134,29 @@ public class WireCable_NonCross_LIS {
 		});
 		
 		
+		// 방법1) Top-Down 방식(재귀) 사용
+		// i번째 A전봇를 기준으로 연결가능한 개수 탐색 및 최대값 찾기
+		int max = 0;
+		for (int i=0; i<N; i++) {
+			max = Math.max(LIS(i), max);
+		}
+		
+		// 출력 값은 전체 전선 개수 - 설치 가능한 최대 개수
+		System.out.println(N - max);
+		
+		// 방법2) Bottom-Up 방식 사용
+		DP = new int[N];
+		
+		// DP배열에 가능한 개수 중 최대값을 입력
+		UsingFor();
+		
+		int maxVal = 0;
+		for (int i=0; i < N; i++) {
+			maxVal = Math.max(maxVal, DP[i]);
+		}
+		
+		// 출력 값은 전체 전선 개수 - 설치 가능한 최대 개수
+		System.out.println(N - maxVal);
 	}
 
 }
