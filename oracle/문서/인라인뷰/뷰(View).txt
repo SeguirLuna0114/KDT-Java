@@ -1,0 +1,106 @@
+* 뷰(View)
+: 하나 이상의 테이블로부터 데이터를 가져와서 
+  가상의 테이블처럼 동작하는 데이터베이스 객체
+	- 기존의 테이블이나 다른 뷰로부터 추출한 결과 데이터 집합
+	- 데이터의 논리적 구조를 간결하게 표현하거나, 복잡한 쿼리를 단순화하거나, 
+	  접근 권한을 제어하는 등 다양한 목적으로 사용
+
+	1. 뷰는 실제로 데이터를 저장하지 않고, 
+	   기존 테이블의 데이터를 참조하여 결과를 생성하는 가상의 테이블
+		- 뷰를 정의할 때마다 정의된 쿼리에 따라 실시간으로 데이터를 가져옴
+	2. 뷰는 원본 테이블의 데이터를 필요한 부분만 추출하거나 가공하여 
+	   논리적으로 추상화시킬 수 있음
+
+o 뷰 생성 - CREATE VIEW 문을 사용
+구문)	CREATE VIEW view_name AS
+	SELECT column1, column2, ...
+	FROM table_name
+	WHERE condition;
+	- view_name: 생성할 뷰의 이름
+	- column1, column2, ...: 선택적으로 뷰에 포함될 열들
+	- table_name: 데이터를 가져올 원본 테이블의 이름
+	- condition: 선택적으로 데이터 추출을 위한 조건
+
+
+o 현재 사용자가 소유한 모든 뷰를 조회
+	SELECT * FROM user_views;
+	- user_views: 데이터 딕셔너리 뷰 중 하나로, 
+		      데이터베이스 객체와 관련된 정보를 담고 있는 뷰
+
+o 뷰 삭제
+	DROP WIEW 뷰이름;
+
+
+o 뷰(View) 종류
+1. 단순 뷰 (Simple View)
+  : 하나 이상의 기본 테이블로부터 데이터를 선택하여 생성된 뷰
+	- 데이터의 가공 없이 원본 데이터를 보여주는 역할
+	- 주로 데이터를 읽는(read-only) 용도로 사용
+
+구문) 	CREATE VIEW view_name AS
+	SELECT column1, column2, ...
+	FROM table_name
+	WHERE condition;
+		- view_name: 생성할 뷰의 이름을 지정
+		- column1, column2, ...: 뷰에서 보여줄 열 선택. 원하는 열이름 나열
+		- table_name: 뷰를 생성할 때 데이터를 가져올 원본 테이블의 이름 지정
+		- condition: 선택적으로 데이터를 추출할 때 적용할 조건 지정
+
+
+2. 복합 뷰 (Complex View)
+  : 여러 개의 테이블로부터 데이터를 가져와서 
+    복잡한 쿼리나 계산을 통해 데이터를 구성하는 뷰
+	- 여러 개의 테이블을 조인하거나 계산을 수행하여 데이터를 추출
+
+o 조인 절을 사용한 복합 뷰 생성
+	-  조인(join) 절을 사용하여 여러 테이블로부터 데이터를 가져와 조합할 수 있음
+		(서로 관련 있는 테이블 간의 데이터를 연결하여 하나의 결과 집합으로 반환)
+
+구문)	CREATE VIEW view_name AS
+	SELECT columns
+	FROM table1
+	JOIN table2 ON join_condition
+	[JOIN table3 ON join_condition...]
+	WHERE condition;
+		- view_name: 생성할 뷰의 이름을 지정
+		- columns: 뷰에서 보여줄 열들을 선택
+		- table1, table2, table3: 데이터를 가져올 원본 테이블들의 이름을 나열
+		- join_condition: 각 테이블 간의 조인 조건을 지정
+				   이 조건에 따라 테이블들이 조인됨
+		- condition: 선택적으로 데이터를 추출할 때 적용할 추가적인 조건을 지정
+	
+
+o 그룹 함수를 사용한 복합 뷰 생성
+	- 그룹 함수(group function)를 사용하여 데이터를 그룹화하고 집계 함수를 적용 가능
+	- 그룹 내에서 계산된 값을 포함하는 뷰를 생성 가능
+
+구문)	CREATE VIEW view_name AS
+	SELECT group_columns, aggregate_function(column) AS alias
+	FROM table1, table2
+	WHERE condition
+	GROUP BY group_columns;
+		- aggregate_function(column) AS alias
+		  : 그룹 내에서 집계 함수를 적용하여 원하는 결과를 계산
+		    집계 함수는 SUM, AVG, COUNT, MAX, MIN 등이 있음
+		      계산된 값을 별칭(alias)으로 지정
+		- table1, table2: 데이터를 가져올 원본 테이블의 이름을 지정
+		- WHERE condition: 테이블 간의 조인 조건을 지정. 데이터를 조합하는 데 사용
+		- GROUP BY group_columns: 그룹화된 결과를 특정 열들을 기준으로 그룹화
+
+	ex)	CREATE VIEW sal_view AS
+		SELECT dname, max(sal) MAX, min(sal) MIN 
+		FROM dept, emp
+		WHERE dept.deptno = emp.deptno
+		group BY dname;
+
+
+3. 인라인 뷰 (Inline View 또는 Derived View)
+  : 쿼리 안에서 하위 쿼리(subquery)로 사용되는 뷰
+	- 주로 FROM 절 내에 쿼리를 삽입하여 중간 결과를 생성하는 뷰
+
+
+
+
+
+
+

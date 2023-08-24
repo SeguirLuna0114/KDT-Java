@@ -1,25 +1,105 @@
-* 제약조건 추가
+* ALTER TABLE 명령으로 제약조건 추가
+- 테이블이 이미 존재하고 있는 경우,
+	        ALTER TABLE 명령을 사용하여 테이블 레벨에서 제약 조건을 추가
+- 제약 조건을 설정할때 테이블 레벨 방식만 가능한 경우 중 하나
 
-   alter table 테이블명 add primary key(empno);
+구문) i) ADD CONSTRAINT 키워드를 사용하여 명시적으로 제약 조건의 이름과 표현식을 지정
+	ALTER TABLE table_name
+	ADD CONSTRAINT constraint_name constraint_expression;
+		- table_name: 제약 조건을 추가할 테이블의 이름
+		- constraint_name: 추가할 제약 조건의 이름
+				    이 이름은 테이블 내에서 고유해야 함
+		- constraint_expression: 추가할 제약 조건의 실제 표현식
+					 해당 제약 조건이 어떤 규칙을 따라야 하는지를 명시
 
-   alter table 테이블명 add unique(ename);
-
-   alter table 테이블명 add foreign key(deptno) references
-        dept(deptno);
-
-   alter table 테이블명 modify 컬럼명 not null;
-
-   alter table 테이블명 add constraint dept01_deptno_pk
-     primary key(deptno);
+	- PRIMARY KEY(기본 키) 추가
+		ALTER TABLE 테이블명
+		ADD CONSTRAINT constraint_name PRIMARY KEY (컬럼명);
 
 
+	- 고유 제약 조건 추가
+		ALTER TABLE 테이블명
+		ADD CONSTRAINT constraint_name UNIQUE (컬럼명);
 
-* 제약조건 삭제
 
-   alter table 테이블명 drop primary key;
+	- FOREIGN KEY(외래 키) 제약 조건 추가
+		ALTER TABLE 테이블명
+		ADD CONSTRAINT constraint_name FOREIGN KEY (컬럼명)
+						REFERENCES 참조테이블(참조컬럼);
 
-   alter table 테이블명 drop unique(ename);
+	*  컬럼의 기본값(DEFAULT)을 변경하거나 
+	    컬럼의 NOT NULL 제약 조건을 추가하는 구문에서는 
+	     제약 조건과 관련된 CONSTRAINT 키워드를 사용X
+		=> 제약 조건과는 별개로 컬럼의 기본값을 설정하는 것이기 때문
+	* CONSTRAINT 키워드는 주로 기본 키, 외래 키, 고유 제약 조건 등과 같이 
+	   데이터베이스의 무결성과 관계를 정의하는 제약 조건을 설정할 때 사용
 
-   alter table 테이블명 drop constraint constraint_name;
+      ii) CONSTRAINT 키워드를 생략하고 제약조건의 컬럼만을 명시하여,
+	   데이터베이스 시스템이 자동으로 제약조건명을 생성해 해당 제약 조건을 추가
+	ALTER TABLE table_name
+	ADD constraint_expression;
+
+	- PRIMARY KEY(기본 키) 추가
+		ALTER TABLE 테이블명
+		ADD PRIMARY KEY (컬럼명);
+
+	- 고유 제약 조건 추가
+		ALTER TABLE 테이블명
+		ADD UNIQUE (컬럼명);
+
+	- FOREIGN KEY(외래 키) 제약 조건 추가
+		ALTER TABLE 테이블명
+		ADD FOREIGN KEY (컬럼명) REFERENCES 참조테이블(참조컬럼);
+
+	- NOT NULL 제약 조건 추가
+		ALTER TABLE 테이블명
+		MODIFY 컬럼명 NOT NULL;
+
+
+
+* ALTER TABLE 문을 사용하여 제약 조건을 제거/삭제
+
+구문)	ALTER TABLE 테이블명 DROP CONSTRAINT constraint_name;
+
+	1. 기본 키, 고유 제약 조건 삭제
+	   ****	ALTER TABLE 테이블명 DROP PRIMARY KEY; -- 기본 키 제약 조건 삭제
+	
+		ALTER TABLE 테이블명 DROP CONSTRAINT 제약조건이름; -- 고유 제약 조건 삭제
+	
+	ex) -- primary key 제약조건 제거
+	    ALTER TABLE emp01 DROP  CONSTRAINT SYS_C007054;     
+	    ALTER TABLE emp01 DROP PRIMARY KEY; 
+
+
+	2. 외래 키 제약 조건 삭제
+		ALTER TABLE 테이블명 DROP CONSTRAINT 제약조건이름; -- 외래 키 제약 조건 삭제
+
+	ex) -- foreign key 제약조건 제거
+	    ALTER TABLE emp01 DROP CONSTRAINT SYS_C007056;
+
+	
+	3. 고유 제약 조건 삭제
+	   ****	ALTER TABLE 테이블명 DROP UNIQUE(컬럼명);	-- DROP UNIQUE 구문사용
+
+		ALTER TABLE 테이블명 DROP CONSTRAINT 제약조건이름;	
+		
+	ex) -- unique 제약조건 제거
+	    ALTER TABLE emp01 DROP  CONSTRAINT SYS_C007055;
+	    ALTER TABLE emp01 DROP UNIQUE(job);
+
+
+	4. NOT NULL 제약 조건 삭제:
+		ALTER TABLE 테이블명 MODIFY 컬럼명 NULL; -- NOT NULL 제약 조건 삭제
+
+	ex) -- not null 제약조건 제거(check라고 명시된 제약조건명 사용)
+	    ALTER TABLE emp01 DROP  CONSTRAINT SYS_C007053;
+
+
+	5. 기본값 제약조건 삭제
+		ALTER TABLE 테이블명 MODIFY 컬럼명 DEFAULT NULL; -- 기본값 제약 조건 삭제
+
+
+
+                
 
 

@@ -1,0 +1,85 @@
+* 제약조건의 비활성화와 CASCADE
+
+o 제약조건 비활성화 (Disabling Constraints)
+: 데이터베이스에서 제약조건을 임시로 비활성화하는 것을 의미
+	- 비활성화하면 데이터 조작 작업(INSERT, UPDATE, DELETE 등)을 수행할 때 
+	   해당 제약조건을 고려X
+	- 작업을 완료한 후에는 제약조건을 다시 활성화 해야 함
+
+
+* 자식 테이블의 외래키 제약조건 비활성화
+	- 외래키가 설정된 경우, 부모 테이블의 데이터를 삭제하려면,
+  	  참조하는 자식 테이블의 외래키를 비활성화 시켜야한다.
+	- 제약조건을 비활성화하고 작업을 수행한 후, 꼭 외래 키 제약조건을 다시 활성화해야 함
+
+구문)	-- 자식 테이블의 외래 키 제약조건 비활성화
+	ALTER TABLE 자식_테이블명 DISABLE CONSTRAINT 외래키_제약조건명;
+
+	-- 작업 수행 (부모테이블 데이터/레코드 삭제... 등)
+
+	-- 자식테이블의 외래 키 제약조건 다시 활성화
+	ALTER TABLE 자식_테이블명 ENABLE CONSTRAINT 외래키_제약조건명;
+
+
+o CASCADE 옵션
+: 어떤 작업을 수행할 때 해당 작업이 다른 연결된 테이블의 데이터에 영향을 미치는 경우, 
+  이 영향을 자동으로 전파시키는 것을 의미
+ 	- 데이터베이스에서 외래 키(Foreign Key)관계를 가지는 
+	  테이블 간의 동작을 제어하는 제약조건 옵션
+ 	- 기본 테이블에서 수행한 작업이 연결된 다른 테이블에도 자동으로 적용됨
+	  => 부모 테이블의 변경 작업이나 삭제 작업이 
+	      자동으로 관련된 자식 테이블에도 전파되어 수행됨
+
+
+* CASCADE 옵션의 종류
+1. CASCADE DELETE
+: 부모 테이블에서 레코드를 삭제할 때, 이와 관련된 자식 테이블의 레코드도 자동으로 삭제됨
+	- 부모 테이블의 레코드 삭제가 자동으로 자식 테이블의 레코드 삭제를 트리거하게 됨
+	- ON DELETE CASCADE: 부모테이블 데이터가 삭제되면, 
+                     	     참조하는 자식테이블의 데이터도 같이 삭제해주는 옵션
+
+CREATE TABLE emp01( empno NUMBER(4) PRIMARY KEY,
+                    ename VARCHAR2(10) NOT NULL,
+                    job VARCHAR2(10) UNIQUE,
+                    deptno NUMBER(2) REFERENCES dept01(deptno) ON DELETE CASCADE );
+                    -- dept01테이블 내 deptno컬럼을 foreign key 설정
+
+구문)	'ON DELETE CASCADE' 옵션 사용
+	1) CONSTRAINT 키워드 사용
+	CREATE TABLE 자식_테이블 (
+  		자식_기본키 NUMBER PRIMARY KEY,
+  		부모_기본키 NUMBER,		-- 부모 테이블에서 PRIMARY KEY로 설정됨
+  		-- 기타 열들...
+  		CONSTRAINT fk_자식_부모 FOREIGN KEY (부모_기본키)
+    			REFERENCES 부모_테이블 (부모_기본키)
+    			ON DELETE CASCADE
+	);
+
+	2) CONSTRAINT 키워드 없이 ON DELETE CASCADE 옵션 설정
+	CREATE TABLE 자식_테이블 (
+		-- 기타 열들...
+  		외래키컬럼명 데이터타입  REFERENCES 부모_테이블(부모_기본키) 
+			ON DELETE CASCADE
+	);
+
+
+
+2. CASCADE UPDATE
+: 부모 테이블에서 기본 키 값을 변경할 때, 
+  이와 관련된 자식 테이블의 외래 키 값도 자동으로 변경됨
+	- 부모 테이블의 레코드 변경이 자식 테이블에도 자동으로 전파됨
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

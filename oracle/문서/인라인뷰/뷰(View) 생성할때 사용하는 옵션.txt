@@ -1,0 +1,69 @@
+* 뷰를 생성할 때 사용되는 옵션
+
+ 1. OR REPLACE 옵션
+  : 뷰를 생성할 때 이미 동일한 이름의 뷰가 존재하는 경우,
+    기존의 뷰를 대체하도록 지정하는 옵션
+  	- 기존에 뷰가 존재하지 않으면 뷰를 생성
+	- 만일 동일한 이름을 가진 뷰가  존재하면, 이미 존재하는 뷰를 "새로운 정의로 대체"
+		* or replace 옵션 없이 기존에 존재하는 뷰를 생성시,
+		  오류발생(name is already used)
+	- 기존 뷰를 수정하거나 갱신하지 않고 새로운 정의로 뷰를 대체
+
+구문)	CREATE OR REPLACE VIEW view_name AS
+	SELECT columns
+	FROM tables
+	WHERE conditions;
+		- view_name: 생성하려는 뷰의 이름을 지정
+		- columns: 뷰에서 보여줄 열들을 선택
+		- tables: 데이터를 가져올 원본 테이블의 이름을 지정
+		- conditions: 선택적으로 데이터를 필터링하는 조건을 지정
+
+
+2. WITH CHECK OPTION 옵션
+  : 뷰에 데이터를 삽입하거나 갱신할 때 뷰에 정의된 조건을 만족해야 한다는 것을 강제
+	- where 조건절에 사용된 값을 수정하지 못하도록 만들어주는 옵션
+	- 이를 통해 특정 조건을 충족하지 않는 데이터의 삽입 또는 갱신을 방지 가능
+
+구문)	CREATE VIEW view_name AS
+	SELECT columns
+	FROM tables
+	WHERE conditions
+	WITH CHECK OPTION;
+	
+	- WHERE 절이나 뷰의 정의를 변경할 때 그에 따라 작동
+	1. WHERE 조건을 수정시 중지됨
+	   : 뷰의 WHERE 절에 정의된 조건을 수정할 경우,  
+	     조건이 수정되면 해당 조건을 충족하지 않는 데이터를 삽입하거나 갱신할 수 없도록 강제
+	2. 뷰의 정의 자체가 변경되는 경우 중지됨
+	   : 조건이 충족되지 않는 데이터를 삽입하거나 갱신을 방지
+
+
+3. WITH READ ONLY 옵션
+  :뷰를 읽기 전용으로 만들어 다른 사용자가 뷰의 내용을 변경할 수 없도록 강제
+	- 뷰 생성시 WHERE절에서 사용
+	- 뷰를 통해서 기본 테이블의 내용을 수정하지 못하도록 막음
+	- 뷰를 통해 데이터를 조회하는 것은 가능하지만, 
+	  뷰를 통해 얻은 결과를 토대로 원본 테이블의 데이터를 수정하거나 삭제하는 작업은 불가능
+
+구문)	CREATE VIEW view_name AS
+	SELECT columns
+	FROM tables
+	WHERE conditions
+	WITH READ ONLY;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
