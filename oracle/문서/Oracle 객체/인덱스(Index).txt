@@ -88,6 +88,38 @@ o 인덱스 종류
 	ON table_name (column_name);
 
 	
+3. 결합 인덱스/다중 컬럼 인덱스(Multi-Column Index)
+  : 두 개 이상의 컬럼을 함께 사용하여 생성한 인덱스
+	- 해당 컬럼들의 값들을 결합하여 복합적으로 인덱싱
+	1. 여러 컬럼을 동시에 활용한 검색 및 정렬 작업의 성능을 향상
+		- 인덱스를 사용한 검색이나 정렬 작업에서 해당 컬럼들의 값을 함께 고려 가능
+	2. 여러 컬럼의 값을 조합한 검색이 가능
+구문)	CREATE INDEX idx_combined
+	ON table_name (column_A, column_B);
+
+
+4. 함수 기반 인덱스(Function-Based Index)
+  : 특정 컬럼의 값을 함수를 적용한 결과를 기반으로 생성한 인덱스
+	- 원래의 데이터 값 대신 함수의 결과 값을 인덱스로 사용하여 
+	   데이터베이스 내의 검색 및 정렬 작업을 최적화하는데 활용
+	- 사용 예
+		- 문자열 컬럼에 대해 대소문자를 구분하지 않고 검색
+		- 날짜 컬럼에 대해 특정 기간 내의 데이터를 검색
+		- 숫자 컬럼에 대해 계산을 수행한 결과를 인덱싱하여 검색 
+구문)	CREATE INDEX index_name
+	ON table_name (function(column_name));
+		- function(column_name): 인덱스로 사용할 컬럼에 적용할 함수를 지정
+				함수는 해당 컬럼의 값을 변환하거나 연산한 결과를 인덱스로 사용
+
+ex) first_name 컬럼의 첫 글자를 대문자로 변환
+	CREATE INDEX idx_upper_first_name
+	ON employees (UPPER(first_name));
+
+ex) 연봉 계산
+	CREATE INDEX idx_emp01_annsal 
+	ON emp(sal*12 +NVL(comm, 0));
+
+
 
 
 
