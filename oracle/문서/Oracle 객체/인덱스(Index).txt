@@ -1,0 +1,98 @@
+* 인덱스
+ : 테이블의 특정 열(칼럼)에 대한 정렬된 데이터 구조로서, 
+   테이블 "검색을 빠르게" 하기위해 사용되는 객체
+	- 데이터베이스 성능을 향상시키기 위한 중요한 개념
+	- 레코드를 검색하거나 필터링하거나 정렬하는 데 사용
+
+	1. 기본키(Primary Key)로 설정된 컬럼은 자동으로 고유 인덱스로 설정됨
+		- 기본키는 테이블의 각 레코드를 식별하는 유일한 값이어야 하므로, 
+		  기본키 컬럼에 대한 고유 인덱스를 생성
+		- 기본키로 설정된 컬럼에 대한 인덱스는 중복된 값을 허용하지 않음
+	2. 일반적인 인덱스는 중복된 값을 가질 수 있음
+		
+	3. 테이블의 빠른 검색과 관련된 작업을 지원
+
+
+o 인덱스 목록 확인
+구문)	SELECT * FROM user_indexes;
+		- user_indexes 뷰:  현재 사용자가 소유한 인덱스에 대한 정보를 제공하는 뷰
+		- 현재 사용자의 스키마에서 생성된 인덱스에 대한 정보를 조회
+
+
+o 인덱스 생성
+	- CREATE INDEX 문을 사용하여 생성
+	- 어떤 열(칼럼)에 대해 인덱스를 생성할 것인지, 
+	  어떤 유형의 인덱스를 사용할 것인지 등을 정의
+구문)	1. 기본 인덱스 생성 CREATE INDEX
+	CREATE INDEX index_name
+	ON table_name (column_name);
+		- index_name: 생성할 인덱스의 이름을 지정
+		- table_name: 인덱스를 생성할 테이블의 이름을 지정
+		- column_name: 인덱스를 생성할 열(칼럼)의 이름을 지정
+
+	2. 고유 인덱스 생성 CREATE UNIQUE INDEX
+		- 기본키 컬럼에 대한 고유(unique) 인덱스를 생성
+		- 중복된 값을 허용하지 않는 인덱스
+	CREATE UNIQUE INDEX index_name
+	ON table_name (column_name);
+		- index_name: 생성할 고유 인덱스의 이름을 지정
+
+
+o 인덱스 사용
+	- 인덱스를 사용하는 주요 목적은 데이터 접근 성능을 향상시키는 것
+1. 검색 쿼리에서의 인덱스 사용
+	- 가장 일반적인 인덱스 사용 방법은 
+	  SELECT 쿼리의 "WHERE절"에서 "인덱스가 있는 컬럼"을 "사용"하는 것
+	- 인덱스를 통해 검색 조건에 해당하는 행을 빠르게 찾을 수 있음
+	ex) 	인덱스가 있는 last_name 컬럼에서 검색
+		SELECT * FROM employees WHERE last_name = 'Smith';
+
+
+2. 정렬 쿼리에서의 인덱스 사용
+	- 인덱스가 있는 컬럼을 기반으로 정렬된 결과를 얻는 데에도 인덱스를 사용
+	- ORDER BY 절에서 인덱스 컬럼을 사용
+	ex)	employees 테이블의 last_name 컬럼에 대한 인덱스를 활용한 정렬 쿼리
+		SELECT * FROM employees
+		ORDER BY last_name;
+
+
+3. 조인에서의 인덱스 사용
+	- ON 절이나 WHERE 절에서 조인 조건에 사용되는 컬럼을 인덱스 컬럼으로 활용
+	ex)	employees 테이블과 departments 테이블을 조인하는 작업에서 인덱스를 활용
+		SELECT e.first_name, e.last_name, d.department_name
+		FROM employees e
+		JOIN departments d ON e.department_id = d.department_id;
+
+
+o 인덱스 제거/삭제
+구문)	DROP INDEX index_name;
+		- index_name: 제거할 인덱스의 이름을 지정
+
+
+
+o 인덱스 종류
+1. 고유 인덱스 (Unique Index)
+  : 중복된 값을 허용하지 않는 인덱스
+	- 주로 기본키(primary key)나 유니크(unique) 제약 조건을 가진 컬럼에 대해 생성되어
+	  해당 값의 고유성을 유지하며, 중복 데이터를 방지
+	- 해당 컬럼의 값이 이미 인덱스에 존재하는지 검사하므로 중복된 값을 허용X
+구문)	CREATE UNIQUE INDEX index_name
+	ON table_name (column_name);
+
+
+2. 비고유 인덱스(Non-Unique Index)
+  : 중복된 값을 허용하는 인덱스
+	- 데이터베이스에서 가장 일반적으로 사용되는 인덱스 유형
+	- 중복 허용: 중복된 값을 가진 여러 행이 인덱스에 포함될 수 있음
+구문)	CREATE INDEX index_name
+	ON table_name (column_name);
+
+	
+
+
+
+
+
+
+
+

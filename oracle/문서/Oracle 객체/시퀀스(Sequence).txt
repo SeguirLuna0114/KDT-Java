@@ -1,0 +1,90 @@
+* 시퀀스(Sequence)
+: 고유한 숫자 값을 자동으로 생성해주는 데이터베이스 객체
+	- 시퀀스는 보통 테이블의 한 컬럼에 연결되어 
+	   해당 컬럼의 값이 시퀀스의 값을 참조하여 생성됨
+
+	1.  고유한 숫자 값을 생성
+		- 주로 고유한 식별자(primary key) 값을 생성하기 위해 사용
+	2. 시퀀스는 자동으로 값을 증가시켜줌
+		- 자동 증가하는 숫자 값을 필요로 하는 경우 유용하게 활용
+		- 새로운 행이 추가될 때마다 시퀀스의 값은 자동으로 증가
+
+o 시퀀스 생성 방법
+구문)	CREATE SEQUENCE sequence_name
+	START WITH start_value
+	INCREMENT BY increment_value
+	MAXVALUE max_value
+	MINVALUE min_value
+	CACHE cache_size;
+
+		- sequence_name: 시퀀스의 이름을 지정(테이블명_적용컬럼명_seq)
+		- start_value: 시퀀스의 시작 값
+		- increment_value: 시퀀스 값이 증가하는 양을 정의
+		- max_value: 시퀀스의 최대 값. maxvalue까지 구해오면 그 다음은 오류 발생
+		- min_value: 시퀀스의 최소 값
+		- cache_size: 캐시에 저장되는 값의 개수를 지정
+
+o 시퀀스 범위제한 옵션
+1. MAXVALUE 옵션
+ : 시퀀스가 생성할 수 있는 값의 최대값을 제한하는 역할
+	- 시퀀스가 MAXVALUE에 도달하면 더 이상 값을 증가시키지 X
+	- 시퀀스가 최대값을 넘어가는 값을 생성하려고 하면 오류가 발생
+	- MAXVALUE를 명시적으로 설정하지 않으면 기본값(10^27 - 1)을 사용
+
+2. MINVALUE 옵션
+ :  시퀀스가 생성할 수 있는 값의 최소값을 제한하는 역할
+	- MINVALUE에 도달하면 더 이상 값을 감소시키지 X
+	- 기본적으로 Oracle 시퀀스의 MINVALUE는 1로 설정됨
+	- MINVALUE로 설정된 값보다 작은 시작 값을 생성하려 하면 오류가 발생
+
+
+o 시퀀스 사용 방법
+구문)	INSERT INTO your_table (id_column, other_columns)
+	VALUES (sequence_name.NEXTVAL, other_values);
+
+
+o 시퀀스 값 가져오기 위해 사용되는 함수
+1. NEXTVAL 함수
+: 시퀀스에서 다음 값을 가져오는 데 사용되는 함수
+	- 시퀀스의 현재 값 다음에 오는 값을 얻을 수 있음
+	- INSERT 문에서 주로 사용되며, 
+	  해당 테이블의 시퀀스와 연결된 컬럼에 다음 시퀀스 값을 자동으로 삽입하는 데 사용
+
+구문) * 시퀀스와 연결된 컬럼에 시퀀스 값을 자동으로 삽입하는데 사용
+	INSERT INTO your_table (id_column, other_columns)
+	VALUES (sequence_name.NEXTVAL, other_values);
+	
+구문) * 시퀀스의 다음 값을 얻기 위해 사용
+	SELECT sequence_name.NEXTVAL FROM dual;
+	
+
+2. CURRVAL 함수
+ : 시퀀스의 현재 값을 반환하는 함수
+   (현재값 = 이미 호출된 NEXTVAL 함수를 통해 생성된 시퀀스 값)
+	- 반드시 NEXTVAL 함수가 호출된 이후에 사용 가능
+	  (NEXTVAL 함수로 시퀀스 값을 생성한 후, CURRVAL 함수로 생성된 시퀀스 값을 조회)
+	- CURRVAL 함수를 사용하여 해당 시퀀스의 마지막으로 생성된 값을 반환
+				=> 시퀀스의 현재 값을 직접 조회 가능
+
+구문)	SELECT sequence_name.CURRVAL FROM dual;		--  현재 시퀀스의 값을 조회
+
+
+o 시퀀스 정보 조회
+구문)	SELECT * FROM seq;	
+	SELECT * FROM user_sequences;
+		- 현재 사용자가 소유한 시퀀스들의 정보를 user_sequences 테이블에서 
+		  모든 열과 행을 선택하여 조회
+		-  시퀀스의 이름, 시작 값, 증가 값, 최소 값, 최대 값 등의 정보를 확인
+
+o 시퀀스 삭제
+	- 시퀀스를 삭제하면 해당 시퀀스와 관련된 데이터도 영구적으로 삭제될 수 있음
+구문)	DROP SEQUENCE sequence_name;
+		- sequence_name: 삭제하려는 시퀀스의 이름
+
+
+o 시퀀스 최대값 수정
+구문)	ALTER SEQUENCE sequence_name
+	MAXVALUE new_max_value;
+
+
+
