@@ -1,0 +1,64 @@
+o PL/SQL에서 변수 선언 시 사용하는 두 가지 유형의 변수 자료형
+
+1. 스칼라 변수(Scalar Variables)
+ : 단일 값만 저장하는 변수
+	- 숫자, 문자열, 날짜, 부울(Boolean) 등과 같은 데이터 타입의 값을 저장하는 데 사용
+	- 값을 직접 저장하며, 해당 값이 변수에 복사됨 => 이렇게 하나의 값을 갖게됨
+	- 일반적으로 단순한 연산이나 데이터의 저장에 활용
+
+구문)	DECLARE
+		-- 변수 선언
+		-- 숫자 변수 
+   		age NUMBER := 30; 
+		salary NUMBER := 50000.75;
+		-- 문자열 변수       
+   		name VARCHAR2(50) := 'John';  
+		-- 날짜 변수
+		birth_date DATE := TO_DATE('1990-05-15', 'YYYY-MM-DD');
+		-- 논리(부울) 변수
+		is_active BOOLEAN := TRUE;
+
+	BEGIN
+   		-- 변수 age와 name 사용
+	END;
+
+
+2. 레퍼런스 변수(Reference Variables)
+ : 데이터가 저장된 메모리 주소를 참조하는 변수
+	- 해당 데이터의 위치를 가리키는 역할
+	  -> 데이터를 복사하지 않고 메모리 주소를 공유하기 때문에,
+	     일부 상황에서 성능 향상을 가져올 수 있음
+	- 같은 데이터에 대한 여러 개의 참조를 만들 수 있음
+	- 주로 레코드(record)나 객체(object)와 같이 복합적인 데이터 타입을 다룰 때 사용
+
+o %TYPE 키워드
+ : 변수의 데이터 타입을 다른 변수나 컬럼의 타입과 연동
+구문)	DECLARE
+   		emp_name employees.first_name%TYPE;
+		-- emp_name 변수의 데이터 타입은 
+		   employees.first_name 컬럼의 데이터 타입과 동일하게 설정
+	BEGIN
+   		SELECT first_name INTO emp_name 
+		FROM employees WHERE employee_id = 101;
+   		dbms_output.put_line('Employee Name: ' || emp_name);
+	END;
+
+
+o %ROWTYPE
+ : 테이블의 컬럼 구조와 동일한 레코드(Record) 형식을 나타내는 
+   레퍼런스 변수를 선언하는 데 사용
+	-  특정 테이블의 모든 컬럼과 동일한 구조를 가지는 
+	  레코드 변수를 간단하게 선언
+	- 테이블의 컬럼 구조를 레코드 변수로 활용할 때 유용
+구문)	DECLARE
+   		emp_info employees%ROWTYPE;
+		-- employees 테이블의 모든 컬럼과 동일한 구조를 가지는 
+		   레코드 변수 emp_info를 선언
+	BEGIN
+		-- SELECT 문에서 결과 집합을 해당 레코드에 바로 할당 가능
+   		SELECT * INTO emp_info FROM employees WHERE employee_id = 101;
+   		dbms_output.put_line('Employee Name: ' || emp_info.first_name);
+	END;
+
+
+ 

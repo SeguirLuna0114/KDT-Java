@@ -1,0 +1,194 @@
+* PL/SQL (Oracle's Procedural Language extention to SQL)
+ : 저장 프로시저, 함수, 트리거 등과 같은 데이터베이스 관련 로직을 작성하는
+    강력한 SQL (Structured Query Language) 확장
+	- Oracle 데이터베이스 관리 시스템에서 사용되는 프로그래밍 언어
+	- SQL 문과 절차적 프로그래밍 요소를 하나로 결합하여 
+	  데이터베이스 내에서 실행되는 절차적인 코드를 작성하고 실행하는 데 사용
+
+	1) 데이터베이스 테이블의 데이터를 삽입, 수정, 삭제 및 검색 가능
+	2) 데이터베이스 내에 비즈니스 로직과 프로세스를 구현 가능
+	3) 연산 중 발생하는 예외 상황을 처리하고, 이에 대한 대응 로직을 작성 가능
+
+o 저장 프로시저(Stored Procedures) 
+ : 데이터베이스 내에서 이름을 가진 코드 블록
+	- 하나 이상의 SQL 문과 PL/SQL 문으로 구성
+	- 데이터베이스에서 실행되도록 저장
+	- 필요한 때에 호출하여 실행 가능
+
+o 함수(Functions)
+ : 특정한 작업을 수행하고 값을 반환하는 코드 블록
+	- 값을 반환하는 저장 프로시저와 유사하나,
+	   함수는 값을 반환하는 데 중점을 둔다는 차이가 있음
+	-  호출될 때 입력 매개변수를 받아들이고, 처리된 결과 값을 반환
+
+o 트리거(Triggers)
+ : 특정 데이터베이스 이벤트가 발생할 때 자동으로 실행되는  PL/SQL 코드 블록
+	- 데이터 조작(INSERT, UPDATE, DELETE) 또는 데이터베이스 구조 변경(DDL)과 
+ 	  관련된 이벤트에 응답하여 추가 로직 수행 가능
+
+
+o 커서(Cursors)
+ : 결과 집합을 처리하거나 탐색하기 위한 데이터베이스 객체
+	- SELECT 문의 결과를 검색하고 처리하는 데 사용
+	1) 암시적 커서:SELECT 문을 실행할 때 자동으로 생성되는 커서
+		- FOR ... IN ... LOOP 문을 사용하여 암시적 커서의 결과 집합을 반복 처리 가능
+
+
+	2) 명시적 커서: 개발자가 직접 선언하고 열고 닫는 커서로, CURSOR 문을 사용하여 선언
+		- OPEN, FETCH, CLOSE 문을 사용하여 커서를 열고 결과 집합을 탐색
+
+
+o 패키지(Packages)
+ : 관련된 프로시저, 함수, 변수, 커서 등을 그룹화하여 모듈화하는 기능을 제공
+	* 패키지 구성
+	1) 패키지 스펙(Package Specification)
+	  : 패키지 내에서 외부에 노출될 프로시저, 함수, 변수, 상수 등의 인터페이스를 선언
+		- 다른 패키지나 사용자가 패키지 내의 요소에 접근할 때 사용되는 부분
+
+	2) 패키지 본문(Package Body)
+	  : 패키지 스펙에서 선언된 요소들의 동작을 정의하는 부분
+		- 실제로 프로시저, 함수, 변수, 상수 등의 구현
+
+
+
+o PL/SQL 코드 구조
+	"블록(block) 단위로 구성"
+	-  선언부(Declaration), 실행부(Execution), 예외 처리부(Exception Handling)로 나뉨
+
+구문)	SET SERVEROUTPUT ON	-- SERVEROUTPUT 환경 변수를 활성화:
+				   dbms_output 패키지를 통해 출력 내용을 화면에 표시하도록함
+
+	DECLARE
+	     	-- 변수 및 상수 선언
+   		variable_name datatype := initial_value;
+			-- variable_name: 변수의 이름, datatype: 데이터 타입, initial_value: 초기 값
+   		constant_name CONSTANT datatype := value;
+			-- constant_name: 상수의 이름, value: 상수의 값
+
+		emp_name employees.first_name%TYPE;
+   
+   	 	-- 사용자 정의 타입 선언
+   		TYPE type_name IS RECORD (field1 datatype1, field2 datatype2);
+			-- type_name: 사용자 정의 타입의 이름
+			-- field1 datatype1, field2 datatype2: 타입 내의 필드와 그 데이터 타입
+   
+   		-- 커서 선언
+   		CURSOR cursor_name IS SELECT columns FROM table;
+			-- cursor_name: 커서의 이름
+   
+   		-- 예외 선언
+   		exception_name EXCEPTION;
+			-- exception_name: 예외의 이름
+
+
+	BEGIN		-- PL/SQL 블록의 시작을 나타내는 키워드
+	   	-- 실행부: SQL 문 및 PL/SQL 문
+
+		--1) SQL 문 실행
+		-- SELECT SQL문
+		SELECT first_name INTO emp_name FROM employees WHERE employee_id = 101;
+			-- first_name 값을 조회하고 emp_name 변수에 할당한 후 출력
+		dbms_output.put_line('Employee Name: ' || emp_name);
+
+		-- INSERT SQL문
+   		-- 변수 선언
+   		my_variable NUMBER := 10;
+   
+   		-- SQL 문 실행
+   		INSERT INTO employees (employee_id, first_name, last_name)
+   		VALUES (v_employee_id, v_first_name, v_last_name);
+		dbms_output.put_line('New employee inserted.');
+
+		-- UPDATE SQL문
+		UPDATE employees SET salary = v_new_salary WHERE employee_id = v_employee_id;
+   		dbms_output.put_line('Salary updated.');
+
+		-- DELETE SQL문
+		DELETE FROM employees WHERE employee_id = 1002;
+			-- employees 테이블에서 employee_id가 1002인 직원 정보를 삭제
+   		dbms_output.put_line('Employee deleted.');
+
+
+		--2) 프로시저 호출
+   		-- 변수 선언
+   		customer_id NUMBER := 123;
+   
+   		-- 프로시저 호출
+   		my_procedure(customer_id);
+
+		--3) 제어 구조(IF, LOOP 등):
+	   	-- 변수 선언
+   		total_amount NUMBER := 1000;
+   
+   		-- IF 문
+   		IF total_amount > 500 THEN
+      			dbms_output.put_line('High total amount');
+   		ELSE
+      			dbms_output.put_line('Low total amount');
+   		END IF;
+   
+   		-- LOOP 문
+   		FOR i IN 1..5 LOOP
+      			dbms_output.put_line('Iteration: ' || i);
+   		END LOOP;	
+
+		--4) 예외처리
+		BEGIN
+   		-- 변수 선언
+   		divisor NUMBER := 0;
+   		result NUMBER;
+   
+   		-- 예외 처리
+   		BEGIN
+      			result := 10 / divisor;
+   		EXCEPTION
+      			WHEN ZERO_DIVIDE THEN
+         			dbms_output.put_line('Division by zero');
+   		END;
+
+
+	EXCEPTION
+	  	-- 예외 처리부: 오류가 발생했을 때 처리
+   		WHEN exception_name1 THEN
+      			-- 예외 처리 로직
+   		WHEN exception_name2 THEN
+      			-- 예외 처리 로직
+   		-- 여러 예외에 대한 처리 로직 추가 가능
+   		WHEN OTHERS THEN
+      			-- 모든 예외에 대한 기본 처리 로직
+
+	END;	--  PL/SQL 코드블록이 종료되는 지점을 나타내는 키워드
+	/	--  SQL*Plus에서 코드 블록 실행을 지시하는 키워드
+
+
+
+	1) DECLARE (선언부, Declaration)
+	 : 블록 내에서 사용할 변수, 상수, 타입 등을 선언
+		- 선언된 변수 및 상수는 해당 블록에서만 사용 가능
+		- 데이터 타입과 초기 값을 지정
+		- 사용자 정의 타입을 선언하여 복잡한 데이터 구조를 정의할 수 있음
+			=> 레코드(record)나 객체(object)와 같은 복합 데이터 타입을 생성
+
+	2) BEGIN (실행부, Execution)
+	 : 실제로 실행되는 코드와 로직을 작성
+		- 선언부에서 정의한 데이터를 활용하여 작업을 수행
+		   => 데이터베이스와 상호 작용하거나 원하는 기능을 구현
+		- SQL 문, 프로시저 호출, 제어 구조(IF, LOOP 등), 예외 처리 등 포함 가능
+
+	3) EXCEPTION (예외 처리부, Exception Handling)
+	 : 코드 실행 중에 발생하는 예외 상황을 처리하고 대응하는 로직을 작성
+		- PL/SQL 코드 실행 중에 오류나 예외가 발생하면 이 부분의 코드가 실행됨
+		- WHEN 키워드를 사용하여
+	  	   어떤 예외 상황이 발생했는지 식별하기 위해 예외 종류를 지정
+
+
+
+
+
+
+
+
+
+
+
+

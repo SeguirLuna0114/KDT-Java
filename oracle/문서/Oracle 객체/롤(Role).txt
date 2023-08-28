@@ -1,0 +1,258 @@
+* 롤(Role)
+: 데이터베이스 사용 권한을 미리 정의한 객체
+	- 여러 사용자에 대한 권한을 그룹화하고, 
+	  특정 작업이나 기능을 수행할 수 있는 권한을 부여하는 데 사용
+	  => 권한 관리가 더욱 효율적이고 일관성 있게 이루어질 수 있음
+
+
+o 롤 생성
+구문)	-- 시스템 계정으로 접속
+	conn system/oracle
+	
+	CREATE ROLE manager_role;
+		- manager_role: 생성하려는 롤의 이름
+
+
+o 롤에 권한 부여
+1. 객체 권한 부여
+  : 객체 권한을 부여하려면 해당 객체를 소유한 스키마의 계정으로 접속하여 권한을 부여해야 함
+    객체의 소유자가 아닌 계정에서 객체에 대한 권한을 부여할 수 없음
+구문)	-- 객체 소유자 계정으로 접속
+	conn scott/tiger
+	
+	-- 롤에 객체 권한 부여
+	GRANT permission 
+	ON object 
+	TO role_name;
+		- permission: 부여할 권한(예: SELECT, INSERT, UPDATE, DELETE 등)
+		- object: 권한을 부여할 객체(테이블, 뷰, 프로시저 등)
+		- role_name: 권한을 부여할 롤의 이름
+
+
+2. 시스템 권한 부여
+구문)	-- 시스템 계정으로 접속
+	conn system/oracle
+
+	-- 롤에 시스템 권한 부여
+	GRANT system_permission 
+	TO role_name;
+		- permission: 부여할 시스템 권한(예: CREATE SESSION, CREATE TABLE 등)
+		- role_name: 권한을 부여할 롤의 이름
+
+
+
+o 사용자에게 롤 할당
+구문)	-- 시스템 계정으로 접속
+	conn system/oracle
+
+	GRANT role_name TO user;
+		- user: 롤을 할당할 사용자 이름
+		-  role_name: 롤 이름
+
+
+o 롤 해제/회수
+	- 롤이 해제되면 해당 롤에 부여된 권한도 사용자로부터 제거됨
+구문)	-- 시스템 계정으로 접속
+	conn system/oracle
+
+	REVOKE role_name TO user;
+		- user: 롤을 해제할 사용자 이름
+		-  role_name: 롤 이름
+
+o 롤 삭제
+	- 롤을 삭제하면 해당 롤에 포함된 권한도 함께 삭제됨
+구문)	-- 시스템 계정으로 접속
+	conn system/oracle
+
+	-- 롤 삭제
+	DROP ROLE role_name;
+
+
+
+o Oracle 데이터베이스에서 제공하는 주요 시스템 롤
+1. CONNECT 롤(8가지 권한)
+ : 데이터베이스에 접속할 수 있는 권한을 부여
+	- 사용자가 데이터베이스에 접속하려면 최소한 "CONNECT" 권한이 필요
+	- 사용자가 데이터베이스에 "로그인(접속)"하여 "세션"을 열 수 있게 해주는 권한을 가짐
+
+구문)	-- 사용자 생성 및 CONNECT 롤 부여
+	CREATE USER sample_user IDENTIFIED BY password;		-- sample_user"라는 사용자를 생성
+	GRANT CONNECT TO sample_user;		
+	-- "CONNECT" 롤을 부여하여 데이터베이스에 접속할 수 있는 권한을 부여
+
+
+	1) 데이터베이스 접속 가능
+		- CONNECT 롤을 가진 사용자는 데이터베이스에 접속(로그인) 가능
+
+	2) 세션 생성
+		- CONNECT" 롤을 부여받으면 데이터베이스에 연결된 세션을 생성할 수 있음
+		* 세션: 데이터베이스와의 통신 경로
+			사용자가 데이터베이스 작업을 수행하고 결과를 주고받는 데 사용됨
+	3) 세션을 통해 SQL문 실행 가능
+		- 데이터베이스에서 데이터를 조회하거나 조작하는 등의 작업을 수행 가능
+		- CONNECT 롤 자체는 데이터 조작이나 객체 생성과 관련된 특정 권한을 제공하지는 X 
+
+
+2. RESOURCE 롤(20여개의 권한)
+ : 객체를 생성할 수 있는 권한을 부여하는 롤
+	- 사용자에게 테이블, 뷰, 시퀀스 등의 데이터베이스 객체를 
+	  생성하고 관리하는 데 필요한 권한을 제공
+
+구문)	-- 사용자 생성 및 RESOURCE 롤 부여
+	CREATE USER resource_user IDENTIFIED BY password;	-- "resource_user"라는 사용자를 생성
+	GRANT RESOURCE TO resource_user;
+	-- RESOURCE 롤을 부여하여 테이블, 뷰, 시퀀스 등의 객체를 생성하고 관리하는 권한을 부여
+
+
+	1) 새로운 테이블을 생성 O
+		- 테이블을 통해 데이터를 저장하고 관리할 수 있음
+
+	2) 새로운 뷰를 생성O
+		- 뷰는 하나 이상의 테이블로부터 데이터를 선택하여 가상의 테이블을 만드는 데 사용
+
+	3) 시퀀스를 생성O
+		- 시퀀스는 일련번호를 생성하기 위해 사용
+		   주로 기본 키나 고유 식별자를 생성하는 데 사용
+
+	4) 프로시저 및 함수 생성O
+		- 데이터베이스 로직을 묶어서 실행하거나 재사용할 수 있도록 해줌
+
+
+3. DBA (Database Administrator) 롤(130여개의 권한)
+ : 데이터베이스 관리자로서 데이터베이스 전체를 관리하고 모든 권한을 가질 수 있는 롤
+	- "DBA" 롤을 가진 사용자는 데이터베이스에 대한 최상위 권한을 가짐
+	- 데이터베이스의 설정, 관리, 보안 등을 전반적으로 관리 가능
+
+	1) 데이터베이스 객체와 관련된 다양한 작업을 수행할 수 있는 권한을 제공
+		- 데이터베이스의 시작과 중지, 재시작, 재구성 등을 관리 가능
+
+	2) 데이터베이스 내의 시스템 뷰와 테이블에 접근 가능
+		- 데이터베이스의 상태, 성능, 오류 등을 모니터링하고 분석할 수 있음
+
+	3) 다른 사용자에 대한 권한을 부여하거나 회수하는 데 필요한 권한을 가짐
+		- 데이터베이스 객체에 대한 권한을 관리하고 롤을 생성하거나 수정할 수 있음
+
+구문)	GRANT DBA TO your_username;
+	-- your_username: "DBA" 권한을 부여하려는 사용자의 이름
+
+
+
+o 사용자 정의 롤을 생성하고 그 롤에 "시스템 권한"을 부여하는 방법-----------------------------------------------
+	- 사용자 그룹을 정의하고 특정 작업이나 권한을 조직화하여
+	  보안 및 권한 관리를 효과적으로 수행 가능
+
+-- 시스템 계정으로 접속
+conn system/oracle
+
+1. 사용자 정의 롤 생성
+	CREATE ROLE custom_role;
+		- custom_role"이라는 이름의 사용자 정의 롤을 생성
+
+2. 생성한 롤에 시스템 권한을 부여
+	GRANT CREATE SESSION, CREATE TABLE TO custom_role;
+		- custom_role" 롤에 "CREATE SESSION"(세션을 열고) 및 
+	     	   "CREATE TABLE"(테이블을 생성) 시스템 권한을 부여
+
+3. 생성한 롤을 특정 사용자에게 할당
+	GRANT custom_role TO specific_user;
+		-  "specific_user" 사용자에게 "custom_role" 롤을 할당
+
+4. 특정 사용자가 데이터베이스에 로그인하여 롤에 부여된 권한을 사용 가능
+	- "specific_user" 사용자가 "custom_role" 롤에 부여된 
+	   "CREATE TABLE" 권한을 사용하여 테이블을 생성하려고 시도
+	CONNECT specific_user;
+	CREATE TABLE test_table (id NUMBER);
+
+
+
+o 사용자 정의 롤을 생성하고 해당 롤에 "객체 권한"을 부여하는 방법----------------------------------------------
+	- 객체 권한을 부여하여 데이터베이스 내에서 권한을 효과적으로 관리
+
+-- 시스템 계정으로 접속
+conn system/oracle
+
+1. 사용자 정의 롤 생성
+	CREATE ROLE my_custom_role;
+		- my_custom_role이라는 이름의 사용자 정의 롤을 생성
+
+2. 생성한 롤에 객체 권한을 부여
+	- 객체 권한: 테이블, 뷰, 프로시저 등과 같은 데이터베이스 객체에 대한 권한
+	-- 객체 소유자 계정으로 접속해서 수행
+
+	conn scott/tiger
+	GRANT SELECT ON my_table TO my_custom_role;
+		- "my_table"이라는 테이블에 대해 SELECT 권한을 
+		  "my_custom_role" 롤에 부여
+
+3. 생성한 롤을 사용자에게 할당
+	-- 시스템 계정으로 접속
+	conn system/oracle
+
+	GRANT my_custom_role TO username;
+		-  "username" : 실제 사용자의 이름
+		-  "username" 사용자에게 "my_custom_role" 롤을 할당
+
+4. 사용자 계정으로 로그인하여 롤에 부여된 객체권한을 사용 가능
+	- "specific_user" 사용자가 "custom_role" 롤에 부여된 
+	   "CREATE TABLE" 권한을 사용하여 테이블을 생성하려고 시도
+	CONNECT username/passwd;
+	SELECT * FROM scott.emp;	-- Scott객체의 emp테이블을 select
+
+
+o 디폴트 롤(Default Role)---------------------------------------------------------------------------------
+ : 사용자가 데이터베이스에 로그인할 때 자동으로 부여되는 롤
+	- 시스템 권한 및 객체 권한을 모두 포함할 수 있음
+	- 사용자가 로그인하면 자동으로 해당 롤에 할당된 권한을 갖게 됨
+
+o 디폴트 롤을 생성하고 여러 사용자에게 해당 롤을 부여하는 과정
+	* 디폴트 롤: 사용자가 로그인할 때 자동으로 부여되는 롤
+
+1. 디폴트 롤 생성
+	-- 디폴트 롤 생성
+	CREATE ROLE def_role;
+
+2. 디폴트 롤에 시스템 권한을 추가
+	-- 시스템 계정으로 접속
+	conn system/oracle
+
+	-- 디폴트 롤에 시스템 권한 부여
+	GRANT CREATE SESSION, CREATE TABLE to def_role;
+
+3. 디폴트 롤에 객체 권한을 추가
+	-- 객체 소유자 계정으로 접속해서 수행
+	conn scott/tiger
+
+	-- 객체 소유자 계정으로 접속해서 객체 권한 부여
+	GRANT SELECT ON table_name to def_role;
+	GRANT UPDATE ON table_name to def_role;
+	GRANT DELETE ON table_name to def_role;
+
+4. 롤을 적용하기 위한 일반 계정 생성
+	-- 시스템 계정으로 접속
+	conn system/oracle
+
+	-- 새로운 일반 계정 생성
+	CREATE USER username1 IDENTIFIED BY tiger;
+	CREATE USER username2 IDENTIFIED BY tiger;
+	CREATE USER username3 IDENTIFIED BY tiger;
+
+5. 디폴트 롤을 여러 사용자에게 부여
+	-- 시스템 계정으로 접속
+	conn system/oracle
+	
+	-- 디폴트 롤을 계정에 할당
+	GRANT def_role TO username1, username2, ...;
+		- username1, username2 등: 디폴트 롤을 부여할 사용자 이름
+
+6. 사용자 계정으로 로그인하여 디폴트롤에 부여된 권한을 사용 가능
+	CONNECT username1/passwd;
+	CONNECT username2/passwd;
+	CONNECT username3/passwd;
+
+	-- SELECT문 실행
+	SELECT * FROM scott.emp;
+
+
+
+
+

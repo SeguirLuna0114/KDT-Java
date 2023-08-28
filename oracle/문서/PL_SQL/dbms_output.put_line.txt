@@ -1,0 +1,32 @@
+* dbms_output.put_line
+ : 내장 프로시저로, 화면에 메시지 출력하기 위해 사용
+	- dbms_output 패키지에 속해 있으며, 
+	 주로 디버깅 및 테스트 목적으로 사용
+	- 데이터베이스 프로시저나 트리거 내에서 
+	  로그 메시지나 중간 결과를 출력하는 데 유용
+
+
+o SET SERVEROUTPUT ON 명령을 사용
+- dbms_output.put_line은 출력을 화면에 바로 표시하지 않고, 
+  나중에 SQL*Plus나 SQL 개발 도구 등을 통해 확인할 수 있도록 내부 버퍼에 메시지를 저장
+- SET SERVEROUTPUT ON 명령을 사용하여
+  dbms_output.put_line을 사용한 메시지가 화면에 표시됨
+
+구문)	SET SERVEROUTPUT ON	-- dbms_output을 활성화하는 명령
+
+	BEGIN
+   		dbms_output.put_line('Hello from PL/SQL');
+	END;
+	/
+
+
+
+
+
+
+
+
+
+
+
+

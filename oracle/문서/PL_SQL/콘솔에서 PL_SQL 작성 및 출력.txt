@@ -1,0 +1,21 @@
+PS C:\Users\user> sqlplus scott/tiger
+
+SQL> begin
+  2  dbms_output.put_line('Hello World~!!');
+  3  end;
+  4  /
+
+PL/SQL procedure successfully completed.
+	-- serveroutput환경변수 값을 설정하지 않았기에, 출력되지 않음
+
+
+SQL> set serveroutput on
+SQL> begin
+  2  dbms_output.put_line('Hello World~!!');
+  3  end;
+  4  /
+Hello World~!!
+
+PL/SQL procedure successfully completed.
+
+

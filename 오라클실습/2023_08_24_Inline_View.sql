@@ -91,10 +91,10 @@ WHERE ROWNUM < 6;
 
 -- Q. ROWNUM을 이용해서 급여를 3~5번째로 많이받는 사원을 검색
 -- 급여를 많이받는 사원 중 3번째
-SELECT ROWNUM, ename, sal
-FROM (
+SELECT ROWNUM, ename, sal   -- 임시 서브쿼리 결과를 기반으로 출력할 결과 선택
+FROM (  -- 서브쿼리를 기반으로 rownum을 부여해 임시 서브쿼리 결과를 생성
     SELECT emp.*, ROWNUM as rnum
-    FROM (
+    FROM (  -- 급여 많이받는 순으로 정렬한 결과 가져옴
         SELECT *
         FROM emp
         ORDER BY sal DESC
@@ -102,8 +102,16 @@ FROM (
 )
 WHERE rnum BETWEEN 3 AND 5;
 
-
-
-
+-- Q. 사원번호가 3~5번째 빠른 사원을 검색
+SELECT ROWNUM, rnum, empno, ename
+FROM (
+    SELECT ROWNUM as rnum, empno, ename
+    FROM (
+        SELECT *
+        FROM emp
+        ORDER BY empno DESC
+    )
+)
+WHERE rnum BETWEEN 3 AND 5;
 
 
