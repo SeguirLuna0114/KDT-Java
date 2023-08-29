@@ -1,0 +1,58 @@
+* CallableStatement 클래스
+ : 데이터베이스에서 저장 프로시저나 함수를 호출하기 위해 사용
+	- PreparedStatement 클래스의 하위 클래스로서, 
+	  SQL 문장을 실행하고 실행 결과를 처리하는 기능을 제공
+
+	1) 저장 프로시저 또는 함수 호출
+		- CallableStatement 객체를 생성하고, 
+		  호출할 저장 프로시저나 함수의 SQL 문장을 설정하여 해당 프로시저나 함수를 호출
+
+	2) IN 매개변수 설정: 호출할 프로시저나 함수에 전달할 IN 매개변수 값을 설정
+
+	3) OUT 매개변수 설정: 호출할 프로시저에 대한 OUT 매개변수의 데이터 타입을 설정
+		- 프로시저 실행 후 해당 매개변수로부터 반환되는 값을 얻을 수 있음
+
+	4) 프로시저나 함수가 실행되며 IN/OUT 매개변수의 값이 전달되고, 결과를 가져옴
+
+
+o CallableStatement 클래스 객체 생성 방법
+	: Connection 객체를 통해 prepareCall 메서드를 호출하여 생성
+	- prepareCall 메서드 : 데이터베이스 연결을 기반으로 CallableStatement 객체를 생성
+
+구문)	CallableStatement cs = connection.prepareCall(sql);
+		- sql: 호출할 저장 프로시저나 함수의 SQL 문장
+
+	try {
+		Class.forName("oracle.jdbc.driver.OracleDriver");
+		con = DriverManager.getConnection(url, "scott", "tiger");
+
+		sql = "{call procedure_name(param1, param2,...)}";
+
+		// CallableStatement를 객체를 생성
+		cs = con.prepareCall(sql);
+
+o static void SetXxx(int parameterIndex, Xxx value)
+	: 매개변수를 설정하고 저장 프로시저를 실행 가능
+	- 다양한 데이터 타입에 따라 매개변수 값을 설정하는 역할
+	- 저장 프로시저에 전달되는 값들을 설정 가능
+
+	- Xxx: 설정하려는 데이터 타입(문자열은 setString, 정수는 setInt, 날짜는 setDate)
+	- parameterIndex: SQL 문장의 매개변수(placeholder) 위치를 나타내는 인덱스. 1부터 시작
+	- value: 설정하려는 값
+
+o boolean execute() 메소드
+ 	: 저장 프로시저나 함수를 실행하는 데 사용
+	- 호출된 저장 프로시저나 함수의 실행을 시작하고, 
+	  프로시저가 실행되며 결과가 반환
+
+	-  반환 값은 boolean 형식으로,
+	   true를 반환하면 결과가 ResultSet 객체로 반환되었음을 나타냄
+	   false를 반환하면 결과가 ResultSet이 아니라 업데이트된 행의 수를 나타냄
+
+
+
+
+
+
+
+

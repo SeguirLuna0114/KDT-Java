@@ -81,7 +81,7 @@ CREATE TABLE book (
     
 -- customer Å×ÀÌ÷ם
 CREATE TABLE customer (
-    custid NUMBER PRIMARY KEY,
+    custid NUMBER(2) PRIMARY KEY,
     name VARCHAR2(40),
     address VARCHAR2(50),
     phone VARCHAR2(20) );

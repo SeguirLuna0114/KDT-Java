@@ -1,0 +1,47 @@
+o Oracle PL/SQL에서 IF 문
+ : 조건에 따라 코드 블록을 실행하거나 건너뛸 때 사용되는 제어 구조
+
+" IF - ELSIF - ELSE - END IF "
+
+구문)	SET SERVEROUTPUT ON
+		-- 결과를 출력하는 데 사용되는 프로시저(DBMS_OUTPUT.PUT_LINE) 사용시 출력 활성화
+
+	DECLARE
+		-- 변수 및 상수 선언
+
+	BEGIN	-- 실행부: SQL 문 및 PL/SQL 문
+		IF condition THEN
+   			-- 실행할 코드 블록
+		ELSIF condition THEN
+   			-- 다른 조건을 검사하고 실행할 코드 블록
+		ELSE
+   			-- 위의 모든 조건이 거짓일 때 실행할 코드 블록
+		END IF;
+
+			- condition: 평가해야 할 조건식.
+				     조건식이 참(True)이면 해당 블록이 실행됨
+			- 여러 개의 ELSIF 절을 사용하여 추가 조건을 검사
+			- 모든 조건이 거짓일 경우 실행할 기본적인 블록을 ELSE 아래에 작성
+
+	END;	--  PL/SQL 코드블록이 종료되는 지점을 나타내는 키워드
+	/	--  SQL*Plus에서 코드 블록 실행을 지시하는 키워드
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

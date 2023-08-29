@@ -1,0 +1,152 @@
+* Oracle PL/SQL에서 반복문
+ : 특정 작업을 반복적으로 수행하기 위해 사용되는 제어 구조
+
+1. (BASIC) LOOP문
+ : 무한 루프를 생성하고, 
+   코드 블록 내에서 EXIT 문을 사용하여 루프를 언제든지 종료할 수 있는 반복문
+	- 특정 조건에 따라 반복 작업을 수행하는데 사용
+
+구문)	BEGIN		-- 실행부: SQL 문 및 PL/SQL 문
+		-- 제어구조 LOOP문
+		LOOP
+    			-- 반복 실행할 코드 블록
+    		EXIT WHEN 조건; -- 루프 종료 조건
+		END LOOP;
+
+o EXIT문
+ : 특정 조건이 충족되었을 때 루프를 종료하고 루프 외부로 나가는 역할 수행
+	- 루프 내에서 실행 조건을 확인한 후, 
+	  해당 조건이 참이 되면 루프를 종료
+
+	1) IF문 사용
+		- 어떤 조건을 확인하여 루프를 종료하고자 한다면,
+           	  EXIT 문을 사용하여 루프를 종료할 수 있음
+	BEGIN
+    		LOOP
+			-- IF문을 사용해 실행조건 확인
+        		IF some_condition THEN
+            			EXIT; -- some_condition이 참이 될 때 루프가 종료
+        		END IF;
+
+        		DBMS_OUTPUT.PUT_LINE('i의 값: ' || i);
+
+        		i := i + 1;
+    		END LOOP;
+	END;
+
+
+	2) EXIT WHEN 조건 사용
+		- EXIT WHEN 구문을 사용하여 루프 내에서 바로 조건을 확인하고,
+		 조건이 참이 되면 루프를 종료
+	BEGIN
+    		LOOP
+        		DBMS_OUTPUT.PUT_LINE('i의 값: ' || i);
+
+			-- EXIT WHEN 구문 사용
+        		EXIT WHEN i > 5; -- i가 5를 초과하면 루프 종료
+
+        		i := i + 1;
+    		END LOOP;
+	END;
+
+
+
+2. FOR LOOP문
+ : 반복 횟수를 지정하여 특정 범위 내에서 일정 횟수만큼 반복 실행하는 반복문
+	- 주로 숫자의 범위나 컬렉션의 요소들을 순회하면서 작업을 수행할 때 사용
+	- FOR 문 내에서 선언한 변수는 해당 루프 내에서만 유효함
+	- EXIT 문을 사용하여 루프를 특정 조건에 따라 중단할 수 있음
+		(반복 작업 중에 원하는 시점에서 루프를 종료하기 위함)
+
+구문)	BEGIN
+    		FOR 변수 IN [REVERSE] 시작값..끝값 LOOP
+    			-- 실제로 반복 실행할 코드를 작성
+		END LOOP;
+	END;
+		
+		- 변수: 반복할 때 사용할 변수를 선언
+			변수는 시작값에서 시작하여 끝값까지 순차적으로 변화
+		- [REVERSE] 키워드 : 역순으로 반복작업 수행 가능
+				    끝값에서 시작값으로 1씩 감소하면서 반복 작업을 역순으로 수행
+				    ([REVERSE] 키워드를 사용하지 않으면 기본적으로 순차적으로 반복)
+		- 시작값: 반복이 시작되는 값
+			  보통 1이나 다른 숫자로 시작하거나, 컬렉션의 첫 번째 요소 등을 지정
+		- 끝값: 반복이 끝나는 값	
+		        변수가 끝값에 도달하면 루프가 종료됨
+
+o FOR LOOP 문을 사용하여 컬렉션의 요소를 순회하는 예제
+ex)	DECLARE
+    		TYPE string_array IS TABLE OF VARCHAR2(100);
+		-- string_array 타입은 VARCHAR2 타입의 배열을 나타내는 컬렉션
+    		names string_array := string_array('Alice', 'Bob', 'Charlie', 'David');
+		-- names 컬렉션에 초기 값을 할당
+	BEGIN
+		-- FOR LOOP 문을 사용하여 names 컬렉션의 요소를 순회하며 각 이름을 출력
+		-- 컬렉션 names의 경우 COUNT 속성을 사용 가능
+    		FOR i IN 1..names.COUNT LOOP
+        		DBMS_OUTPUT.PUT_LINE('이름: ' || names(i));
+    		END LOOP;
+	END;
+
+o For Loop문을 이용해서 부서 테이블(DEPT)의 모든 정보를 출력하는 PL/SQL문
+ex)	SET SERVEROUTPUT ON
+	DECLARE
+    		vdept dept%rowtype;     -- dept테이블의 모든 컬럼의 자료형을 참조
+    		vdept_cnt NUMBER;       -- dept테이블의 행수 조회하는 변수
+	BEGIN
+    		-- dept테이블의 행수를 조회하고, 그 값을 For Loop의 끝값으로 설정
+    		SELECT count(*) INTO vdept_cnt FROM dept;
+
+    		dbms_output.put_line('부서번호  /   부서명   /   지역명'); 
+    		FOR cnt IN 1..vdept_cnt LOOP
+        		SELECT * INTO vdept 
+        		FROM dept WHERE deptno = 10 * cnt;
+        
+        	dbms_output.put_line(vdept.deptno || '  /   ' || vdept.dname || '   /   ' || vdept.loc);
+    		END LOOP;
+	END;
+
+
+
+
+3. WHILE LOOP문
+ : 특정 조건이 참인 동안 반복 작업을 수행하는 구조
+	- 조건을 평가하여 참이면 코드 블록을 실행하고, 
+	  다시 조건을 평가하여 계속해서 반복 작업을 진행
+	- WHILE 루프는 조건이 거짓이 되면 종료됨
+	- 루프 진입 전에 조건을 먼저 평가하기에, 조건이 거짓인 경우 블록 실행X
+
+구문)	DECLARE
+		--조건식에 사용할 변수 설정
+	BEGIN
+    		WHILE 조건식 LOOP
+        		-- 실제로 반복 실행할 코드 블록
+        		-- 조건식에 사용하는 변수를 증가/감소 시킴
+    		END LOOP;
+	END;
+
+
+o WHILE LOOP 문을 사용하여 '*' 문자를 1개부터 10개까지 누적해서 출력(삼각형 별 출력)
+ex)	SET SERVEROUTPUT ON
+	DECLARE
+    		c NUMBER := 1;
+    		star VARCHAR2(100) := '';
+		-- star변수를 빈 문자열로 초기화
+	BEGIN
+    		WHILE c <= 10 LOOP
+        		star := star || '*';	-- star 변수에 '*' 문자를 누적
+        		dbms_output.put_line(star);	-- 현재까지 누적된 '*' 문자를 출력
+        		c := c + 1;	--c 값을 1 증가시킴
+    		END LOOP;
+	END;
+
+
+
+
+
+
+
+
+
+
+
