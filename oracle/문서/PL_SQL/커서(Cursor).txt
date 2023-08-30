@@ -1,0 +1,77 @@
+* CURSOR
+ : 데이터베이스 쿼리의 결과 집합을 처리하는 데 사용되는 데이터 타입
+	- 데이터베이스 내의 테이블 또는 쿼리의 
+	  결과 집합을 가리키는 포인터와 같은 역할
+	- 결과를 하나씩 읽어오며 처리할 수 있는 방법을 제공
+	  => 2개 이상의  데이터를 조작하고 연산할 때, 커서를 사용
+
+
+o 커서 선언
+	- 선언부(DECLARE블록 or IS블록)에서 커서 선언
+구문)	DECLARE/IS
+   		CURSOR cursor_name IS
+      			SELECT column1, column2
+      			FROM table_name
+      			WHERE condition;
+
+		- cursor_name: 선언된 CURSOR의 이름
+		- SELECT문 : 테이블에서 조건에 해당하는 컬럼의 레코드를 선택
+
+
+o 커서 열기/닫기
+	- OPEN 명령어를 사용하여 커서 열기
+	- 열린 커서는 데이터베이스 쿼리의 결과 집합에 대한 포인터 역할
+
+	- CLOSE 명령어를 사용하여 커서 닫기
+구문)	BEGIN
+		-- 커서 열기(첫번째 데이터를 가져옴)
+		OPEN cursor_name;
+
+		-- 커서 닫기
+		CLOSE cursor_name;
+					- cursor_name: 열고/닫고자 하는 CURSOR의 이름
+
+
+o 커서 순회
+ - CURSOR를 사용하여 데이터베이스 결과 집합을 처리할 때 
+   주로 FOR ... IN 루프나 LOOP를 사용
+
+방법1) LOOP문을 사용
+	- LOOP 루프는 FETCH 구문을 사용하여 CURSOR의 레코드를 하나씩 읽어오고,
+	  EXIT 문을 사용하여 루프를 종료
+	- 커서 제어 수동 : LOOP를 사용할 때는 커서의 열기(OPEN)와 닫기(CLOSE)를 수동으로 처리
+	- FETCH 문 사용: FETCH 문을 통해 커서로부터 레코드를 읽어옴
+			각 순회마다 다음 레코드가 읽혀오며, 레코드 변수에 할당됨
+
+구문)	BEGIN
+		OPEN cursor_name;	-- 커서 열기
+			LOOP
+				-- CURSOR로부터 데이터를 읽어 변수에 할당
+   				FETCH cursor_name INTO variable1, variable2;
+				-- CURSOR의 끝에 도달하면 루프를 종료
+   				EXIT WHEN cursor_name%NOTFOUND;
+
+   				-- 처리 로직 (variable1, variable2 사용)
+			END LOOP;
+		CLOSE cursor_name;	-- 커서 닫기
+	END;
+
+
+방법2) FOR...IN 루프문을 사용
+	- 자동 순회: FOR ... IN 루프는 CURSOR의 각 레코드를 순회하며 
+	   	     자동으로 레코드를 읽어와서 처리
+	- CURSOR를 열고 닫는 과정을 자동으로 처리 => 코드가 더 간결해짐
+	- 커서의 모든 레코드를 순회하면 자동으로 종료되므로 
+	   일반적으로 EXIT 문을 사용할 필요가 없음
+
+구문)	BEGIN
+   		FOR 레코드변수 IN 커서명 LOOP
+      			-- 레코드변수를 사용하여 레코드의 필드에 접근하여 처리
+   		END LOOP;
+	END;
+		- 레코드변수: 루프를 통해 순회되는 각 레코드의 필드를 저장하는 변수
+			      레코드변수를 사용하여 레코드의 필드에 접근하여 처리
+
+
+
+

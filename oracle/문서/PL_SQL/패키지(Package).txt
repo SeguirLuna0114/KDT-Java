@@ -1,0 +1,105 @@
+* 패키지(Package)
+ : 저장 프로시저(Stored Procedure)와 저장 함수(Stored Function)를 
+   묶어서 관리하고 제공하는 데 사용되는 구조
+
+- 관련된 프로시저, 함수, 변수, 상수 등을 하나의 단위로 그룹화하여 모듈화하고, 
+  필요한 인터페이스를 제공하여 데이터베이스 내에서 코드의 구조를 조직화하고 접근을 관리하는 객체
+
+	1. 관련된 코드를 하나의 패키지로 묶어서 모듈화하고, 재사용 가능
+	2. 패키지 사양에 공개(public) 및 내부(private) 요소를 구분하여, 정보 은닉 구현 가능
+	3. 패키지는 이름을 기반으로 요소를 그룹화
+		=> 네임스페이스를 관리 가능
+
+
+o 패키지 구성요소 :  패키지 몸체(body) + 패키지 사양(specification)
+	1) 패키지 사양/헤드 (Package Specification)
+	   : 패키지의 외부 인터페이스를 정의하는 부분
+		- 다른 코드가 패키지 내의 요소에 접근할 수 있는 방법을 지정
+			- 패키지 이름과 버전 정보
+			- 공개(public) 프로시저, 함수, 변수, 상수 등의 선언
+			- 사용자가 패키지에 접근할 수 있는 권한 설정
+
+	2) 패키지 몸체 (Package Body)
+	  : 패키지 내의 실제 코드를 포함하는 부분
+		- 패키지 사양에서 선언한 요소들을 구현
+			- 프로시저, 함수 등의 구현
+			- 내부(private) 변수, 상수 등의 정의
+			- 패키지 내의 코드 로직
+
+
+o 패키지 생성
+	- 패키지 사양과 패키지 몸체를 함께 생성
+
+1) 패키지 사양/헤드 작성 및 생성
+	- 패키지의 외부 인터페이스를 정의
+	- 다른 코드가 패키지의 요소에 접근하는 방법과 호출 방법을 제공
+
+구문)	CREATE OR REPLACE PACKAGE package_name 
+	IS
+   		-- 프로시저 선언
+   		PROCEDURE procedure_name(param1 datatype, param2 datatype);
+
+   		-- 함수 선언
+   		FUNCTION function_name(
+			param3 datatype) 
+		RETURN datatype;
+
+	END;
+
+2) 패키지 몸체 작성 및 생성
+	- 패키지 사양에서 선언한 프로시저와 함수의 구현
+
+구문)	CREATE OR REPLACE PACKAGE BODY package_name 
+	IS
+   		-- 프로시저 구현
+   		PROCEDURE procedure_name(param1 datatype, param2 datatype) 
+		IS
+			-- 변수 선언
+   		BEGIN
+      			-- 프로시저 코드
+   		END;
+   
+   		-- 함수 구현
+   		FUNCTION function_name(param3 datatype) 
+		RETURN datatype 
+		IS
+			-- 변수 선언
+
+			-- 반환할 변수 선언
+			result_val datatype;
+		BEGIN
+      			-- 함수 코드
+
+			-- 반환 변수 리턴
+			RETURN result_val;
+   		END;	
+		-- 해당 프로시저 내에서 프로시저 코드만 포함하고 
+		   더이상의 정의가 없는 경우 END;만으로 블록 종료 가능
+	END;
+
+
+o 패키지 실행
+	- 패키지는 저장 프로시저와 저장 함수 등을 포함하고 있는 PL/SQL 객체이기에,
+	  직접 실행되는 것이 아니라, 내부 프로시저나 함수를 호출해서 사용 가능
+1. 패키지 내에 저장 프로시저를 실행 : 패키지명.프로시저명
+구문)	EXECUTE package_name.procedure_name(param1, param2, ...);
+
+2. 패키지 내에 저장 함수를 실행 : 패키지명.함수명
+ 1) 바인드 변수와 EXECUTE문을 사용해 실행
+구문)	1. 바인드 변수 생성
+	VARIABLE var_result datatype;
+
+	2. 패키지 내의 저장함수 실행
+	EXECUTE :var_result := package_name.function_name(param1, param2, ...);
+
+	3. 결과 출력
+	PRINT var_result;
+
+ 2) SELECT문으로 저장함수 실행
+구문)	SELECT package_name.function_name(param1, param2, ...) 
+	FROM table_name 
+	WHERE condition;
+		-- condition은 파라미터와 관련됨
+
+
+

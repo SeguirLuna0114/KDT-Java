@@ -1,0 +1,104 @@
+* 트리거(Trigger)
+ : 특정 이벤트가 발생했을 때 자동으로 실행되는 PL/SQL 블록
+	- 이벤트는 INSERT, UPDATE, DELETE와 같은 데이터 변경 작업 
+	   또는 특정 시간이나 상태 등의 조건을 포함
+	- 트리거는 데이터의 일관성 유지, 로깅, 감사 기능, 자동화된 작업 등을 위해 사용
+
+o 트리거 유형
+1. Row-Level Triggers
+  : 각 행에 대해 개별적으로 실행되는 트리거
+	- 주로 테이블의 데이터 변경 작업에 대한 응답으로 실행됨
+
+2. Statement-Level Triggers
+  : 하나의 SQL 문이 실행될 때 한 번만 실행되는 트리거
+	- 테이블의 데이터 변경 작업에 대한 전체 그룹 또는 세트에 대해 실행됨
+
+
+o 트리거 생성
+구문)	CREATE OR REPLACE TRIGGER trigger_name
+		{BEFORE | AFTER | INSTEAD OF} {INSERT | UPDATE | DELETE} ON table_name
+
+		[REFERENCING OLD AS old NEW AS new]
+		[FOR EACH ROW]
+		[WHEN (condition)]
+
+	BEGIN
+  		-- Trigger logic here
+	END;
+	/
+		- {BEFORE | AFTER | INSTEAD OF}: 트리거가 어떤 시점에서 실행되는지를 나타냄
+			BEFORE는 이벤트 전에, AFTER는 이벤트 후에, INSTEAD OF는 대신에 실행됨
+		- {INSERT | UPDATE | DELETE}: 어떤 데이터 변경 작업에 대해 트리거를 생성할지 선택
+		- ON table_name: 트리거가 적용될 테이블 이름을 지정
+
+		- [REFERENCING OLD AS old NEW AS new]: 트리거 내에서 사용되는 :OLD와 :NEW 키워드의 별칭을 설정
+						트리거 내에서 이전 및 새로운 값을 참조할 때 사용
+						:NEW와 :OLD를 사용하여 이전 및 새로운 값에 접근 가능
+		- [FOR EACH ROW]: 트리거가 테이블의 각 행에 대해 개별적으로 실행됨
+				이 부분이 없으면 문장 단위(statement-level) 트리거가 생성됨
+				(해당 데이터 변경 작업에 대한 전체 그룹 또는 세트에 대해 트리거가 실행)
+				- 주로 데이터 변경 작업(INSERT, UPDATE, DELETE)에 대한 응답으로 사용
+				- FOR EACH ROW로 생성되면 트리거 내부에서 
+				  :OLD와 :NEW 두 개의 가상 테이블을 사용할 수 있음
+		- [WHEN (condition)]: 트리거가 실행되기 전에 평가되는 조건을 지정(참일때만 트리거 실행됨)
+
+		- BEGIN ... END;: 트리거 내부에 작성되는 PL/SQL 코드 블록
+				  실제 트리거 로직이 여기에 작성됨
+
+o :NEW
+ : Oracle 데이터베이스에서 트리거 내에서 사용되는 가상 테이블
+	- 행 단위 트리거에서 새로 추가(INSERT)되거나 수정(UPDATE)되는 행의 값 의미
+	- ':NEW.column_name' :새로운 행의 column_name 컬럼의 값을 할당하기 위함
+		- 새로운 행의 특정 컬럼의 값을 참조하거나 조작하는 데 사용
+
+
+o :OLD
+ : Oracle 데이터베이스에서 트리거 내에서 사용되는 가상 테이블
+	- 행 단위 트리거에서 수정되거나 삭제(DELETE)되는 기존 행의 값을 나타냄
+	- ':OLD.column_name' : 기존 행의 column_name 컬럼의 값을 할당하기 위함
+		- 현재 처리 중인 행의 이전 값을 참조하거나 조작하는 데 사용
+
+
+ex) my_table에 새로운 행이 삽입되거나 업데이트 될 때마다 실행되는 트리거 
+	CREATE OR REPLACE TRIGGER my_trigger
+	AFTER INSERT OR UPDATE ON my_table
+	FOR EACH ROW	-- 행 수준 트리거
+	BEGIN
+	  	-- Trigger logic here
+	  	IF :NEW.column_name = 'some_value' THEN
+	    		-- Do something
+	  	END IF;
+	END;
+	/
+
+
+ex) 사원 테이블 (EMP01)에 신입 사원이 등록되면, 
+    급여 테이블(SAL01)에 급여 정보를 자동으로 추가해주는 트리거
+	CREATE OR REPLACE TRIGGER trg_02
+    		AFTER INSERT ON emp01       -- emp01테이블에 insert된 후 trigger처리
+    		FOR EACH ROW    -- 트리거가 각 행에 대해 개별적으로 실행됨
+	BEGIN
+    		-- Trigger logic 작성
+    		INSERT INTO sal01 
+    		VALUES(sal01_salno_seq.nextval, 300, :new.empno);
+	END;
+
+
+
+o 현재 사용자가 소유한 테이블에 대한 트리거 정보 조회
+구문)	SELECT * FROM user_triggers;
+	- user_triggers 뷰: 현재 사용자(세션을 시작한 사용자)가 소유한 테이블에 대한 
+			     트리거 정보를 제공하는 Oracle 데이터베이스의 시스템 뷰
+			    사용자가 소유한 테이블에 대한 트리거 목록을 가져올 수 있음
+
+
+
+o 트리거를 사용하여 외래키가 설정된 테이블의 값을 삭제
+ : 트리거 내부의 로직과 외래키 제약 조건(FOREIGN KEY constraint) 사이의 상호작용에 의해 결정됨
+	- 트리거가 삭제 작업을 수행하면 외래키 제약 조건에 의해 
+	   관련된 다른 테이블의 데이터도 함께 영향받을 수 있음
+	- ON DELETE CASCADE 옵션이 없어도 삭제됨
+	- 단, NO ACTION이나 RESTRICT 액션이 설정된 경우, 연관된 데이터의 삭제가 거부될 수 있음
+
+
+
