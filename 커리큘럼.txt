@@ -1,0 +1,78 @@
+안화수
+010-9809-4320
+giduck23@naver.com
+
+데이터융합 자바(JAVA) 응용 SW개발자 취업과정
+130일, 1040시간
+
+o 당부사항
+1. 대면출석
+   입실/퇴실 : 비콘, 지문     
+2. 대면수업으로 진행
+3. 수업공유 - 네이버 클라우드(마이박스)                  
+4. 자기주도 학습
+5. 공부한 내용을 블로그나 notion, github 등에 정리
+6. 끝까지 포기하지 말고 성실하게 교육을 받자
+
+
+커리큘럼
+1. java
+   java - app - 안드로이드
+          web - 웹프로그램-JSP(게시판, 회원관리, 자료실...)
+
+   개발 : windows
+   운영 : Linux
+
+2. 데이터베이스(DBMS)
+    Oracle : SQL, PL/SQL, 데이터 모델링
+    MySQL
+
+3. 웹표준 : Frontend
+    HTML5 : 레이아웃, 양식(폼)
+    CSS : 디자인, 색깔, 색상, 폰트
+    Javascript : 이벤트, 팝업, 유효성 검사
+    jQuery : 자바스크립트 라이브러리(함수) 제공 
+
+    bootstrap :  css framework
+
+4. 웹프로그램 : Backend
+    JSP : 회원관리, 일반 게시판, 댓글 게시판, 자료실
+   
+    JSP : Model1 - JSP만으로 프로그램 개발
+          Model2 - MVC Pattern 개발 - java가 70% 정도 사용함
+                         Model : 데이터 처리(DB연동) - 개발자가 처리
+                         View : 출력 화면 - 디자이너가 처리
+                         Controller :  흐름을 제어 - 개발자가 처리
+
+5. 전자정부 프레임워크
+   Spring : MVC Pattern 개발
+            환경 설정, 어노테이션
+   Springboot
+
+6. 아마존 AWS
+    EC2 : 웹서버 호스팅           
+    RDS : 데이터베이스 서비스
+    S3 : 빅데이터 저장소
+
+7. Git, GitHub
+
+8. 안드로이드(java  or  kotlin)
+
+9. python / python 분석
+
+10. 내부 프로젝트     
+    공모전
+    협약 기업 프로젝트
+    
+
+
+
+   
+   
+
+
+
+
+
+
+

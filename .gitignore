@@ -4,6 +4,11 @@
 /.metadata/
 
 
+**/.settings/*
+/.settings/
+
+**/*.policy
+
 
 
 ## 설치파일
