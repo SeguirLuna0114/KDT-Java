@@ -1,0 +1,70 @@
+* <audio> 요소
+: 웹 페이지에 오디오 파일을 포함하고 재생할 수 있는 방법을 제공
+	- 오디오 클립을 재생하고 컨트롤하는 기능을 웹 페이지에 추가할 수 있음
+
+
+o <audio> 요소의 주요 속성
+1. src 속성
+ : 재생할 오디오 파일의 URL을 지정
+	- URL은 로컬 파일 경로 또는 원격 파일 URL일 수 있음
+구문)	<audio src="audio.mp3"></audio>
+
+
+2. type 속성
+ : 오디오 파일의 미디어 유형(MIME 유형)을 지정하는 데 사용
+	- 브라우저에게 어떤 종류의 오디오 파일을
+	   처리해야 하는지 알려주는 중요한 역할 수행
+구문)	<audio controls>
+  		<source src="audio.wav" type="audio/type">
+	</audio>
+
+	- type 속성의 값은 일반적으로 오디오 파일의 확장자에 기반하여 설정됨
+		1) MP3 오디오 파일을 지정하는 경우 
+		 : type 속성은 "audio/mpeg" 또는 "audio/mp3"로 설정
+
+		2) Ogg Vorbis 오디오 파일을 지정하는 경우 
+ 	 	 : type 속성은 "audio/ogg"로 설정
+
+		3) WAV 오디오 파일을 지정하는 경우
+		 : type 속성은 "audio/wav" 또는 "audio/wave"로 설정
+
+		4) WAV 오디오 파일을 지정하는 경우
+		 : type 속성은 "audio/wav" 또는 "audio/wave"로 설정
+
+
+2. controls 속성
+ : 오디오 플레이어 컨트롤(재생, 일시 중지, 볼륨 조절 등)이 표시됨
+구문)	<audio src="audio.mp3" controls></audio>
+
+
+3. autoplay 속성
+ : 오디오 파일이 페이지 로드 시 자동으로 재생됨
+구문)	<audio src="audio.mp3" controls autoplay></audio>
+
+4. loop 속성
+ : 오디오가 재생을 완료한 후에 자동으로 반복 재생됨
+구문)	<audio src="audio.mp3" controls loop></audio>
+
+
+5. <source> 요소
+	- <source> 요소를 사용하여 여러 오디오 포맷을 지원하고, 
+	  브라우저가 지원하는 첫 번째 포맷을 선택하게 할 수 있음
+
+ex)	<audio controls>
+  		<source src="audio.mp3" type="audio/mpeg">
+  		<source src="audio.ogg" type="audio/ogg">
+ 		Your browser does not support the audio element.
+	</audio>
+
+
+
+
+
+
+
+
+
+
+
+
+

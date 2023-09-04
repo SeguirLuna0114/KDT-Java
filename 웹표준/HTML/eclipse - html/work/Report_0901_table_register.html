@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>표연습</title>
+</head>
+
+<body>
+	<!-- 다음과 같은 모양으로 출력하는 html파일을 작성하세요 -->
+	<!-- 	표연습
+	신	청소년	노인		비고
+	청	남자 여자	남자 여자	
+	내	10	50	60	80
+	역	80	60	68	78		-->
+
+	<!-- 4행 6열 테이블 생성-->
+	<table border="1" width="400" height="200" align="center" bgcolor="yellow">
+		<!--표의 제목 설정-->
+		<caption>표 연 습</caption>
+		<!--<tr> 요소는 표의 행을 정의-->
+		<tr align="center">
+			<!--<th> 요소는 표의 열 제목을 나타냄-->
+			<th rowspan=4>신<br>청<br>내<br>역<br></th>	<!--4개의 행 병합-->
+			<th colspan=2>청소년</th>					<!--2개의 열 병합-->
+			<th colspan=2>노인</th>
+			<th rowspan=2>비고</th>
+		</tr>
+		<tr align=center>
+			<!--<td> 요소는 표의 데이터 셀을 나타냄-->
+			<td>남자</td>
+			<td>여자</td>
+			<td>남자</td>
+			<td>여자</td>
+		</tr>
+		<tr align=center>
+			<td>10</td>
+			<td>50</td>
+			<td>60</td>
+			<td>80</td>
+			<td rowspan=2></td>		<!--비어 있는 데이터 셀(2개의 행 병합)-->
+		</tr>
+		<tr align=center>
+			<td>80</td>
+			<td>60</td>
+			<td>68</td>
+			<td>78</td>
+		</tr>
+	</table>
+</body>
+
+</html>
