@@ -1,0 +1,47 @@
+* <font> 태그
+ : 텍스트의 글꼴(font) 스타일과 크기를 지정하는데 사용
+
+	- CSS(Cascading Style Sheets)를 사용하여 웹 페이지의 스타일을 제어하는 것이 권장됨
+		<style>
+  			.custom-text {
+    			font-family: Arial, sans-serif;
+    			font-size: 16px;
+    			font-weight: bold;
+    			color: #333;
+  			}
+		</style>
+
+구문)	<font size="크기" color="색깔" face="글꼴">텍스트</font>
+
+o <font> 태그 속성
+1. size
+ : 텍스트의 크기를 지정(주로 1에서 7까지의 크기 값을 사용)
+
+구문)	<font size="크기값">글자크기 설정</font>
+
+
+2. color 
+ : 텍스트의 색상을 지정
+	- 색상 이름, HEX 코드 또는 RGB 값을 사용
+구문)	<font color="색상이름">글자 색깔 설정</font>
+
+
+3. face 
+ : 원하는 글꼴의 이름을 입력하여 글꼴(font)을 지정
+구문)	<font face="글꼴 이름">글꼴 설정</font>
+
+
+4. background 
+ : 텍스트의 배경 색상을 지정
+
+
+
+
+
+
+
+
+
+
+
+
