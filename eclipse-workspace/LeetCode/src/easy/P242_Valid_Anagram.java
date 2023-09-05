@@ -1,6 +1,8 @@
 package easy;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 /** Anagram(두개의 문자열이 같은 문자를 포함하고 있다면 true)
  * : a word or phrase formed by rearranging the letters of a different words
@@ -124,6 +126,31 @@ public class P242_Valid_Anagram {
 		return Arrays.equals(str_s, str_t);
 	}
 	
+	
+//	방법4) String 을 ArrayList로 만들어서 sorting을 하고 equals()를 사용하는 방법
+	static boolean isAnagramSplit(String s, String t) {
+		
+		// 만일 두 문자열의 길이가 다른경우, false
+		if(s.length() != t.length()) {
+			return false;
+		}
+		
+		// 두 문자열을 split("")메소드를 사용하여 문자열배열로 반환
+		String[] sSplit = s.split("");
+		String[] tSplit = t.split("");
+		
+		// Arrays.asList()메소드로 문자열배열 -> 리스트로 변환
+		ArrayList<String> sList = new ArrayList<String>(Arrays.asList(sSplit));
+		ArrayList<String> tList = new ArrayList<String>(Arrays.asList(tSplit));
+		
+		// Collection.sort(List<T> list)메소드로 리스트를 오름차순 정렬
+		Collections.sort(sList);
+		Collections.sort(tList);
+		
+		// ArrayList.equals(Object o)메소드를 사용하여 리스트의 값이 같은지 확인
+		return sList.equals(tList);
+	}
+	
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -140,5 +167,8 @@ public class P242_Valid_Anagram {
 		
 //		방법3) Arrays.Sort()정렬을 시도해서 각 배열의 값이 같다면 true리턴
 		System.out.println(isAnagramSort(s, t));
+		
+//		방법4) String 을 ArrayList로 만들어서 sorting을 하고 equals()를 사용하는 방법
+		System.out.println(isAnagramSplit(s, t));
 	}
 }
