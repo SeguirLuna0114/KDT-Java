@@ -1,0 +1,79 @@
+* 박스 모델(Box Model)
+ : 웹 페이지의 요소를 사각형 형태의 박스로 처리하는 웹 디자인의 기본 개념
+	- 웹 페이지에서 모든 HTML 요소는 박스 모델(Box Model)에 따라 
+	  크기, 여백, 테두리 및 패딩과 같은 속성을 가지고 있음
+
+
+o 박스 모델의 핵심 구성 요소
+1. Content (콘텐츠): 박스의 내용 부분
+	- 주로 텍스트 또는 다른 HTML 요소가 포함됨
+	- width: 콘텐츠 영역의 너비를 설정
+	- height: 콘텐츠 영역의 높이를 설정
+
+2. Padding (패딩): 콘텐츠와 테두리 사이의 여백(내부여백)
+	- padding: 콘텐츠와 테두리 사이의 여백/공백을 설정
+	- 내용과 테두리 사이의 공백을 만들 때 사용
+	- 모든 방향 (상, 하, 좌, 우)에 동시에 적용됨
+
+3. Border (테두리): 박스의 가장자리
+	- border: 테두리의 스타일, 두께 및 색상을 지정 가능
+		- 각각의 세부 속성인 border-style, border-width, border-color를 사용하여 
+		  테두리를 개별적으로 설정 가능
+			border-style: 테두리의 스타일을 설정(solid, dashed, dotted)
+			box-sizing: 박스의 크기 계산 방법을 설정
+				      기본값은 content-box, 
+				    border-box로 설정하면 패딩과 테두리가 크기에 포함됨
+
+4. Margin (마진): 박스와 다른 요소 사이의 여백(외부 여백)
+	- margin: 박스와 다른 요소 사이의 간격을 조절 가능
+	- margin 속성은 모든 방향 (상, 하, 좌, 우)에 동시에 적용됨
+
+
+
+o <style> 태그 안에서 <div> 태그만을 사용하여 박스 모델을 생성
+	- <style> 태그 내에서 <div> 태그를 선택하고 CSS 스타일을 직접 지정
+	- 해당 <div> 요소에 스타일이 적용되며, 
+	  웹 페이지에서 스타일이 적용된 박스 모델이 생성됨
+<head>
+    <meta charset="UTF-8">
+    <title>CSS Inline Example</title>
+    <style>
+        /* CSS 스타일을 직접 지정합니다. */
+        div {
+            width: 200px;         /* 너비 설정 */
+            height: 100px;        /* 높이 설정 */
+            padding: 20px;        /* 패딩 설정 */
+            border: 2px solid blue; /* 테두리 설정 */
+            margin: 10px;         /* 마진 설정 */
+        }
+    </style>
+</head>
+<body>
+    <!-- 스타일이 적용된 div 요소 -->
+    <div>This is a box.</div>
+</body>
+</html>
+
+
+
+o 박스 모델을 생성하는 방법
+1. 박스 모델을 만들고자 하는 HTML 요소를 생성
+	-  일반적으로 <div>, <p>, <h1>, <span> 등과 같은 HTML 태그로 정의됨
+	- 구문)	<div class="box">This is a box.</div>
+
+2. 요소를 선택하고 원하는 스타일을 적용하기 위해 CSS를 사용
+	- 박스 모델을 구성하기 위한 CSS 속성을 적용
+	- 구문) .box 클래스를 선택하여 해당 클래스에 대한 스타일을 정의
+		.box {
+    			width: 200px;         /* 너비 설정 */
+    			height: 100px;        /* 높이 설정 */
+    			padding: 20px;        /* 패딩 설정 */
+    			border: 2px solid blue; /* 테두리 설정 */
+    			margin: 10px;         /* 마진 설정 */
+		 }
+
+
+
+
+
+
