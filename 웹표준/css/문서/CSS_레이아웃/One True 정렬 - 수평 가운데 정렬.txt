@@ -1,0 +1,35 @@
+* "One True" 정렬/레이아웃
+ : 요소를 수평 가운데 정렬하면서 
+   다른 요소와의 상대적인 위치를 유지하는 레이아웃을 만드는 데 사용
+  
+	1. "수평 가운데 정렬"에 중점을 둔 디자인 패턴
+
+	2. 텍스트나 컨텐츠를 페이지의 가로 중앙에 정렬하는 것을 목표
+
+o "One True" 정렬을 구현
+
+	<body>
+    		<div id="middle">
+        		<div id="left">...</div>
+        		<div id="right">...</div>
+    		</div>
+	</body>
+
+
+1. <body> 태그를 가운데 정렬
+	body {
+            width: 500px;
+            margin: 10px auto;
+        }
+
+2. body내 자식 div요소들을 가로로 정렬하고, 값을 부여
+	- 자식 div들을 float: left 또는 right로 설정
+        	#middle { overflow: hidden; }
+        #left { float: left; width: 150px; background: red; }
+        #right { float: left; width: 350px; background: blue; }
+
+
+3. 자식 div요소들을 감싸고 있는 부모 div요소에 overflow: hidden;을 주어 
+   자식 요소들과 겹치는 것을 방지
+	#middle { overflow: hidden; }
+

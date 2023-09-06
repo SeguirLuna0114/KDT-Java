@@ -1,0 +1,54 @@
+* <meta> 태그
+ : 문서의 메타 데이터 및 다양한 설정을 정의하는 데 사용
+	- HTML 문서의 <head> 섹션에 사용됨
+
+1. charset 속성: 문자 인코딩 설정
+	- 웹 페이지의 문자 인코딩은 특수 문자와 다국어 텍스트의 표시에 영향
+<meta charset="UTF-8">
+
+
+2. name 속성 & viewport 속성: 뷰포트 설정
+	- 모바일 기기에서 웹 페이지를 렌더링하는 방법을 제어
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="user-scalable=no,initial-scale=1" />
+
+	o viewport 설정에서 사용되는 속성
+	1) user-scalable 속성: 모바일 기기에서 웹 페이지를 확대/축소할 수 있는
+			      사용자의 동작을 제어
+		- yes 또는 1(기본 설정): 웹 페이지를 확대/축소할 수 있도록 허용
+		- no 또는 0: 웹 페이지를 확대/축소할 수 없도록 비활성화
+	
+	2) initial-scale 속성: 모바일 기기에서 웹 페이지를 처음 로드할 때
+			       초기 확대 수준을 지정
+		- initial-scale=1.0: 초기 확대 수준을 100%로 설정
+				    (웹 페이지가 정상 크기로 표시)
+		- initial-scale=0.5는 웹 페이지를 50% 크기로 표시
+
+	3) width: 뷰포트의 너비를 지정
+		- 일반적으로 device-width를 사용하여 기기의 너비에 맞춤
+
+
+3. name 속성 & keywords 속성: 검색 엔진 최적화 (SEO)
+	- description은 웹 페이지의 간단한 설명을 제공
+	- keywords는 웹 페이지와 관련된 키워드를 지정
+<meta name="description" content="웹 페이지의 간단한 설명">
+<meta name="keywords" content="키워드1, 키워드2, 키워드3">
+
+
+4. 리다이렉트
+<meta http-equiv="refresh" content="5;url=https://example.com">
+	- 웹 페이지를 일정 시간 (여기서는 5초) 후에 
+	   다른 URL로 자동으로 리다이렉트하는 데 사용
+
+
+5. 사이트 저작권 정보
+	- 웹 페이지의 사이트 저작권 정보를 나타냄
+<meta name="copyright" content="Copyright © 2023 Your Company">
+
+
+
+
+
+
+
+

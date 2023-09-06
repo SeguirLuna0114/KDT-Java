@@ -1,0 +1,83 @@
+* @media
+ : 웹 페이지의 스타일을 다양한 미디어 조건에 따라 다르게 설정하는 데 사용
+	- 다양한 디바이스 및 화면 크기에서 
+	  웹 페이지의 레이아웃 및 디자인을 최적화
+
+구문)	@media media-type (and) (media-feature: value) {
+    		/* 스타일 규칙 */
+	}
+		- media-type: 미디어 타입. 주로 screen, print, speech 등이 사용됨
+		- media-feature: 미디어 특성. 미디어 쿼리의 조건을 설정
+				 화면 너비, 해상도, 색상 기능 등이 포함됨
+
+구문)	@media media-type (and) (media-feature: value) {
+		선택자 {
+    			/* 스타일 규칙 */
+		}
+	}
+
+
+o 미디어 타입
+ : @media 규칙을 사용할 때, 스타일 규칙이 
+   어떤 종류의 미디어에 적용될지를 지정하는데 사용
+
+1. all(기본값): 모든 미디어 유형에 스타일을 적용
+구문)	@media all {
+    		/* 모든 미디어에 대한 스타일 규칙 */
+	}
+
+
+2. screen: 화면 기반의 미디어에 스타일을 적용
+	- 대부분의 웹 브라우저와 디바이스는 화면 미디어 타입을 사용
+구문)	@media screen {
+    		/* 화면 미디어에 대한 스타일 규칙 */
+	}
+
+	o screen 미디어 타입에서 사용되는 주요 미디어 특성
+	1) width: 화면 너비(범위)에 따라 스타일을 적용
+		- 픽셀(px), 백분율(%), em, rem 등 다양한 단위를 사용 가능
+		- width: value : 화면 너비가 특정 값일 때 적용
+		- max-width: value : 화면 너비가 특정 값 미만일 때 적용
+		- min-width: value : 화면 너비가 특정 값 이상일 때 적용
+		  
+
+	2) height: 화면 높이(범위)에 따라 스타일을 적용
+		- 픽셀(px), 백분율(%), em, rem 등 다양한 단위를 사용 가능
+		- height: value : 화면 높이가 특정 값일 때 적용
+		- max-height: value : 화면 높이가 특정 값 미만일 때 적용
+		- min-height: value : 화면 높이가 특정 값 이상일 때 적용
+
+
+	3) orientation: 화면의 방향(세로 또는 가로)에 따라 스타일을 적용
+		- portrait (세로 방향) 
+		- landscape (가로 방향) 
+
+
+	4) resolution: 화면 해상도(범위)에 따라 스타일을 적용
+		- 주로 dots per inch (DPI) 단위로 값을 지정
+		- resolution: value : 특정 해상도에 대해 적용
+		- min-resolution: value : 화면 해상도가 특정 해상도 이상일 때 적용
+		- max-resolution: value : 화면 해상도가 특정 해상도 미만일 때 적용
+	
+
+3. print: 인쇄 미디어에 스타일을 적용
+	- 웹 페이지를 인쇄할 때 적용
+구문)	@media print {
+    		/* 인쇄 미디어에 대한 스타일 규칙 */
+	}
+
+
+4. speech: 음성 미디어에 스타일을 적용
+	- 스크린 리더 및 음성 브라우징 장치를 위한 
+	  웹 페이지 접근성을 개선하기 위해 사용
+구문)	@media speech {
+    		/* 음성 미디어에 대한 스타일 규칙 */
+	}
+
+
+
+
+
+
+
+

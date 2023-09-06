@@ -1,0 +1,43 @@
+* 수평정렬
+ : 여러개의 컴포넌트들을 수평으로 나란히 오게끔
+
+o 구현 방법
+	: 자손에게 float 속성을 지정
+	   부모의 overflow속성을 hidden으로 적용
+
+1. HTML 구조 설정
+	- 부모 요소와 자손 요소 만듦
+구문)	<div class="parent">
+  		<div class="child">내용1</div>
+  		<div class="child">내용2</div>
+  		<div class="child">내용3</div>
+  		<div class="child">내용4</div>
+	</div>
+
+2. CSS 스타일 지정
+	- 자손 요소에 float 속성을 지정하고 
+	  부모 요소에 { overflow: hidden; } 스타일을 추가
+구문)	div.parent {
+  		overflow: hidden; /* 자손 요소의 오버플로우를 숨깁니다. */
+		
+		/* 부모 요소의 스타일 지정 */
+  		width: 100%; /* 부모 요소의 너비 설정 */
+  		height: 100vh; /* 부모 요소의 높이 설정 (예: 화면 높이) */
+  		text-align: center; /* 내용을 수평으로 가운데 정렬합니다. */
+	}
+
+	div.child {
+  		float: left; /* 자손 요소에 float 속성을 지정합니다. */
+
+  		/* 내용 스타일 지정 */
+            	margin: 0 3px;
+            	padding: 10px;
+            	border: 1px solid black; 
+	}
+
+
+	- .parent는 overflow: hidden; 스타일을 가지고 있어서 
+	  내부 자손 요소의 오버플로우를 숨김
+	- .child는 float: left; 스타일을 가지고 있어서 왼쪽으로 플로팅
+	  이것은 요소를 수평으로 가운데 정렬하기 위한 중요한 부분
+

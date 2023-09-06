@@ -1,0 +1,91 @@
+* 절대 위치를 사용한 요소 배치
+ : 자식 요소의 position 속성에 absolute를 적용하려면 
+   부모 요소의 position 속성에 "relative"를 적용
+	=> 자식 요소는 부모 요소를 기준으로 위치가 결정됨
+
+1. HTML 구조 설정
+구문)	<div class="parent">
+  		<div class="child">절대 위치로 배치된 요소</div>
+	</div>
+
+
+2. CSS 스타일 지정
+	- 부모요소는 position: relative; 스타일을 가지고 있어서
+	   해당 요소가 자손 요소의 위치 기준이 됨
+	- 자식 요소는 position: absolute; 스타일을 가지고 있어서
+	   부모 요소 기준으로 상대적으로 위치가 지정됨
+구문)	.parent {
+  		position: relative; /* 부모 요소에 relative 위치 지정 */
+
+  		width: 500px;
+  		height: 300px;
+		border: 3px solid black;
+		overflow: hidden;
+	}
+
+	.child {
+  		position: absolute; /* 자손 요소에 absolute 위치 지정 */
+
+  		top: 50%; 	/* 상단을 기준으로 50% 수직 위치 */
+  		left: 50%; 	/* 좌측을 기준으로 50% 수평 위치 */
+  		transform: translate(-50%, -50%); /* 요소를 중앙으로 이동 */
+  		border-radius: 50% 50%;
+	}
+
+
+
+
+o 절대위치를 활용한 컴포넌트 중앙배치 활용
+ex) #container 요소를 중앙에 배치
+1. HTML 구조 설정
+구문)	<body>
+		<div id="container">
+			<h1>요소의 중앙 배치</h1>
+		</div>
+	</body>
+
+
+2. CSS 스타일 지정
+	- position: absolute;를 사용하여 요소의 위치를 절대 위치로 설정
+	- left: 50%; 및 top: 50%;를 사용하여 
+	  요소를 부모 요소의 가로 및 세로 중앙으로 이동
+	- margin-left: -250px;(body요소 너비의 반) 및 
+	  margin-top: -125px;(body요소 높이의 반) 를 사용하여 
+	  요소를 수평 및 수직으로 중앙으로 정렬
+	  (음수 마진 값은 요소의 크기의 반을 고려한 설정)
+
+구문)	/* 초기화 - 모든 요소의 마진과 패딩을 초기화합니다. */
+	* {
+  		margin: 0;
+  		padding: 0;
+	}
+
+	/* 주제 - body의 배경색을 빨간색으로 설정합니다. */
+	body {
+  		background: red;
+	}
+
+	#container {
+  		/* 색상 및 크기 적용 */
+  		width: 500px; /* 요소의 너비 설정 */
+  		height: 250px; /* 요소의 높이 설정 */
+  		background: orange; /* 요소의 배경색 설정 */
+
+  		/* 위치 설정 */
+  		position: absolute; /* 요소의 위치를 절대 위치로 설정합니다. */
+
+  		left: 50%; /* 요소를 수평으로 가운데로 이동 (부모 요소 기준) */
+  		top: 50%; /* 요소를 수직으로 가운데로 이동 (부모 요소 기준) */
+
+		/* 요소를 수평 및 수직으로 중앙으로 정렬 */
+  		margin-left: -250px; /* 요소의 가로 중앙 정렬을 위한 음수 마진 */
+  		margin-top: -125px; /* 요소의 세로 중앙 정렬을 위한 음수 마진 */
+	}
+
+
+
+
+
+
+
+
