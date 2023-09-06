@@ -84,23 +84,49 @@ public class P67_Add_Binary {
 	
 //	방법3) XOR로 처리한 후 carry하는 방법
 	static String addBinary2(String a, String b) {
-		
+		/** BigInteger 클래스
+		 * :임의 정밀도로 정수를 다룰 수 있는 클래스로, 
+		 *  이진 문자열을 정수로 변환하기 위해 사용
+		 *  
+		 * - BigInteger xor(BigInteger val) 메소드
+		 * 	: BigInteger 객체와 다른 BigInteger 객체를 
+		 *    XOR(배타적 논리합) 연산하여 새로운 BigInteger 객체를 반환
+		 *   - XOR 연산은 비트 단위로 작동하며, 
+		 *     두 비트가 서로 다를 때 결과가 1이 되고, 두 비트가 같으면 결과가 0
+		 *     
+		 * - BigInteger and(BigInteger val)메소드
+		 *  : 현재 BigInteger 객체와 다른 BigInteger 객체를 
+		 *    비트 단위로 AND(논리곱) 연산하여 새로운 BigInteger 객체를 반환하는 메소드
+		 *   - AND 연산은 두 비트가 모두 1일 때 결과가 1이 되고, 그 외의 경우에는 결과가 0
+		 */
+		// 문자열을 2진수로 변환
 		BigInteger x = new BigInteger(a, 2);
 		BigInteger y = new BigInteger(b, 2);
 		
-		BigInteger zero = new BigInteger("0", 2);
+		// 0을 나타내는 이진 문자열 "0"으로 초기화
+		BigInteger zero = new BigInteger("0", 2);	// 이진수 0
 		
 		BigInteger carry, answer;
 		
+		// while 루프를 사용하여 두 이진수를 더함
 		while(y.compareTo(zero) != 0) {
 			
+			// x와 y를 XOR(배타적 논리합) 연산 => 두 이진수를 더한 비트들 나타냄
 			answer = x.xor(y);
+			// x와 y의 AND(논리곱) 연산 + 그 결과를 왼쪽으로 1 비트 시프트(이동)
+			// => 더해진 비트 중에서 자리 올림을 처리
 			carry = x.and(y).shiftLeft(1);
 			
+			// x는 더한 결과를 나타냄
 			x = answer;
+			// y는 이전 자리 올림을 나타냄
 			y = carry;
 		}
 		
+		/* y가 0이 되면 루프가 종료되고, 최종 결과는 x에 저장됨
+		 *  이 값을 이진 문자열로 변환하여 반환
+		 * => String toString(int radix)메소드 사용하여 2진수로 변환
+		 */
 		return x.toString(2);
 	}
 	
