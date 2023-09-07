@@ -1,0 +1,31 @@
+o Bootstrap의 이미지 스타일링 클래스를 사용
+
+<img src="이미지경로.jpg" alt="이미지 설명" class="이미지 스타일링 클래스명">
+
+* 이미지 클래스 사용시, 일정 여백 부여하는 방법
+	- 이미지는 .container 클래스를 포함하며,
+	  mt-3 클래스를 통해 상단에 일정한 여백을 부여 가능
+	<div class="container mt-3">
+		<img src="이미지경로.jpg" class="이미지 스타일링 클래스명">
+	</div>
+
+
+- img 태그에 다른 Bootstrap 클래스
+1. Rounded Corners (둥글게 만들기)
+ : 이미지를 둥글게 만들기 위해 .rounded 클래스를 사용
+	- <img> 태그에 class="rounded"가 추가
+
+2. Circle (원 모양 만들기)
+ : 이미지를 원 모양으로 만들기 위해 .rounded-circle 클래스를 사용
+	- <img> 태그에 class="rounded-circle"가 추가
+
+3. Thumbnail (섬네일로 만들기)
+ : 이미지를 섬네일로 만들기 위해 .img-thumbnail 클래스를 사용
+	- <img> 태그에 class="img-thumbnail"가 추가
+
+
+
+
+
+
+

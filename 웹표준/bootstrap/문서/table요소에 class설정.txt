@@ -1,0 +1,35 @@
+o 테이블 관련  Bootstrap 클래스
+
+1) .table (table 클래스)
+	- 테이블을 더 간결하고 가독성 있게 만들어주며, 
+	  테이블 행, 열, 헤더, 스트라이프 등을 스타일링
+
+구문) <table> 요소에 class="table"을 설정하여 Bootstrap 테이블 스타일을 적용
+	<table class="table">
+  		<thead>
+   			<tr>
+
+
+2) .table-bordered (table-bordered 클래스)
+	- table 클래스에 table-bordered 클래스를 추가하면 
+	    "bordered" 스타일을 적용 가능
+	- 각 테이블 셀 주위에 "경계선"이 표시되어 
+	   테이블의 각 셀이 뚜렷하게 나뉘어져서 나타남
+
+구문) <table> 요소에 class="table table-bordered"를 설정하여 bordered 스타일 적용
+	<table class="table table-bordered">
+  		<thead>
+    			<tr>
+
+
+3) .table-hover (table-hover 클래스)
+	- table 클래스에 table-hover 클래스를 추가하면 
+	  "hover" 스타일을 테이블에 적용 가능
+	- 마우스 포인터를 테이블의 각 행 위로 올렸을 때 행이 강조 표시됨
+
+구문) <table> 요소에 class="table table-hover"를 설정하여 hover 스타일 적용
+	<table class="table table-hover">
+  		<thead>
+    			<tr>
+
+

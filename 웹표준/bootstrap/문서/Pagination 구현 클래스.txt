@@ -1,0 +1,91 @@
+* 페이지네이션(Pagination)을 구현하는 데 사용할 수 있는 클래스
+
+	- 페이지네이션: 긴 목록이나 테이블 결과를 여러 페이지로 나누어 
+	 	       사용자가 페이지 간 이동을 할 수 있도록 도와주는 UI 구성 요소
+
+
+1) .pagination 클래스
+	- pagination 클래스는 페이지네이션을 나타내는 주요 클래스
+	- 페이지 번호 및 이전/다음 버튼을 포함한
+	  페이지네이션 컨테이너를 만들 때 사용
+	- 이 클래스를 <ul> 태그에 적용하여 페이지 번호를 포함하는 목록을 생성
+
+구문)	<ul class="pagination">
+		<li class="page-item"><a class="page-link" href="#">이전</a></li>
+		<li class="page-item"><a class="page-link" href="#">1</a></li>
+		<li class="page-item"><a class="page-link" href="#">2</a></li>
+		<li class="page-item"><a class="page-link" href="#">3</a></li>
+		<li class="page-item"><a class="page-link" href="#">다음</a></li>
+	</ul>
+
+
+2) .page-item 클래스
+	- page-item 클래스는 각 페이지 번호(링크)를 래핑하는 클래스
+	- 이 클래스를 사용하여 페이지 번호를 그룹화하고 스타일을 적용
+	- 이 클래스를 <li> 태그에 적용하여 페이지 번호를 감쌈
+
+
+3) .page-link 클래스:
+	- page-link 클래스는 페이지 번호(링크)를 스타일링하는 클래스
+	- 이 클래스를 페이지 번호 <a> 태그에 적용하여 스타일을 적용
+
+
+4) .active 클래스
+	- active 클래스는 현재 활성화된 페이지 번호를 강조 표시할 때 사용
+	- 현재 페이지를 스타일링하기 위해 이 클래스를 .page-item과 함께 사용
+
+
+5) .disabled 클래스:
+	- disabled 클래스는 비활성화된 페이지 번호(링크)나 
+	  이전/다음 버튼을 나타낼 때 사용
+	- 이 클래스를 사용하면 해당 페이지나 버튼이 클릭 불가능한 상태임을 나타냄
+
+
+6) 이전/다음 버튼 클래스:
+	- page-item 클래스와 page-link 클래스를 이용하여 
+	   이전/다음 버튼을 생성하고 스타일링
+
+
+
+* 페이지네이션(Pagination)을 정렬하는 클래스
+	- 페이지네이션 컨테이너의 페이지 번호의 위치를 원하는대로 조절할 수 있음
+
+1) justify-content-start 클래스
+	- 페이지 번호의 배치를 왼쪽으로 정렬(기본값)
+	- 페이지네이션 컨테이너를 감싸는 부모 요소에 이 클래스를 적용하면 
+	  페이지 번호가 왼쪽에 배치됨
+구문)	 <ul class="pagination justify-content-start">...</ul>
+	 <ul class="pagination">
+	  - 왼쪽 정렬이 기본값이기에 둘 다 같은 결과가 출력됨
+
+
+2) justify-content-center 클래스
+	- 페이지 번호의 배치를 가운데로 정렬
+	- 페이지네이션 컨테이너를 감싸는 부모 요소에 
+	   이 클래스를 적용하면 페이지 번호가 가운데에 배치됨
+구문)	 <ul class="pagination justify-content-center">...</ul>
+
+
+3) justify-content-end 클래스
+	- 페이지 번호의 배치를 오른쪽으로 정렬
+	- 페이지네이션 컨테이너를 감싸는 부모 요소에
+	  이 클래스를 적용하면 페이지 번호가 오른쪽에 배치됨
+구문)	 <ul class="pagination justify-content-end">...</ul>
+
+
+4) justify-content-between 클래스
+	- 페이지 번호를 왼쪽과 오른쪽 양쪽 끝에 배치
+	- 페이지네이션 컨테이너를 감싸는 부모 요소에 
+	   이 클래스를 적용하면 페이지 번호가 양쪽 끝에 배치됨
+구문)	 <ul class="pagination justify-content-between">...</ul>
+
+
+5) justify-content-around 클래스
+	- 페이지 번호를 각각 균일한 간격으로 배치
+	- 페이지네이션 컨테이너를 감싸는 부모 요소에 
+	   이 클래스를 적용하면 페이지 번호가 균등하게 간격을 두고 배치됨
+구문)	 <ul class="pagination justify-content-around">...</ul>
+
+
+	
+

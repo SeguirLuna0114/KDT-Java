@@ -1,0 +1,87 @@
+* Bootstrap 버튼 클래스를 사용하여 스타일 적용
+
+o Bootstrap의 주요 버튼 클래스
+1) .btn: 기본 버튼 스타일
+
+2) .btn-primary: 주요 액션을 나타내는 버튼 스타일. 
+	- 일반적으로 페이지에서 가장 중요한 액션을 수행하는 버튼에 사용
+
+3) .btn-secondary: 보조 액션을 나타내는 버튼 스타일. 
+	- 부가적인 액션 또는 선택적 기능을 수행하는 버튼에 사용
+
+4) .btn-success: 성공 메시지 또는 성공적인 액션을 나타내는 버튼 스타일. 
+	- 주로 성공적인 작업을 수행한 후의 액션에 사용
+
+5) .btn-info: 정보를 표시하거나 정보를 요청하는 버튼 스타일. 
+	- 정보를 표시하거나 정보를 보여줄 때 사용
+
+6) .btn-warning: 경고 또는 주의를 요하는 버튼 스타일. 
+	- 사용자에게 주의를 환기시키거나 잠재적인 문제를 나타낼 때 사용
+
+7) .btn-danger: 위험 또는 실패를 나타내는 버튼 스타일. 
+	- 사용자에게 위험한 동작을 수행할 때 사용
+
+8) .btn-dark: 어두운 배경에 적합한 버튼 스타일. 
+	- 어두운 테마에 어울리는 버튼에 사용
+
+9) .btn-light: 밝은 배경에 적합한 버튼 스타일. 
+	- 밝은 테마에 어울리는 버튼에 사용
+
+10) .btn-link: 링크 버튼 스타일. 
+	- 일반 링크와 유사한 모양을 가지며, 버튼처럼 보이지 않음
+
+11) .btn-lg: 큰 크기의 버튼. 일반 버튼보다 크게 표시
+
+12) .btn-sm: 작은 크기의 버튼. 일반 버튼보다 작게 표시
+
+13) .btn-block: 전체 너비의 버튼. 
+	- 부모 요소의 너비를 채우는 버튼으로, 다른 내용과 함께 사용하기 적합
+
+14) .active: 활성 상태를 나타내는 클래스. 활성 상태의 토글 버튼에 사용
+
+15) .disabled: 비활성화 상태를 나타내는 클래스. 
+	- 사용자 상호작용을 비활성화하고 회색으로 표시
+
+
+
+
+
+o 버튼과 입력 필드 스타일링
+	<button type="button" class="btn btn-secondary">가입</button>
+	<input type="button" value="확인" class="btn btn-secondary">
+
+
+	- '중복검사' 버튼은 전송기능 필요X => button타입으로 만들어야 함
+	<button type="button" class="btn btn-outline-info">ID중복검사</button>
+		
+	- '회원가입' 버튼은 전송기능 필요 => submit타입으로 만들어야 함
+	<button type="submit" class="btn btn-outline-success">회원가입</button>
+		
+	- '취소' 버튼은 리셋(재설정) 버튼으로 생성 => reset타입으로 만들어야 함
+	<button type="reset" class="btn btn-outline-dark">취소</button>
+
+
+
+o <a> 태그에 버튼 스타일을 적용
+	<a href="#" class="btn btn-success">글작성</a>
+
+
+
+o <div> 태그로 버튼 스타일링
+	- <div> 태그를 사용할 때 버튼의 동작은 자동으로 처리되지 않음
+	   => JavaScript 이벤트 처리 등 추가 작업이 필요
+
+	<div class="btn btn-success">로그인</div>
+	
+
+
+
+
+
+
+
+
+
+
+
+

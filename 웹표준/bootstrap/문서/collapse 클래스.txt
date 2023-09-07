@@ -1,0 +1,29 @@
+* collapse 클래스
+ : 요소를 접고 펼치는 데 사용됨
+	- 주로 아코디언(Accordion) 메뉴, 토글 메뉴, 
+	  또는 숨겨진 콘텐츠를 만들 때 활용
+
+o .collapse 클래스 주요 기능
+1. 요소의 접기 및 펼치기
+	- .collapse 클래스를 요소에 추가하면 해당 요소는 초기에 숨겨짐
+	- JavaScript 이벤트 또는 데이터 속성을 사용하여 
+	  요소를 클릭하거나 특정 조건에서 펼칠 수 있음
+
+2. 애니메이션 효과 제공
+	- .collapse 클래스를 사용하면 
+	   요소를 펼치거나 접을 때 부드러운 애니메이션 효과가 제공됨
+
+
+o 접고 펼치는 기능 구현
+	<!-- 접기/펼치기 버튼 -->
+	<button type="button" class="btn btn-primary" 
+		data-bs-toggle="collapse" data-bs-target="#demo">
+  		접기/펼치기
+	</button>
+
+	<!-- 숨겨진 콘텐츠 -->
+	<div class="collapse" id="demo">
+  		<p>이 콘텐츠는 접혀있는 상태입니다. 버튼을 클릭하면 나타납니다.</p>
+	</div>
+
+

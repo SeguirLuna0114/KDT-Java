@@ -1,0 +1,71 @@
+* Dropdown 관련 클래스
+
+o  Dropdown을 구현-------------------------------------------------------------
+구문) <!-- Dropdown 토글 버튼 -->
+	<div class="dropdown">
+  		<button type="button" class="btn btn-secondary dropdown-toggle"
+			data-toggle="dropdown">
+    		Dropdown 버튼
+  		</button>
+  
+     		<!-- Dropdown 메뉴 -->
+  		<ul class="dropdown-menu">
+    			<li><a class="dropdown-item" href="#">항목 1</a></li>
+    			<li><a class="dropdown-item" href="#">항목 2</a></li>
+    		</ul>
+  	</div>
+----------------------------------------------------------------------------------
+
+1) .dropdown 클래스
+	- Dropdown을 감싸는 컨테이너를 정의하는 주요 클래스
+	- 이 클래스를 Dropdown 메뉴를 감싸는 요소에 추가
+
+2) .dropdown-menu 클래스
+	- 실제 Dropdown 메뉴를 정의하는 클래스
+	- 이 클래스를 Dropdown 내부의 메뉴를 감싸는 
+	  <ul> 또는 <div> 요소에 추가
+
+3) .dropdown-item 클래스
+	- .dropdown-item 클래스는 Dropdown 메뉴 내의 각 항목을 정의
+	- 이 클래스를 Dropdown 메뉴 내부의 항목(<li>, <a>, <button> 등)에 추가
+
+4) .dropdown-divider 클래스
+	- Dropdown 메뉴 내에서 항목들을 구분하는 수평 구분선을 생성
+	- Dropdown 메뉴 내부에 구분선을 추가할 때 사용
+
+5) .dropdown-header 클래스
+	- Dropdown 메뉴 내에서 제목(헤더)을 나타내는 클래스
+	- 이 클래스를 Dropdown 메뉴 내의 헤더 항목(<h6>, <span>, <div> 등)에 적용
+
+6) .dropdown-toggle 클래스
+	- .dropdown-toggle 클래스는 Dropdown 토글 버튼을 정의
+	- 이 버튼을 클릭하면 Dropdown 메뉴가 나타나거나 사라짐
+	- Dropdown 토글 버튼에 이 클래스를 추가
+
+
+7) .btn-group 클래스
+	- .btn-group 클래스는 Dropdown과 함께 버튼 그룹을 만들 때 사용
+	- Dropdown 토글 버튼과 관련 버튼들을 함께 그룹화할 때 사용
+
+8) .dropup 클래스
+	- .dropup 클래스는 Dropdown 메뉴를 위쪽으로 열도록 설정
+	- 기본적으로 Dropdown 메뉴는 아래쪽으로 열림
+
+9) .dropright, .dropleft 클래스:
+	- .dropright 클래스는 Dropdown 메뉴를 오른쪽으로 열도록 설정
+	- .dropleft 클래스는 Dropdown 메뉴를 왼쪽으로 열도록 설정
+
+
+10) .disabled 클래스
+	- .disabled 클래스를 Dropdown 항목에 적용하면 
+	  해당 항목을 비활성화시킬 수 있음
+	- 이 항목은 클릭되지 않으며 비활성 상태로 표시됨
+
+
+11) .show 클래스
+	- .show 클래스는 Dropdown 메뉴를 강제로 열 때 사용
+	- Dropdown 토글 버튼을 클릭하지 않고도 Dropdown 메뉴를 열려면 
+	   이 클래스를 메뉴 컨테이너에 추가
+
+
+
