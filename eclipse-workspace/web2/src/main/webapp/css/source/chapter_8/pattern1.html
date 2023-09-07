@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+	<title>패턴1</title>
+	<!--뷰포트 설정 변경: 확대축소X, 확대비율1, 최대크기1-->
+	<meta name="viewport" content="user-scalable=no,
+								 	initial-scale=1,
+								 	maximum-scale=1" />
+	<style>
+		/* 초기화(모든요소) */
+		* {
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			width: 960px;
+			margin: 0 auto;		/* 가로 중앙 정렬 */
+			overflow: hidden;	/* 내용이 너비를 벗어나지 않게 함 */
+		}
+
+		/* 왼쪽에 플로팅 */
+		#menu {
+			width: 260px;
+			float: left;
+		}
+
+		/* 오른쪽에 플로팅 */
+		#section {
+			width: 700px;
+			float: right;
+			/* left로 입력해도 상관 없습니다. */
+		}
+
+		/* 화면 너비가 767px 이하인 경우에만 내부의 스타일 규칙을 적용 */
+		@media screen and (max-width: 767px) {
+
+			/* 스마트폰 사이즈에서는 전부 해제합니다. */
+			body {
+				width: auto;
+			}
+
+			#menu {
+				/* auto로 설정하여 화면 너비에 맞게 표시 */
+				width: auto;
+				/* 플로팅을 해제해, 세로로 쌓이게 함 */
+				float: none;
+			}
+
+			#section {
+				/* auto로 설정하여 화면 너비에 맞게 표시 */
+				width: auto;
+				/* 플로팅을 해제해, 세로로 쌓이게 함 */
+				float: none;
+			}
+		}
+	</style>
+</head>
+
+<body>
+	<div id="menu">
+		<ul>
+			<li>메뉴A</li>
+			<li>메뉴B</li>
+			<li>메뉴C</li>
+		</ul>
+	</div>
+	<div id="section">
+		<h1>Lorem ipsum</h1>
+		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec mollis urna sed turpis luctus laoreet. Fusce
+			auctor maximus finibus. Nam ac dictum velit. Donec sit amet bibendum erat. Sed varius arcu est. Nullam
+			maximus, libero id sollicitudin malesuada, nunc nunc varius neque, eu rhoncus dui nunc ac felis. Integer sit
+			amet turpis metus. Nam id efficitur velit. Mauris suscipit, odio et dictum fermentum, nulla orci fermentum
+			quam, a condimentum magna justo dictum leo. Aenean et odio mattis, maximus elit sed, fringilla est. Sed eget
+			purus sit amet arcu elementum aliquet in eu mi. Donec dui tortor, viverra in fermentum ut, aliquam ac ipsum.
+		</p>
+	</div>
+</body>
+
+</html>

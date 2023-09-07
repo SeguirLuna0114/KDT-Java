@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Ellipsis</title>
+	<style>
+		h1,	p {
+			width: 300px;
+		}
+
+		/* 긴 텍스트를 자르고 생략 부호("...")로 표시하는 데 사용 */
+		.ellipsis {
+			/* 텍스트가 자동으로 줄 바꿈되지 않도록 설정 */
+			white-space: nowrap;
+			/* 요소 내에서 넘치는 콘텐츠를 숨김 => 요소의 경계(너비 300px)를 넘어가지X */
+			overflow: hidden;
+			
+			/* 요소 내에서 텍스트가 넘칠 때 생략 부호("...")를 표시 */
+			text-overflow: ellipsis;
+		}
+	</style>
+</head>
+
+<body>
+	<h1 class="ellipsis">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h1>
+	<p class="ellipsis">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+</body>
+
+</html>
