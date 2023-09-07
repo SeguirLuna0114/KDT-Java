@@ -1,0 +1,116 @@
+* form-control 클래스
+ : 다양한 입력 요소를 스타일링하고 일관된 디자인을 제공하기 위해 사용
+	- 다양한 입력 요소( <input>, <textarea>, <select>, 등 )을
+	  스타일링하는 데 사용됨
+
+1) 입력 요소가 일관된 스타일을 가지게 됨
+	- 웹 페이지에서 입력 필드를 시각적으로 구분하는 데 도움
+
+2) 입력 요소의 너비가 조정됨
+	- 부트스트랩은 기본적으로 입력 요소를 100% 너비로 설정하여
+	  부모 요소에 맞게 확장됨
+
+3) 입력 요소 주위에 테두리와 그림자를 추가하여 입력 필드를 강조
+
+4) 입력 필드의 높이가 일정하게 유지되어 일관된 모양을 유지
+
+
+
+o 스택된(form) 양식을 구현
+<div class="container mt-3">
+	<h2>Stacked form</h2>
+	<form action="/action_page.php">
+
+		<!--이메일 필드-->
+		<div class="mb-3 mt-3">
+			<label for="email">Email:</label>
+			<input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+		</div>
+
+		<!--비밀번호 필드-->
+		<div class="mb-3">
+			<label for="pwd">Password:</label>
+			<input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pswd">
+		</div>
+
+		<!--체크박스 필드-->
+		<div class="form-check mb-3">
+			<label class="form-check-label">
+				<input class="form-check-input" type="checkbox" name="remember"> Remember me
+			</label>
+		</div>
+
+		<!--text area-->
+		<div class="mb-3 mt-3">
+			<label for="comment">Comments:</label>
+			<textarea class="form-control" rows="5" id="comment" name="text"></textarea>
+		</div>
+
+		<!--select menu-->
+		<label for="sel1" class="form-label">Select list (select one):</label>
+		<select class="form-select" id="sel1" name="sellist1">
+			<option>1</option>
+			<option>2</option>
+			<option>3</option>
+			<option>4</option>
+		</select>
+
+		<!--checkbox-->
+		취미
+		<div class="form-check">
+			<input type="checkbox" class="form-check-input" id="check1" name="option1" value="something" checked>
+			<label class="form-check-label" for="check1">게임</label>
+		</div>
+		<div class="form-check">
+			<input type="checkbox" class="form-check-input" id="check2" name="option2" value="something">
+			<label class="form-check-label" for="check2">쇼핑</label>
+		</div>
+		<div class="form-check">
+			<input type="checkbox" class="form-check-input" disabled>
+			<label class="form-check-label">영화감상</label>
+		</div>
+
+		<!--radio button-->
+		좋아하는 계절:
+		<div class="form-check">
+			<input type="radio" class="form-check-input" id="radio1" name="optradio" value="option1" checked>
+			<label class="form-check-label" for="radio1">봄</label>
+		</div>
+		<div class="form-check">
+			<input type="radio" class="form-check-input" id="radio2" name="optradio" value="option2">
+			<label class="form-check-label" for="radio2">여름</label>
+		</div>
+		<div class="form-check">
+			<input type="radio" class="form-check-input" id="radio3" name="optradio" value="option3">
+			<label class="form-check-label" for="radio3">가을</label>
+		</div>
+		<div class="form-check">
+			<input type="radio" class="form-check-input" id="radio4" name="optradio" value="option4">
+			<label class="form-check-label" for="radio4">겨울</label>
+		</div>
+
+
+		<!--Submit버튼-->
+		<button type="submit" class="btn btn-primary">Submit</button>
+	</form>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
