@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>증감 연산자</title>
+</head>
+
+<body>
+	
+	<script>
+		
+		// 증감 연산자 : ++, --
+		var num1 = 10;
+		var num2 = 20;
+		var result;
+
+		num1--;				// 후행 연산	
+		document.write("num1=" + num1 + "<br>");		// 9
+
+		num1++;				// 후행 연산
+		document.write("num1=" + num1 + "<br>");		// 10
+
+		result = num2++;	// 후행 연산
+		document.write("num2=" + num2 + "<br>");		// 21
+		document.write("result=" + result + "<br>");	// 20
+
+		result = ++num2;	// 선행 연산
+		document.write("num2=" + num2 + "<br>");		// 22
+		document.write("result=" + result + "<br>");	// 22
+
+	</script>
+
+</body>
+
+</html>

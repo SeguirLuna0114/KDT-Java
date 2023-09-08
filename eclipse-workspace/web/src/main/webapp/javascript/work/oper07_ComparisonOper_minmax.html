@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>비교 연산자</title>
+</head>
+
+<body>
+
+	<script>
+		// 키보드로 정수 2개를 입력받아서 최대값과 최소값을 구하는 프로그램
+
+		var n1 = prompt("정수1을 입력 하세요?","");
+		var n2 = prompt("정수2을 입력 하세요?","");
+		
+		alert(typeof n1);		// string
+		alert(typeof n2);		// string
+
+		// 최대값과 최소값 변수 선언
+		var max, min;
+		
+		// 문자형 변수끼리 비교연산이 가능함
+		if(n1 > n2) {
+			max = n1;
+			min = n2;
+		} else {
+			min = n1;
+			max = n2;
+		}
+		
+		document.write("max = " + max + "<br>");
+		document.write("min = " + min + "<br>");
+
+	</script>
+
+</body>
+
+</html>

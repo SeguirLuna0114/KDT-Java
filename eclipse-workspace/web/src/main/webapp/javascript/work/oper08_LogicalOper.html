@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>논리 연산자</title>
+</head>
+
+<body>
+	<script>
+		// 논리 연산자 : &&, ||, !
+
+		/* 5과목의 점수를 입력 받아서 합격, 불합격을 판별하는 프로그램을 작성 하세요?
+			  단, 과목당 과락은 40점이고, 평균 60점 이상을 받아야 합격한다. */
+
+		var n1 = prompt("과목1 점수를 입력하세요?", "");   // string
+		var n2 = prompt("과목2 점수를 입력하세요?", "");
+		var n3 = prompt("과목3 점수를 입력하세요?", "");
+		var n4 = prompt("과목4 점수를 입력하세요?", "");
+		var n5 = prompt("과목5 점수를 입력하세요?", "");
+
+		//	var total = n1 + n2 + n3 + n4 + n5;   // 합이 구해지지 않는다.
+		//	console.log('total='+ total);
+
+		//  형변환 함수	
+		//  Number(): 문자를 숫자로 변환 해주는 함수
+		//  Number("30")  	-->  30	
+		//  Number("3.14")  -->  3.14	
+
+		var total =
+			Number(n1) + Number(n2) + Number(n3) + Number(n4) + Number(n5);
+		console.log('total=' + total);
+
+		var avg = total / 5;
+		console.log('avg=' + avg);    // 평균
+
+		if (n1 >= 40 && n2 >= 40 && n3 >= 40 && n4 >= 40 && n5 >= 40 && avg >= 60) {
+			alert("avg:" + avg);
+			alert("합격");
+		} else {
+			alert("avg:" + avg);
+			alert("불합격");
+		}
+	</script>
+
+</body>
+
+</html>

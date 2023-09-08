@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>조건 연산자</title>
+</head>
+
+<body>
+	<script>
+		/* 	조건 연산자
+			변수 = (조건식) ?  값1 : 값2;
+			조건식이 참이면 값1을 변수에 리턴하고, 조건식이 거짓이면 값2를 변수에 리턴한다.
+
+			키보드로 정수 2개를 입력 받아서 최대값과 최소값을 구하는 프로그램을 
+			조건 연산자를 이용해서 작성하세요? */
+
+		var n1 = prompt("정수1을 입력하세요?", "");
+		var n2 = prompt("정수2를 입력하세요?", "");
+		
+		alert(typeof (n1));     // string 
+		alert(typeof (n2));     // string 
+
+		var max = (n1 > n2) ? n1 : n2;
+		var min = (n1 < n2) ? n1 : n2;
+
+		document.write("max=" + max + "<br>");
+		document.write("min=" + min + "<br>");
+	</script>
+</body>
+
+</html>

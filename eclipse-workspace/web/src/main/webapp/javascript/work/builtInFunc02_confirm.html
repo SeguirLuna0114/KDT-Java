@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>confirm함수</title>
+</head>
+
+<body>
+	
+	<!-- confirm()함수
+	confirm()함수는 사용자에게 중요한 결정을 물어볼때 주로 사용하며,
+	확인 버튼을 클릭하면 true 값을 리턴하고,
+	취소 버튼을 클릭하면 false 값을 리턴한다.		
+	-->	
+	
+	<script>
+		var result = confirm("정말로 삭제 하시겠습니까?");
+		
+		alert(result);
+		
+		if(result) {
+			alert("삭제 성공");
+		} else {
+			alert("삭제 실패");
+		}
+	</script>
+
+</body>
+
+</html>
