@@ -1,0 +1,95 @@
+o window 객체
+	= 모든 JavaScript 코드가 실행되는 최상위 객체
+	  	- 웹 브라우저에서만 사용 가능
+		- 보통은 생략함
+ 		- 브라우저 환경에서 전역 객체(Global Object)로 사용됨
+		- 웹 페이지를 제어하는 데 필요한 다양한 속성과 메서드를 제공
+
+
+* 내장 함수(built-in function)
+  = window 객체가 제공하는 메소드
+
+1. window.alert(message)
+	"간단한 알림 대화 상자를 표시하는 데 사용"
+	- 경고 다이얼로그를 표시하며, 메시지를 사용자에게 표시
+	- 사용자는 확인 버튼을 클릭하여 다이얼로그를 닫아야 함
+	  (사용자가 확인 버튼을 클릭하기 전까지 페이지의 상호작용이 중지됨)
+
+구문)	window.alert("이것은 경고 창입니다.");
+
+
+2. window.confirm(message)
+	"사용자로부터 중요한 결정을 물어볼 때 사용"
+	- "확인" 및 "취소" 버튼이 있는 대화 상자(확인 다이얼로그)를 표시 
+	   + 사용자에게 메시지를 표시
+	- 사용자가 "확인" 버튼을 클릭하면 true를 반환하고, 
+	  	  "취소" 버튼을 클릭하면 false를 반환
+	- 사용자의 의사 결정을 수용하거나 거부하는 데 유용
+
+구문)	var result = window.confirm("계속하시겠습니까?");
+	if (result) {
+    		// 사용자가 확인을 클릭한 경우
+	} else {
+    		// 사용자가 취소를 클릭한 경우
+	}
+
+
+3. window.prompt(message, defaultText)
+	"사용자로부터 키보드로 입력받을 때 사용"
+	- 사용자로부터 입력을 받는 프롬프트 창(입력 대화상자)을 표시하고, 
+	   사용자가 입력한 값을 반환
+	- 사용자에게 입력 필드와 "확인" 및 "취소" 버튼이 있는 대화 상자가 표시됨
+	- 사용자로부터 입력받은 값은 항상 문자열(string)로 저장됨
+		- 숫자로 처리하려면 입력된 문자열을 숫자 데이터 유형으로 변환해야 함
+		 : parseInt() 함수 또는 parseFloat() 함수를 사용하여
+		   문자열을 정수 또는 부동 소수점 숫자로 변환
+
+구문)	var userInput = prompt(message);
+	var userInput = prompt(message, defaultText);
+
+	- message: 사용자에게 표시되는 메시지
+	- defaultText: 입력 필드에 표시될 기본 텍스트
+			초기값을 설정하지 않으면 비어있는 상태가 됨
+
+
+
+o 윈도우 창 관련 메소드
+1) window.open(url, name, features)
+	- 새 창을 열거나 새 탭을 열 때 사용하며
+	   열린 창에 대한 참조를 반환
+
+	- url: 열릴 페이지의 URL
+	- name: 창 또는 탭의 이름
+	- atures:창의 속성을 지정
+구문)	var newWindow = window.open("https://www.example.com", "새창",
+				    "width=400,height=300");
+
+2)window.close()
+	- 현재 창을 닫음. 닫을 창은 스크립트로 열린 창이어야 함
+구문)	window.close();
+
+
+
+o 메소드 실행 시간 관련 메소드
+1. window.setTimeout(function, delay)
+	- 지정된 시간(delay 밀리초 후)에 지정된 함수(function)를 
+	  비동기적으로 실행
+	- setTimeout은 일회성 타이머를 설정
+
+구문)	setTimeout(function() {
+    		console.log("일정 시간 후에 실행됩니다.");
+	}, 2000); // 2초 후에 실행
+
+2. window.setInterval(function, delay)
+	- 일정한 간격(delay 밀리초)으로 
+	   지정된 함수를 반복해서 실행
+	- setInterval은 주기적인 작업을 수행할 때 사용
+
+구문) 	setInterval(function() {
+    		console.log("주기적으로 실행됩니다.");
+	}, 1000); // 1초마다 실행
+
+
+
+
+

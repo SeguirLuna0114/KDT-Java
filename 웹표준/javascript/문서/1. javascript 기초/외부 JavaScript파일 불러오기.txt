@@ -1,0 +1,45 @@
+o JavaScript 파일을 웹 페이지에 추가하는 방법
+
+1. JavaScript 파일 생성
+	- JavaScript 코드를 포함하는 외부 파일을 생성하고,
+	   파일 내에 원하는 JavaScript 코드를 추가
+	- 파일 확장자는 .js
+
+ex)	// myscript.js
+	function greet() {
+  		console.log("안녕하세요!");
+	}
+
+
+
+2. HTML 문서에 외부 스크립트 파일 추가
+	- <script> 태그를 사용하여
+	  웹 페이지의 HTML 문서에서 이 외부 JavaScript 파일을 추가
+	- <script> 태그는 웹 페이지의 <head> 
+	  또는 <body> 부분 어디든 추가할 수 있음
+		- <script> 태그를 <head> 섹션에 배치하면 
+		  스크립트가 페이지가 로드되기 전에 실행됨
+		- <body> 섹션 맨 아래에 배치하면 
+		   페이지가 로드된 후에 스크립트가 실행됨
+		  => 스크립트가 페이지 로딩을 차단하지 않도록 하기위해
+		        <body> 맨 아래에 배치하는 것이 좋음
+	- <script> 태그의 src 속성에 외부 JavaScript 파일의 절대/상대경로를 지정
+
+ex)	<!DOCTYPE html>
+	<html>
+	<head>
+  		<title>외부 JavaScript 예제</title>
+	</head>
+	<body>
+  		<!-- 외부 JavaScript 파일 추가 -->
+  		<script src="myscript.js"></script>
+		// => 외부 JavaScript 파일에 포함된 JavaScript 코드가 웹 페이지에 로드됨
+
+  		<!-- JavaScript 코드 실행 -->
+  		<script>
+    			greet(); // 외부 파일에 정의된 함수 호출
+  		</script>
+	</body>
+	</html>
+
+

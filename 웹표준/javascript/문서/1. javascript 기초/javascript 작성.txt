@@ -1,0 +1,96 @@
+o JavaScript 코드를 작성
+
+1. HTML 문서 생성
+	- 웹 페이지에서 JavaScript를 실행하려면 
+	   HTML 문서에 "<script> 태그"를 사용하여 JavaScript 코드를 포함시켜야 함
+	- 보통 <head> 태그 안에 
+	  또는 페이지의 하단 <body> 태그 안에 스크립트를 포함시킬 수 있음
+
+구문)	방법1) <head> 태그 안에 "<script> 태그"를 사용하여 JavaScript 코드를 포함
+	<!DOCTYPE html>
+	<html>
+	<head>
+	    <meta charset="UTF-8">
+	    <title>JavaScript 예제</title>
+
+	    <!-- JavaScript 코드를 이곳에 작성 -->
+	    <script>
+	        // JavaScript 코드를 작성
+	        alert("Hello, JavaScript!");
+	    </script>
+
+	</head>
+	<body>
+
+	</body>
+	</html>
+
+
+
+	방법2) 하단 <body> 태그 안에 "<script> 태그"를 사용하여 JavaScript 코드를 포함
+	<!DOCTYPE html>
+	<html>
+	<head>
+	    <meta charset="UTF-8">
+	    <title>JavaScript 예제</title>
+	</head>
+	<body>
+
+	    <!-- JavaScript 코드를 이곳에 작성 -->
+	    <script>
+	        // JavaScript 코드를 작성
+	        alert("Hello, JavaScript!");
+	    </script>
+
+	</body>
+	</html>
+
+
+2. <script> 태그 내에서 JavaScript 코드를 작성
+	방법1) <script> 태그 내에 JavaScript 코드를 작성
+	    <script>
+	        // JavaScript 코드를 작성
+	        var greeting = "안녕하세요, JavaScript!";
+		alert(greeting);
+	    </script>
+
+
+	방법2) 큰 프로젝트의 경우,	
+	       JavaScript 코드를 외부 파일로 분리하고, HTML 문서에 링크하여 불러옴
+		<!-- 외부 JavaScript 파일 링크 -->
+    		<script src="my-script.js"></script>
+
+
+3. 웹 브라우저에서 HTML 문서를 열어 JavaScript 코드가 올바르게 실행되는지 확인
+
+
+
+o  JavaScript에서 주석
+   주석 단축키    : Ctrl + Shift + /
+   주석 해제단축키 : Ctrl + Shift + \
+
+1. 단일행 주석 : //
+	- //로 시작하면 그 줄의 나머지 부분은 주석으로 처리됨
+ex)	// 이것은 한 줄 주석입니다.
+	var x = 5; // 변수 x에 5를 할당합니다.
+
+
+2. 다중행 주석 : /*      ~      */
+	- /*로 시작하고 */로 끝나는 부분은 주석으로 처리됨
+ex)	/*
+	이것은
+	여러 줄
+	주석입니다.
+	*/
+
+	var y = 10; /* 변수 y에 10을 할당합니다. */
+ 
+
+
+
+
+
+
+
+
+

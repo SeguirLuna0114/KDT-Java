@@ -1,0 +1,91 @@
+o typeof 연산자
+:  특정 값 또는 변수의 데이터 유형(Data Type)을 확인하기 위해 사용
+
+- 다양한 데이터 유형을 식별하고 
+  해당 값을 해당 데이터 유형에 따라 "문자열"로 반환
+
+구문1)	typeof operand
+구문2)	typeof(operand)
+		- operand: 데이터 유형을 확인하려는 값 또는 변수
+
+
+- 반환되는 결과값
+1) "undefined"
+ : 변수가 선언되었지만 초기화되지 않았거나 값이 없는 경우
+ex)	var x;
+	console.log(typeof x); // "undefined"
+
+
+2) "number"
+ : 숫자 데이터 유형
+ex)	var age = 30;
+	console.log(typeof age); // "number"
+
+
+3) "string"
+ : 문자열 데이터 유형
+ex)	var name = "John";
+	console.log(typeof name); // "string"
+
+
+4) "boolean"
+ : 불리언(참 또는 거짓) 데이터 유형
+ex)	var isLoggedin = true;
+	console.log(typeof isLoggedin); // "boolean"
+
+
+5) "object"
+ : 객체 데이터 유형
+    이 값은 객체, 배열, 함수 등 여러 종류의 객체를 포함
+	
+	- String변수의 초기값이 null로 할당된 경우
+	  typeof 연산자를 사용하면 결과로 "object"가 반환됨
+	(null은 원래 "비어 있는 값"을 나타내는 데 사용했기 때문)
+	
+ex)	var person = { name: "John", age: 30 };
+	console.log(typeof person); // "object"
+
+	var numbers = [1, 2, 3];
+	console.log(typeof numbers); // "object"
+
+	var myVariable = null;
+	console.log(typeof myVariable); // "object"
+
+
+
+6) "function"
+ : 함수 데이터 유형
+ex)	function greet() {
+  		console.log("Hello!");
+	}
+	console.log(typeof greet); // "function"
+
+7) "symbol"
+ : 심볼(Symbol) 데이터 유형
+	- 유니크한 식별자를 생성할 때 사용
+ex)	var uniqueSymbol = Symbol("description");
+	console.log(typeof uniqueSymbol); // "symbol"
+
+
+
+o null을 정확하게 식별하기 위한 방법
+ : 일치(===) 연산자 사용
+	- === 연산자는 값과 데이터 유형까지 비교
+	- null을 정확하게 식별하려면 === 연산자를 사용하여 변수와 null을 비교
+ex)	var myVariable = null;
+	if (myVariable === null) {
+  		console.log("myVariable은 null입니다.");
+	}
+		- myVariable이 null일 때만 조건이 참이 되며, 정확한 null 체크를 제공
+
+
+
+
+
+
+
+
+
+
+
+

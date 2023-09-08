@@ -1,0 +1,61 @@
+o JavaScript에서 사용되는 메소드
+	-  다양한 작업을 수행하거나 데이터를 조작하기 위함
+	- 문자를 출력할때 쌍따옴표와 외따옴표를 모두 사용 가능
+	- 문장의 끝에는 세미콜론을 생략가능
+
+
+* JavaScript에서 정보를 출력하는 주요 메소드
+
+1. console.log()
+ : 개발자 도구의 "콘솔"에 메시지를 출력
+	- 가장 일반적으로 사용되는 출력 메소드
+	- 디버깅 및 로깅 목적으로 주로 사용
+
+구문)	console.log("Hello, World!");
+
+
+
+2. alert()
+  : 경고 다이얼로그를 표시하여 메시지를 사용자에게 보여줌
+	- 사용자의 화면에 메시지를 띄우는 용도로 사용
+
+구문)	alert("이것은 경고 창입니다.");
+
+
+
+3. document.write():
+ : HTML 문서에 텍스트를 추가하여, "현재 페이지의 위치"에 텍스트를 출력
+	- 페이지 로딩 중에 동적으로 HTML을 생성할 때 사용됨
+
+구문) document.write("이것은 문서에 추가되는 텍스트입니다.");
+
+
+
+
+4. innerHTML
+ : 요소의 내부 HTML 콘텐츠를 읽거나 설정
+ 	- 주로 DOM 요소의 내용을 동적으로 변경하는 데 사용됨
+
+구문)	var element = document.getElementById("myElement");
+	element.innerHTML = "새로운 내용";
+
+
+
+5. textContent
+ : 요소의 텍스트 내용을 읽거나 설정
+	- HTML 태그를 무시하고 텍스트만 다룸
+
+구문) 	var element = document.getElementById("myElement");
+	element.textContent = "새로운 텍스트 내용";
+
+
+
+6. console.error()
+ : 콘솔에 에러 메시지를 출력
+	- 주로 오류 및 예외 처리에 사용됨
+구문)	console.error("에러가 발생했습니다.");
+
+
+
+
+
