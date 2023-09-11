@@ -1,0 +1,33 @@
+* eval() 함수
+ : 문자열로 주어진 JavaScript 코드를 실행
+	- 런타임 시에 동적으로 코드를 생성하고 실행해야 할 때 유용
+
+
+구문)	eval(문자열);
+		- 문자열: 실행할 JavaScript 코드를 포함하는 문자열
+
+ex)	var x = 10;
+	var y = 20;
+	var result = eval("x + y"); // 문자열 "x + y"를 평가하여 변수 result에 30을 할당
+	console.log(result); // 30 출력
+
+
+	1) 문자열로 표현된 JavaScript 코드를 처리하는 용도로 사용됨
+		- 서버로부터 동적으로 받은 코드나 문자열을 실행하거나 처리할 때 유용
+
+	2) eval() 함수 내에서 실행되는 코드는 호출된 스코프와 공유
+		- eval() 내부에서 선언된 변수가 외부 스코프에서도 접근 가능
+	ex)	var x = 10;
+		function evalExample(code) {
+    			eval(code);
+		}
+		evalExample("console.log(x);"); // 10 출력
+
+
+
+
+
+
+
+
+

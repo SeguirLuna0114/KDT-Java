@@ -1,0 +1,76 @@
+* 형 변환(타입 변환) 함수(type conversion function)
+ : 데이터를 다른 데이터 타입으로 변환하는 데 사용되는 함수
+
+- JavaScript는 동적 타입 언어로, 변수의 데이터 타입이 동적으로 결정됨
+ => 때로는 데이터 타입을 명시적으로 변환해야 할 때가 있음
+   이를 위해 몇 가지 형변환 함수가 제공됨
+
+1. String(value) 함수
+ : 값(value)을 문자열(string)로 변환
+ex)	var number = 42;
+	var str = String(number);	// "42"
+
+
+2. Number(value) 함수
+ : 값(value)을 숫자(number)로 변환
+	- 만약 변환이 불가능하면 NaN을 반환
+ex)	var str = "42";
+	var num = Number(str);
+
+
+3. parseInt(string, radix) 함수
+ : 문자열(string)을 정수로 해석하고 반환
+	- radix는 기수를 나타냅니다(10진수인 경우 생략 가능)
+ex)	var str = "42";
+	var num = parseInt(str);
+
+4. parseFloat(string) 함수
+ : 문자열(string)을 부동 소수점 숫자로 해석하고 반환
+ex)	var str = "3.14";
+	var num = parseFloat(str);
+
+
+5. Boolean(value) 함수
+ : 값을 불리언(boolean)으로 변환
+	- falsy 값인 경우 false를 반환하고, 그 외에는 true를 반환
+ex)	var value = "hello";
+	var isTrue = Boolean(value);
+
+
+6. eval() 함수
+ : JavaScript 코드 문자열을 실제 스크립트 또는 코드 블록처럼 실행할 수 있게 해주는 함수
+	- eval() 함수는 하나의 인수를 받으며, 
+	  이 인수는 유효한 JavaScript 코드가 포함된 문자열
+
+구문)	eval(코드문자열);
+
+
+7. isNaN() 함수
+ : 주어진 값이 NaN(Not-a-Number)인지 여부를 확인하는 함수
+	- NaN은 숫자가 아닌 값.
+	 주로 수학적 계산 중에 잘못된 값 또는 결과를 나타내기 위해 사용됨
+	- 주어진 value가 숫자가 아니거나, 숫자로 변환할 수 없는 문자열인 경우 
+	  (해당 값은 NaN) true를 반환
+	- 주어진 value가 숫자 또는 숫자로 변환 가능한 문자열인 경우
+	  해당 값은 숫자이고, false를 반환합니다.
+
+구문)	isNaN(value);	
+	- value: NaN 여부를 확인하려는 값
+		 이 값이 숫자인지 여부를 확인
+ex)	isNaN(42);        // false (숫자)
+	isNaN("42");      // false (문자열 "42"를 숫자로 변환 가능)
+	isNaN("Hello");   // true (문자열 "Hello"는 숫자로 변환 불가능)
+	isNaN(NaN);       // true (NaN은 NaN입니다)
+
+
+
+
+
+
+
+
+
+
+
+
+

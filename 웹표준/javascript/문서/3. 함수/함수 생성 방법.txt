@@ -1,0 +1,210 @@
+* 함수 생성 방법 및 호출 방법
+
+방법1. 함수 선언문 (Function Declaration)
+	 : 함수를 정의하고, 그 이름으로 호출할 수 있는 방법
+	- function 키워드로 시작하고 함수 이름, 매개변수 목록, 함수 본문으로 구성
+
+구문)	function 함수이름(매개변수1, 매개변수2, ...) {
+    		// 함수 본문
+    		return 결과값; // 결과값을 반환할 수 있음 (선택사항)
+	}
+
+호출방법)	함수이름(매개변수1, 매개변수2, ...);
+
+
+
+방법2. 함수 표현식 (Function Expression)
+	: 함수를 변수에 할당하는 방식으로 정의
+	- 익명 함수(이름 없는 함수)를 만들 수 있음
+	- 변수에 할당한 후 변수 이름을 사용하여 함수를 호출 가능
+
+구문)	var 변수이름 = function(매개변수1, 매개변수2, ...) {
+    		// 함수 본문
+    		return 결과값; // 결과값을 반환할 수 있음 (선택사항)
+	};
+
+호출방법)	변수이름(매개변수1, 매개변수2, ...);
+
+
+
+방법3. 화살표 함수 (Arrow Function)
+	: ES6부터 도입된 새로운 함수 정의 방식
+	- 간결한 문법을 가지며, 주로 익명 함수를 간단하게 정의할 때 사용됨
+
+구문)	var 변수이름 = (매개변수1, 매개변수2, ...) => {
+    		// 함수 본문
+    		return 결과값; // 결과값을 반환할 수 있음 (선택사항)
+	};
+
+
+	o 화살표 함수의 간단한 형태 (단일 표현식 함수)
+	var multiply = (a, b) => a * b;
+
+
+호출방법)	console.log(변수이름(매개변수1, 매개변수2, ...));
+		console.log(multiply(4, 6)); // 24 출력
+
+
+
+
+방법4. 생성자 함수 (Constructor Function)
+	: 객체 생성을 위한 함수
+	- 대문자로 시작하며 new 연산자를 사용하여 호출
+
+구문)	function 생성자함수이름(매개변수1, 매개변수2, ...) {
+    		this.속성 = 값;
+    		// 메서드 정의도 가능
+	}
+
+
+호출방법)	var 객체이름 = new 생성자함수이름(매개변수1, 매개변수2, ...);
+
+
+
+방법5. 메서드 (Method)
+	: 객체에 속한 함수
+	- 객체 리터럴 내부에서 함수를 정의하여 메서드를 만들 수 있음
+
+구문)	var 객체이름 = {
+    	    메서드이름: function(매개변수1, 매개변수2, ...) {
+        	// 메서드 본문
+        	return 결과값; // 결과값을 반환할 수 있음 (선택사항)
+     	     }
+	};
+
+
+호출 방법)	console.log(객체이름.메서드이름(매개변수1, 매개변수2, ...)); 
+
+
+
+o  JavaScript 함수를 정의
+
+1. JavaScript 코드를 <head> 태그에서 선언
+	- 함수를 <head> 태그 내에서 정의
+	- 코드는 <script> 태그 내에 포함됨
+	=> 스크립트는 페이지가 로드되는 동안 미리 로드되고 준비됨
+
+구문)	<!DOCTYPE html>
+	<html>
+	<head>
+    		<title>JavaScript 예제</title>
+    		<script>
+        		function 함수이름(매개변수1, 매개변수2, ...) {
+    				// 함수 본문
+    				return 결과값; // 결과값을 반환할 수 있음 (선택사항)
+			}
+    		</script>
+	</head>
+
+	<body>
+    		<button onclick="greet('John')">인사하기</button>
+	</body>
+	</html>
+
+
+2. JavaScript 코드를 <body> 태그에서 선언 및 실행
+
+구문)	<body>
+    		<script>
+        		function 함수이름(매개변수1, 매개변수2, ...) {
+    				// 함수 본문
+    				eturn 결과값; // 결과값을 반환할 수 있음 (선택사항)
+			}
+    		</script>
+	</body>
+	</html>
+
+
+
+o JavaScript 함수를 호출 또는 실행하는 방법
+
+1. 이벤트 처리기를 통한 호출 (예: 버튼 클릭)
+
+	1) HTML 코드를 사용하여 버튼 요소(<input type="button"> 또는 <button>)를 생성
+	구문)	<input type="button" value="버튼 텍스트">
+
+	2) 클릭 이벤트 핸들러 설정
+	- HTML 요소에 해당 이벤트(예: onclick, onmouseover, onchange 등)를
+	   처리할 수 있는 속성을 추가
+	- 해당 이벤트 속성의 값으로 JavaScript 함수 호출을 위한 구문을 추가
+	구문)	<input type="button" value="버튼 텍스트" onclick="사용자정의함수();">
+
+
+o HTML 요소에 이벤트를 추가하기 위해, 이벤트와 관련된 속성(attribute)을 사용
+	- 이벤트 핸들러를 생성할 때 이벤트 이름에 "on"을 붙여 이벤트 명을 작성
+	=> 특정 이벤트가 발생했을 때 실행되는 JavaScript 코드를 지정
+			
+	- 이벤트 속성은 요소에 이벤트 핸들러를 추가하고 
+	  해당 이벤트가 발생했을 때 실행될 JavaScript 코드를 지정하는 데 사용
+		1) onclick 이벤트 (클릭 이벤트)
+			- 해당 요소를 클릭했을 때 지정된 JavaScript 코드가 실행
+		구문)	<element onclick="JavaScript 코드">
+		ex)	<button onclick=
+				"alert('버튼이 클릭되었습니다.');">클릭하세요</button>
+
+		2) onmouseover 이벤트 (마우스 오버 이벤트)
+			- 해당 요소 위로 마우스 커서가 올라갔을 때 코드 실행
+		구문)	<element onmouseover="JavaScript 코드">
+		ex)	<div onmouseover=
+			console.log('마우스가 위에 있습니다.');">마우스를 올림<div>
+
+		3) onchange 이벤트 (값 변경 이벤트)
+			- 입력 필드의 값이 변경되면 지정된 JavaScript 코드가 실행됨
+		구문)	<input type="text" onchange="JavaScript 코드">
+		ex)	<input type="text" 
+				onchange="console.log('값이 변경되었습니다.');">
+
+		4) onsubmit 이벤트 (폼 제출 이벤트)
+			- 폼을 제출하면 지정된 JavaScript 코드가 실행됨
+		구문)	<form onsubmit="JavaScript 코드">
+		ex)	<form onsubmit="alert('폼이 제출되었습니다.');">
+    				<input type="submit" value="제출">
+			</form>
+
+		5) onkeydown, onkeyup, onkeypress 이벤트 (키보드 이벤트)
+			- 키를 누르거나 떼면 지정된 JavaScript 코드가 실행됨 
+		구문)	<input type="text" onkeydown="JavaScript 코드">
+		ex)	<input type="text" onkeydown="console.log('키가 눌렸습니다.');">
+
+
+ex)	<button> 요소에 onclick 이벤트 처리기를 추가하여 
+	 "인사하기" 버튼을 클릭할 때 greet('John') 함수 호출
+
+	<body>
+    		<button onclick="greet('John')">인사하기</button>
+
+    		<script>
+        		// JavaScript 함수 정의
+        		function greet(name) {
+            			alert("Hello, " + name + "!");
+        		}
+    		</script>
+	</body>
+
+
+
+2. 스크립트 내에서 직접 호출
+	- <script> 태그 내에서 직접 함수를 호출
+	- 함수 이름 다음에 괄호 ()를 사용하여 함수를 호출
+	 필요한 인수(arguments)를 전달 가능
+	- HTML 요소에서 이벤트를 대기하지 않고 스크립트 내에서 함수를 호출 가능
+구문)	<script>
+	        // 스크립트 내에서 함수 호출
+        	함수이름(매개변수1, 매개변수2, ...);
+    	</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
