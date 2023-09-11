@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>for문</title>
+</head>
+
+<body>
+
+	<script>
+		// 1~100까지 정수 중에서 홀수, 짝수의 합을 구하는 프로그램
+
+		var odd = 0, even = 0;
+		for (var i = 1; i < 101; i++) {
+			if (i % 2 == 1) {
+				// 홀수
+				odd += i;
+			} else {
+				// 짝수
+				even += i;
+			}
+		}
+
+		document.write("1~100 홀수의 합:" + odd + "<br>");		// 2500
+		document.write("1~100 짝수의 합:" + even + "<br>");	// 2550
+	</script>
+
+</body>
+
+</html>

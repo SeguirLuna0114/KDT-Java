@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>사용자 정의 함수</title>
+
+	<script>
+		// Number("3.14") --> 3.14 : 문자형 데이터를 숫자형 데이터로 변환
+		var n1 = Number(prompt("정수1을 입력하세요?", ""));
+		var n2 = Number(prompt("정수2를 입력하세요?", ""));
+
+		// 사용자 정의 JavaScript 함수
+		function plus() {		// 더하기	
+			alert(n1 + n2);
+		}
+		function minus() {		// 빼기
+			alert(n1 - n2);
+		}
+		function multi() {			// 곱하기
+			alert(n1 * n2);
+		}
+		function div() {			// 나누기
+			alert(n1 / n2);
+		}
+
+	</script>
+</head>
+
+<body>
+
+	<!-- 클릭 이벤트를 추가한 버튼 -->
+	<form>
+		<input type="button" value="더하기" onclick="plus();">
+		<input type="button" value="빼기" onclick="minus();">
+		<input type="button" value="곱하기" onclick="multi();">
+		<input type="button" value="나누기" onclick="div();">
+	</form>
+
+</body>
+
+</html>

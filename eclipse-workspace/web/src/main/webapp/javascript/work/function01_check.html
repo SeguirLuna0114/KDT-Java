@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>사용자 정의 함수</title>
+
+	<script>
+		// 같은 script 안에 있는 함수는 위치에 상관없이 호출할 수 있다.
+//		check();			// 함수 호출 가능함.
+
+		// 사용자 정의 함수
+		function check() {   // 함수명은 대.소문자를 구분한다.
+			alert("함수 호출 성공");
+		}	
+	</script>
+
+</head>
+
+<body>
+
+	<!--방법1. 함수호출 -->
+	<script>
+//		check();		// 함수 호출
+	</script>
+
+	<!--방법2. 이벤트를 이용해서 함수호출 -->
+	<input type="button" value="함수호출" onClick="check()">
+
+</body>
+
+</html>

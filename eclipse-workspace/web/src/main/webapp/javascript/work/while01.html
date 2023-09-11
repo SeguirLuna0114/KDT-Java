@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>while문</title>
+</head>
+
+<body>
+
+	<script>
+		// while문
+		// while(조건식){
+		//	 반복 실행할 문장;
+		// }
+
+		// 1 ~ 100 까지 홀수, 짝수의 합을 구하는 프로그램을 작성하세요?
+
+		var i = 1, odd = 0, even = 0;			// 초기값
+		while (i <= 100) {				// 조건식
+			if (i % 2 == 0) {	 // 짝수
+				even += i;
+			} else {			 // 홀수
+				odd += i;
+			}
+			i++;						// 증감식	
+		}
+		document.write("1~100까지 홀수의 합:" + odd + "<br>");
+		document.write("1~100까지 짝수의 합:" + even + "<br>");
+	</script>
+
+</body>
+
+</html>

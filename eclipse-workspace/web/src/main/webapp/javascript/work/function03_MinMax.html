@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>사용자 정의 함수</title>
+
+	<script>
+		// 최대값과 최소값을 구하는 함수
+		function max(a, b) {		// 최대값
+			if (a > b)
+				return a;
+			else
+				return b;
+		}
+		function min(a, b) {		// 최소값
+			if (a < b)
+				return a;
+			else
+				return b;
+		}	
+	</script>
+</head>
+
+<body>
+	<script>
+		var a = prompt("정수1을 입력 하세요?", "");
+		var b = prompt("정수2를 입력 하세요?", "");
+
+		var max = max(a, b);		// max()함수 호출
+		var min = min(a, b);		// min()함수 호출
+		
+		document.write("max=" + max + "<br>");
+		document.write("min=" + min + "<br>");
+	</script>
+</body>
+
+</html>

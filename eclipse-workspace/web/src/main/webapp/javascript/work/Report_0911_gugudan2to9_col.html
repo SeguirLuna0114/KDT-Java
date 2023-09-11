@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>구구단(2~9단)을 열방향(세로)으로 출력하는 프로그램</title>
+</head>
+<!--구구단(2~9단)을 열방향(세로방향)으로 출력하는 프로그램
+		 	(테이블 태그를 사용하여 처리)
+			-------------------------------------
+			2단		3단		...		8단		9단
+			-------------------------------------
+			2*1=2						  9*1=9
+			...								...
+			2*9=18						  9*9=81
+			-------------------------------------
+		-->
+
+<body>
+
+	<table border="1">
+		<!--표의 제목 설정-->
+		<caption>구구단(2~9단)</caption>
+
+		<!--<tr> 요소는 표의 행을 정의-->
+		<tr align="center">
+			<!--<th> 요소는 표의 열 제목을 나타냄-->
+			<script>
+				for (var dan = 2; dan <= 9; dan++) {			 // 단
+					document.write("<th>[" + dan + "단]</th>"); // dan title
+				}
+			</script>
+		</tr>
+
+
+		<!--<td> 요소는 표의 데이터 셀을 나타냄-->
+		<script>
+			for (var i = 1; i <= 9; i++) {			 // 단
+				document.write("<tr align='center'>");
+				for (var dan = 2; dan <= 9; dan++) {			 // 단
+					document.write("<td>" + dan + "*" + i + "=" + dan * i + "</td>");
+				}
+				document.write("</tr>");
+			}
+		</script>
+	</table>
+
+</body>
+
+</html>
