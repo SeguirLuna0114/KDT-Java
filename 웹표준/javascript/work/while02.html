@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>while문</title>
+</head>
+
+<body>
+
+	<script>
+		// while(조건식){
+		//	 반복 실행할 문장;
+		// }
+
+		// while문을 이용해서 구구단 2 ~ 9단을 출력하는 프로그램을 작성하세요?
+
+		// i가 2~9까지
+		var dan = 2;			
+		while (dan < 10) {				// 단
+			document.write("[" + dan + "단]<br>"); // dan title
+			
+			var i=1;
+			while(i<10) {
+				document.write(dan + "*" + i + "=" + dan * i + "<br>");
+				
+				i++;
+			}
+			dan++;						// 증감식	
+			document.write("<br>");		// 각단 줄간격 벌리기
+		}
+		
+	</script>
+
+</body>
+
+</html>

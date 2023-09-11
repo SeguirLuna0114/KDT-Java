@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>do ~ while문</title>
+</head>
+
+<body>
+
+	<script>
+		// do ~ while문
+		// do{
+		//	 반복 실행할 문장;
+		// }while(조건식);
+
+		// 키보드로 수식(ex. 10+20)을 입력 받아서 연산결과를 출력하는 프로그램을 
+		// 작성하세요?
+
+		do {
+			var s = prompt("수식을 입력하세요?(종료하려면 0입력", "");
+
+			// '0'을 입력하면 break문으로 반복문을 빠져 나온다.
+			if (s == '0') break;
+
+			// eval() : 문자 형식의 수식을 연산을 해주는 함수
+			// eval("10+20")  -->   30
+			alert(s + "의 연산결과는 " + eval(s));
+
+		} while (true);	// 무한루프	
+
+	</script>
+
+</body>
+
+</html>

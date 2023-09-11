@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>for문</title>
+</head>
+
+<body>
+
+	<script>
+
+		// 구구단 2 ~ 9단을 출력하는 프로그램을 작성하세요?
+
+		for (var dan = 2; dan <= 9; dan++) {			 // 단
+			document.write("[" + dan + "단]<br>"); // dan title
+			for (var i = 1; i <= 9; i++) {
+				document.write(dan + "*" + i + "=" + dan * i + "<br>");
+			}
+			document.write("<br>");		// 각단 줄간격 벌리기	
+		}
+
+	</script>
+
+</body>
+
+</html>

@@ -1,0 +1,142 @@
+* 배열(Array)
+ : 여러 값을 순서대로 저장하는 데이터 구조
+	- 하나의 변수에 여러 값을 저장할 수 있어 
+	  데이터를 구조화하고 관리하는 데 유용
+
+1. 배열 생성
+ : 배열을 생성하려면 대괄호 []를 사용
+
+o 배열 리터럴 방법 (Array Literal)
+ : 대괄호 [] 내에 원하는 요소를 나열하여 생성
+	var fruits = ["apple", "banana", "cherry"];
+
+
+o new Array() 생성자를 사용하여 배열을 생성
+	- 배열의 크기를 동적으로 설정 가능
+	var fruits = new Array("apple", "banana", "cherry");
+
+	- 초기 크기를 설정한 후, 나중에 요소 추가
+	var arrayWithSize = new Array(n); // 길이가 n인 빈 배열 생성
+
+
+o 빈 배열 생성
+ : 배열을 미리 채우지 않고 빈 배열을 생성하려면 아무 요소도 넣지 않고 배열을 생성
+	var emptyArray = [];
+
+
+
+o 다차원 배열 생성
+ : 배열 내에 배열을 포함하여 다차원 배열을 생성	
+	-  행렬 또는 2차원 배열과 같은 구조를 만들 수 있음
+	var matrix = [
+    		[1, 2, 3],
+    		[4, 5, 6],
+    		[7, 8, 9]
+	];
+
+
+
+2. 배열 요소 접근
+ : 배열 요소는 0부터 시작하는 인덱스를 사용하여 접근할 수 있음
+
+o 인덱스를 사용한 접근
+	- 배열 내의 각 요소는 0부터 시작하는 인덱스를 가짐
+	- 대괄호 [] 안에 인덱스를 넣어 해당 요소에 접근할 수 있음
+	ex)	var fruits = ["apple", "banana", "cherry"];
+		var firstFruit = fruits[0]; // 첫 번째 요소에 접근 ("apple")
+		var secondFruit = fruits[1]; // 두 번째 요소에 접근 ("banana")
+
+o 반복문을 사용한 접근(배열 순회)
+	- for 루프나 forEach() 메서드와 같은 반복문을 사용하여 
+	  배열 요소에 접근 가능
+
+	1. for 루프 사용
+	for (var i = 0; i < fruits.length; i++) {
+    		console.log(fruits[i]); // 배열의 각 요소 출력
+	}
+
+	2. forEach() 메서드 사용
+		- forEach() 메서드: 배열의 각 요소에 대해 지정된 함수를 실행
+		- 배열의 각 요소에 대해 지정된 함수를 실행하는 데 사용
+		- 반복문을 대체하고 배열의 각 요소를 순회하며 조작하거나 처리할 때 유용
+	array.forEach(function(currentValue, index, array) {
+    		// currentValue: 현재 요소의 값
+    		// index: 현재 요소의 인덱스
+    		// array: 원본 배열 자체
+    		// 실행할 코드
+	});
+		- currentValue: 현재 순회 중인 배열 요소의 값
+		- index: 현재 순회 중인 배열 요소의 인덱스
+		- array: forEach()가 호출된 배열 자체
+
+
+3. 배열 길이
+ : 배열의 길이는 length 속성을 사용하여 확인
+ex)	var fruits = ["apple", "banana", "cherry"];
+	var length = fruits.length;
+	console.log(length); // 배열의 길이 출력 (3)
+
+
+4. 배열 수정
+ : 배열 내의 특정 요소 값을 변경하려면 해당 요소의 인덱스를 사용
+ex)	var fruits = ["apple", "banana", "cherry"];
+	fruits[1] = "orange"; // 두 번째 요소를 "orange"로 수정
+
+
+
+5. 배열 추가
+ : 새로운 요소를 배열 끝에 추가하려면 push() 메서드를 사용
+	- push() 메서드: JavaScript 배열에서 
+			가장 마지막에 하나 이상의 요소를 추가하는 데 사용
+구문)	array.push(element1, element2, ..., elementN);
+		- element1, element2, ..., elementN: 배열에 추가할 요소. 
+						여러 개의 요소를 동시에 추가할 수 있음
+ex)	var fruits = ["apple", "banana"];
+	fruits.push("cherry"); // 배열의 끝에 "cherry" 추가
+	fruits.push("date", "elderberry"); // 배열의 끝에 "date"와 "elderberry" 추가
+
+	console.log(fruits); // ["apple", "banana", "cherry", "date", "elderberry"]
+
+
+
+6. 배열 삭제
+ : 배열에서 요소를 삭제하려면 splice() 메서드를 사용하거나 delete 연산자를 사용
+	1) splice() 메서드를 사용하여 요소 삭제
+		- splice() 메서드: 배열에서 특정 위치의 요소를 삭제하거나
+				  새로운 요소를 추가하는 데 사용
+		- 요소를 삭제할 때는 시작 인덱스와 삭제할 요소의 개수를 지정
+	구문)	array.splice(start, deleteCount);
+			- start: 삭제를 시작할 인덱스.
+			- deleteCount: 삭제할 요소의 개수.
+
+	ex)	var fruits = ["apple", "banana", "cherry"];
+		fruits.splice(1, 1); // 인덱스 1의 요소 "banana" 삭제
+
+
+	2) delete 연산자를 사용하여 요소 삭제 (요소는 undefined로 남음)
+		- delete 연산자를 사용하면 배열에서 요소를 삭제할 수 있음
+		- 단, 해당 인덱스의 요소는 undefined로 남게 됨
+	구문)	delete array[index];
+			- index: 삭제하려는 요소의 인덱스
+
+	ex)	var fruits = ["apple", "banana", "cherry"];
+		delete fruits[2]; // 인덱스 2의 요소 "cherry" 삭제 
+				    ("cherry"는 undefined로 남음)
+
+
+	3) pop() 메서드를 사용하여 배열에서 마지막 요소를 제거하고 해당 요소를 반환
+	구문)	var removedItem = array.pop();
+
+	ex)	var fruits = ["apple", "banana", "cherry"];
+		var removedFruit = fruits.pop(); // 마지막 요소 "cherry"를 제거하고 반환
+
+
+	4) length 속성을 사용하여 배열의 길이를 직접 수정하며 요소 삭제
+		- 배열 길이를 줄이면 마지막 요소가 삭제됨
+	구문)	array.length = newLength;
+			- newLength: 변경된 배열의 길이
+
+	ex)	var fruits = ["apple", "banana", "cherry"];
+		fruits.length = 2; // 배열의 길이를 2로 수정 (마지막 요소 "cherry" 삭제)
+
+
