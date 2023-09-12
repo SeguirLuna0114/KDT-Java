@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>String 객체</title>
+</head>
+
+<body>
+	<script>
+		// 키보드로 핸드폰 번호를 입력 받아서 마지막 4자리를 별표시(*)로 마킹해서 
+		// 출력 하세요?
+		// var num = "01012345678";
+
+		var num = prompt("핸드폰 번호를 입력 하세요?", "");
+
+		var result1 = num.substring(0, 7) + "****";
+		var result2 = num.substr(0, 7) + "****";
+
+		document.write(result1 + "<br>");
+		document.write(result2 + "<br>");
+	</script>
+</body>
+
+</html>

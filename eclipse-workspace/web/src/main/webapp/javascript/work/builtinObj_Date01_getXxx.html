@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Date 객체</title>
+</head>
+
+<body>
+
+	<script>
+		// 현재 연,월,일,시,분,초,요일을 구하는 프로그램을 작성 하세요?
+
+		var t = new Date();
+
+		var y = t.getFullYear();		// 연도	
+		var m = t.getMonth() + 1;		// 월(0~11)
+		var d = t.getDate();			// 일
+
+		var h = t.getHours();			// 시간
+		var mm = t.getMinutes();		// 분
+		var s = t.getSeconds();			// 초
+		var w = t.getDay();				// 요일(0~6)
+
+		var week = ['일', '월', '화', '수', '목', '금', '토'];
+
+		// 0(일), 1(월), 2(화), 3(수), 4(목), 5(금), 6(토)
+		//	document.write(w+"<br>");		// w=2 : 화		
+
+		document.write(y + "-" + m + "-" + d + "  " + h + ":" + mm + ":" + s + "  ");
+		document.write(week[2] + "요일");	
+	</script>
+
+</body>
+
+</html>
