@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>String 객체</title>
+</head>
+
+<body>
+	<script>
+
+		var t = "Hello Thans you good luck to you";
+
+		// charAt(16) : 인덱스 16번 문자를 추출
+		document.write(t.charAt(16) + "<br>");			// g
+
+		// indexOf('you') : 가장 먼저 나오는 you의 인덱스 번호를 구해준다.
+		document.write(t.indexOf('you') + "<br>");		// 12
+		document.write(t.indexOf('you') + "<br>");		// 12
+
+		// indexOf('you', 16) 
+		//: 인덱스 16번 이후에 나오는 you의 인덱스 번호를 구해준다.
+		document.write(t.indexOf('you', 16) + "<br>");		// 29
+
+		// lastIndexOf('you'): 끝에서 가장 먼저 나오는 you의 인덱스 번호를 구해준다.
+		document.write(t.lastIndexOf('you') + "<br>");	// 29
+
+		// toUpperCase() : 대문자로 변환 해주는 함수
+		document.write(t.toUpperCase() + "<br>");
+		// HELLO THANS YOU GOOD LUCK TO YOU
+
+		// toLowerCase() : 소문자로 변환 해주는 함수
+		document.write(t.toLowerCase() + "<br>");
+		// hello thans you good luck to you
+
+		// substring(start index, end index)
+		// : start 인덱스 번호부터 end-1번 인덱스 번호의 문자를 추출
+		// substring(6, 12) : 인덱스 6번 부터 11번 까지의 문자를 추출
+		document.write(t.substring(6, 12) + "<br>");  // Thans
+
+		// substr(start index, 추출할 문자열의 길이)
+		// substr(21, 4) : 인덱스 21번 부터 4개의 문자를 추출
+		document.write(t.substr(21, 4) + "<br>");     // luck
+
+		// split("구분기호") : 구분기호를 이용해서 문자들을 분리해서 배열로 리턴해주는 함수
+		// split(" ") : 공백문자를 기준으로 문자를 분리해서 배열로 리턴 해준다.
+		var s = t.split(" ");
+		document.write(s[0] + "<br>");	// Hello
+		document.write(s[1] + "<br>");	// Thans
+		document.write(s[2] + "<br>");	// you
+		document.write(s[3] + "<br>");	// good
+		document.write(s[4] + "<br>");	// luck
+		document.write(s[5] + "<br>");	// to
+		document.write(s[6] + "<br>");	// you
+
+		for (var i = 0; i < s.length; i++) {
+			document.write(s[i] + "\t");
+		}
+		
+	</script>
+</body>
+
+</html>

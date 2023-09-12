@@ -1,0 +1,19 @@
+o document.getElementById(id)
+ : HTML 문서 내에서 특정 ID 속성을 가진 HTML 요소를 찾아서 
+    요소에 대한 참조를 반환
+	- HTML 요소에 접근하고 해당 요소의 속성이나 내용을 변경할 수 있음
+	- 문서 내에서 유일한 ID 값을 가진 요소를 찾기 때문에, 
+	  동일한 ID가 여러 요소에 적용되면 첫 번째 요소만 반환됨
+	   => HTML 문서 내에서 각 ID는 고유해야 함
+
+구문)	var element = document.getElementById(id);
+		- id: 찾고자 하는 HTML 요소의 ID 속성 값
+
+
+
+o document.getElementById(id).value
+ : HTML 문서 내에서 해당 id값을 HTML 요소를 찾아 
+   특정 입력 필드의 값(일반적으로 사용자 입력)을 반환
+	- 입력 필드의 값을 JavaScript로 가져올 때 사용
+	- .value: 반환된 요소의 값을 가져오는 속성
+	-  주로 입력 요소 (input, textarea, select 등)에서 사용

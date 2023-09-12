@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>배열의 메소드</title>
+</head>
+
+<body>
+	<script>
+		var greenLine = ['사당', '교대', '방배', '강남'];
+		var yellowLine = ['미금', '정자', '모란', '수서'];
+
+		// slice(start index, end index): start ~ end-1번 원소를 추출
+		document.write(greenLine.slice(1, 3) + "<br>"); // 교대,방배
+
+		// concat(): 2개의 배열 객체를 하나로 결합 해주는 함수
+		document.write(greenLine.concat(yellowLine) + "<br>");
+		// 사당,교대,방배,강남,미금,정자,모란,수서
+
+		// pop(): 배열의 마지막 원소를 삭제 해주는 함수
+		greenLine.pop();					// '강남' 삭제
+		document.write(greenLine + "<br>");   // 사당,교대,방배
+
+		// push(): 배열의 마지막 인덱스에 새로운 데이터를 삽입 해주는 함수
+		greenLine.push('삼성');              // '삼성' 삽입
+		document.write(greenLine + "<br>");   // 사당,교대,방배,삼성
+
+		// shift(): 배열의 첫번째 원소를 삭제 해주는 함수
+		greenLine.shift();					// '사당' 삭제
+		document.write(greenLine + "<br>");   // 교대,방배,삼성
+
+		// unshift(): 배열의 첫번째 인덱스에 새로운 데이터를 삽입 해주는 함수
+		greenLine.unshift('신도림');			// '신도림' 삽입
+		document.write(greenLine + "<br>");   // 신도림,교대,방배,삼성
+	</script>
+</body>
+
+</html>

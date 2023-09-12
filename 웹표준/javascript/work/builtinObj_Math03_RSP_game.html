@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>가위, 바위, 보 게임</title>
+</head>
+
+<body>
+
+	<script>
+		var rsp = prompt("가위, 바위, 보 중에서 하나를 입력하세요?", "");
+
+		switch (rsp) {
+			case '가위':
+				rsp = 1;
+				break;
+			case '바위':
+				rsp = 2;
+				break;
+			case '보':
+				rsp = 3;
+				break;
+			default:
+				alert('잘못 입력 했습니다.');
+				location.reload();	   // 새로고침
+		}
+		
+		/* 1~3사이의 난수 발생
+		   Math.random():0~1사이 난수를 발생시키는 메소드
+		   방법1) ceil함수를 사용해 올림기능 활용하여 정수 난수 발생시키는 방법
+		   		Math.ceil(Math.random() * 3);	// 1~3사이 난수 발생
+		   방법2) floor함수를 사용해 내림기능을 활용하여 정수 난수 발생
+		   		Math.floor(Math.random() * 3)+1;	// 1~3사이 난수 발생 */
+		 var rand = Math.floor(Math.random() * 3) +1;
+		 
+		 /* 가위 바위 보 게임 실행 후, 컴퓨터와의 게임에서 이겼는지 확인 */
+		 var RSP = [];
+		 RSP[1] = "가위";
+		 RSP[2] = "바위";
+		 RSP[3] = "보";
+		 
+		 document.write("User : "+RSP[rsp]+" vs Computer :"+RSP[rand]+"<br>");
+		 
+		 verdict = rsp - rand;
+		 
+		 /* user: 가위(1) -> computer: 보(3) =>  verdict = 1-3 = -2
+		 	user: 바위(2) -> computer: 가위(1) => verdict = 2-1 = 1
+		 	user: 보(3) -> computer: 바위(2) => verdict = 3-2 = 1 */
+		 if(verdict == -2 || verdict == 1) {
+			 alert("당신이 이겼습니다.")
+			 document.write("당신이 이겼습니다.<br>");
+		 } else if (verdict == 2 || verdict == -1) {
+			 alert("당신이 졌습니다.")
+			 document.write("당신이 졌습니다.<br>");
+		 } else {
+			 alert("무승부입니다. 게임을 다시 진행하세요.")
+			 document.write("무승부입니다.<br>")
+		 }
+	</script>
+
+</body>
+
+</html>

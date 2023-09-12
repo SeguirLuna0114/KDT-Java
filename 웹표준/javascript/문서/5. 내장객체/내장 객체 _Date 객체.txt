@@ -1,0 +1,171 @@
+* 내장 객체들은 JavaScript 언어 자체에 내장되어 있어서 
+  별도의 라이브러리나 모듈을 가져오지 않고 사용할 수 있음
+
+o Date 객체
+ : JavaScript에서 날짜와 시간 정보를 다루는 데 사용되는 내장 객체
+	- 현재 시간, 날짜 비교, 날짜 계산 등 
+	  다양한 날짜 및 시간 관련 작업을 수행할 수 있음
+
+
+o Date 객체를 생성하는 방법
+방법1) 현재 시간과 날짜 정보를 포함하는 Date 객체를 생성
+	var currentDate = new Date();
+
+
+방법2)	Date 객체를 생성할 때 인자를 전달하여 특정 날짜와 시간을 나타냄
+	var specificDate = new Date('2023-09-12T15:30:00');
+
+
+
+o Date 객체를 사용하여 가능한 작업
+1) 날짜 및 시간 정보 가져오기: 
+  Date 객체에서 날짜 및 시간 정보를 가져오는 다양한 메서드를 사용해
+  연, 월, 일, 시, 분, 초 등의 정보를 가져올 수 있음
+
+	- getFullYear(): 현재 연도를 반환
+		let currentDate = new Date();
+		let year = currentDate.getFullYear();
+		console.log(year); // 예: 2023
+
+	- getMonth(): 현재 월을 반환
+		      월은 0부터 시작하므로 0은 1월, 11은 12월을 나타냄
+		let currentDate = new Date();
+		let month = currentDate.getMonth();
+		console.log(month); // 예: 8 (9월)
+
+	- getDate(): 현재 월의 일(day of the month)을 반환
+		let currentDate = new Date();
+		let day = currentDate.getDate();
+		console.log(day); // 예: 12
+
+	- getDay(): 현재 요일을 반환
+		    요일은 0부터 시작하며, 0은 일요일, 1은 월요일 등을 나타냄
+		let currentDate = new Date();
+		let dayOfWeek = currentDate.getDay();
+		console.log(dayOfWeek); // 예: 1 (월요일)
+
+	- getHours(), getMinutes(), getSeconds(): 각각 현재 시간의 시, 분, 초를 반환
+		let currentDate = new Date();
+		let hours = currentDate.getHours();
+		let minutes = currentDate.getMinutes();
+		let seconds = currentDate.getSeconds();
+		console.log(hours, minutes, seconds); // 현재 시간의 시, 분, 초 출력
+
+	- getTime(): 1970년 1월 1일 00:00:00 UTC로부터 
+		     현재 날짜와 시간까지의 밀리초(milliseconds) 수를 반환
+		let currentDate = new Date();
+		let timestamp = currentDate.getTime();
+		console.log(timestamp); // 예: 1631395200000
+
+
+
+2) Date 객체를 사용하여 날짜를 계산하고 더하거나 빼는 것이 가능
+
+	- setDate() 메서드를 사용하여 특정 날짜를 설정하고, 
+	  이를 통해 날짜를 더하거나 빼는 것이 가능
+		let currentDate = new Date();
+
+		// 7일 뒤의 날짜 계산
+		currentDate.setDate(currentDate.getDate() + 7);
+
+		// 3일 전의 날짜 계산
+		currentDate.setDate(currentDate.getDate() - 3);
+
+
+	- setMonth() 메서드를 사용하여 특정 월을 설정하고, 
+	  이를 통해 월을 더하거나 빼는 것이 가능
+
+	- setFullYear() 메서드를 사용하여 특정 연도를 설정하고, 
+	  이를 통해 연도를 더하거나 빼는 것이 가능
+
+
+
+3) Date 객체를 사용하여 두 날짜를 비교
+	- 주로 비교 연산자를 사용하거나 
+	   getTime() 메서드를 활용하는 방법을 사용하여 비교
+	-  Date 객체에서 시간 정보도 함께 비교된다는 점 주의
+
+	(1) 비교 연산자(<, >, <=, >=, ===, !==)를 사용하여 비교
+		- Date 객체끼리 직접 비교하는 것이 가능
+	ex)	let date1 = new Date('2023-09-12');
+		let date2 = new Date('2023-09-13');
+
+		if (date1 < date2) {
+  			console.log('date1은 date2보다 이전입니다.');
+		} else if (date1 > date2) {
+  			console.log('date1은 date2보다 이후입니다.');
+		} else {
+  			console.log('date1과 date2는 같습니다.');
+		}
+
+	(2) getTime() 메서드 사용하여 
+	   날짜를 밀리초 단위의 숫자로 변환한 다음, 이 숫자를 비교할 수 있음
+	ex)	let date1 = new Date('2023-09-12');
+		let date2 = new Date('2023-09-13');
+
+		let time1 = date1.getTime();
+		let time2 = date2.getTime();
+
+		if (time1 < time2) {
+  			console.log('date1은 date2보다 이전입니다.');
+		} else if (time1 > time2) {
+  			console.log('date1은 date2보다 이후입니다.');
+		} else {
+  			console.log('date1과 date2는 같습니다.');
+		}
+
+
+o setTimeout 함수
+ : 비동기 작업을 수행할 수 있는 타이머 함수
+	- 지정된 시간이 지난 후에 함수를 실행하거나 코드 블록을 실행할 수 있음
+	- 웹 애플리케이션에서 비동기 작업을 처리하거나 
+	  일정한 시간 후에 특정 작업을 수행하기 위해 사용
+구문)	setTimeout(function, delay);
+		- function: 실행하려는 함수 또는 코드 블록을 나타냄
+		- delay: 함수를 실행하기 전에 기다려야 하는 밀리초 단위의 
+			 지연 시간을 나타냄
+
+ex)	setTimeout(function() {
+  		console.log("Hello, World!");
+	}, 3000); // 3000 밀리초 (3초) 후에 실행
+
+
+
+
+o clearTimeout() 함수
+ : setTimeout() 함수로 예약한 타이머를 취소하고 실행되지 않도록 하는 데 사용
+	- 타이머 식별자를 인자로 받아 해당 타이머를 취소
+	- 주로 setTimeout() 함수와 함께 사용되며, 
+	  타이머를 취소하거나 중단하는데 사용
+
+구문)	clearTimeout(timerID);
+		- timerID: 취소하려는 타이머의 고유 식별자
+			    timerID: 취소하려는 타이머의 고유 식별자
+
+ex)	setTimeout() 함수를 사용하여 
+	 3초 후에 "Hello, World!"를 출력하는 타이머를 생성하고, 
+	 그 후 2초가 지난 후에 해당 타이머를 취소하는 방법
+
+	function sayHello() {
+  		console.log("Hello, World!");
+	}
+
+	const timerID = setTimeout(sayHello, 3000); // 3초 후에 실행
+
+	// 2초 후에 타이머를 취소
+	setTimeout(function() {
+  		clearTimeout(timerID);
+  		console.log("Timer canceled.");
+	}, 2000);
+
+
+
+
+
+
+
+
+
+
+
+

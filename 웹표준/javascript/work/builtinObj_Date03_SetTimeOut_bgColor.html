@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Date 객체</title>
+	<script>
+		var c = ['blue', 'pink', 'green', 'gray', 'skyblue', 'black'];
+
+		function change() {
+			var t = new Date();
+			var s = t.getSeconds();
+			var na = s % 6;    // 나머지 : 0 ~ 5
+
+			document.bgColor = c[na];  // 배경색 설정
+
+			w = setTimeout("change()", 1000); // 1초에 한번씩 change()함수 호출		
+		}
+		function stop() {
+			clearTimeout(w);// setTimeout()으로 실행한 명령을 취소시켜 준다.
+		}
+	</script>
+</head>
+
+<body>
+	<h3>화면색이 바뀌네요.</h3>
+	<input type="button" value="배경색 변경" onClick="change()">
+	<input type="button" value="중지" onClick="stop()">
+</body>
+
+</html>
