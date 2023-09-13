@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>click 이벤트</title>
+	<script>
+		function check() {
+
+			var myform = document.getElementById('myform');
+			var id = document.getElementById('id');
+			var name = document.getElementById('name');
+
+			if (window.document.myform.id.value == "") {
+				alert("ID를 입력 하세요.");
+				id.focus();
+				return false;		// check()함수를 빠져 나옴
+			}
+			if (name.value == "") {
+				alert("이름을 입력 하세요.");
+				name.focus();
+				return false;		// check()함수를 빠져 나옴
+			}
+			window.document.myform.submit();        // send.jsp 페이지로 전송함
+		}		
+	</script>
+</head>
+
+<body>
+
+	<!--간단한 폼(form) 유효성 검사와 제출을 수행하는 웹 페이지
+		사용자가 "전송" 버튼을 클릭할 때, check() 함수가 호출됨
+	-->
+	
+	<form id="myform" method="post" action="send.jsp">
+		ID : <input type="text" id="id" name="id"><br>
+		이름 : <input type="text" id="name" name="name"><br>
+		<input type="button" value="전송" onClick="check()">
+	</form>
+</body>
+
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>lotto</title>
+	<script>
+		/* Math.random()을 이용해서 1~45사이 난수 6개를 추출하는 프로그램
+			단,  1. 중복되지 않은 값을 구해야 함
+				2. 구해진 값을 오름차순으로 정렬해서 출력 */
+
+		// 중복이 없는 6개의 난수를 생성하여 rand 배열에 저장
+		function findrandInt() {
+			// 구해진 난수 6개를 입력하는 배열
+			var rand = [];
+
+			// 인덱스 0에 값을 미리 할당
+			rand[0] = Math.floor(Math.random() * 45) + 1;
+
+			// 중복되지 않는 난수 6개 생성
+			for (var i = 1; i <= 6; i++) {
+
+				var check_r;
+				var duplicate;
+				// 중복 확인
+				do {
+					check_r = Math.floor(Math.random() * 45) + 1;
+					duplicate = false;	// 초기에는 중복이 없다고 가정
+
+					for (var j = 0; j < i; j++) {
+
+						if (check_r == rand[j]) {
+							duplicate = true;	// 중복이 발견되면 duplicate를 true로 설정
+							break;
+							// 해당 반복문 실행 중지
+						}
+					}
+				} while (duplicate);
+				rand.push(check_r)
+			}
+
+			// sort()메소드로 rand배열 "오름차순" 정렬
+			rand.sort(function (a, b) {
+				return a - b;
+			});
+
+			document.write(rand);
+
+			//			console.log(rand);
+		}
+
+		// 향상된 중복 검사 - 중복이 없는 6개의 난수를 생성하여 rand 배열에 저장
+		function findrandInt2() {
+			
+			var lotto = new Array();
+
+			for (var i = 0; i < 6; i++) {
+				// 1~45 난수 발생 부분 
+				lotto[i] = Math.floor(Math.random() * 45) + 1;
+
+				//중복 검사 부분
+				for (var j = 0; j < i; j++) {
+					if (lotto[i] == lotto[j]) {
+						// 이전의 숫자와 같은 경우(중복되는 수가 있다면), for문 다시 실행 => 새로운 난수 발생
+						i--;
+						break;	// 해당 중복검사 for문을 빠져나가서 상위for문(난수발생) 실행
+					}
+				}
+			}
+
+			// 정렬방식 : 오름차순 (1,2,3....)
+			lotto.sort(function (a, b) {
+				return a - b;
+			});
+
+			// 정렬방식 : 내림차순 (10,9,8...)
+			//  lotto.sort(function(a,b){
+			//   return b-a;
+			//  });
+
+			document.write(lotto);
+
+			//	for(var k=0; k<6; k++){
+			//		document.write(lotto[k]+"  ");
+			//	}
+
+		}
+	</script>
+</head>
+
+<body>
+
+	<form>
+		<input type="button" value="난수 발생시키기" onclick="findrandInt()"><br><br>
+		<input type="button" value="난수 발생시키기2" onclick="findrandInt2()">
+	</form>
+
+</body>
+
+</html>

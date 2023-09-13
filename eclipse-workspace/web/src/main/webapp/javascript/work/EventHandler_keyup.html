@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>keyup 이벤트</title>
+	<script>
+		function move() {
+			var jumin1 = document.getElementById("jumin1");
+			var jumin2 = document.getElementById("jumin2");
+
+			// 주민번호 앞자리를 6자리 입력한 했을때
+			if (jumin1.value.length == 6)
+				jumin2.focus();
+		}	
+	</script>
+</head>
+
+<body>
+	<form>
+		주민번호:
+		<input type="text" size="6" maxlength="6" id="jumin1" 
+				onkeyup="move()">-
+		<input type="text" size="7" maxlength="7" id="jumin2">
+	</form>
+</body>
+
+</html>

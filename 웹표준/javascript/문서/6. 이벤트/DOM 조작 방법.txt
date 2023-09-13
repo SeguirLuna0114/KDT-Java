@@ -1,0 +1,263 @@
+* DOM (Document Object Model)을 조작
+  = 웹 페이지의 콘텐츠, 스타일, 구조를 변경하고 상호 작용
+
+
+o JavaScript를 사용한 DOM 조작의 주요 방법
+1. 요소(Elements) 선택
+	- 문서 객체(Tag)를 구해오는 메소드 사용
+	1) getElementById: 특정 ID를 가진 요소를 선택
+		: DOM (Document Object Model)에서 특정 ID를 가진 요소를 선택
+		- 웹 페이지에서 해당 ID를 가진 요소를 검색
+
+		var element = document.getElementById("elementId");
+			- document 객체: HTML 문서 전체를 나타내는 DOM의 최상위 객체
+			- elementId: 찾고자 하는 요소의 ID 문자열
+			- element: getElementById 메서드는 ID에 해당하는 요소를 찾으면
+				    해당 요소를 반환
+
+
+	2) getElementsByClassName: 특정 클래스를 가진 모든 요소를 선택
+		: DOM (Document Object Model)에서 특정 클래스 이름을 가진 
+		  모든 요소를 선택하고 반환
+		-  HTML 문서 내에서 특정 클래스를 가진 모든 요소를 선택
+
+		var elements = document.getElementsByClassName("className");
+			- "className": 선택하려는 클래스 이름
+			- elements: 클래스 이름에 해당하는 모든 요소를 선택하고 
+				    이를 HTMLCollection 또는 NodeList 형태로 반환
+
+
+	3) getElementsByTagName: 특정 태그 이름을 가진 모든 요소를 선택
+		: DOM (Document Object Model)에서 특정 HTML 태그 이름을 
+		  가진 모든 요소를 선택하고 반환
+		- HTML 문서 내에서 특정 태그를 가진 모든 요소를 선택
+
+		var elements = document.getElementsByTagName("tagName");
+			- "tagName": 선택하려는 태그 이름
+			- elements: 태그 이름에 해당하는 모든 요소를 선택하고 
+				     이를 HTMLCollection 또는 NodeList 형태로 반환
+
+
+	4) querySelector: CSS 선택자를 사용하여 요소를 선택
+		:  DOM (Document Object Model)에서 CSS 선택자를 사용하여 
+		  요소를 선택하고 반환
+		- CSS 선택자를 활용하여 원하는 요소를 선택
+
+		var element = document.querySelector("CSSSelector");
+			- "CSSSelector": 선택하려는 CSS 선택자
+			- element: 해당 CSS 선택자에 일치하는 
+				   첫 번째 요소를 선택하고 이를 반환
+
+
+	5) querySelectorAll: CSS 선택자를 사용하여 여러 요소를 선택
+		: DOM (Document Object Model)에서 CSS 선택자를 사용하여
+		  요소들을 선택하고 반환
+		- CSS 선택자를 활용하여 원하는 "모든" 요소들을 선택
+
+		var elements = document.querySelectorAll("CSSSelector");
+			- CSSSelector": 선택하려는 CSS 선택자
+			- elements: 해당 CSS 선택자에 일치하는 
+			  	     모든 요소를 선택하고 이를 NodeList 객체로 반환
+
+
+2. 요소 조작
+1) 요소 속성 변경 : element.setAttribute()
+	- setAttribute 메소드
+	  : 요소의 속성을 변경하거나 새 속성을 추가하는 데 사용
+		element.setAttribute("속성이름", "새로운값");
+			- "속성이름": 변경하거나 추가할 속성의 이름을 문자열로 지정
+			- "새로운값": 해당 속성에 설정할 새로운 값을 문자열로 지정
+
+
+2) 요소 스타일 변경 : style 객체를 사용
+	- element.style: HTML 요소의 CSS 스타일 속성에 접근하고 변경
+
+	* 개별적인 스타일 속성에 접근할 수 있는 프로퍼티
+	(1)element.style.color: 요소의 글자색을 읽거나 변경 가능
+		// 스타일 속성 읽기
+		var textColor = element.style.color;
+
+		// 스타일 속성 변경
+		element.style.color = "blue";
+
+
+	(2)element.style.backgroundColor: 요소의 배경색을 읽거나 변경할 수 있음
+		// 스타일 속성 읽기
+		var bgColor = element.style.backgroundColor;
+
+		// 스타일 속성 변경
+		element.style.backgroundColor = "red";
+
+
+	(3)element.style.fontSize: 요소의 글꼴 크기를 읽거나 변경할 수 있음
+		// 스타일 속성 읽기
+		var bgColor = element.style.backgroundColor;
+
+		// 스타일 속성 변경
+		element.style.backgroundColor = "red";
+
+
+	(4)element.style.fontWeight: HTML 요소의 글꼴 굵기를 설정하거나 가져옴
+		-  주로 "normal" 또는 "bold" 값으로 설정
+		// 스타일 속성 읽기
+		var fontWeight = element.style.fontWeight;
+
+		// 스타일 속성 변경
+		element.style.fontWeight = "bold";
+
+
+
+3) 요소 내용 변경 : 
+	-주로 요소의 innerHTML, textContent, 
+	 또는 DOM 조작 메서드를 사용하여 내용을 변경
+
+	(1)innerHTML 프로퍼티를 사용한 요소 내부의 HTML 내용 변경
+		-HTML 태그를 직접 삽입하는 데 유용
+		element.innerHTML = "새로운 HTML 내용";
+			- element: 변경하려는 요소
+			- innerHTML 프로퍼티에 새로운 HTML 내용을 할당하여
+			  요소 내용을 변경
+
+	(2)textContent 프로퍼티를 사용한 요소 내부의 텍스트 내용 변경
+		- HTML 태그를 인식하지 않고 순수한 텍스트만 변경
+		element.textContent = "새로운 텍스트 내용";
+			- element: 변경하려는 요소
+			- textContent 프로퍼티에 새로운 텍스트 내용을 할당하여 
+			   요소 내용을 변경
+			
+
+	(3)DOM 조작 메서드를 사용한 내용 변경
+	  : createElement, createTextNode, appendChild, removeChild,
+	   replaceChild 등의 DOM 조작 메서드를 사용하여 요소의 내용을 동적으로 변경
+		var newElement = document.createElement("요소 태그 이름");
+		var newText = document.createTextNode("새로운 텍스트 내용");
+		newElement.appendChild(newText);
+
+		var parentElement = document.getElementById("부모 요소의 ID");
+		var oldElement = document.getElementById("기존 요소의 ID");
+		parentElement.replaceChild(newElement, oldElement);
+
+
+
+3. 요소 추가 및 제거
+	1) 요소 추가
+		(1) createElement 메서드와 appendChild 메서드를 사용
+		// 새로운 요소 생성
+		var newElement = document.createElement("요소 태그 이름");
+
+		// 내용 설정 (옵션)
+		newElement.textContent = "새로운 요소 내용";
+
+		// 부모 요소 선택
+		var parentElement = document.getElementById("부모 요소의 ID");
+
+		// 새로운 요소를 부모 요소에 추가
+		parentElement.appendChild(newElement);
+
+
+		(2) insertAdjacentHTML 메서드를 사용하여 HTML 문자열을 추가
+		// 부모 요소 선택
+		var parentElement = document.getElementById("부모 요소의 ID");
+
+		// HTML 문자열을 요소 뒤에 추가
+		parentElement.insertAdjacentHTML("beforeend",
+					 "<요소 태그 이름>HTML 문자열</요소 태그 이름>");
+
+
+	2) 요소 제거
+		(1) removeChild 메서드를 사용하여 요소 제거
+		// 제거할 요소 선택
+		var elementToRemove = document.getElementById("제거할 요소의 ID");
+
+		// 요소를 포함하고 있는 부모 요소에서 요소 제거
+		elementToRemove.parentNode.removeChild(elementToRemove);
+
+
+		(2) remove 메서드를 사용하여 요소 제거
+		// 제거할 요소 선택
+		var elementToRemove = document.getElementById("제거할 요소의 ID");
+
+		// 요소 제거
+		elementToRemove.remove();
+
+
+		(3) innerHTML 프로퍼티를 사용하여 요소 내용을 비워 제거
+		// 요소 선택
+		var elementToRemove = document.getElementById("제거할 요소의 ID");
+
+		// 요소 내용을 비우기 (제거)
+		elementToRemove.innerHTML = "";
+
+
+
+4. 이벤트 처리
+	1) 이벤트 리스너 등록
+		- 이벤트를 감지하고 특정 동작을 수행하기 위함
+		- addEventListener 메서드를 사용하여 이벤트 리스너를 요소에 연결
+		element.addEventListener("이벤트 이름", 이벤트 핸들러 함수);
+
+		element.addEventListener("이벤트 이름", function() {
+   			 // 이벤트 핸들러 코드
+		});
+
+			- "이벤트 이름": 연결할 이벤트의 이름
+					("click", "mouseover", "keydown")
+			- 이벤트 핸들러 함수: 이벤트가 발생했을 때 실행될 함수
+					    이벤트 객체를 인수로 받을 수 있음
+
+
+	2) 이벤트 핸들러 제거
+		- removeEventListener 메서드를 사용하여 
+		  특정 이벤트에 대한 이벤트 핸들러를 등록 해제
+		element.removeEventListener("이벤트 이름", 이벤트 핸들러 함수);
+			- "이벤트 이름": 제거할 이벤트의 이름
+					(이벤트를 등록할 때와 동일한 이벤트 이름)
+			- 이벤트 핸들러 함수: 제거할 이벤트 핸들러 함수
+					    (등록할 때와 동일한 함수)
+
+
+5. 클래스 조작
+	1) 클래스 추가
+		element.classList.add("추가할클래스");
+			- element: 클래스를 추가할 HTML 요소
+			- "추가할클래스": 추가할 클래스의 이름
+		- 요소에 여러 개의 클래스를 추가
+		 : classList.add 메서드를 여러 번 호출하거나
+		   클래스 이름을 공백으로 구분하여 한 번에 여러 클래스를 추가
+			// 여러 클래스 추가
+			element.classList.add("클래스1", "클래스2", "클래스3");
+
+			// 클래스 이름을 공백으로 구분
+			element.classList.add("클래스1 클래스2 클래스3");
+
+
+	2) 클래스 제거
+		element.classList.remove("제거할클래스");
+			- element: 클래스를 제거할 HTML 요소
+			- "제거할클래스": 제거할 클래스의 이름
+		- 요소에서 여러 개의 클래스를 제거
+		 : classList.remove 메서드를 여러 번 호출하거나 
+		  클래스 이름을 공백으로 구분하여 한 번에 여러 클래스를 제거
+			// 여러 클래스 제거
+			element.classList.remove("클래스1", "클래스2", "클래스3");
+
+			// 클래스 이름을 공백으로 구분
+			element.classList.remove("클래스1 클래스2 클래스3");
+
+
+	3) 클래스 토글
+	  : 요소의 상태에 따라 클래스를 추가하거나 제거하는 것
+		- HTML 요소의 클래스를 추가하거나 제거하는 것을
+		  반복적으로 수행하는 동적 작업에 유용
+
+		element.classList.toggle("토글할클래스");
+			- element: 클래스를 토글할 HTML 요소
+			- "토글할클래스": 토글할 클래스의 이름
+
+
+
+
+
+
+
+

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>submit 이벤트</title>
+	<script>
+		function check() {
+			var name = document.getElementById("name");
+			var email = document.getElementById("email");
+
+			if (myform.name.value == "") {	// name값으로 설정
+				//		if(name.value == ""){           // id값으로 설정
+				alert("이름을 입력 하세요.");
+				name.focus();
+				return false;	// check()함수를 빠져 나가게 만들어 준다.
+			}
+
+			if (myform.email.value == "") {	// name값으로 설정
+				//		if(email.value == ""){			// id값으로 설정
+				alert("email주소를 입력 하세요.");
+				email.focus();
+				return false;   // check()함수를 빠져 나가게 만들어 준다.
+			}
+		}	
+	</script>
+</head>
+
+<body>
+	<form name="myform" method="post" action="send.jsp" onSubmit="return check()">
+		이름 : <input type="text" id="name" name="name"><br>
+		이메일 : <input type="text" id="email" name="email"><br>
+		<input type="submit" value="전송">
+	</form>
+</body>
+
+</html>

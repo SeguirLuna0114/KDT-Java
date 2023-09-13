@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>계산기</title>
+	<!--자바스크립트를 이용해서 간단 계산기 프로그램을 작성-->
+	
+	<script>
+		
+	</script>
+</head>
+
+<body>
+	<form>
+	<!--6행 4열 테이블 생성-->
+	<table border="1" align="center" cellspacing="10" cellpadding="50">
+		<tr align="center">
+			<th colspan=4></th>
+		</tr>
+		<tr align="center">
+			<td><input type="button" value="7" name="num"></td>
+			<td><input type="button" value="8" name="num"></td>
+			<td><input type="button" value="9" name="num"></td>
+			<td><input type="button" value="/" name="arith"></td>
+		</tr>
+		<tr align="center">
+			<td><input type="button" value="4" name="num"></td>
+			<td><input type="button" value="5" name="num"></td>
+			<td><input type="button" value="6" name="num"></td>
+			<td><input type="button" value="*" name="arith"></td>
+		</tr>
+		<tr align="center">
+			<td><input type="button" value="1" name="num"></td>
+			<td><input type="button" value="2" name="num"></td>
+			<td><input type="button" value="3" name="num"></td>
+			<td><input type="button" value="-" name="arith"></td>
+		</tr>
+		<tr align="center">
+			<td><input type="button" value="0" name="num"></td>
+			<td><input type="button" value="." name="arith"></td>
+			<td><input type="button" value="sqrt" name="arith"></td>
+			<td><input type="button" value="+" name="arith"></td>
+		</tr>
+		<tr align="center">
+			<td colspan=2><input type="button" value="=" name="arith" onclick="calc()"></td>
+			<td colspan=2><input type="button" value="clear" name="arith" onclick="calc()"></td>
+		</tr>
+	</table>
+	</form>
+</body>
+
+</html>

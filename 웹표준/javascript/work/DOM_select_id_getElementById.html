@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>이벤트</title>
+	<script>
+		/* 	웹 페이지가 로드된 후에 window.onload 이벤트 핸들러를 사용하여
+	   		웹 페이지의 header 요소의 스타일 및 내용을 변경하는 JavaScript 코드
+		*/
+		
+		// load 이벤트 
+		window.onload = function () {
+
+			// id가 header인 태그(element)를 구해온다.
+			var header = document.getElementById('header');
+
+			header.style.color = 'orange';   // 글자색
+			header.style.background = 'red'; // 배경색
+
+			// h1 태그 안의 값을 '자바스크립트' 를 삽입
+			header.innerHTML = '자바스크립트';
+		}	
+	</script>
+</head>
+
+<body>
+	<h1 id="header">Header</h1>
+</body>
+
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>이벤트</title>
+	<script>
+		// load 이벤트
+		window.onload = function () {
+			// querySelectorAll('h1') 메소드
+			// querySelectorAll('h1')는 h1 선택자(태그)를 모두 구해와서 
+			// 배열로 리턴 해준다.
+			var headers = document.querySelectorAll('h1');
+
+			for (var i = 0; i < headers.length; i++) {
+				var header = headers[i];
+
+				header.style.color = 'orange';
+				header.style.background = 'red';
+				header.innerHTML = "자바스크립트";
+			}
+		}	
+	</script>
+</head>
+
+<body>
+	<h1>Header</h1>
+	<h1>Header</h1>
+	<h1>Header</h1>
+</body>
+
+</html>

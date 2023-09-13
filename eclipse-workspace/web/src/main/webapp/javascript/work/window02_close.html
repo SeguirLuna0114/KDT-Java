@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>window 객체</title>
+	
+	<script>
+		function winopen(){
+				  // 선언자가 없는 w1은 전역변수가 된다.	
+			// open("팝업창에 실행될 문서명", "윈도우 이름", "옵션");
+			w1 = window.open("builtinObj_Date01_getXxx.html","mywin01","width=200, height=400");
+			w2 = window.open("builtinObj_Date02_getXxx.html","mywin02","width=200, height=400");
+		}
+		function winclose(){
+			w1.close();
+			w2.close();
+		}
+	</script>
+</head>
+
+<body>
+
+	<input type="button" value="창열기" onclick="winopen()">
+	<input type="button" value="창닫기" onclick="winclose()">
+
+</body>
+
+</html>

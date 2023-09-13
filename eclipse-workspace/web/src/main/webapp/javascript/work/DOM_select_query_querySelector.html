@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>이벤트</title>
+	<script>
+		// load 이벤트
+		window.onload = function () {
+
+			// h1 선택자(태그)를 구해온다.
+			// querySelector('h1')는 첫번째 h1 선택자(태그)만 구해온다.
+			var header = document.querySelector('h1');
+
+			header.style.color = 'orange';
+			header.style.background = 'red';
+			header.innerHTML = '자바스크립트';
+		}	
+	</script>
+</head>
+
+<body>
+	<h1>Header</h1>
+	<h1>Header</h1>
+	<h1>Header</h1>
+</body>
+
+</html>

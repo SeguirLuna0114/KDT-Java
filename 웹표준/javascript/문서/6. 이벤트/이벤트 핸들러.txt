@@ -1,0 +1,98 @@
+* 이벤트 핸들러
+ : 웹 페이지에서 발생하는 이벤트(예: 클릭, 마우스 오버, 키 다운 등)에 대한
+   응답으로 실행되는 함수
+	- 웹 페이지의 동작을 사용자 상호 작용에 맞게 제어하고 
+	  응답을 구현할 수 있음
+
+o 이벤트 핸들러의 종류
+1. click 이벤트 핸들러
+	- 요소를 클릭할 때 발생
+	- 주로 버튼 클릭, 링크 클릭, 요소를 활성화하는 데 사용
+	
+	- click 이벤트 리스너 등록
+	element.addEventListener("click", function(event) {
+  		// 클릭 이벤트가 발생했을 때 실행되는 코드
+	});
+
+
+2. mouseover 및 mouseout 이벤트 핸들러
+ 	- 요소에 마우스 포인터가 올라가거나 떠날 때 발생
+	- 주로 툴팁 표시, 호버 효과 적용 등에 사용
+
+	element.addEventListener("mouseover", function(event) {
+  		// 마우스 오버 이벤트가 발생했을 때 실행되는 코드
+	});
+
+	element.addEventListener("mouseout", function(event) {
+  		// 마우스 아웃 이벤트가 발생했을 때 실행되는 코드
+	});
+
+
+3. keydown 및 keyup 이벤트 핸들러
+	- 키보드의 키를 누를 때(keydown)와 뗄 때(keyup) 발생
+	- 주로 단축키 설정, 입력 검증, 게임 제어 등에 사용
+
+	document.addEventListener("keydown", function(event) {
+  		// 키 다운 이벤트가 발생했을 때 실행되는 코드
+	});
+
+	document.addEventListener("keyup", function(event) {
+  		// 키 업 이벤트가 발생했을 때 실행되는 코드
+	});
+
+
+4. submit 이벤트 핸들러
+	- 폼(form) 요소가 제출될 때 발생
+	- 주로 사용자로부터 데이터 입력 후 제출할 때 사용
+
+	formElement.addEventListener("submit", function(event) {
+  		// 폼 제출 이벤트가 발생했을 때 실행되는 코드
+	});
+
+
+5. change 이벤트 핸들러
+	- 입력 요소(input, select, checkbox 등)의 값이 변경될 때 발생
+	- 주로 폼 요소의 변경 감지, 선택 목록 변경 등에 사용
+
+	inputElement.addEventListener("change", function(event) {
+  		// 값이 변경될 때 실행되는 코드
+	});
+
+
+6. load 및 unload 이벤트 핸들러
+	- 웹 페이지가 로드될 때(load)와 페이지를 떠날 때(unload) 발생
+	- 주로 페이지 로딩 후 초기화 또는 
+	  사용자가 페이지를 떠날 때 작업을 수행할 때 사용
+
+	window.addEventListener("load", function() {
+  		// 페이지 로드 시 실행되는 코드
+	});
+
+	window.addEventListener("unload", function() {
+  		// 페이지를 떠날 때 실행되는 코드
+	});
+
+
+7. focus 이벤트 핸들러
+ : HTML 요소가 포커스를 받을 때(해당 요소가 활성화될 때) 발생하는 이벤트를 처리하는데 사용
+	- 입력 필드나 다른 폼 요소에서 사용
+	- 사용자가 입력을 시작할 때 유용하게 활용
+	ex) 	입력 양식 보정: 입력 필드에 포커스가 설정되면 
+			      입력 값이 특정 형식에 맞지 않으면 자동으로 수정하거나
+			      서식을 지정하는 등의 동작을 수행
+
+
+8. blur 이벤트 핸들러
+ : HTML 요소가 포커스를 잃을 때(해당 요소가 활성화되지 않을 때) 발생하는 이벤트를 처리 
+	- 주로 입력 필드나 다른 폼 요소에서 사용됨
+	- 사용자가 입력을 마치고 다른 요소로 이동할 때 유용하게 활용됨
+	ex)	1) 유효성 검사 : 입력 필드에 데이터를 입력하고 해당 필드를 떠날 때
+			        입력값을 검사하고 유효성을 검증
+		2) 입력된 데이터를 특정 형식으로 자동으로 변경하거나 서식을 지정 가능
+
+
+
+
+
+
+

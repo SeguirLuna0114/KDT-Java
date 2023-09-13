@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>focus, blur 이벤트</title>
+</head>
+
+<body>
+	
+	<!-- focus 및 blur 이벤트를 사용하여 
+		입력 필드에 포커스가 설정되면 기본값을 지우고, 
+		포커스가 해제되면 원래 기본값을 복원하는 예제
+		
+		이벤트 핸들러 함수를 바로 정의하여 간단하게 표현하기 위해 <body> 태그 내에 작성
+	-->
+	
+	<form>
+		아이디 : <input type="text" id="id" value="아이디 입력" 
+						onfocus="id_focus()" onblur="id_blur()"><br>
+		비밀번호 : <input type="text" id="passwd" value="비밀번호 입력" 
+						onfocus="passwd_focus()" onblur="passwd_blur()"><br>
+	</form>
+	<script>
+		var id = document.getElementById('id');
+		var passwd = document.getElementById('passwd');
+
+		function id_focus() {			// focus 이벤트	
+			id.value = "";
+		}
+		function id_blur() {				// blur 이벤트
+			id.value = id.defaultValue;
+		}
+		function passwd_focus() {		// focus 이벤트
+			passwd.value = "";
+		}
+		function passwd_blur() {			// blur 이벤트
+			passwd.value = passwd.defaultValue;
+		}
+	</script>
+
+</body>
+
+</html>

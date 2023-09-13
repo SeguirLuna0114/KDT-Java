@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>focus, blur 이벤트</title>
+	<script>
+
+		// 자바스크립트는 html이 실행된 다음에 사용 되어야 하기 때문에
+		// 함수 윗쪽에 있는 id와 passwd는 정상적으로 인식되지 않는다.
+		//	var id = document.getElementById('id');
+		//	var passwd = document.getElementById('passwd');
+
+		function id_focus() {			// focus 이벤트	
+			var id = document.getElementById('id');
+			id.value = "";
+		}
+		function id_blur() {				// blur 이벤트
+			var id = document.getElementById('id');
+			id.value = id.defaultValue;
+		}
+		function passwd_focus() {		// focus 이벤트
+			var passwd = document.getElementById('passwd');
+			passwd.value = "";
+		}
+		function passwd_blur() {			// blur 이벤트
+			var passwd = document.getElementById('passwd');
+			passwd.value = passwd.defaultValue;
+		}
+	</script>
+</head>
+
+<body>
+	<form>
+		아이디 : <input type="text" id="id" value="아이디 입력" onfocus="id_focus()" onblur="id_blur()"><br>
+		비밀번호 : <input type="text" id="passwd" value="비밀번호 입력" onfocus="passwd_focus()" onblur="passwd_blur()"><br>
+	</form>
+
+</body>
+
+</html>
