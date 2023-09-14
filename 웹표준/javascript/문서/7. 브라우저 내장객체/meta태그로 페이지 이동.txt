@@ -1,0 +1,57 @@
+* <meta> 태그
+ : HTML 문서 내에서 메타 데이터를 정의하는 데 사용되는 태그
+
+	- 웹 브라우저나 검색 엔진 등에게 문서에 관한 정보를 제공하거나
+	  문서의 동작을 제어하기 위해 사용
+	- <meta> 태그는 주로 <head> 섹션 내에 위치하며 
+	  다양한 속성을 사용하여 정보를 지정
+
+1) charset: 문서의 문자 인코딩을 지정합니다. 대부분의 경우 UTF-8을 사용
+	<meta charset="UTF-8">
+
+2) name 및 content: 다양한 메타 데이터를 정의할 때 사용
+	- name: 메타 데이터의 종류
+		viewport, description, keywords, author, robots 등과 함께 사용
+	- content: 실제 메타 데이터 내용
+	<meta name="description" content="웹 페이지의 간단한 설명">
+	<meta name="keywords" content="키워드1, 키워드2, 키워드3">
+	<meta name="author" content="작성자 이름">
+
+3) http-equiv 및 content: HTTP 헤더에 영향을 주는 메타 데이터를 정의할 때 사용
+	- 주로 페이지 캐시, 리프레시, 문서의 언어 등을 설정할 때 사용
+	<meta http-equiv="refresh" content="5;url=https://www.example.com">
+
+4) viewport: 모바일 디바이스에서 웹 페이지를 렌더링할 때 	
+	     화면 크기와 줌 수준을 제어하는 데 사용
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+o <meta> 태그를 사용하여 페이지 이동
+	- HTTP 리프레시를 설정하는 방법으로 구현됨
+	  : <meta> 태그의 http-equiv 속성은 "refresh"로 설정
+	- HTTP 리프레시는 일정 시간 간격 또는 특정 URL로 페이지를
+	  자동으로 다시 로드하는 메커니즘을 제공됨
+
+	- content 속성 값에서 숫자는 리프레시까지 대기할 시간(초)을 나타냄
+	- url은 이동할 대상 페이지의 URL을 나타냄
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="refresh" content="5;url=https://www.example.com">
+    <title>페이지 이동 예제</title>
+</head>
+<body>
+    <p>5초 후에 다른 페이지로 이동합니다...</p>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
