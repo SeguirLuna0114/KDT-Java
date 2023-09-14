@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>location 객체</title>
+</head>
+
+<body>
+	<script>
+		var s = prompt("당신의 취미를 입력 하세요?", "");
+		alert(s);
+
+		function call() {
+			alert("호출 성공");
+			location.reload();		// 새로고침
+		}
+	</script>
+
+	<input type="button" value="호출" onclick="call()">
+
+</body>
+
+</html>
