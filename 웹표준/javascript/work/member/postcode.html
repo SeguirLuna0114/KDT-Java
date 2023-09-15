@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>우편검색</title>
+	<!--Daum의 우편번호 검색 서비스를 사용하기 위해 필요한 JS파일을 가져옴-->
+	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+	<script>
+		/* 우편번호 검색 팝업을 열기 위한 함수 */
+		function openDaumPostcode() {
+			/* Daum이 제공하는 우편번호 검색 팝업 객체 */
+			new daum.Postcode({
+				/*  우편번호 검색이 완료되었을 때 실행할 콜백 함수 */
+				oncomplete: function (data) {
+					/* 우편번호(zonecode)를 join_zip라는 HTML 요소의 값으로 설정 */
+					document.getElementById('join_zip').value = data.zonecode;
+					/* 주소 정보(address)를 join_addr라는 HTML 요소의 값으로 설정 */
+					document.getElementById('join_addr').value = data.address;
+				}
+			}).open();
+		}
+	</script>
+</head>
+
+<body>
+	<form>
+		우편번호 :
+		<input type=text size=5 maxlength=5 id="join_zip">
+		<input type=button value=" 우편검색" onClick="openDaumPostcode()"><br>
+		주소 : <input type=text size=60 id="join_addr">
+	</form>
+</body>
+
+</html>

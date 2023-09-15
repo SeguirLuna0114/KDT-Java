@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>게시판 폼</title>
+	<!--<script>
+	function check(){
+		var writer = document.getElementById("writer");
+		var passwd = document.getElementById("passwd");
+		var subject = document.getElementById("subject");
+		var content = document.getElementById("content");
+		
+		if(writer.value == ""){
+			alert("작성자명을 입력 하세요.");
+			writer.focus();
+			return false;
+		}
+		if(passwd.value == ""){
+			alert("비밀번호를 입력 하세요.");
+			passwd.focus();
+			return false;
+		}
+		if(passwd.value.length < 2 || passwd.value.length > 8){
+			alert("비밀번호는 2~8자 이내로 입력 하세요.");
+			passwd.value = "";		// 입력한 비번 삭제
+			passwd.focus();
+			return false;
+		}
+		if(subject.value == ""){
+			alert("제목을 입력 하세요.");
+			subject.focus();
+			return false;
+		}
+		if(subject.value.length > 50){
+			alert("제목을 50자 이내로 입력 하세요.");
+			subject.value = "";		// 입력한 제목 삭제
+			subject.focus();
+			return false;
+		}
+		if(content.value == ""){
+			alert("내용을 입력 하세요.");
+			content.focus();
+			return false;			
+		}
+		if(content.value.length > 200){
+			alert("내용을 200자 이내로 입력 하세요.");
+			content.focus();
+			return false;
+		}		
+	}
+</script>-->
+
+	<!-- 외부 자바스크립트 파일 불러오기 -->
+	<script src="board.js"></script>
+
+</head>
+
+<body>
+
+	<form method="post" action="board.jsp" onSubmit="return check()">
+		<table border="1" width="500" align="center">
+			<caption>게시판</caption>
+			<tr>
+				<th>작성자</th>
+				<td><input type="text" size="20" name="writer" id="writer" placeholder="작성자명 입력" autofocus>
+
+				</td>
+			</tr>
+			<tr>
+				<th>비밀번호</th>
+				<td><input type="password" name="passwd" id="passwd" placeholder="2~8자 이내 입력">
+				</td>
+			</tr>
+			<tr>
+				<th>제목</th>
+				<td><input type="text" size="50" name="subject" id="subject" placeholder="50자 이내로 입력">
+				</td>
+			</tr>
+			<tr>
+				<th>내용</th>
+				<td><textarea rows="5" cols="50" name="content" id="content" placeholder="200자 이내로 입력"></textarea>
+				</td>
+			</tr>
+			<tr>
+				<th>파일첨부</th>
+				<td><input type="file" name="myfile" id="myfile"></td>
+			</tr>
+			<tr>
+				<td colspan="2" align="center">
+					<input type="submit" value="글작성"><!--전송기능 있는 버튼-->
+					<!--<input type="button" value="글작성2">--><!--전송기능 없는 버튼-->
+
+					<!--<button>글작성3</button>	--> <!--전송기능 있는 버튼-->
+					<!--<button type="submit">글작성4</button>--><!--전송기능 있는 버튼-->
+					<!--<button type="button">글작성5</button>--><!--전송기능 없는 버튼-->
+
+					<input type="reset" value="취소"> <!-- 초기화 버튼-->
+					<!--<button type="reset">초기화</button>--> <!-- 초기화 버튼-->
+				</td>
+			</tr>
+		</table>
+	</form>
+
+</body>
+
+</html>
