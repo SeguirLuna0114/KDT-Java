@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script src="http://code.jquery.com/jquery-latest.js"></script>
+	<script>
+		$(document).ready(function () {
+//			$('div').hide();      // 모든 div태그를 불러와서 보이지 않게 한다.
+
+			// id값이 sample1으로 되어있는 태그를 불러와서 보이지 않게 한다.
+			$('#sample1').hide();
+
+			// id값이 sample2으로 되어있는 태그를 불러와서 보이지 않게 한다.  
+			$("#sample2").hide();
+		});
+
+		var s1 = document.getElementById('sample1');
+	</script>
+</head>
+
+<body>
+
+	<div id="sample1">이 div1을 지우고 싶다.</div><br>
+	<div id="sample2">이 div2을 지우고 싶다.</div><br>
+
+</body>
+
+</html>
