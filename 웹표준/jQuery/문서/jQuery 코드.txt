@@ -1,0 +1,92 @@
+o jQuery 코드 작성
+	-  jQuery 코드는 일반적으로 HTML 문서의 <script> 태그 내에서 작성
+	-  문서가 완전히 로드되고 준비될 때
+	   코드가 실행되도록 $(document).ready() 함수를 사용
+
+구문)	<script>
+    		$(document).ready(function () {
+        		// jQuery 코드 작성
+        		// 여기에 코드를 작성합니다.
+    		});
+	</script>
+
+
+구문)	축약형
+	$(function () {
+    		// HTML 문서가 완전히 로드되고 준비된 후 실행할 코드
+    		// 여기에 코드를 작성합니다.
+	});
+
+
+
+
+o HTML 요소 선택 및 조작
+	- jQuery를 사용하여 HTML 요소를 선택하고 조작 가능
+
+- jQuery를 사용하여 HTML 요소를 선택하려면
+   $() 함수를 사용하고 선택자(selector)를 전달
+	- 태그 이름으로 선택
+		// 모든 <p> 요소를 선택
+		$("p")	
+
+	- 클래스로 선택
+		// 클래스가 "my-class"인 요소를 선택
+		$(".my-class")
+
+	- ID로 선택
+		// ID가 "my-element"인 요소를 선택
+		$("#my-element")
+
+	- 속성으로 선택
+		// data-id 속성이 "123"인 요소를 선택
+		$("[data-id='123']")
+
+	
+- 선택한 요소를 조작하려면 jQuery 메서드를 사용
+	- 텍스트 변경
+		// 텍스트 변경
+		$("#my-element").text("새로운 텍스트");
+
+	- HTML 변경
+		// HTML 변경
+		$("#my-element").html("<strong>강조된 텍스트</strong>");
+
+	- 속성 변경
+		// 속성 변경
+		$("#my-element").attr("src", "new-image.jpg");
+
+	- 클래스 추가/제거
+		// 클래스 추가
+		$("#my-element").addClass("active");
+
+		// 클래스 제거
+		$("#my-element").removeClass("active");
+
+	- 요소 숨기기/보이기
+		// 요소 숨기기
+		$("#my-element").hide();
+
+		// 요소 보이기
+		$("#my-element").show();
+
+	- 요소 삭제
+		// 요소 삭제
+		$("#my-element").remove();
+
+
+
+o 이벤트 처리
+	- jQuery를 사용하여 이벤트를 처리 가능
+	- .on() 또는 짧게 .click(), .submit() 등의 
+	  메서드를 사용하여 이벤트 리스너를 추가
+
+ex)	// 버튼 클릭 이벤트 처리
+	$("button").click(function () {
+    		// 이벤트 핸들러 내용 작성
+	});
+
+
+
+
+
+

@@ -1,0 +1,26 @@
+* jQuery를 불러오는 방법
+
+1. CDN을 통해 라이브러리를 포함하는 방법
+	( jQuery를 CDN을 통해 불러옴 )
+ : Content Delivery Network (CDN)을 통해 jQuery 라이브러리를 불러오는 것
+	- HTML 문서의 <head> 섹션 또는 
+	  <body> 섹션 안에서 <script> 태그로 포함
+
+<!-- jQuery 라이브러리 CDN 불러오기 -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+2. jQuery 라이브러리를 로컬로 다운로드하고 프로젝트 폴더에 포함시키는 것
+  : 다운로드한 라이브러리 파일을 프로젝트 폴더에 저장하고 포함시킴
+ 	- 인터넷 연결이 필요하지 않으며 jQuery 파일을 직접 관리할 수 있음
+	- jQuery의 공식 웹 사이트(https://jquery.com/download/)에서
+	   라이브러리를 다운로드 가능
+
+<!-- 로컬 jQuery 라이브러리 포함 -->
+<script src="js/jquery-3.6.0.min.js"></script>
+
+
+
+
+
+

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script src="http://code.jquery.com/jquery-latest.js"></script>
+	<script>
+		$(document).ready(function () {
+			$('div').hide();      // 모든 div태그를 불러와서 보이지 않게 한다.
+
+			// id값이 b1으로 되어있는 태그를 불러와서 div태그가 보이게 한다.
+			// id값이 b1인 버튼태그를 구해온다.
+			$('#b1').click(function() {		// 출력 버튼 클릭
+				$('div').show();
+			});
+
+			// id값이 b2으로 되어있는 태그를 불러와서 div태그가 보이지 않게 한다. 
+			// id값이 b2인 버튼태그를 구해온다. 
+			$('#b2').click(function() {		// 숨기기 버튼 클릭
+				$('div').hide();
+			});
+		});
+	</script>
+</head>
+
+<body>
+
+	<div id="sample1">이 div를 지우고 싶다.</div>
+	div태그 안에 들어 있는 내용이 지워 졌어요. <br><br>
+
+	<button type="button" id="b1">출력</button>
+	<button type="button" id="b2">숨기기</button>
+
+</body>
+
+</html>
