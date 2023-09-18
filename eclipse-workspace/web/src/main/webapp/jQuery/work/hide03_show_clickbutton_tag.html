@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script src="http://code.jquery.com/jquery-latest.js"></script>
+	<script>
+		$(document).ready(function () {
+			$("p").click(function () {
+				$("p").hide();
+			});
+
+			$("button").click(function () {		// 출력 버튼 클릭
+				$("p").show();
+			});
+
+		});
+	</script>
+</head>
+
+<body>
+	<p>안녕 하세요?</p>
+	<button type="button">출력</button>
+</body>
+
+</html>

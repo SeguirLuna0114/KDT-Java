@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script src="http://code.jquery.com/jquery-latest.js"></script>
+	<script>
+		$(document).ready(function() {
+			// class값이 first이고 후손이 string인 태그를 불러와서 css 적용
+			$(".first strong").css("color", "green");
+		});
+	</script>
+</head>
+
+<body>
+	<ul>
+		<li class="first"><strong>텍스트</strong> 텍스트 텍스트 텍스트 텍스트 텍스트</li>
+		<li class="second"><strong>텍스트</strong> 텍스트 텍스트 텍스트 텍스트 텍스트</li>
+		<li class="third"><strong>텍스트</strong> 텍스트 텍스트 텍스트 텍스트 텍스트</li>
+		<li class="fourth"><strong>텍스트</strong> 텍스트 텍스트 텍스트 텍스트 텍스트</li>
+	</ul>
+</body>
+
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>click 이벤트</title>
+	<script src="http://code.jquery.com/jquery-latest.js"></script>
+	<script>
+		// eq필터 : 특정 태그 안에 지정한 태그의 순서를 구하는 셀렉터
+		$(document).ready(function () {
+			$("a:eq(0)").click(function () {
+				$("img").attr("src", "img/flower.jpg")
+					.attr("title", "꽃");
+				// 하이퍼링트 내용을 실행시키지 않음(하이퍼링크의 기본 동작(페이지 이동)이 실행되지 않음)
+				// 페이지가 이동되지 않고 이미지의 src와 title 속성만 변경됨
+				return false;
+			});
+			$("a:eq(1)").click(function () {
+				$("img").attr("src", "img/sea.jpg")
+					.attr("title", "바다");
+				// 하이퍼링트 내용을 실행시키지 않음(하이퍼링크의 기본 동작(페이지 이동)이 실행되지 않음)
+				// 페이지가 이동되지 않고 이미지의 src와 title 속성만 변경됨
+				return false;
+			});
+			$("a:eq(2)").click(function () {
+				$("img").attr("src", "img/Jellyfish.jpg")
+					.attr("title", "해파리");
+				// 하이퍼링트 내용을 실행시키지 않음(하이퍼링크의 기본 동작(페이지 이동)이 실행되지 않음)
+				// 페이지가 이동되지 않고 이미지의 src와 title 속성만 변경됨
+				return false;
+			});
+			$("a:eq(3)").click(function () {
+				$("img").attr("src", "img/building.jpg")
+					.attr("title", "건물");
+				// 하이퍼링트 내용을 실행시키지 않음(하이퍼링크의 기본 동작(페이지 이동)이 실행되지 않음)
+				// 페이지가 이동되지 않고 이미지의 src와 title 속성만 변경됨
+				return false;
+			});
+		});
+	</script>
+</head>
+
+<body>
+	<ul>
+		<li><a href="img/flower.jpg">꽃</a></li>
+		<li><a href="img/sea.jpg">바다</a></li>
+		<li><a href="img/Jellyfish.jpg">해파리</a></li>
+		<li><a href="img/building.jpg">건물</a></li>
+	</ul>
+	<p><img src="img/flower.jpg" title="꽃"></p>
+</body>
+
+</html>
