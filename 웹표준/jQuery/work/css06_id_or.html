@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script src="http://code.jquery.com/jquery-latest.js"></script>
+	<script>
+		$(document).ready(function () {
+			// id값이 first이거나 third인 태그를 불러와서 css 적용
+			$("#first, #third").css("color", "red");
+		});
+	</script>
+</head>
+
+<body>
+	<ul>
+		<li id="first">텍스트 텍스트 텍스트 텍스트 텍스트</li>
+		<li id="second">텍스트 텍스트 텍스트 텍스트 텍스트</li>
+		<li id="third">텍스트 텍스트 텍스트 텍스트 텍스트</li>
+		<li id="fourth">텍스트 텍스트 텍스트 텍스트 텍스트</li>
+	</ul>
+</body>
+
+</html>

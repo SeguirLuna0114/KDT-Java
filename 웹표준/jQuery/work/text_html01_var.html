@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>text, html 함수</title>
+	<script src="http://code.jquery.com/jquery-latest.js"></script>
+	<script>
+		$(document).ready(function () {
+			// 모든 h1태그의 내용을 읽어옴
+			var text = $("h1").text();
+			// 첫번째 h1태그의 내용만 읽어옴
+			var html = $("h1").html();
+
+			// text: javascript연습jQuery연습 출력
+			alert("text: " + text);
+			// html: javascript연습 출력
+			alert("html: " + html);
+		});
+	</script>
+</head>
+
+<body>
+	<h1>javascript연습</h1>
+	<h1>jQuery연습</h1>
+</body>
+
+</html>

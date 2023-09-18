@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>each 함수</title>
+	<script src="http://code.jquery.com/jquery-latest.js"></script>
+	<script>
+		$(function() {
+			var list = ['야구', '축구', '농구', '배구', '수영']
+			
+			$.each(list, function(index, values) {
+				alert(index+" : "+values);
+				
+				$('ol').append('<li>'+values+'</li>');
+			});
+		});
+	</script>
+</head>
+
+<body>
+	<ol></ol>
+</body>
+
+</html>
