@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>checkbox 객체</title>
+	<script src="http://code.jquery.com/jquery-latest.js"></script>
+	<script>
+		// :checkbox는 input type="checkbox"로 되어있는 태그를 모두 구해오는 필터 선택자
+		$(document).ready(function() {
+			$("#b1").click(function() {
+				$(":checkbox").prop("checked", true);
+			});
+			$("#b2").click(function() {
+				$(":checkbox").prop("checked", false);
+//				$(":checkbox").removeProp("checked");
+			});
+		});
+	</script>
+</head>
+
+<body>
+	스킬 :
+	<input type="checkbox" name="program" value="java" id="java">java
+	<input type="checkbox" name="program" value="oracle" id="oracle">oracle
+	<input type="checkbox" name="program" value="jsp" id="jsp">jsp
+	<input type="checkbox" name="program" value="spring" id="spring">spring
+	<br><br>
+	<input type="button" value="전부체크" id="b1">
+	<input type="button" value="전부해제" id="b2">
+</body>
+
+</html>

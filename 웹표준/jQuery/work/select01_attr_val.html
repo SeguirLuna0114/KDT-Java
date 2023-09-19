@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>select 객체</title>
+	<script src="http://code.jquery.com/jquery-latest.js"></script>
+	<script>
+		$(document).ready(function() {
+			$("select").change(function() {
+				// 10대를 선택한 경우
+				if($("select").val() == "10") {
+					$("input").attr("readOnly", true);
+//					$("input").attr("readOnly", "readOnly");		// <input> 요소의 readOnly 속성을 "readOnly"로 설정
+					$("input").val("").focus();
+				} else {
+					// 나머지 연령대를 선택한 경우
+					$("input").attr("readOnly", false);
+//					$("input").removeAttr("readOnly");
+					$("input").val("").focus();
+				}
+			});
+		});
+	</script>
+</head>
+
+<body>
+	나이 :
+	<select>
+		<option value="">나이 선택</option>
+		<option value="10">10대</option>
+		<option value="20">20대</option>
+		<option value="30">30대</option>
+		<option value="40">40대 이상</option>
+	</select><br>
+	좋아하는 술: <input type="text">
+</body>
+
+</html>

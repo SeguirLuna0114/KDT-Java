@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script src="http://code.jquery.com/jquery-latest.js"></script>
+	<script>
+		$(document).ready(function() {
+			// 모든 button태그를 구해옴
+			$("button").on("click", function() {
+				// $(this)는 클릭한 button태그를 가져옴
+				// text() : button태그 안의 text를 가져옴
+				var text = $(this).text();
+				// val(text): 입력양식에 text를 설정함
+				$("input").val(text);
+			});
+		});
+	</script>
+</head>
+
+<body>
+	
+	<div>
+		<button>가위</button>
+		<button>바위</button>
+		<button>보</button>
+	</div>
+	<input type="text" value="버튼을 클릭 하세요.">
+
+</body>
+
+</html>
