@@ -1,0 +1,77 @@
+* 라디오 버튼
+ : 여러 옵션 중 하나를 선택하는 데 사용되며, 
+   같은 그룹 내에서 하나의 라디오 버튼만 선택할 수 있음
+
+- 라디오 버튼 생성
+	<input type="radio" name="gender" value="male"> 남성
+	<input type="radio" name="gender" value="female"> 여성
+	<input type="radio" name="gender" value="other"> 기타
+		- type="radio": 라디오 버튼을 나타내는 입력 타입을 정의
+		- name="gender": 같은 그룹 내에서 라디오 버튼들을 식별하는 데 사용되는 이름			이 예제에서는 "gender"라는 그룹으로 라디오 버튼을 묶음
+		- value="male", value="female", value="other": 각 라디오 버튼의 값을 정의
+
+
+o 라디오 객체 관련 메소드와 함수
+1. :radio 선택자
+ : 모든 라디오 버튼(input type="radio") 요소를 선택하는데 사용
+
+구문)	var radioButtons = $(":radio");
+		-  $(":radio"): HTML 문서 내에서 모든 라디오 버튼을 선택한 후,
+				선택된 라디오 버튼을 나타내는 jQuery 객체를 반환
+
+
+2. :checked 선택자
+ : 선택된(체크된) 라디오 버튼(input type="radio") 요소를 선택하는데 사용
+	- 여러 옵션 중 하나를 선택하는 데 사용됨
+	- :checked 선택자를 사용하면 선택된 라디오 버튼만을 선택할 수 있음
+
+구문)	var checkedRadioButtons = $(":radio:checked");
+		- $(":radio:checked"): HTML 문서 내에서 선택된 상태인 모든 라디오 버튼을 
+				선택한 후, 이러한 라디오 버튼을 나타내는 jQuery 객체를 반환
+
+
+3. .prop() 메소드
+ : 라디오 버튼의 checked 속성을 가져오거나 설정
+	- 라디오 버튼이 선택되면 true, 선택되지 않으면 false가 반환
+
+1) prop("checked")를 사용하여 checked 속성의 값을 가져오기
+	var isChecked = $("#myRadio").prop("checked");
+		- ID가 "myRadio"인 라디오 버튼의 checked 속성 값을 가져옴
+
+2) prop("checked", true) 또는 prop("checked", false)를 사용하여 
+  checked 속성의 값을 설정
+	// 라디오 버튼을 선택 상태로 설정
+	$("#myRadio").prop("checked", true);
+
+	// 라디오 버튼을 선택 해제 상태로 설정
+	$("#myRadio").prop("checked", false);
+
+
+
+4. .is() 메소드
+ :라디오 버튼이 선택되었는지 여부를 확인
+	if ($("#myRadio").is(":checked")) {
+    		// 라디오 버튼이 선택된 상태일 때 실행되는 코드
+	} else {
+    		// 라디오 버튼이 선택되지 않은 상태일 때 실행되는 코드
+	}
+
+
+
+5. .val() 메소드
+ : 선택된 라디오 버튼의 값을 가져오거나 설정할 수 있음
+
+1) 값 가져오기
+ : .val() 메소드를 사용하여 선택된 라디오 버튼의 값을 가져올 수 있음
+	- 선택된 라디오 버튼이 없는 경우 undefined를 반환
+	var selectedValue = $("input[name='gender']:checked").val();
+		-  input[name='gender']:checked 선택자: "gender"라는 name 속성을 가진
+					 라디오 버튼 그룹에서 선택된 라디오 버튼을 선택
+
+2) 값 설정하기
+ : .val() 메소드를 사용하여 라디오 버튼 그룹에서 특정 값을 선택하려면 해당 값으로 설정
+	$("input[name='gender'][value='female']").prop("checked", true);
+		- "gender"라는 name 속성을 가진 라디오 버튼 그룹에서
+		  value가 "female"인 라디오 버튼을 선택
+		- .prop("checked", true): 해당 라디오 버튼을 선택 상태로 설정
+

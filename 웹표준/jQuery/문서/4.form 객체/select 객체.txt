@@ -1,0 +1,36 @@
+*<select> 요소
+: HTML 폼에서 사용자가 항목을 선택할 수 있는 드롭다운 목록
+
+
+o <select> 요소의 속성(attribute)과 속성을 조작하는 방법
+	- attr() 함수와 prop() 함수
+1. attr() 함수
+ : HTML 요소의 속성(attribute) 값을 가져오거나 설정할 때 사용
+	- <select> 요소의 경우, attr() 함수를 사용하여 selected 속성을 조작 가능
+	- selected 속성은 드롭다운 목록에서 현재 선택된 <option> 요소를 지정
+
+ex)	<select> 요소의 selected 속성을 가져오는 방법
+	var selectedOption = $("#mySelect").attr("selected");
+
+ex)	selected 속성을 설정
+	$("#mySelect").attr("selected", "selected");
+
+
+2. prop() 함수
+ : HTML 요소의 속성(property) 값을 가져오거나 설정할 때 사용
+   	- 속성과 속성 값은 HTML 요소의 상태를 나타냄
+	- <select> 요소의 경우, prop() 함수를 사용하여 
+	   <option> 요소의 selected 속성을 조작 가능
+	- <option> 요소의 selected 속성은 해당 항목이 선택되었는지 여부를 나타냄
+
+ex)	<option> 요소의 selected 속성을 가져옴
+	var isSelected = $("#myOption").prop("selected");
+
+eX)	selected 속성을 설정
+	$("#myOption").prop("selected", true);
+
+
+
+
+
+

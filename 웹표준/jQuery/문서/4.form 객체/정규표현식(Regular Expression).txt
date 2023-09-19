@@ -1,0 +1,97 @@
+* 정규표현식 패턴을 jQuery에서 사용
+ 	- jQuery의 .match() 메소드 또는 .test() 메소드와 함께 사용
+	- 정규표현식 패턴을 사용하여 특정 요소를 선택하거나 문자열을 검사
+
+o 정규 표현식 요소
+- 문자 클래스(Character Class): [...]로 둘러싼 문자 그룹
+	ex) [aeiou]는 모음 문자 중 하나
+	    [a-z]은 "a"부터 "z" 사이 소문자 알파벳 중 하나
+	    [^0-9]은 숫자를 제외한 어떤 문자라도 일치
+	    [a-zA-Z0-9]은 영문 대문자, 소문자, 숫자 중 어떤 문자라도 일치
+- 특수 시퀀스(Special Sequences): 특정 문자 그룹을 나타내는 특수한 문자 시퀀스
+	ex) \d (숫자), \w (알파벳 문자 또는 밑줄), \s (공백 문자)
+- $: 문자열의 끝
+- +: 바로 앞의 표현식(숫자 범위)이 1회 이상 반복되어야 함
+- ^: 문자열의 시작
+
+
+1. 정규표현식을 사용하여 요소 선택
+ : jQuery의 filter() 메소드를 사용하여 
+   정규표현식 패턴과 일치하는 요소를 선택할 수 있음
+	-DOM 요소를 필터링하여 패턴과 일치하는 것만 선택
+구문)	var regexPattern = /^your-pattern-here/; // 사용자 정의 정규표현식 패턴
+
+	var matchedElements = $("selector").filter(function() {
+    		// 요소 필터링 함수 내에서 정규표현식을 적용
+		// 예시: 요소의 텍스트 내용에 패턴 적용
+    		return regexPattern.test($(this).text()); 
+	});
+
+
+ex)	var regexPattern = /^[0-9]/; // 숫자로 시작하는 패턴
+
+	var matchedElements = $("div").filter(function() {
+    		return regexPattern.test($(this).attr("class"));
+	});
+	// matchedElements에는 패턴과 일치하는 <div> 요소들이 포함됨
+
+
+
+2. 정규표현식을 사용하여 문자열 검사
+ : jQuery를 사용하여 문자열을 정규표현식 패턴과 일치하는지 확인
+	- 이를 위해 match() 메소드나 test() 메소드를 사용할 수 있음
+
+o match() 메소드: 사용하여 정규표현식 패턴과 일치하는 부분 문자열을 찾음
+구문)	var regexPattern = /^your-pattern-here/; // 사용자 정의 정규표현식 패턴
+	var myString = "your-input-string-here"; // 검사할 문자열
+
+	var matched = myString.match(regexPattern); 
+	// match() 메소드를 사용하여 일치하는 부분 문자열 찾기
+
+	if (matched) {
+    		// matched에 일치하는 부분 문자열이 있다면 실행될 코드
+    		console.log("일치하는 부분 문자열:", matched[0]); 
+		// matched 배열의 첫 번째 요소에 일치하는 문자열이 들어 있음
+	} else {
+    		// 일치하는 부분 문자열이 없을 경우 실행될 코드
+    		console.log("일치하는 부분 문자열 없음");
+	}
+
+
+ex)	var regexPattern = /abc/; // "abc" 패턴
+	var myString = "abcdefg";
+
+	var matched = myString.match(regexPattern);
+	if (matched) {
+    		console.log("일치하는 부분 문자열 찾음:", matched[0]);
+	} else {
+    		console.log("일치하는 부분 문자열 없음");
+	}
+
+
+o test() 메소드: 정규표현식 패턴과 문자열을 비교하고 일치 여부를 확인
+구문)	var regexPattern = /your-pattern-here/; // 사용자 정의 정규표현식 패턴
+	var myString = "your-input-string-here"; // 검사할 문자열
+
+	if (regexPattern.test(myString)) {
+    		// 패턴과 일치하는 경우 실행될 코드
+    		console.log("문자열에 패턴이 포함됨");
+	} else {
+    		// 패턴과 일치하지 않는 경우 실행될 코드
+    		console.log("문자열에 패턴이 포함되지 않음");
+	}
+
+
+ex)	var regexPattern = /abc/; // "abc" 패턴
+	var myString = "abcdefg";
+
+	if (regexPattern.test(myString)) {
+    		console.log("문자열에 패턴이 포함됨");
+	} else {
+    		console.log("문자열에 패턴이 포함되지 않음");
+	}
+
+
+
+
+
