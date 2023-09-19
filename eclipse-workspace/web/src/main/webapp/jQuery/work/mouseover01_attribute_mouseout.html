@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>mouseover 이벤트</title>
+	<script src="http://code.jquery.com/jquery-latest.js"></script>
+	<script>
+		$(document).ready(function() {
+			$("img").mouseover(function() {
+				$(this).attr("src", "img/sea.jpg")
+						.attr("title", "바다");
+				$("body").css("background", "yellow");
+			}).mouseout(function() {
+				$(this).attr("src", "img/flower.jpg")
+						.attr("title", "꽃");
+				$("body").css("background", "green");
+			});
+			/* mouseover과 mouseout 이벤트를 같이 처리할 수 있고,
+			   따로 처리할 수도 있음
+			   	$("img").mouseover(function() {
+					$(this).attr("src", "img/sea.jpg")
+							.attr("title", "바다");
+					$("body").css("background", "yellow");
+				});
+				$("img").mouseout(function() {
+					$(this).attr("src", "img/flower.jpg")
+							.attr("title", "꽃");
+					$("body").css("background", "green");
+				});
+			*/
+		});
+	</script>
+</head>
+
+<body>
+	<img src="img/flower.jpg" title="꽃">
+</body>
+
+</html>

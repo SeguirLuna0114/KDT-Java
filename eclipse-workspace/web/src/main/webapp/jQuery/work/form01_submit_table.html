@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>form 객체</title>
+	<script src="http://code.jquery.com/jquery-latest.js"></script>
+	<script>
+		$(document).ready(function() {
+			// form태그 또는 form태그의 id값을 가져와서 선택자로 사용 가능
+			$("form").submit(function() {
+				// 사용자가 id값을 입력한 경우에만 값이 전송되게 유효성검사
+				if($("#id").val() == "") {
+					alert("ID를 입력 하세요.");
+					$("#id").focus();
+					return false;
+				}
+			});
+		});
+	</script>
+</head>
+
+<body>
+	<form id="myform" method="post" action="send.jsp">
+		<table border="1" align="center">
+			<tr>
+				<th>ID</th>
+				<td><input type="text" id="id" name="id"></td>
+			</tr>
+			<tr>
+				<td align="center" colspan="2">
+					<input type="submit" value="가입">
+				</td>
+			</tr>
+		</table>
+	</form>
+</body>
+
+</html>
