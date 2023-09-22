@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>문항 4</title>
+	<script src="http://code.jquery.com/jquery-latest.js"></script>
+	<script>
+		$(document).ready(function () {
+			$("form").submit(function () {
+				// 유효성 검사
+				if ($("#title").val() == "") {
+					alert("제목을 입력 하세요.");
+					$("#title").focus();
+					return false;
+				}
+				if ($("#name").val() == "") {
+					alert("작성자를 입력 하세요.");
+					$("#name").focus();
+					return false;
+				}
+				if ($("#mypasswd").val() == "") {
+					alert("비밀번호를 입력 하세요.");
+					$("#mypasswd").focus();
+					return false;
+				}
+
+				if ($("#mycontent").val() == "") {
+					alert("내용을 입력 하세요.");
+					$("#mycontent").focus();
+					return false;
+				}
+			})
+		})
+	</script>
+</head>
+
+<body>
+	<form method="post" action="board.jsp">
+		<table border="1" width="500" align="center">
+			<caption>게시판</caption>
+			<tr>
+				<th>제목</th>
+				<td><input type="text" size="20" name="title" id="title">
+				</td>
+			</tr>
+			<tr>
+				<th>작성자</th>
+				<td><input type="text" size="20" name="name" id="name">
+				</td>
+			</tr>
+			<tr>
+				<th>비밀번호</th>
+				<td><input type="password" name="mypasswd" id="mypasswd">
+				</td>
+			</tr>
+			<tr>
+				<th>내용</th>
+				<td><textarea rows="5" cols="50" name="mycontent" id="mycontent"></textarea>
+				</td>
+			</tr>
+
+			<tr>
+				<td colspan="2" align="center">
+					<input type="submit" value="확인"><!--전송기능 있는 버튼-->
+				</td>
+			</tr>
+		</table>
+	</form>
+
+</body>
+
+</html>
