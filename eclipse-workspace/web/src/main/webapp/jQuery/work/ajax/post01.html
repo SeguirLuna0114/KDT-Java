@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>post 함수</title>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script>
+$(function(){
+	$('#b1').click(function(){
+		// $.post("요청할 파일명","전달할 데이터","콜백함수");
+		$.post('welcome.jsp',
+		       {'username' : $('#username').val() },
+		       function(msg){   // 콜백함수
+				   alert(msg);
+				   $('#message').html(msg);
+			   } 
+		);
+		
+	});	
+});		
+</script>
+</head>
+<body>
+<form>
+	이름 입력 :
+	<input type="text" id="username"><br>
+	<input type="button" value="전송" id="b1">
+</form>	
+
+<div id="message"></div>
+
+</body>
+</html>
+
+
+
+
+

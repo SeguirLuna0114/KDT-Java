@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>load 함수</title>
+<style>
+	div{width: 180px; height: 80px; margin: 3px; float: left;}
+</style>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script>
+$(function(){
+	$('#menu1').click(function(){		// 메뉴 보기1 클릭
+		// load함수를 이용해서 menu.html 문서 전체를 읽어와서
+		// id가 message1인 태그 사이에 출력한다.
+		$('#message1').load('menu.html');
+	});
+	
+	$('#menu2').click(function(){		// 메뉴 보기2 클릭
+		// load함수를 이용해서 menu.html 문서의 내용중에서 li태그만 읽어와서
+		// id가 message2인 태그 사이에 출력한다.
+		$('#message2').load('menu.html li');
+	});	
+});		
+</script>
+</head>
+<body>
+	
+<div>
+	<a href="#" id="menu1">메뉴 보기1</a>
+	<span id="message1"></span>
+</div>
+<div>
+	<a href="#" id="menu2">메뉴 보기2</a>
+	<span id="message2"></span>
+</div>	
+
+</body>
+</html>
