@@ -1,0 +1,82 @@
+* 스크립틀릿 태그(<% %> 태그)
+ : Java 코드 블록을 JSP 페이지에 삽입하는 데 사용됨
+	- 스크립틀릿 태그 내부에 작성된 Java 코드는 
+	   JSP 페이지가 서블릿으로 컴파일될 때 서블릿 클래스의 service() 메서드 안에 포함됨
+	- 웹 애플리케이션에서 동적 로직을 처리
+
+구문)	<%
+    		// 여기에 Java 코드를 작성합니다.
+    		// 변수 선언, 조건문, 반복문, 메서드 호출 등의 Java 코드를 사용 가능
+	%>
+
+
+o 스크립틀릿 태그의 주요 특징
+- <% %> 태그는 JSP 페이지 내에서 어디에서나 사용할 수 있음
+- 스크립트릿 내에서 Java 코드를 작성할 수 있으며,
+  변수 선언, 반복문, 조건문, 메서드 호출 등 Java 프로그래밍을 수행할 수 있음
+	1) 변수 선언 및 초기화
+	ex)	<% 
+    			int age = 30;
+    			String name = "John";
+		%>
+
+	2) 조건문 (if-else)
+	ex)	<% 
+		    int score = 85;
+		    if (score >= 60) {
+		        out.println("합격");
+		    } else {
+		        out.println("불합격");
+		    }
+		%>
+
+	3) 반복문 (for, while)
+	ex)	<% 
+		    for (int i = 1; i <= 5; i++) {
+		        out.println("반복 횟수: " + i);
+		    }
+		%>
+
+	4) 메서드 호출
+	ex)	<% 
+		    String message = getMessage();
+		    out.println("메시지: " + message);
+	    
+		    // getMessage() 메서드는 다른 자바 클래스나 빈(Bean)에서 정의되야 함
+		%>
+
+	5) 데이터베이스 조회
+	ex)	<% 
+		    Connection conn = getConnection(); // 데이터베이스 연결
+		    Statement stmt = conn.createStatement();
+		    ResultSet rs = stmt.executeQuery("SELECT * FROM users");
+    
+		    while (rs.next()) {
+		        out.println("사용자 이름: " + rs.getString("username"));
+		    }   
+		%>
+
+	6) 세션 및 요청 객체 사용
+	ex)	<% 
+		    String username = (String) session.getAttribute("username");
+		    String paramValue = request.getParameter("paramName");
+    
+		    out.println("세션에서 가져온 사용자 이름: " + username);
+		    out.println("요청 파라미터 값: " + paramValue);
+		%>
+
+
+- 스크립트릿 내에서 선언한 변수는 해당 JSP 페이지의 스코프 내에서 유지됨
+- 스크립트릿 내에서 생성한 출력은 기본적으로 HTTP 응답에 포함되어 클라이언트에게 전송됨
+
+
+
+
+
+
+
+
+
+
+
+

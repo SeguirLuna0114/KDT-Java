@@ -1,0 +1,37 @@
+* web.xml 파일
+: Java 웹 애플리케이션의 설정을 정의하는 데 사용됨
+- 웹 애플리케이션 서버가 애플리케이션을
+  올바르게 구성하고 실행하는 데 필요한 정보를 포함
+
+
+o  XML 코드의 주요 요소와 의미
+- <?xml version="1.0" encoding="UTF-8"?>
+  : XML 문서의 버전 및 인코딩을 지정하는 선언
+
+- <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
+  : 이 부분은 웹 애플리케이션의 설정을 정의하는 루트 엘리먼트
+	- xmlns:xsi와 xmlns 속성: XML 네임스페이스를 정의
+	- xsi:schemaLocation 속성: 스키마 위치를 지정
+	- id 속성: 웹 애플리케이션의 고유 ID를 나타내며, 일반적으로 사용되지 않음
+	- version 속성: Java EE 스팩의 버전을 나타냄
+			Java EE 4.0을 사용하고 있음
+
+<display-name>jspproject</display-name>
+	: 이 엘리먼트는 웹 애플리케이션의 표시 이름(display name)을 정의
+	  표시 이름은 일반적으로 관리 도구나 관리 콘솔에서 
+	  웹 애플리케이션을 식별하는 데 사용됨
+ 	   (여기서는 "jspproject"라는 이름을 사용)
+
+<welcome-file-list>
+	: 이 엘리먼트는 웰컴 파일(welcome file) 목록을 정의
+	   웰컴 파일은 클라이언트가 웹 애플리케이션의 루트 URL에 접속할 때 
+	  서버에서 먼저 제공하는 파일
+	- 여러 웰컴 파일 중에서 첫 번째로 찾아진 파일이 클라이언트에게 전송됨
+
+<welcome-file> 엘리먼트는 웰컴 파일의 이름을 나타냄
+	
+
+
+
+
+

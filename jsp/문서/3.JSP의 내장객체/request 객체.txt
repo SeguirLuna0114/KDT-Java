@@ -1,0 +1,122 @@
+* request 객체
+: JSP 내장 객체 중 하나로, 
+  클라이언트로부터 서버로 전송된 HTTP 요청에 대한
+  정보와 데이터를 다루는 데 사용됨
+	- request 객체는 JSP 페이지 내에서 자동으로 생성되며,
+	  서블릿에서 HttpServletRequest와 동등한 역할 수행
+
+o 주요 속성
+1. QueryString
+ : HTTP 요청 URL에 포함된 쿼리 문자열을 반환
+	
+2. Method
+ : 현재 요청의 HTTP 메서드 (GET, POST, PUT, 등)를 반환
+
+3. Parameter
+ : 요청 매개변수 (HTTP Request Parameters)에 접근할 때 사용하는 메서드
+	- getParameter()로 단일 값, getParameterValues()로 다중 값을 얻을 수 있음
+
+
+
+o 주요 기능 및 사용법
+1. HTTP 요청 매개변수 (HTTP Request Parameters) 처리
+ : request 객체를 사용하여 HTTP 요청 매개변수를 읽고 처리할 수 있음
+  이를 통해 클라이언트가 제출한 데이터를 JSP 페이지에서 사용할 수 있음
+	- request.getParameter(String name) 메서드를 사용하여
+	   HTTP 요청 매개변수를 읽음
+ex)	<%
+	    String username = request.getParameter("username");
+	    String password = request.getParameter("password");
+	%>
+
+
+2. 요청 범위(Request Scope) 속성 (Attributes) 설정 및 검색
+ : request 객체를 사용하여 데이터를 요청 범위(Request Scope)에
+   속성으로 설정하고 검색할 수 있음
+	- 설정된 속성은 같은 요청 범위 내에서 공유됨
+	- request.setAttribute(String name, Object value) 메서드를 
+	   사용하여 요청 범위에 속성을 설정
+	- request.getAttribute(String name) 메서드를 사용하여 해당 속성 값을 읽음
+ex)	<%
+	    // 속성 설정
+	    request.setAttribute("key", "value");
+    
+	    // 속성 검색
+	    String value = (String) request.getAttribute("key");
+	%>
+
+
+3. 세션(Session) 관리
+ : request 객체를 사용하여 세션(Session)을 생성하거나
+   request.getSession() 메서드를 사용하여 현재 세션을 가져올 수 있음
+	- 이를 통해 사용자 세션에 데이터를 저장하거나 읽을 수 있음
+ex)	<%
+	    // 세션 가져오기 (세션이 없으면 새로운 세션 생성)
+	    HttpSession session = request.getSession(true);
+    
+	    // 현재 세션에 데이터 저장
+	    session.setAttribute("user", "John");
+    
+	    // 현재 세션에서 데이터 읽기
+	    String user = (String) session.getAttribute("user");
+	%>
+
+
+4. 기타 HTTP 요청 관련 정보 액세스
+ : request 객체를 사용하여 다양한 HTTP 요청과 관련된 정보를 얻을 수 있음
+	- 요청 메서드(GET 또는 POST), 요청 URI, 헤더 정보 등을 액세스할 수 있음
+	- getMethod(), getRequestURI(), getHeader(String name) 등의 
+	   메서드를 사용하여 요청 메서드, 요청 URI 및 헤더 정보를 읽을 수 있음
+ex)	<%
+	    String method = request.getMethod();
+	    String uri = request.getRequestURI();
+	    String userAgent = request.getHeader("User-Agent");
+	%>
+
+
+
+o request 객체의 주요 메서드
+1. getParameter(String name)
+ : HTTP 요청 매개변수를 가져옴
+	- 주로 HTML 폼으로 전송된 데이터를 받을 때 사용
+ex)	String username = request.getParameter("username");
+
+
+2. getAttribute(String name)
+ : 요청 범위(Request Scope) 속성을 가져옴
+	- 다른 서블릿이나 JSP 페이지에서 설정한 속성 값을 가져올 때 사용
+ex)	String value = (String) request.getAttribute("key");
+
+
+3. setAttribute(String name, Object value)
+ : 요청 범위(Request Scope) 속성을 설정
+	- 다른 서블릿이나 JSP 페이지에서 속성을 읽을 수 있도록 값을 저장할 때 사용
+ex)	request.setAttribute("key", "value");
+
+
+4. getMethod()
+ : HTTP 요청 메서드(GET, POST, 등)를 반환
+ex)	String method = request.getMethod();
+
+
+5. getRequestURI()
+ : 현재 요청의 URI(Uniform Resource Identifier)를 반환
+ex)	String uri = request.getRequestURI();
+
+
+6. getHeader(String name)
+ : HTTP 요청 헤더의 값을 반환
+	- 주로 사용자 에이전트(User-Agent) 정보와 같은 헤더 값을 얻을 때 사용
+ex)	String userAgent = request.getHeader("User-Agent");
+
+
+7. getSession(boolean create)
+ : 클라이언트의 세션(Session)을 가져오거나 생성
+ 	- create 매개변수를 사용하여 세션이 없는 경우
+	   세션을 생성할지 여부를 지정할 수 있음
+ex)	HttpSession session = request.getSession(true);
+
+
+
+
+

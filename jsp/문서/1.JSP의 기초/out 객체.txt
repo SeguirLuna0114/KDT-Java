@@ -1,0 +1,56 @@
+* out 객체
+ : JSP 페이지에서 텍스트를 출력하는 데 사용되는 객체
+	- javax.servlet.jsp.JspWriter 인터페이스를 구현한 객체
+	- 페이지 내에서 서버 측 로직을 실행하고
+	  그 결과를 웹 브라우저로 전송하기 위해 사용됨
+
+	- out 객체는 JSP 페이지의 스크립트릿(<% %> 태그) 내에서 사용됨
+	  서버 측 로직의 결과를 웹 브라우저로 동적으로 전달할 때 사용
+
+o out 객체를 사용하여 브라우저에 텍스트를 출력할 때
+  사용되는 주요 메서드
+1. print(String s) 및 println(String s)
+ : 문자열 s를 출력
+	- print 메서드는 줄 바꿈 없이 출력,
+	  println 메서드는 줄 바꿈 문자를 추가하여 출력
+ex)	<% 
+	    String message = "안녕하세요!";
+	    out.print(message);
+	    out.println(" 웹 페이지에 출력됩니다.");
+	%>
+
+2. print(int i) 및 println(int i)
+ : 정수 i를 출력
+	- 문자열로 자동 변환됨
+ex)	<% 
+	    int count = 42;
+	    out.print("총 갯수: ");
+	    out.println(count);
+	%>
+
+
+3. flush()
+ : 출력 버퍼를 비움
+	- 일반적으로 JSP 페이지가 종료되거나 데이터를 전송할 때 
+	  자동으로 호출되므로 명시적으로 호출할 필요는 없음
+ex)	<% 
+	    out.flush();
+	%>
+
+
+4. clear()
+ : 출력 버퍼를 지움 
+	- 이미 출력된 내용은 지워지며, 버퍼가 비워짐
+ex)	<% 
+	    out.clear();
+	%>
+
+5. close()
+ : 출력 스트림을 닫음
+	-  일반적으로 JSP 페이지가 종료될 때 자동으로 호출되므로 
+	    명시적으로 호출할 필요는 없음
+ex)	<% 
+	    out.close();
+	%>
+
+
