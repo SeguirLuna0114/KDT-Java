@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>ajax 함수</title>
+<style>
+	div{width: 180px; height: 80px; margin:3px; float: left;}
+</style>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script>
+$(function(){
+	$('#menu1').click(function(){    	// 메뉴보기1 클릭
+		$.ajax({
+			url: 'menu.html',		// 서버에 요청할 파일명
+			type: 'post',       	// 전송방식 설정
+			dataType: 'html',   	// 요청한 데이터 타입
+			// 서버로부터 응답받은 데이터는 콜백함수의 매개변수로 전달된다.
+			success: function(data){// 콜백함수
+				alert(data);
+				// 콜백함수로 돌려받은 data를 id가 message1인 태그사이에 출력
+				$('#message1').html(data);
+			}
+		}); // $.ajax() end		
+	});
+	
+	$('#menu2').click(function(){		// 메뉴보기2 클릭
+		$.ajax({
+			url: 'menu.html',
+			type: 'post',
+			dataType: 'html',
+			// 서버로부터 응답받은 데이터는 콜백함수의 매개변수로 전달된다.
+			success: function(data){
+			    // menu.html문서의 내용중 li태그만 읽어와서 id가 message2인
+			    // 태그 사이에 출력한다.
+			    alert(data);
+				$('#message2').html($(data).find('li'));
+			}			
+		}); // $.ajax() end
+		
+	});	
+	
+});		
+</script>
+</head>
+<body>
+	
+<div>
+	<a href="#" id="menu1">메뉴 보기1</a>
+	<span id="message1"></span>
+</div>	
+<div>
+	<a href="#" id="menu2">메뉴 보기2</a>
+	<span id="message2"></span>
+</div>
+
+</body>
+</html>

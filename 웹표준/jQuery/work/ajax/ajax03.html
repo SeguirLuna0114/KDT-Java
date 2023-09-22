@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>ajax 함수</title>
+	<style>
+		table,
+		td {
+			border: 1px solid gray;
+		}
+	</style>
+	<script src="http://code.jquery.com/jquery-latest.js"></script>
+	<script>
+		$(function () {
+			$.ajax({
+				url: 'item.json',
+				type: 'post',
+				dataType: 'json',
+				success: function (data) {
+					$('#treeData').append(
+						"<tr><td>id</td><td>name</td>" +
+						"    <td>price</td><td>description</td></tr>");
+
+					$.each(data, function () {
+						$('#treeData').append(
+							"<tr><td>" + this.id + "</td>" +
+							"    <td>" + this.name + "</td>" +
+							"    <td>" + this.price + "</td>" +
+							"    <td>" + this.description + "</td></tr>");
+					}); // $.each() end			
+				}
+			}); // $.ajax() end	
+		});	
+	</script>
+</head>
+
+<body>
+	<table id="treeData"></table>
+</body>
+
+</html>

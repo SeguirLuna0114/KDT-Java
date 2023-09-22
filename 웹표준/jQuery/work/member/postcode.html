@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>우편검색</title>
+	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+	<script>
+		function openDaumPostcode() {
+			new daum.Postcode({
+				oncomplete: function (data) {
+					document.getElementById('join_zip').value = data.zonecode;
+					document.getElementById('join_addr').value = data.address;
+				}
+			}).open();
+		}
+	</script>
+</head>
+<body>
+<form>
+우편번호 : 
+<input type=text size=5 maxlength=5 id="join_zip">
+<input type=button value=" 우편검색" onClick="openDaumPostcode()"><br>
+주소 : <input type=text size=60 id="join_addr">
+</form>
+</body>
+</html>
+

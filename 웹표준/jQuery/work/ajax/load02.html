@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>load 함수</title>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script>
+	$(function(){
+		$('button').click(function(){
+			// load함수로 resource.html파일을 불러와서 div태그 사이에 출력
+			$('#container').load('resource.html');
+		});		
+	});	
+</script>
+</head>
+<body>
+	<button>서버로부터 데이터 가져오기</button>
+	<div id="container">데이터 가져오기 전</div>
+</body>
+</html>
