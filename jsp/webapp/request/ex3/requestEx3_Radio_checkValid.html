@@ -1,0 +1,47 @@
+<html>
+
+<head>
+	<title>radio 버튼을 이용한 설문 조사</title>
+	<meta charset="utf-8">
+	<script src="http://code.jquery.com/jquery-latest.js"></script>
+	<script>
+		// 계절을 선택하게 유효성 검사
+		$(document).ready(function() {
+			// form태그를 가져옴
+			$("form").submit(function() {
+				// radio객체의 season을 선택해야 form이 전송되게 설정
+				/* 선택된 라디오 버튼의 수를 확인한 후, 1개 미만인 경우 폼 제출 중단
+				 - "season"이라는 이름을 가진 라디오 버튼 그룹에 대해서만 검사
+				*/
+				if($("input:radio[name='season']:checked").length < 1) {
+					alert("좋아하는 계절 1개를 선택 하세요.");
+					return false;
+				}
+				
+				/* 문서 내의 모든 라디오 버튼을 검사하여 선택된 라디오버튼이 없는경우 폼 제출 중단
+				 - :radio 선택자를 사용하여 문서 내의 모든 라디오 버튼을 선택한 후,
+				   is(":checked")를 사용하여 모든 라디오 버튼 중 하나라도 선택되었는지 확인
+				*/
+//				if($(":radio").is(":checked") == false){
+//					alert("좋아하는 계절 1개를 선택 하세요.");
+//					return false;
+//				}
+			});
+		});
+	</script>
+</head>
+
+<body>
+	가장 좋아하는 계절은? <br>
+
+	<form name=syberpoll method=post action=requestEx3_Radio_checkValid.jsp>
+		<input type=radio id="s1" name=season value=봄>봄<br>
+		<input type=radio id="s2" name=season value=여름>여름<br>
+		<input type=radio id="s3" name=season value=가을>가을<br>
+		<input type=radio id="s4" name=season value=겨울>겨울<br>
+		<input type=submit value="투표">
+	</form>
+
+</body>
+
+</html>
