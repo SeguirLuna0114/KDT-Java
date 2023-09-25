@@ -1,0 +1,270 @@
+* request 객체
+: JSP 내장 객체 중 하나로, 
+  클라이언트로부터 서버로 전송된 HTTP 요청에 대한
+  정보와 데이터를 다루는 데 사용됨
+	- request 객체는 JSP 페이지 내에서 자동으로 생성되며,
+	  서블릿에서 HttpServletRequest와 동등한 역할 수행
+
+o 주요 속성
+1. QueryString
+ : HTTP 요청 URL에 포함된 쿼리 문자열을 반환
+	
+2. Method
+ : 현재 요청의 HTTP 메서드 (GET, POST, PUT, 등)를 반환
+
+3. Parameter
+ : 요청 매개변수 (HTTP Request Parameters)에 접근할 때 사용하는 메서드
+	- getParameter()로 단일 값, getParameterValues()로 다중 값을 얻을 수 있음
+
+
+
+o 주요 기능 및 사용법
+1. HTTP 요청 매개변수 (HTTP Request Parameters) 처리
+ : request 객체를 사용하여 HTTP 요청 매개변수를 읽고 처리할 수 있음
+  이를 통해 클라이언트가 제출한 데이터를 JSP 페이지에서 사용할 수 있음
+	- request.getParameter(String name) 메서드를 사용하여
+	   HTTP 요청 매개변수를 읽음
+ex)	<%
+	    String username = request.getParameter("username");
+	    String password = request.getParameter("password");
+	%>
+
+
+2. 요청 범위(Request Scope) 속성 (Attributes) 설정 및 검색
+ : request 객체를 사용하여 데이터를 요청 범위(Request Scope)에
+   속성으로 설정하고 검색할 수 있음
+	- 설정된 속성은 같은 요청 범위 내에서 공유됨
+	- request.setAttribute(String name, Object value) 메서드를 
+	   사용하여 요청 범위에 속성을 설정
+	- request.getAttribute(String name) 메서드를 사용하여 해당 속성 값을 읽음
+ex)	<%
+	    // 속성 설정
+	    request.setAttribute("key", "value");
+    
+	    // 속성 검색
+	    String value = (String) request.getAttribute("key");
+	%>
+
+
+3. 세션(Session) 관리
+ : request 객체를 사용하여 세션(Session)을 생성하거나
+   request.getSession() 메서드를 사용하여 현재 세션을 가져올 수 있음
+	- 이를 통해 사용자 세션에 데이터를 저장하거나 읽을 수 있음
+ex)	<%
+	    // 세션 가져오기 (세션이 없으면 새로운 세션 생성)
+	    HttpSession session = request.getSession(true);
+    
+	    // 현재 세션에 데이터 저장
+	    session.setAttribute("user", "John");
+    
+	    // 현재 세션에서 데이터 읽기
+	    String user = (String) session.getAttribute("user");
+	%>
+
+
+4. 기타 HTTP 요청 관련 정보 액세스
+ : request 객체를 사용하여 다양한 HTTP 요청과 관련된 정보를 얻을 수 있음
+	- 요청 메서드(GET 또는 POST), 요청 URI, 헤더 정보 등을 액세스할 수 있음
+	- getMethod(), getRequestURI(), getHeader(String name) 등의 
+	   메서드를 사용하여 요청 메서드, 요청 URI 및 헤더 정보를 읽을 수 있음
+ex)	<%
+	    String method = request.getMethod();
+	    String uri = request.getRequestURI();
+	    String userAgent = request.getHeader("User-Agent");
+	%>
+
+
+
+o request 객체의 주요 메서드
+- get 메소드 (데이터 읽기)
+1. getCharacterEncoding()
+ : 요청에 대한 문자 인코딩(Charset)을 반환
+	- 문자 데이터가 어떤 인코딩으로 전송되었는지 알려주는데 사용
+	- 일반적으로 HTTP 요청의 본문 데이터(POST 요청 등)가 
+	  어떤 문자 인코딩으로 인코딩되어 있는지 확인할 때 사용
+ex)	String encoding = request.getCharacterEncoding();
+
+
+2. getParameter(String name)
+ : request 객체에서 지정된 이름(name)에 해당하는 
+   하나의 HTTP 요청 매개변수(parameter) 값을 반환
+	- 주로 HTML 폼으로 전송된 데이터를 받을 때 사용
+	- 클라이언트가 웹 서버로 보낸 HTTP GET 또는 POST 요청에서
+ 	  특정 매개변수의 값을 가져올 때 사용
+	- 문자열 형태의 매개변수 값을 반환하며, 매개변수가 없으면 null을 반환
+ex)	String username = request.getParameter("username");	
+	// 매개변수의 값을 가져옴
+
+	if (username != null) {
+    		// 매개변수가 존재하는 경우
+    		out.println("사용자 이름은 " + username + "입니다.");
+	} else {
+    		// 매개변수가 존재하지 않는 경우
+    		out.println("사용자 이름이 지정되지 않았습니다.");
+	}
+
+
+
+3. getParameterValues(String name)
+ : request 객체에서 지정된 이름(name)에 해당하는
+     HTTP 요청 매개변수(parameter)의 값을 문자열 배열로 반환
+	- 매개변수는 일반적으로 HTML 양식(form) 
+	   또는 쿼리 문자열(query string)에서 전달됨
+	- 하나의 이름으로 여러 값을 가진 매개변수를 처리할 때 유용
+	 	- HTML 폼(form)에서 같은 이름으로 여러 개의 체크박스를 선택한 경우
+		- 다중 선택 목록, 체크박스 그룹 등과 같은 다양한 상황에서 유용하게 활용
+ex)	String[] parameterValues = request.getParameterValues("parameterName");
+	// 매개변수의 값을 배열로 가져옴
+
+	if (parameterValues != null) {
+	    	out.println("선택한 값:");
+    		for (String value : parameterValues) {
+        		out.println(value);
+    		}
+	} else {
+    		out.println("값이 선택되지 않았습니다.");
+	}
+
+
+4. getAttribute(String name)
+ : request 객체 또는 다른 스코프(scope) 객체에서 
+   지정된 이름(name)에 해당하는 속성(attribute) 값을 검색
+	- 속성(attribute)은 키-값 쌍의 형태로 저장됨
+	- 웹 애플리케이션에서 데이터를 저장하고 검색하는 데 사용
+	- 다른 서블릿이나 JSP 페이지에서 설정한 속성 값을 가져올 때 사용
+ex)	String value = (String) request.getAttribute("key");
+	// 속성(key)의 값을 가져옴
+
+	if (value != null) {
+    		out.println("값은 " + value + "입니다.");
+	} else {
+    		out.println("값이 지정되지 않았습니다.");
+	}
+
+
+5. getMethod()
+ : request 객체에서 현재 요청의 HTTP 메소드(HTTP method)를 반환
+	-  HTTP 메소드는 클라이언트가 서버에게 요청한 동작을 나타내는데 사용되며,
+	  주요 HTTP 메소드로는 GET, POST, PUT, DELETE 등이 있음
+	- 요청을 처리할 때 클라이언트가 어떤 동작을 요청했는지를 확인하고
+	  해당 동작에 맞는 로직을 수행하기 위해 사용
+ex)	String httpMethod = request.getMethod();
+	// 현재 요청의 HTTP 메소드를 가져옴
+
+	if ("GET".equals(httpMethod)) {
+    		// GET 요청 처리
+	} else if ("POST".equals(httpMethod)) {
+    		// POST 요청 처리
+	} else if ("PUT".equals(httpMethod)) {
+    		// PUT 요청 처리
+	} else if ("DELETE".equals(httpMethod)) {
+    		// DELETE 요청 처리
+	} else {
+    		// 다른 HTTP 메소드 처리
+	}
+
+
+6. getRemoteAddr()
+ : request 객체에서 클라이언트의 IP 주소를 반환
+	- HTTP 요청을 보낸 클라이언트의 실제 IP 주소를 가져올 때 사용
+	- 클라이언트의 IP 주소를 알면 웹 애플리케이션에서 
+	  사용자를 식별하거나 로깅 및 보안 목적으로 활용 가능
+ex)	String clientIP = request.getRemoteAddr();
+	// 클라이언트의 IP 주소를 가져옴
+	out.println("클라이언트의 IP 주소: " + clientIP);
+
+
+7. getRequestURI()
+ : request 객체에서 현재 요청의 URI(Uniform Resource Identifier)를 반환
+	- URI는 클라이언트가 요청한 리소스의 경로 및 식별 정보를 나타냄
+	- 웹 애플리케이션에서 현재 요청된 페이지나 서블릿의 경로를 확인하는 데 사용
+	   ex)	클라이언트가 "http://example.com/myapp/page.jsp" 주소로 요청을 보냈다면, 		getRequestURI() 메소드는 "/myapp/page.jsp"와 같은 URI 문자열을 반환
+ex)	String requestURI = request.getRequestURI();
+	// 현재 요청의 URI를 가져옴
+	out.println("현재 요청의 URI: " + requestURI);
+
+
+8. getHeader(String name)
+ : request 객체에서 지정된 HTTP 헤더(Header)의 값을 반환
+	- 클라이언트가 요청한 HTTP 요청의 헤더 정보를 가져올 수 있음
+	  (헤더는 클라이언트와 서버 간의 통신에서 다양한 정보를 전달하는 데 사용)
+	- 주로 사용자 에이전트(User-Agent) 정보와 같은 헤더 값을 얻을 때 사용
+ex)	String userAgent = request.getHeader("User-Agent");
+	// 클라이언트의 사용자 에이전트(User-Agent) 정보를 가져옴
+
+
+9. getSession(boolean create)
+ : request 객체에서 세션(Session) 객체를 가져오거나 생성
+	- 세션은 클라이언트와 서버 간의 지속적인 상태 정보를 저장하는 데 사용
+	- 세션을 사용하면 동일한 클라이언트가 여러 요청 간에 데이터를 공유할 수 있기에
+	  웹 애플리케이션에서 상태를 유지하거나 사용자 식별 및 로그인 정보를 저장하는 데 유용
+ 	- create 매개변수를 사용하여 세션이 없는 경우
+	   세션을 생성할지 여부를 지정할 수 있음
+ex)	HttpSession session = request.getSession(true);
+	// 세션이 이미 존재하지 않으면 새로운 세션을 생성하고, 존재할 경우 기존 세션을 반환
+	HttpSession session = request.getSession(false);
+	// 세션이 존재하지 않을 때 null을 반환하며, 존재할 경우 기존 세션을 반환
+
+
+10. getContextPath()
+ : request 객체에서 현재 웹 애플리케이션의 컨텍스트 경로(Context Path)를 반환
+	- 웹 애플리케이션 내에서 다른 자원에 대한 경로를 생성할 때 사용
+	- 컨텍스트 경로는 웹 애플리케이션의 루트 경로를 나타냄
+	   = 웹 애플리케이션이 호스팅되는 서버에서 이 애플리케이션에 대한 URL 경로	
+	ex)	웹 애플리케이션이 "mywebapp"으로 배포되었다면 
+		"/mywebapp"과 같은 문자열을 반환할 것
+ex)	String contextPath = request.getContextPath();
+
+
+11. getParameterMap()
+ : HTTP 요청에서 파라미터를 추출하여 맵 형태로 반환
+	- HTTP 요청에서 받은 모든 파라미터를 파라미터 이름을 키로, 
+	  해당 파라미터 값(하나 또는 다수)을 배열로 가지는 맵으로 반환
+ex)	Map<String, String[]> parameterMap = request.getParameterMap();
+	// 파라미터를 추출하고,파라미터 이름을 키(key)로 
+	    해당 파라미터의 값을 문자열 배열을 가지는 맵으로 반환
+	- request: 현재 HTTP 요청을 나타내는 객체
+		  Servlet 또는 JSP에서 제공되는 HttpServletRequest 객체
+	- parameterMap: 추출된 파라미터 정보를 저장하는 변수
+
+ex) "name" 파라미터를 얻는 경우
+	Map parameterMap = request.getParameterMap();
+	String[] nameValues = parameterMap.get("name");
+	if (nameValues != null && nameValues.length > 0) {
+    		String name = nameValues[0];
+    		// name 변수에 "name" 파라미터의 값이 들어갑니다.
+	}
+
+
+
+- set 메소드 (데이터 설정)
+1. setCharacterEncoding(String enc)
+ : request 객체에서 클라이언트에서 서버로 전송된 
+   문자열 데이터의 문자 인코딩(Charset)을 설정하는 메소드
+	- 클라이언트가 어떤 문자 인코딩으로 데이터를 보냈는지를 서버에 알려줄 수 있음
+	 (클라이언트와 서버 간에 일관된 문자 인코딩을 유지하는 것이 중요)
+	- 클라이언트의 요청 데이터의 문자 인코딩을 "UTF-8"로 설정하고,
+	  이후에 getParameter() 또는 getParameterValues() 메소드를 호출하여 
+	  요청 데이터를 올바르게 처리할 수 있도록 도와줌
+	- setCharacterEncoding() 메소드는 주로 POST 방식의 요청에서 사용됨
+	  	- POST 방식은 HTTP 요청 본문에 데이터를 실어 보내므로,
+	   	  이 데이터의 문자 인코딩을 설정하는 것이 중요
+		- GET 요청의 경우, 클라이언트가 URL에 데이터를 인코딩하고 
+		  서버로 보내기 때문에 setCharacterEncoding() 메소드의 설정이
+		   URL 문자열에 영향을 미치지 않을 수 있음
+ex)	request.setCharacterEncoding("UTF-8");
+
+
+
+2. setAttribute(String name, Object value)
+ : request, session, application 등의 스코프(scope) 객체에
+    속성(attribute)을 설정
+	- 속성의 이름(name)과 값을(value) 받으며,
+	  이름은 문자열로 지정되고 값은 임의의 객체(Object)로 지정됨
+	- 속성은 키-값(key-value) 쌍으로 데이터를 저장
+	- 클라이언트와 서버 간에 데이터를 공유할 때 사용
+	- 다른 서블릿이나 JSP 페이지에서 속성을 읽을 수 있도록 값을 저장할 때 사용
+ex)	request.setAttribute("key", "value");
+
+
+
