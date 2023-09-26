@@ -8,7 +8,7 @@
 <%
    String cookieName = "id";
    Cookie cookie = new Cookie(cookieName, "totoro");
-   cookie.setMaxAge(3600); 
+   cookie.setMaxAge(30); 
    cookie.setValue("guardian");	// 쿠키 값을 guardian으로 수정
    response.addCookie(cookie);	// 쿠키를 응답에 추가
 %>
