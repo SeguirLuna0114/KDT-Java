@@ -140,6 +140,96 @@ ex)	cookie.setPath("/myapp"); // 특정 경로로 제한
 
 
 
+o 쿠키 값 변경
+단계1. 쿠키 가져오기 또는 생성하기
+	- 현재 요청에 대한 쿠키를 가져오거나 새로운 쿠키를 생성
+	- 기존의 쿠키 값을 변경하려면 해당 쿠키를 가져와야 함
+구문)	Cookie[] cookies = request.getCookies();
+
+
+단계2. 원하는 새로운 값을 설정
+방법1) 기존의 Cookie객체를 가져와서 값을 직접 변경
+	- 쿠키의 값을 변경하려면 Cookie 객체의 setValue 메소드를 사용하여 원하는 값을 설정
+구문)	if (cookies != null) {
+    		for (Cookie cookie : cookies) {
+        		if ("username".equals(cookie.getName())) {
+            			// 원하는 새로운 값을 설정
+				cookie.setValue("새로운_값");
+
+
+방법2) Cookie객체를 새로 생성하여 변경
+	- 새로운 쿠키를 생성하여 기존 쿠키를 대체하는 경우 사용
+구문)	if (cookies != null) {
+    		for (Cookie cookie : cookies) {
+        		if ("username".equals(cookie.getName())) {
+				Cookie newCookie = new Cookie("username", "new_username");
+
+
+단계3. 변경된 쿠키를 응답에 추가
+	- 변경된 쿠키를 클라이언트에게 반영하려면 해당 쿠키를 응답에 추가하면
+	   클라이언트로 변경된 쿠키가 전송됨
+구문)	response.addCookie(newCookie);
+
+
+ex)	<%
+	    // 쿠키 가져오기
+	    Cookie[] cookies = request.getCookies();
+	    Cookie updatedCookie = null;
+
+	    if (cookies != null) {
+	        for (Cookie cookie : cookies) {
+	            if (cookie.getName().equals("username")) {
+	                // 원하는 새로운 값을 설정
+	                String newUsername = "new_john_doe";
+	                cookie.setValue(URLEncoder.encode("자바와 JSP"));
+	                updatedCookie = cookie;
+	                break; // 쿠키를 찾았으므로 반복문 종료
+	            }
+	        }
+	    }
+
+	    if (updatedCookie != null) {
+	        // 변경된 쿠키를 응답에 추가
+	        response.addCookie(updatedCookie);
+	    }
+	%>
+
+
+
+
+o 쿠키를 삭제하는 방법
+단계1. 기존 쿠키 가져오기
+	- 기존에 설정된 쿠키를 가져오기 위해 request.getCookies()를 사용
+	- 져온 쿠키 배열을 반복하여 원하는 쿠키를 찾음
+구문)	Cookie[] cookies = request.getCookies();
+
+
+단계2. 쿠키 삭제
+	- 해당 쿠키의 값을 변경해서 쿠키 삭제
+	- 쿠키를 삭제하려면 쿠키의 값을 무효한 값(예: 빈 문자열)으로 설정하고,
+	  쿠키의 유효 시간을 0으로 설정
+구문)	if (cookies != null) {
+	    for (Cookie cookie : cookies) {
+	        if ("username".equals(cookie.getName())) {
+	            // 쿠키 값을 무효화(빈 문자열로 설정)
+	            cookie.setValue("");
+		    // Cookie객체를 새로 생성하여 변경 가능
+		    // Cookie cookie = new Cookie("name", "");
+	            
+	            // 쿠키의 유효 시간을 0으로 설정 => 발행되자마자 쿠키 정보 삭제됨
+	            cookie.setMaxAge(0);
+
+
+
+단계 3: 변경된 쿠키를 응답에 추가
+	- 삭제된 쿠키를 클라이언트에게 반영하려면 변경된 쿠키를 응답에 추가
+	  => 클라이언트에서 해당 쿠키를 삭제하게 됨
+구문)		    // 변경된 쿠키를 응답에 추가
+            	    response.addCookie(cookie);
+	            break; // 쿠키를 찾았으므로 반복문 종료
+	        }
+	    }
+	}
 
 
 

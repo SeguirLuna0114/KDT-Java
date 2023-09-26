@@ -1,0 +1,46 @@
+* URLEncoder.encode()와 URLDecoder.decode() 메소드는 
+  주로 URL 매개변수를 인코딩하고 디코딩할 때 사용
+
+o URLEncoder.encode() 메소드
+: URL에 포함되는 특수 문자나 공백과 같은 문자열을 URL 형식으로 인코딩하는 데 사용
+	- 입력된 문자열 s를 URL 형식으로 인코딩하여 새 문자열을 반환
+	- 문자열 내에 있는 특수 문자나 공백은 URL에서 허용되는 형식으로 변경됨
+	  (공백은 "%20"로 인코딩되고, 
+	   특수 문자는 해당 문자의 ASCII 코드 값에 따라 "%xx" 형태로 인코딩)
+	- 쿠키에 데이터 저장 시 인코딩
+	  : 쿠키에 저장될 데이터에 특수 문자나 공백과 같은 
+	    URL에서 허용되지 않는 문자가 포함되어 있는 경우,
+	    이 데이터를 URLEncoder.encode() 메소드를 사용하여 URL로 안전하게 인코딩
+	
+기본구문)	public static String encode(String s, String enc)
+    			throws UnsupportedEncodingException
+			- s: URL로 인코딩할 문자열
+			- enc: 문자열을 어떤 문자 인코딩 방식으로 변환할지를 나타내는 문자열
+				주로 "UTF-8"과 같은 문자 인코딩을 지정
+
+ex) 사용자의 이름이 "John Doe"
+	String encodedName = URLEncoder.encode("John Doe", "UTF-8");
+	Cookie userCookie = new Cookie("username", encodedName);
+
+
+
+
+o URLDecoder.decode() 메소드
+ : URL에서 인코딩된 문자열을 디코딩하여 원래의 문자열로 복원하는 데 사용
+	- 입력된 URL 인코딩된 문자열 s를 디코딩하여 원래의 문자열을 반환
+		- 주로 URL에서 사용하는 특수 문자를 원래 문자로 변환하고,
+		  공백은 "+"나 "%20"과 같은 문자열로 변환
+	- 쿠키에서 데이터 읽을 때 디코딩
+	  : 클라이언트로부터 받은 쿠키의 값을 읽을 때, 해당 값이 URL 인코딩되어 있는 경우, 		    URLDecoder.decode() 메소드를 사용하여 디코딩하여 원래의 데이터로 복원
+
+기본구문)	public static String decode(String s, String enc)
+		    	throws UnsupportedEncodingException
+			- s: 디코딩할 URL 인코딩된 문자열
+			- enc: 문자열이 어떤 문자 인코딩 방식으로 인코딩되었는지를 나타내는 문자열				  주로 "UTF-8"과 같은 문자 인코딩을 지정
+
+ex) 쿠키에서 사용자의 이름을 읽을 때
+	String encodedName = userCookie.getValue();
+	String decodedName = URLDecoder.decode(encodedName, "UTF-8");
+
+
+
