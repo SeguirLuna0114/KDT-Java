@@ -1,0 +1,78 @@
+o javabean관련 액션태그
+ : JSP에서는 <jsp:useBean>과 <jsp:setProperty> 액션 태그를 사용하여
+    JavaBean을 생성하고 속성을 설정할 수 있음
+    => JavaBean과 JSP 페이지 간의 상호 작용을 단순화하고 명령형 코드를 최소화
+
+
+1. <jsp:useBean> 액션 태그
+ : JavaBean 객체를 생성하거나 기존의 JavaBean 객체를 검색하는 데 사용
+   (JavaBean을 효과적으로 관리하고, JSP 페이지에서 JavaBean을 생성하거나 가져옴)
+
+구문)	<jsp:useBean id="beanName" class="fully.qualified.classname"
+		     [scope="page|request|session|application"] />
+
+	- <jsp:useBean>: 액션 태그의 시작 의미
+	- id: JavaBean 객체의 이름을 지정.이 이름은 JavaBean 객체를 참조하는 데 사용됨
+	- class: JavaBean 클래스의 경로 및 이름을 지정
+		 JavaBean 클래스가 어떤 패키지에 있는지 지정해야 함
+	- scope(선택 사항): JavaBean을 저장할 범위(수명범위, scope)를 지정(기본값은 page)
+			   가능한 값은 page, request, session, application 중 하나
+
+
+2. <jsp:setProperty> 액션 태그
+ : JavaBean의 속성을 설정하는데 사용됨.
+   JSP 페이지에서 JavaBean 객체의 속성에 값을 할당할 수 있음
+
+구문)	<jsp:setProperty name="beanName" property="propertyName" 
+			 [param="paramName"] [value="propertyValue"] />
+	
+	- name: JavaBean 객체의 이름을 지정
+	- property: 설정할 속성의 이름을 지정
+		    *는 property 속성에 사용되는 특수한 값으로, 모든 속성을 대상으로 속성 값을 설정
+		    (JavaBean 객체의 모든 속성에 값을 할당하려는 것)
+	- value(선택 사항): 속성에 할당할 값을 직접 지정할 때 사용
+		  	   이 속성을 사용하려면 value 속성과 함께 propertyValue를 지정해야 함
+	- param (선택 사항): HTTP 요청 매개변수에서 값을 가져와 속성에 할당할 때 사용됨
+			    이 속성을 사용하려면 param 속성과 함께 paramName을 지정해야 함
+
+ex)	JavaBean 속성 설정 예제
+	// PersonBean 클래스를 사용해 세션 스코프에 JavaBean객체(personBean) 생성
+	<jsp:useBean id="personBean" class="com.example.PersonBean" scope="session" />
+	// personBean의 name 및 age 속성에 값을 할당
+	<jsp:setProperty name="personBean" property="name" value="John Doe" />
+	<jsp:setProperty name="personBean" property="age" value="30" />
+
+ex)	HTTP 요청 매개변수를 사용하여 속성 설정
+	// PersonBean 클래스를 사용해 request 스코프에 존재하는 JavaBean객체(personBean) 가져옴
+	<jsp:useBean id="personBean" class="com.example.PersonBean" scope="request" />
+	// HTTP 요청 매개변수에서 userName 및 userAge 값을 가져와 personBean의 속성에 할당
+	<jsp:setProperty name="personBean" property="name" param="userName" />
+	<jsp:setProperty name="personBean" property="age" param="userAge" />
+
+
+o <jsp:setProperty> 액션 태그에서 property="*"를 사용하는 경우
+  JavaBean 객체의 모든 속성을 한 번에 초기화/재설정
+  : property="*"를 사용하면 JavaBean 객체의 모든 속성에 값을 한 번에 설정
+	- JavaBean 객체를 초기화하거나 재설정해야 하는 경우에 유용
+
+
+
+3. <jsp:getProperty> 액션 태그
+ : JavaBean 객체의 속성 값을 가져와서 JSP 페이지에서 출력하거나 다른 처리에 사용
+
+구문)	<jsp:getProperty name="beanName" property="propertyName" />
+		- <jsp:getProperty>: 액션 태그의 시작
+		- name: JavaBean 객체의 이름을 지정
+		- property: 가져올 속성의 이름을 지정
+
+ex)	<jsp:getProperty> 액션 태그를 사용하여 JavaBean 객체의 name 속성 값을 출력
+	<jsp:getProperty name="personBean" property="name" />
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,91 @@
+* JSP에서 템플릿 기능을 구현
+ : include 액션 태그와 forward 액션 태그를 함께 사용하여
+   웹 페이지의 레이아웃을 구성하고 코드를 모듈화하여 유지 보수성을 높일 수 있음
+
+
+o 템플릿 기능 구현 방법
+1. 템플릿 페이지 생성
+ : 레이아웃을 정의한 JSP 템플릿 페이지를 생성
+	- 웹 사이트의 모든 페이지에 공통으로 사용되는 
+	  레이아웃(헤더, 푸터, 메뉴 등)을 포함/정의할 수 있음
+구문)	<!-- template.jsp -->
+	<!DOCTYPE html>
+	<html>
+	<head>
+	    <meta charset="UTF-8">
+	    <title><%= pageTitle %></title>
+	</head>
+	<body>
+	    <header>
+	        <!-- 공통 헤더 내용 -->
+	    </header>
+	    <nav>
+	        <!-- 공통 메뉴 내용 -->
+	    </nav>
+	    <main>
+	        <!-- 페이지 고유 내용 -->
+	        <jsp:include page="<%= contentPage %>" />
+	    </main>
+	    <footer>
+	        <!-- 공통 푸터 내용 -->
+	    </footer>
+	</body>
+	</html>
+
+
+
+2. 개별 페이지 생성
+ : 각 개별 웹 페이지를 생성
+	- 각 개별 웹 페이지에서는 템플릿 페이지를 포함하고 페이지 고유한 내용을 추가
+구문)	<!-- page1.jsp -->
+	<%@ page contentType="text/html; charset=UTF-8" %>
+	<!-- %@ include %> 디렉티브를 사용하여 템플릿 페이지를 포함 --!>
+	<%@ include file="template.jsp" %>
+
+	<%-- 템플릿 페이지에서 사용할 변수 설정 --%>
+	<%
+	    String pageTitle = "페이지 1";
+	    String contentPage = "page1_content.jsp"; // 페이지 1에 대한 고유 내용
+	%>
+
+
+3. 페이지 고유 내용 생성
+  : 각 개별 페이지에 대한 고유한 내용을 생성
+ex)	<!-- page1_content.jsp -->
+	<h1>페이지 1 내용</h1>
+	<p>이 페이지는 페이지 1의 내용을 표시합니다.</p>
+
+
+4. 템플릿 페이지와 변수 연결
+ : 필요한 경우, 페이지 간에 데이터를 전달하려면 forward 액션 태그를 사용할 수 있음
+	- 페이지 간에 데이터 공유가 가능하며,
+	  템플릿 페이지의 일부 내용을 동적으로 변경할 수 있음
+구문)	<!-- content.jsp에서 forward 액션 태그를 사용하여 데이터 전달 -->
+	<jsp:forward page="template.jsp">
+ 	   <jsp:param name="pageTitle" value="페이지 제목" />
+	</jsp:forward>
+
+
+	<!-- 변수를 설정하여 템플릿 페이지의 변수와 연결 --!>
+	<%
+	    String pageTitle = "페이지 1";
+	    String contentPage = "page1_content.jsp";
+	%>
+
+
+5. 템플릿 페이지로 전환
+  : 개별 페이지에서 템플릿 페이지로 전환
+	- 이를 통해 템플릿 페이지의 레이아웃이 개별 페이지에 적용됨
+	- 필요한 경우, 페이지 간 데이터 전달을 위해 forward 액션 태그를 사용
+구문)	<jsp:forward page="template.jsp">
+	    <jsp:param name="pageTitle" value="<%= pageTitle %>" />
+	    <jsp:param name="contentPage" value="<%= contentPage %>" />
+	</jsp:forward>
+
+
+
+
+
+
+
+

@@ -1,0 +1,73 @@
+o 자바빈 클래스 작성 방법
+
+1. 클래스 작성
+ : JavaBean을 나타내는 클래스를 작성
+	1) 기본 생성자 (파라미터가 없는 생성자)를 가져야 함
+	2) 개인 필드(private fields)를 사용하여 상태를 캡슐화
+		- 클래스 내부에서만 접근 가능해야 하므로 private으로 선언
+		- 자바빈에서 멤버변수를 프로퍼티(property)라고 함
+	3) 개인 필드에 접근하고 수정하기 위한 public getter 및 setter 메서드를 제공
+		- Getter 메서드는 필드 값을 반환하고, Setter 메서드는 필드 값을 설정
+
+구문)	public class SimplenBean {
+	    // 개인 필드(private fields)를 사용
+ 	    private String name;
+ 	    private int age;
+
+	    public SimplenBean() {
+  	      // 기본 생성자
+	    }
+
+	    // public getter메소드
+	    public String getName() {
+	        return name;
+	    }
+
+	    public int getAge() {
+	        return age;
+	    }
+
+	    // public setter메소드
+	    public void setName(String name) {
+	        this.name = name;
+	    }
+
+	    public void setAge(int age) {
+	        this.age = age;
+	    }
+	}
+
+
+
+2. 선택사항 - 시리얼라이즈 가능(Serializable) 만들기
+ : JavaBean을 직렬화 가능하게 만들려면 java.io.Serializable 인터페이스를 구현할 수 있음
+	- JavaBean 객체를 스트림에 저장하고 전송할 수 있음
+
+구문)	public class SimplenBean implements Serializable {
+	    // ...
+	}
+
+
+3. 클래스 사용
+ : JavaBean을 사용하는 애플리케이션에서는
+    해당 클래스의 인스턴스를 생성하고, 
+   getter와 setter 메서드를 통해 JavaBean의 상태를 액세스하고 수정할 수 있음
+
+구문)	// JavaBean 인스턴스 생성
+	SimplenBean sbean = new SimplenBean();
+
+	// Setter 메서드를 사용하여 속성 설정
+	sbean.setName("John");
+	sbean.setAge(30);
+
+	// Getter 메서드를 사용하여 속성 읽기
+	String name = sbean.getName();
+	int age = sbean.getAge();
+
+
+
+
+
+
+
+
