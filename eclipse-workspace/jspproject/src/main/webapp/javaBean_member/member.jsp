@@ -5,8 +5,19 @@
 %>
 
 <jsp:useBean id="member" class="member.MemberDataBean"></jsp:useBean>
-
 <jsp:setProperty property="*" name="member"/>
+
+<% 
+	String[] hobby = request.getParameterValues("hobby");
+
+	// String h = "공부-게임-등산-"
+	String h = "";
+	for(String hy : hobby) {
+		h += hy + "-";
+	}
+	member.setHobby(h);
+%>
+
 
 ID: <%=member.getId() %><br>
 비밀번호: <%=member.getPasswd() %><br>
