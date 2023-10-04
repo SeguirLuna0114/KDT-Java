@@ -1,4 +1,10 @@
--- member2테이블 생성(scott계정)
+-- javaBean예제 DB연동
+
+-- 생성하려는 member2테이블이 존재하는 지 확인
+select * from tab;
+select * from member2;
+
+-- member2 테이블 생성
 create  table  member2( 
             id varchar2(12) primary key,
             passwd varchar2(12) not null,
@@ -8,6 +14,3 @@ create  table  member2(
             email varchar2(30),
             blog varchar2(50),
             reg_date date not null);
-
-register - LogonDataBean.java (DTO)
-register - LogonDBBean.java (DAO)
