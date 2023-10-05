@@ -8,10 +8,7 @@
 </head>
 <body>
 
-처음 작성하는 jsp프로그램 <br><br>
-
-application객체로 공유한 값 :
-<%=application.getAttribute("java") %>
+회원관리 프로그램
 
 </body>
 </html>

@@ -1,8 +1,0 @@
--- 데이터베이스 연동 예제
--- member1테이블을 scott계정으로 생성
-
-create  table  member1( id varchar2(20) primary key,
-                          passwd varchar2(20) not null,
-		name varchar2(20) not null,	
-		reg_date timestamp not null );
-		    
