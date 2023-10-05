@@ -1,4 +1,4 @@
--- javaBean예제 DB연동
+-- javaBean예제_DAO와 Oracle DB연동
 
 -- 생성하려는 member2테이블이 존재하는 지 확인
 select * from tab;

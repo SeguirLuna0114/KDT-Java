@@ -22,9 +22,11 @@
 <%
 	// DAO클래스 내 정적메소드 호출 => 싱글톤 객체 반환
 	LogonDBBean manager = LogonDBBean.getInstance();
+	// insert된 데이터 개수를 반환받음
 	int result = manager.insertMember(regBean);
 	
 	if (result == 1) {
+		// 데이터 1개(1행)이 정상적으로 입력된 경우
 %>
 	<script>
 		alert("회원가입 성공");

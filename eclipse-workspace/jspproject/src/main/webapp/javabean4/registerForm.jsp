@@ -5,6 +5,7 @@
 <head>
 	<title>회원가입</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
+	<!-- script.js파일을 불러와서 유효성 검사 실시 -->
 	<script src="script.js"></script>
 </head>
 
