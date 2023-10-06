@@ -2,7 +2,7 @@
 
 package member;
 
-import java.security.Timestamp;
+import java.sql.Timestamp;
 
 public class MemberDTO {
 	// property
