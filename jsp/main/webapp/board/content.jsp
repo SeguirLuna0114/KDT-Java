@@ -8,7 +8,5 @@
 </head>
 <body>
 
-일반 게시판
-
 </body>
 </html>
