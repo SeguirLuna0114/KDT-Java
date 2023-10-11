@@ -5,6 +5,7 @@
 <%@page import="board.BoardDBBean"%>
 <%@page import="java.util.List"%>
 
+<!-- 게시판 목록 페이지 -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,6 +19,7 @@
 	// 1. 한 화면(페이지)에 출력할 데이터 갯수
 	int page_size = 10;
 
+	/* HTTP 요청(request)의 매개변수(parameter) 값을 추출하는 메서드 사용하여 page값을 받음 */
 	String pageNum = request.getParameter("page");
 	if(pageNum == null) {
 		// 페이지가 전달되지 않은 경우
@@ -100,17 +102,18 @@
 		<tr>
 			<!-- 시작번호로부터 1씩 감소시킴(후행연산) -->
 			<td><%=number-- %></td>
-			<td><%=board.getSubject()%></td>
+			
+			<!-- 상세페이지(content.jsp)로 이동하는 하이퍼링크 설정 -->
+			<td>
+				<!-- 하이퍼링크를 클릭할 때, get방식으로 매개변수(parameter)값을 포함하여 페이지로 전달
+					 이때, page값을 전달해야, 상세페이지(content.jsp)에서 목록페이지(list.jsp)로 돌아올 수 있음 -->
+				<a href="content.jsp?num=<%=board.getNum() %>&page=<%=currentPage %>">
+					<%=board.getSubject()%></a>
+			</td>
 			<td><%=board.getWriter()%></td>
 			<td><%=sd.format(board.getReg_date()) %></td>
 			<td><%=board.getReadcount()%></td>
 			<td><%=board.getIp()%></td>
-			<td>
-				<a href="updateForm.jsp?num=<%=board.getNum()%>">수정</a>
-			</td>
-			<td>
-				<a href="deleteForm.jsp?num=<%=board.getNum()%>">삭제</a>
-			</td>
 		</tr>
 	<%
 		}// end for
@@ -121,7 +124,8 @@
 	}// end if
 %>
 
-	<!-- 페이지 링크 -->
+	<br>
+	<!-- 페이지 링크 설정 - get방식으로 page매개변수를 url에 포함하여 페이지에 전달 -->
 	<center>
 	<% 
 		if(count > 0) {

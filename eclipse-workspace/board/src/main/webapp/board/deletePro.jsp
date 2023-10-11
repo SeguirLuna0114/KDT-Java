@@ -13,6 +13,12 @@
 <jsp:setProperty property="*" name="board"/>
 
 <% 
+	/* deleteForm.jsp페이지에서 hidden으로 num값과 page값이 전달됨
+	   => num값은 setNum()메소드로 값이 설정됨
+		  단, page변수는 DTO클래스에 존재하지 않는 property이기에
+		  	 getParameter로 값을 받음*/
+	String nowPage = request.getParameter("page");
+
 	// DB연동을 위한 DAO 객체 호출
 	BoardDBBean dao = BoardDBBean.getInstance();
 	
@@ -21,19 +27,19 @@
 	   -> 해당 DB내 저장된 데이터(DTO객체의 passwd)와 
 	   	  입력받은 비밀번호(member의 passwd)가 같은지 판단 
 	*/
-	// 한 사람의 상세정보(비번) 구하기
-	BoardDataBean old = dao.get(board.getNum());
+	// DB에 저장된 비번을 구해오기
+	BoardDataBean old = dao.getContent(board.getNum());
+	// 비번 비교
 	if(old.getPasswd().equals(board.getPasswd())) {
 		// 비번 일치시, delete SQL문 실행
 		int result = dao.delete(board.getNum());
 		if (result == 1) {
-			// 삭제된 데이터가 있는 경우, 세션 삭제
-			session.invalidate();
+			// 삭제된 데이터가 있는 경우
 %>
 		<script>
-			alert("회원탈퇴 성공");
-			// 세션 영역이 시작되었기 때문에, id값은 공유됨
-			location.href = "main.jsp";
+			alert("글삭제 성공");
+			// delete된 후, list.jsp(글 목록)페이지로 이동
+			location.href="list.jsp?page=<%=nowPage %>";
 		</script>
 
 <%
@@ -43,7 +49,7 @@
 %>
 	<script>
 		alert("비번이 일치하지 않습니다.");
-		// 로그인 폼(이전 페이지)으로 이동함
+		// 이전 페이지(게시판 글삭제 페이지)로 이동
 		history.go(-1);
 	</script>
 
