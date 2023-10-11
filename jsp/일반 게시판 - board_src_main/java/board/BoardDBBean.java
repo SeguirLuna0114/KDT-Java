@@ -274,6 +274,225 @@ public class BoardDBBean {
 	}
 	
 	
-	// 
+	// 해당 상세페이지로 이동시, 조회수를 1 증가시키고 & 상세정보를 구하는 메소드
+	public BoardDataBean updateContent(int num) {
+		// 검색한 1개의 결과를 DTO객체에 저장한 후, 반환
+		BoardDataBean board = new BoardDataBean();
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		// select문 실행해 가져온 결과를 저장
+		ResultSet rs = null;
+		
+		try {
+			/* 커넥션풀에서 커넥션을 구해오는 메소드를 사용 */
+			con = getConnection();
+			
+			// 1. 조회수를 1 증가시키는 update SQL문 작성
+			String sql = "update board set readcount=readcount+1 ";
+				   sql += " where num=?";
+			// PreparedStatement객체 생성
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			
+			// update SQL문 실행
+			pstmt.executeUpdate();
+			
+			// 2. 1개의 글의 상세정보를 구하는 select SQL문 작성
+			sql = "select * from board where num=?";
+			// PreparedStatement객체 생성
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, num);
+
+			// select SQL문 실행 -> 쿼리실행결과를 resultSet객체에 반환
+			rs = pstmt.executeQuery();
+			
+			// 데이터를 1개씩 가져오는 next()메소드 사용 -> 데이터를 가져오면 true 리턴
+			if(rs.next()) {
+				// ResultSet객체에 반환된 필드값을 set메소드 호출을 통해 DTO객체에 저장
+				board.setNum(rs.getInt("num"));
+				board.setWriter(rs.getString("writer"));
+				board.setEmail(rs.getString("email"));
+				board.setSubject(rs.getString("subject"));
+				board.setPasswd(rs.getString("passwd"));
+				board.setReg_date(rs.getTimestamp("reg_date"));
+				board.setReadcount(rs.getInt("readcount"));
+				board.setContent(rs.getString("content"));
+				board.setIp(rs.getString("ip"));
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			// 리소스 닫기
+			try {
+				// 초기값이 null이기에, null값이 아닌 경우 close
+				if(rs != null) {
+					rs.close();
+				}
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(con != null) {
+					con.close();
+				}
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		// 조회수를 1 증가시키고 & 상세정보를 구한 DTO객체 반환
+		return board;
+	}
 	
+	
+	// 수정폼 : 상세 정보를 구해오는 메소드
+	public BoardDataBean getContent(int num) {
+		// 검색한 1개의 결과를 DTO객체에 저장한 후, 반환
+		BoardDataBean board = new BoardDataBean();
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		// select문 실행해 가져온 결과를 저장
+		ResultSet rs = null;
+		
+		try {
+			/* 커넥션풀에서 커넥션을 구해오는 메소드를 사용 */
+			con = getConnection();
+			
+			// 1개의 글의 상세정보를 구하는 select SQL문 작성
+			String sql = "select * from board where num=?";
+			// PreparedStatement객체 생성
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, num);
+
+			// select SQL문 실행 -> 쿼리실행결과를 resultSet객체에 반환
+			rs = pstmt.executeQuery();
+			
+			// 데이터를 1개씩 가져오는 next()메소드 사용 -> 데이터를 가져오면 true 리턴
+			if(rs.next()) {
+				// ResultSet객체에 반환된 필드값을 set메소드 호출을 통해 DTO객체에 저장
+				board.setNum(rs.getInt("num"));
+				board.setWriter(rs.getString("writer"));
+				board.setEmail(rs.getString("email"));
+				board.setSubject(rs.getString("subject"));
+				board.setPasswd(rs.getString("passwd"));
+				board.setReg_date(rs.getTimestamp("reg_date"));
+				board.setReadcount(rs.getInt("readcount"));
+				board.setContent(rs.getString("content"));
+				board.setIp(rs.getString("ip"));
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			// 리소스 닫기
+			try {
+				// 초기값이 null이기에, null값이 아닌 경우 close
+				if(rs != null) {
+					rs.close();
+				}
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(con != null) {
+					con.close();
+				}
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		// 상세정보를 구한 DTO객체 반환
+		return board;
+	}
+	
+	
+	// 글 수정 메소드
+	public int update(BoardDataBean board) {
+		int result = 0;
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			/* 커넥션풀에서 커넥션을 구해오는 메소드를 사용 */
+			con = getConnection();
+			
+			// update SQL문 작성
+			String sql = "update board set writer=?, email=?, subject=?,";
+				   sql += " content=? where num=?";
+			// PreparedStatement객체 생성
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, board.getWriter());
+			pstmt.setString(2, board.getEmail());
+			pstmt.setString(3, board.getSubject());
+			pstmt.setString(4, board.getContent());
+			pstmt.setInt(5, board.getNum());
+			
+			// update SQL문 실행 -> update된 데이터 개수를 반환
+			result = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			// 리소스 닫기
+			try {
+				// 초기값이 null이기에, null값이 아닌 경우 close
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(con != null) {
+					con.close();
+				}
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		// 수정된 데이터 개수를 반환
+		return result;
+	}
+	
+	
+	// 글 삭제 메소드
+	public int delete(int num) {
+		int result = 0;
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			/* 커넥션풀에서 커넥션을 구해오는 메소드를 사용 */
+			con = getConnection();
+			
+			// delete SQL문 작성
+			String sql = "delete from board where num=?";
+			// PreparedStatement객체 생성
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			
+			// delete SQL문 실행 -> delete된 데이터 개수를 반환
+			result = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			// 리소스 닫기
+			try {
+				// 초기값이 null이기에, null값이 아닌 경우 close
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(con != null) {
+					con.close();
+				}
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		// 삭제된 데이터 개수 반환
+		return result;
+	}
 }
