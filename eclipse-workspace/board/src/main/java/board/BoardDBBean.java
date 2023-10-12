@@ -47,17 +47,17 @@ public class BoardDBBean {
 			
 			// insert SQL문 작성
 			String sql = "insert into board ";
-				   sql += " values (?, ?, ?, ?, ?, sysdate, ?, ?, ?)";
+				   sql += " values (board_seq.nextval, ?, ?, ?, ?, sysdate, ?, ?, ?)";
 			// PreparedStatement객체 생성
 			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, board.getNum());
-			pstmt.setString(2, board.getWriter());
-			pstmt.setString(3, board.getEmail());
-			pstmt.setString(4, board.getSubject());
-			pstmt.setString(5, board.getPasswd());
-			pstmt.setInt(6, board.getReadcount());
-			pstmt.setString(7, board.getContent());
-			pstmt.setString(8, board.getIp());
+			// num멤버변수를 sequence의 nextval로 설정
+			pstmt.setString(1, board.getWriter());
+			pstmt.setString(2, board.getEmail());
+			pstmt.setString(3, board.getSubject());
+			pstmt.setString(4, board.getPasswd());
+			pstmt.setInt(5, board.getReadcount());		// 0
+			pstmt.setString(6, board.getContent());
+			pstmt.setString(7, board.getIp());
 			
 			// insert SQL문 실행 -> insert된 데이터 개수를 반환
 			result = pstmt.executeUpdate();

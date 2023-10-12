@@ -1,0 +1,15 @@
+-- search 프로젝트
+	- board프로젝트를 [copy] and [paste]하여 생성한 dynamic project
+	
+
+-- 복사한 프로젝트의 경우, tomcat실행하면 오류가 발생
+	이는 web module의 path가 복사한 프로젝트로 설정되어 있기 때문
+	=> Tomcat의 웹 모듈 경로를 변경해야 함
+	
+	1) 현재 등록된 Tomcat서버를 더블클릭하여, 
+		Overview라는 Tomcat서버의 정보가 표시된 개요창을 실행
+	2) 경로설정은 좌측 하단에 위치한 [Modules]탭에서 설정
+	3) board프로젝트를 복사한 search프로젝트의 경우
+		document base는 search이지만, path는 board로 되어있기에,
+		'edit'를 클릭하여 path란을 '/search'로 변경
+	4) 다시 실행하면 오류가 발생하지X

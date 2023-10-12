@@ -1,0 +1,13 @@
+
+-- 검색 란을 추가
+	select태그를 사용해 '작성자','제목','내용' 란을 선택하고,
+	검색란에 값을 검색할 경우, 그에 해당하는 값이 선택되어 출력되게 설정
+		- 이때, 검색되는 값은 like연산자를 사용하여 필터링해야 함
+
+-- list.jsp 파일에 필터링된 값을 넘겨줌
+	<form action="list.jsp"> 태그를 사용
+		<select name="search" id="search">
+			<option value='writer'>
+			<option value='subject'>
+			<option value='content'>
+		</select>
