@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>게시판 목록</title>
 </head>
 <body>
 
@@ -100,9 +100,8 @@
 				// 댓글의 경우 Re_level변수의 값이 0보다 큼
 				if(board.getRe_level() > 0) {
 					// 제목 앞에 댓글의 깊이만큼 수평간격을 넓힘
-					for(int j=i; j<=board.getRe_level(); j++) {
-	%>
-					&nbsp;&nbsp;
+					for(int j=1; j<=board.getRe_level(); j++){ %>
+						&nbsp;&nbsp;
 	<% 				}
 				}
 	%>
