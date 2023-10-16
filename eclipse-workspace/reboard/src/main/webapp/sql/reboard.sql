@@ -24,6 +24,9 @@ create table reboard(
 	ip varchar2(20) not null,
 	constraint board_pk primary key(num) );
 
+-- 입력한 데이터 확인
+select writer, subject, ref, re_step, re_level from reboard;	
+	
 
 -- 시퀀스 목록 보기
 select * from seq; 

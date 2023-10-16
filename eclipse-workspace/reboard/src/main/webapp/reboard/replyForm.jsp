@@ -81,7 +81,7 @@
 						<input type="submit" value="댓글">
 						<input type="reset" value="다시작성">
 						<input type="button" value="목록보기" 
-								onClick="location.href='list.jsp?page=<%=nowPage %>'">
+								onClick="location.href='list.jsp?page=<%=nowPage %>' ">
 					</td>
 				</tr>
 			</table>

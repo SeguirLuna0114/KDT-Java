@@ -77,3 +77,33 @@ java폴더 하위에 댓글 게시판 - java파일(javabean에서 사용되는 �
 
 
 
+
+
+## 자료실(파일 업로드) 프로젝트
+## C:\Users\user\eclipse-workspace\jspproject\src\main\webapp
+
+C:\Users\user\eclipse-workspace\jspproject\src\main\webapp\uploadTest
+
+webapp\uploadTest폴더 하위에 파일업로드 테스트 jsp파일 저장됨
+
+
+C:\Users\user\eclipse-workspace\jspproject\src\main\webapp\upload
+
+webapp\upload폴더 하위에 업로드된 파일들 저장됨
+
+
+
+
+## eclipse-workspace reboard
+
+C:\Users\user\eclipse-workspace\upload\src\main\webapp
+
+webapp폴더 하위에 파일업로드 게시판 - jsp파일 작업 저장됨 
+
+
+C:\Users\user\eclipse-workspace\upload\src\main\java
+
+java폴더 하위에 파일업로드 게시판 - java파일(javabean에서 사용되는 클래스) 저장됨
+
+
+
