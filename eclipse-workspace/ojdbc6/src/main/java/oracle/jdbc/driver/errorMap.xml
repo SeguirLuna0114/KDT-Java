@@ -6,6 +6,7 @@
   <error oraErrorFrom="100" sqlState="02000" sqlException="SQLEXCEPTION" comment="No data found/processed" />
   <error oraErrorFrom="251" sqlState="42000" sqlException="SQLSYNTAXERROREXCEPTION" comment="Syntax error, access rule" />
   <error oraErrorFrom="911" sqlState="22019" sqlException="SQLSYNTAXERROREXCEPTION" comment="Syntax error, invalid character" />
+  <error oraErrorFrom="1013" sqlState="72000" sqlException="SQLTIMEOUTEXCEPTION" comment="User canceled operation" />
   <error oraErrorFrom="1025" sqlState="22023" sqlException="SQLDATAEXCEPTION" comment="Invalid parameter value" />
   <error oraErrorFrom="1031" sqlState="42000" sqlException="SQLSYNTAXERROREXCEPTION" comment="Syntax error, access rule" />
   <error oraErrorFrom="1033" sqlState="08006" sqlException="SQLRECOVERABLEEXCEPTION" comment="Oracle database initialization or shutdown in progress" />

@@ -34,7 +34,7 @@
 <body bgcolor="<%=bodyback_c%>">
 
 	<table border="1" width="500" align="center" bgcolor="<%=bodyback_c%>">
-		<caption>상세 페이지</caption>
+		<caption><b>상세 페이지</b></caption>
 		<tr>
 			<td bgcolor="<%=value_c%>" align="center">번호</td>
 			<td><%=board.getNum() %></td>

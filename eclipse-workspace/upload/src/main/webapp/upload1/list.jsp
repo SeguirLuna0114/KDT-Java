@@ -60,7 +60,7 @@ if (count == 0) {
 	글갯수 : <%=count%>
 	
 	<table border=1 width=700 align=center>
-		<caption>게시판 목록</caption>
+		<caption><b>게시판 목록</b></caption>
 		<tr>
 			<th>번호</th>
 			<th>제목</th>
