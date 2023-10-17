@@ -1,0 +1,113 @@
+* 서블릿에서 한글 인코딩 설정
+ : 한글 데이터를 올바르게 처리하려면
+   한글 문자열의 인코딩과 관련된 설정을 올바르게 구성해야함
+
+
+o GET방식에서 한글 인코딩 설정
+ : GET 방식에서는 데이터가 URL의 쿼리 문자열로 전달됨
+	- GET 요청은 URL 매개변수나 쿼리 문자열을 통해 데이터를 전달하므로,
+	  URL 인코딩이 자동으로 처리됨
+	  => GET 요청에서 request.setCharacterEncoding("utf-8"); 설정을
+	    추가하는 것은 일반적으로 필요X
+
+	- response.setContentType("text/html; charset=UTF-8")
+	  : 서블릿의 HttpServletResponse 객체를 통해
+	    클라이언트에게 "전송되는 컨텐츠의 타입과 문자열 인코딩"을 설정
+	    (응답 데이터의 문자열 인코딩을 명시적으로 설정)
+		- text/html: HTML 컨텐츠
+		- charset=UTF-8: 이 컨텐츠의 문자열 인코딩을 설정
+
+구문)	protected void doGet(HttpServletRequest request, HttpServletResponse response) 	throws ServletException, IOException {   
+	    // 컨텐츠 타입도 설정 (HTML을 보내는 경우)
+	    response.setContentType("text/html; charset=UTF-8");
+
+	    // 클라이언트로 데이터 보내기
+	    PrintWriter out = response.getWriter();
+	    out.println("안녕하세요, 한글 데이터!");
+	}
+
+
+	    
+
+
+o POST방식에서 한글 인코딩 설정
+ : POST 방식에서는 데이터가 요청 본문(body)에 담겨 전달됨
+	- POST 요청은 본문에 데이터를 담아 보내므로, 
+	  요청의 본문 데이터를 올바르게 해석하기 위해서 "본문의 문자열 인코딩 설정"이 필요
+	  (요청 데이터를 처리할 때 사용)
+	  => request.setCharacterEncoding("UTF-8"); 사용!
+
+	- request.setCharacterEncoding("UTF-8")
+	 : 서블릿에서 HttpServletRequest 객체를 통해
+	   클라이언트로부터 받은 요청 데이터를 처리할 때, 사용되는 문자열 인코딩을 설정
+	    (HttpServletRequest 객체에 대한 문자열 인코딩을 설정)
+		- 주로 POST 방식 요청에서 한글 데이터를 올바르게 처리하기 위해 사용되는 메소드
+		- 서블릿이 클라이언트로부터 받은 POST 요청의 본문(body) 데이터를
+		  UTF-8 또는 다른 지정된 문자열 인코딩으로 처리할 수 있도록 설정
+
+	- response.setContentType("text/html; charset=UTF-8")
+	  : 서블릿의 HttpServletResponse 객체를 통해
+	    클라이언트에게 "전송되는 컨텐츠의 타입과 문자열 인코딩"을 설정
+	    (응답 데이터의 문자열 인코딩을 명시적으로 설정)
+		- text/html: HTML 컨텐츠
+		- charset=UTF-8: 이 컨텐츠의 문자열 인코딩을 설정
+
+구문)	protected void doPost(HttpServletRequest request, HttpServletResponse response) 	throws ServletException, IOException {
+	    // 응답의 문자 인코딩을 설정 (UTF-8을 사용하는 예시)
+	    response.setCharacterEncoding("UTF-8");
+    
+	    // 컨텐츠 타입도 설정 (HTML을 보내는 경우)
+	    response.setContentType("text/html; charset=UTF-8");
+
+	    // 클라이언트로 데이터 보내기
+	    PrintWriter out = response.getWriter();
+	    out.println("안녕하세요, 한글 데이터!");
+	}
+
+
+
+
+1) 서블릿에서 한글 문자열을 받을 때의 설정 (Request 설정)
+ : 서블릿의 doGet 또는 doPost 메서드 내에서 한글 데이터를 받을 때,
+  HttpServletRequest 객체를 통해 서블릿이
+  클라이언트로부터 받은 데이터의 문자열 인코딩을 설정
+
+	- 주로 POST 요청에서 데이터를 처리할 때 필요
+	-  GET 요청에서도 사용할 수 있으며, 데이터가 URL의 쿼리 문자열로 전달되는 경우에 유용
+
+구문)	protected void doPost(HttpServletRequest request, HttpServletResponse response) 	throws ServletException, IOException {
+	    // 요청의 문자 인코딩을 설정 (UTF-8을 사용하는 예시)
+	    request.setCharacterEncoding("UTF-8");
+
+	    // 나머지 서블릿 로직
+	}
+
+
+
+2) 서블릿에서 응답을 클라이언트로 보낼 때의 설정 (Response 설정)
+ : 서블릿에서 클라이언트로 한글 데이터를 보낼 때,
+  HttpServletResponse 객체를 통해 서블릿이 클라이언트로
+  응답 데이터를 보낼 때의 문자열 인코딩을 설정
+	-  주로 서블릿에서 클라이언트로 HTML 또는 기타 응답을 보낼 때 사용
+
+	- response.setCharacterEncoding("UTF-8")
+	  : 서블릿의 HttpServletResponse 객체를 통해
+	    클라이언트로 "응답을 보낼 때 사용되는 문자열 인코딩을 설정"
+
+구문)	protected void doGet(HttpServletRequest request, HttpServletResponse response) 	throws ServletException, IOException {
+	    // 응답의 문자 인코딩을 설정 (UTF-8을 사용하는 예시)
+	    response.setCharacterEncoding("UTF-8");
+    
+	    // 컨텐츠 타입도 설정 (HTML을 보내는 경우)
+	    response.setContentType("text/html; charset=UTF-8");
+
+	    // 클라이언트로 데이터 보내기
+	    PrintWriter out = response.getWriter();
+	    out.println("안녕하세요, 한글 데이터!");
+	}
+
+
+
+
+
+

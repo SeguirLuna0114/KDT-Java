@@ -1,0 +1,52 @@
+* 서블릿에서 출력 스트림 객체를 생성하려면,
+  HttpServletResponse 객체를 사용
+	- 출력 스트림을 사용하면 
+	  서블릿에서 생성된 동적 웹 페이지, JSON 데이터, XML 데이터
+	  또는 다른 형식의 응답을 클라이언트로 보낼 수 있음
+
+
+o 서블릿에서 출력 스트림을 생성하는 방법
+ : doGet 메서드 내에서(메소드 오버라이딩) HttpServletResponse 객체를 사용하여
+   출력 스트림을 생성하고, println 메서드를 사용하여 원하는 내용을 출력
+
+1. HttpServletResponse 객체 얻기
+ : 서블릿에서 출력 스트림을 생성하기 위해 HttpServletResponse 객체를 얻어야 함
+	- 이 객체는 HTTP 응답에 관련된 정보와 메서드를 제공
+	- 단, doGet(HttpServletRequest request, HttpServletResponse response)와 같은
+	   메서드 시그니처를 사용할 때,
+	  HttpServletRequest와 HttpServletResponse 객체는
+	   이미 서블릿 컨테이너 (예: Tomcat, Jetty)에서 인스턴스화되어 전달됨
+	  => 따라서 개발자가 직접 이 객체들을 생성/초기화할 필요X
+
+구문)	protected void doGet(HttpServletRequest request, HttpServletResponse response) 	throws ServletException, IOException {
+    		// 이미 생성된 request 및 response 객체를 사용하여 작업을 수행
+	}
+
+
+
+2. 출력 스트림 생성
+ : HttpServletResponse 객체를 사용하여 출력 스트림을 생성
+	- 출력 스트림은 데이터를 클라이언트로 전송할 때 사용됨
+	- 일반적으로 getWriter() 또는 getOutputStream() 메서드를 호출하여
+	   출력 스트림을 가져옴
+
+구문)	import java.io.PrintWriter; // 출력 스트림을 사용하기 위해 추가
+
+	PrintWriter out = httpResponse.getWriter();
+
+
+
+3. 데이터 출력
+ : 생성된 출력 스트림을 사용하여 원하는 데이터를 클라이언트로 전송
+	- 이 단계에서 데이터를 스트림에 쓰고, 클라이언트로 전달
+구문)   out.println("안녕하세요, 이것은 서블릿에서 보내는 메시지입니다.");
+        out.println("서블릿은 동적 웹 페이지를 생성하는 데 사용됩니다.");
+	out.close();	// 출력 스트림 닫기
+
+
+
+
+
+
+
+
