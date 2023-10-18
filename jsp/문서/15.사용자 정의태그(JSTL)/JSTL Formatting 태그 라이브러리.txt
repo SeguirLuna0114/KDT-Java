@@ -1,0 +1,39 @@
+* JSTL(JavaServer Pages Standard Tag Library)
+ : JSP(JavaServer Pages)에서 사용하는 표준 태그 라이브러리
+	- JSTL은 JSP 페이지에서 Java 코드를 줄이고
+	  더 간결하고 가독성 있는 코드를 작성할 수 있게 해주는 유용한 도구
+	- JSTL은 다양한 기능을 제공하는 여러 개의 태그 라이브러리로 구성됨
+
+	- JSTL 라이브러리는 대부분의 JSP 컨테이너(예: Apache Tomcat)에서 지원되므로
+	  JSP 프로젝트에서 널리 사용됨
+
+
+o Formatting 태그 라이브러리
+: JSP 페이지에서 날짜 및 시간 형식화, 숫자 형식화 및 텍스트 형식화에 관련된 작업을
+ 처리하기 위한 태그들을 제공
+
+	- Formatting 태그 라이브러리를 사용하려면 먼저 태그 라이브러리를 선언
+	<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+	- 수행 가능 작업
+	1) 날짜 및 시간 형식화: 날짜 및 시간 값을 원하는 형식으로 표시할 수 있음
+	2) 숫자 형식화: 숫자를 원하는 형식으로 출력하고,
+		      소수점 처리 및 천 단위 구분자를 설정할 수 있음
+	3) 문자열 형식화: 텍스트 값을 변환하고 특수 문자를 이스케이프할 수 있음
+
+	- 주요 태그
+	1) <fmt:formatDate>: 날짜와 시간을 원하는 형식으로 형식화함
+		ex) 현재 날짜를 "yyyy-MM-dd HH:mm:ss" 형식으로 출력
+		<fmt:formatDate value="${now}" pattern="yyyy-MM-dd HH:mm:ss" />
+
+	2) <fmt:formatNumber>: 숫자를 원하는 형식으로 출력
+		ex) 숫자 1234567.89를 "###,###.##" 형식으로 출력
+		<fmt:formatNumber value="1234567.89" pattern="###,###.##" />
+
+	3) <fmt:message>: 리소스 번들 파일에서 메시지를 가져와 출력
+			   이것은 국제화 및 다국어 지원을 위해 사용됨
+		ex) <fmt:message key="welcome.message" />
+
+	4)<fmt:setLocale>: 로케일(언어 및 지역 설정)을 설정
+			     언어 및 지역 설정에 따라 다른 메시지 및 형식을 사용할 때 유용
+		ex) <fmt:setLocale value="en_US" />

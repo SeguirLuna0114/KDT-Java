@@ -1,0 +1,57 @@
+* EL(Expression Language)
+ : JSP(JavaServer Pages)와 비슷한 웹 프레임워크 및 기술에서
+   데이터를 출력하거나 변수를 평가하는 데 사용되는 간단한 표현 언어
+
+	- JSP 페이지에서 데이터를 동적으로 출력하거나 변수를 평가하고,
+	  데이터를 처리하고 표현하는 데 사용됨
+
+
+o JSP(JavaServer Pages)의 표현식 태그(<%= %>)와 비슷한 역할을 수행
+ : 데이터를 표시하거나 계산하는 데 사용됨
+	- JSP 표현식 태그: <%= someVariable %>
+	- EL: ${someVariable}
+
+	1. JSP 페이지에서 출력할 때 사용됨
+	ex)	${someVariable}는 someVariable의 값을 표시
+
+	2. 간단한 수학적 또는 논리 연산을 수행할 수 있음
+	ex)	${a + b}와 같이 변수 a와 b의 합을 계산
+
+
+
+o  EL의 주요 특징
+1. 스코프 및 빈(bean) 객체 액세스
+ : EL을 사용하면 JSP 페이지에서 서블릿의 스코프(예: request, session, application)에
+   저장된 데이터 및 빈(bean) 객체에 쉽게 액세스할 수 있음
+	ex) ${user.name}와 같은 표현식: user 객체의 name 속성 값을 가져옴
+	    ${requestScope.attribute} 또는 ${sessionScope.user} 표현식
+	    : 해당 스코프에 저장된 데이터를 가져옴
+
+
+2. 수학 및 논리 연산 가능
+ : EL을 사용하면 변수 또는 속성 간의 간단한 수학 연산 및 논리 연산을 수행할 수 있음
+	ex) ${a + b}와 ${x > y}와 같은 표현식은 변수 a, b, x, y 사이의 연산을 나타냄
+
+
+3. 조건문 및 반복문
+ : EL은 JSP 페이지에서 if 문과 반복문을 대체하는데 사용됨
+	ex) ${condition ? trueValue : falseValue} 와
+	    ${arrayList.size() > 0}와 같은 표현식을 사용하여
+	    조건부로 값을 출력하거나 반복 요소를 처리할 수 있음
+
+
+4. 함수 호출
+ : EL은 사용자 정의 함수를 호출하거나 내장 함수를 사용하는 데도 적합	
+	ex) ${myFunctions.myCustomFunction(parameter)}와 같은 표현식을 사용하여
+	    사용자 정의 함수를 호출할 수 있음
+
+
+5. HTML 출력 방지
+ : EL을 사용하면 HTML 이스케이프를 자동으로 수행하여 보안을 강화.
+  사용자 입력 데이터를 안전하게 출력할 수 있음
+
+
+
+
+
+

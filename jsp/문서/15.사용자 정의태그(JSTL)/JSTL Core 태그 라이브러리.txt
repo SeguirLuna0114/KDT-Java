@@ -1,0 +1,153 @@
+* JSTL(JavaServer Pages Standard Tag Library)
+ : JSP(JavaServer Pages)에서 사용하는 표준 태그 라이브러리
+	- JSTL은 JSP 페이지에서 Java 코드를 줄이고
+	  더 간결하고 가독성 있는 코드를 작성할 수 있게 해주는 유용한 도구
+	- JSTL은 다양한 기능을 제공하는 여러 개의 태그 라이브러리로 구성됨
+
+	- JSTL 라이브러리는 대부분의 JSP 컨테이너(예: Apache Tomcat)에서 지원되므로
+	  JSP 프로젝트에서 널리 사용됨
+
+
+o JSTL Core 태그 라이브러리
+: JSP 페이지의 기본적인 로직 및 흐름 제어를 수행하는 데 사용
+	- JSP 페이지에서 Core 태그 라이브러리 사용을 위한 태그 라이브러리 선언
+	  <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> 
+		- prefix 속성: 태그 라이브러리의 접두사를 정의
+			      JSTL태그를 사용 시 해당 접두사를 사용해 태그를 식별하는 데 사용됨
+		- uri 속성: 태그 라이브러리의 위치를 지정
+			    JSP 컨테이너는 이 URI를 사용하여 해당 태그 라이브러리를 식별
+
+	- 주요 기능에는 조건문(if), 반복문(for-each), 변수 설정(set),
+	  URL 리다이렉션 및 다른 기본적인 작업이 포함됨
+
+	1) 조건문 (Conditional Tags)
+	- <c:if>: 조건을 평가하고 조건이 참인 경우 내용을 표시
+	구문)	<c:if test="${condition}"> 
+			<!-- 조건이 참일 때 출력할 내용 -->
+		</c:if>
+			- test: 조건을 평가하는 표현식을 지정.
+				표현식은 불리언 값(true 또는 false)을 반환해야함
+
+	- <c:choose>, <c:when>, <c:otherwise>
+	 : 여러 조건을 평가하고 그 중 하나가 참일 때 해당 내용을 출력하는 데 사용
+		- 다중 조건 분기를 처리할 때 유용하며,
+		  여러 조건 중 하나를 선택하여 실행하려는 경우에 주로 사용
+		- 여러 조건을 순차적으로 확인하므로 첫 번째 참인 조건의 내용만 출력됨
+	구문)	<c:choose>
+	    		 <c:when test="condition1">
+			        <!-- 조건 1이 참인 경우 출력할 내용 -->
+			    </c:when>
+			 <c:when test="condition2">
+			     <!-- 조건 2이 참인 경우 출력할 내용 -->
+			 </c:when>
+			 <!-- 다른 조건들 -->
+			 <c:otherwise>
+			     <!-- 어떤 조건도 참이 아닌 경우 출력할 내용 (선택 사항) -->
+			 </c:otherwise>
+		c:choose>
+		- <c:otherwise> (선택 사항): 어떤 조건도 참이 아닌 경우,
+				 즉 모든 <c:when> 블록에서 조건이 거짓일 때 출력할 내용을 정의	
+	
+	
+
+	2) 반복문 (Iteration Tags)
+	- <c:forEach>: 컬렉션 또는 배열을 반복하며 각 요소에 대한 작업을 수행
+	구문)	<c:forEach var="variable" items="collection">
+			    <!-- 반복 작업을 수행할 내용 -->
+		</c:forEach>
+		- var: 현재 반복 요소를 참조하기 위한 변수 이름을 지정
+			이 변수를 사용하여 현재 요소에 접근할 수 있음
+		- items: 반복할 컬렉션을 지정.
+			이것은 배열, 리스트 또는 다른 반복 가능한 컬렉션일 수 있음
+
+	o 집합 데이터 반복
+	 <c:forEach>를 사용하여 집합 데이터를 반복하려면 items 속성에 반복할 데이터를 지정
+	이 데이터는 배열, 리스트, 맵 또는 기타 컬렉션일 수 있음
+	각 반복은 데이터의 요소에 대한 반복으로 진행됨
+	구문)	<%-- fruits 변수는 List<String> 형식의 과일 목록 --%>
+		<c:forEach items="${fruits}" var="fruit">
+		    <p>${fruit}</p>
+		</c:forEach>
+
+
+	o 특정 횟수 반복
+	<c:forEach>를 사용하여 특정 횟수만큼 반복하려면 begin, end, step 속성을 사용
+	begin은 시작 인덱스, end는 종료 인덱스, step은 증가 값
+	이를 조합하여 반복할 범위를 정의할 수 있음
+	구문)	<c:forEach begin="1" end="5" step="1" var="number">
+		    <p>${number}</p>
+		</c:forEach>
+
+	ex) 1부터 100까지 홀수의 합	
+		<c:forEach var="i" begin="1" end="100" step="2">
+		    <c:set var="sum" value="${sum + i}" />
+		</c:forEach>
+
+
+	o varStatus 속성
+	<c:forEach>에 varStatus 속성을 추가하면 반복 상태 정보를 추적할 수 있음
+	이 속성을 사용하면 현재 반복 횟수, 첫 번째 및 마지막 반복 여부 등과 같은 정보에 접근할 수 있음
+	ex)	반복 중에 현재 반복 횟수와 마지막 반복 여부를 확인
+		<c:forEach begin="1" end="5" var="number" varStatus="loopStatus">
+		    <p>반복 횟수: ${loopStatus.count}</p>
+		    <p>첫 번째 반복? ${loopStatus.first}</p>
+		    <p>마지막 반복? ${loopStatus.last}</p>
+		</c:forEach>
+
+
+	- <c:forTokens>: 문자열을 구분자로 분리하고 각 토큰에 대한 작업을 수행
+	구문)	<c:forTokens items="text" delims="delimiters" var="token">
+		    <!-- 각 토큰에 대한 작업을 수행 -->
+		</c:forTokens>
+		- items: 토큰을 생성할 원본 문자열을 지정
+		- delims: 토큰을 분리하는 구분자 문자열을 지정
+			  구분자 문자열은 토큰을 나눌 때 사용됨
+		- var: 각 토큰을 참조하기 위한 변수 이름을 지정
+		       이 변수를 사용하여 현재 토큰에 접근할 수 있음
+
+
+	3) 변수 설정 (Variable Tags)
+	- <c:set>: 변수를 설정하고 값을 할당
+		ex) <c:set var="varName" value="${expression}" [scope="scopeValue"] />
+		- var: 변수 이름을 지정. 변수는 이 이름으로 생성되며
+			해당 이름을 사용하여 변수의 값을 참조할 수 있음
+		- value: 변수에 할당될 값 또는 표현식을 지정. 이 값은 변수에 저장됨
+		- scope (선택 사항): 변수의 범위(scope)를 지정
+				    기본적으로 변수는 페이지 범위(scope)에 저장됨.
+		 		다른 범위(예: request, session, application)로 변수 설정 가능
+
+	- <c:remove>: 변수를 제거/삭제
+		ex) <c:remove var="varName" [scope="scopeValue"] />
+		- var: 제거할 변수의 이름을 지정
+		- scope (선택 사항): 변수의 범위(scope)를 지정
+				    기본적으로 변수는 페이지 범위(scope)에 저장됨.
+			 	다른 범위(예: request, session, application)의 변수 제거 가능
+
+	4) URL 처리 (URL Tags)
+	- <c:import>: 다른 페이지를 포함하거나 외부 리소스를 가져옴
+		ex) <c:import url="url" />
+	- <c:redirect>: URL 리다이렉션을 수행
+		ex) <c:redirect url="newPage.jsp" />
+
+	5) 페이지 관리 (Page Control Tags)
+	- <c:param>: URL에 매개 변수를 추가
+		ex) <c:param name="paramName" value="paramValue" />
+
+	6) 텍스트 출력 (Output Tags)
+	- <c:out>: 변수 또는 표현식을 출력
+		ex) <c:out value="${expression}" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

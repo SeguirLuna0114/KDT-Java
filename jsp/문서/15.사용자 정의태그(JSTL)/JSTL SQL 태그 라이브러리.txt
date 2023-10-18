@@ -1,0 +1,11 @@
+* JSTL(JavaServer Pages Standard Tag Library)
+ : JSP(JavaServer Pages)에서 사용하는 표준 태그 라이브러리
+	- JSTL은 JSP 페이지에서 Java 코드를 줄이고
+	  더 간결하고 가독성 있는 코드를 작성할 수 있게 해주는 유용한 도구
+	- JSTL은 다양한 기능을 제공하는 여러 개의 태그 라이브러리로 구성됨
+
+	- JSTL 라이브러리는 대부분의 JSP 컨테이너(예: Apache Tomcat)에서 지원되므로
+	  JSP 프로젝트에서 널리 사용됨
+
+
+o SQL 태그 라이브러리: JSTL SQL 태그 라이브러리를 사용하면 JSP 페이지에서 데이터베이스에 대한 SQL 쿼리를 실행하고 결과를 처리할 수 있습니다.
