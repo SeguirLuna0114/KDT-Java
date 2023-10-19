@@ -64,7 +64,21 @@ o JSTL Core 태그 라이브러리
 	 <c:forEach>를 사용하여 집합 데이터를 반복하려면 items 속성에 반복할 데이터를 지정
 	이 데이터는 배열, 리스트, 맵 또는 기타 컬렉션일 수 있음
 	각 반복은 데이터의 요소에 대한 반복으로 진행됨
-	구문)	<%-- fruits 변수는 List<String> 형식의 과일 목록 --%>
+
+	- List<String>과 같은 Java 컬렉션을 JSP에서 사용하려면
+	  해당 컬렉션을 fruits와 같은 변수에 설정해야 함
+	   : fruits 변수를 생성하고 데이터를 추가한 다음,
+	    request.setAttribute()를 사용해 JSP 페이지에서 해당 변수 사용 가능하게 스코프에 설정
+
+	구문)	List<String> fruits = new ArrayList<>();
+		fruits.add("Apple");
+		fruits.add("Banana");
+		fruits.add("Orange");
+
+		// 변수를 JSP 스코프에 설정
+		request.setAttribute("fruits", fruits);
+
+		<%-- fruits 변수는 List<String> 형식의 과일 목록 --%>
 		<c:forEach items="${fruits}" var="fruit">
 		    <p>${fruit}</p>
 		</c:forEach>
@@ -72,8 +86,10 @@ o JSTL Core 태그 라이브러리
 
 	o 특정 횟수 반복
 	<c:forEach>를 사용하여 특정 횟수만큼 반복하려면 begin, end, step 속성을 사용
-	begin은 시작 인덱스, end는 종료 인덱스, step은 증가 값
-	이를 조합하여 반복할 범위를 정의할 수 있음
+		- begin: 반복의 시작 값(시작 인덱스)
+		- end: 반복의 종료 조건(종료 인덱스)
+		- step: 반복에서 증가되는 값
+	=> 반복 범위를 설정하고, 일정한 간격으로 반복할 수 있음
 	구문)	<c:forEach begin="1" end="5" step="1" var="number">
 		    <p>${number}</p>
 		</c:forEach>
@@ -86,13 +102,45 @@ o JSTL Core 태그 라이브러리
 
 	o varStatus 속성
 	<c:forEach>에 varStatus 속성을 추가하면 반복 상태 정보를 추적할 수 있음
-	이 속성을 사용하면 현재 반복 횟수, 첫 번째 및 마지막 반복 여부 등과 같은 정보에 접근할 수 있음
-	ex)	반복 중에 현재 반복 횟수와 마지막 반복 여부를 확인
+	이 속성을 사용해 현재 반복 횟수, 첫 번째 및 마지막 반복 여부 등과 같은 정보에 접근 가능
+		* varStatus 내의 반복 상태 변수
+		- index: 현재 반복의 인덱스. 0부터 시작(0, 1, 2, 3, ...)
+		- count: 현재 반복의 번호. 1부터 시작(1, 2, 3, 4, ...)
+		- first: 현재 반복이 첫 번째인 경우 true, 그렇지 않으면 false
+		- last: 현재 반복이 마지막인 경우 true, 그렇지 않으면 false
+		- even: 현재 반복이 짝수 번호인 경우 true, 그렇지 않으면 false
+		- odd: 현재 반복이 홀수 번호인 경우 true, 그렇지 않으면 false
+	
+	ex) 반복 중에 현재 반복 횟수와 마지막 반복 여부를 확인
 		<c:forEach begin="1" end="5" var="number" varStatus="loopStatus">
 		    <p>반복 횟수: ${loopStatus.count}</p>
 		    <p>첫 번째 반복? ${loopStatus.first}</p>
 		    <p>마지막 반복? ${loopStatus.last}</p>
 		</c:forEach>
+
+	- List<String>과 같은 Java 컬렉션을 JSP에서 사용하려면
+	  해당 컬렉션을 fruits와 같은 변수에 설정해야 함
+	   : fruits 변수를 생성하고 데이터를 추가한 다음,
+	    request.setAttribute()를 사용해 JSP 페이지에서 해당 변수 사용 가능하게 스코프에 설정
+
+	ex) fruits 변수의 각 과일에 대한 정보와 해당 반복 상태를 출력하는 예제
+		List<String> fruits = new ArrayList<>();
+		fruits.add("Apple");
+		fruits.add("Banana");
+		fruits.add("Orange");
+
+		// 변수를 JSP 스코프에 설정
+		request.setAttribute("fruits", fruits);
+
+		<c:forEach items="${fruits}" var="fruit" varStatus="loopStatus">
+		    <p>Index: ${loopStatus.index + 1}</p>
+		    <p>Count: ${loopStatus.count}</p>
+		    <p>First: ${loopStatus.first}</p>
+		    <p>Last: ${loopStatus.last}</p>
+		    <p>Even: ${loopStatus.even}</p>
+		    <p>Odd: ${loopStatus.odd}</p>
+		</c:forEach>
+
 
 
 	- <c:forTokens>: 문자열을 구분자로 분리하고 각 토큰에 대한 작업을 수행
@@ -104,6 +152,16 @@ o JSTL Core 태그 라이브러리
 			  구분자 문자열은 토큰을 나눌 때 사용됨
 		- var: 각 토큰을 참조하기 위한 변수 이름을 지정
 		       이 변수를 사용하여 현재 토큰에 접근할 수 있음
+
+	ex) 세미콜론(;)으로 구분된 과일 이름 목록 출력
+		<%-- 문자열을 세미콜론으로 구분한 예제 문자열 --%>
+		<c:set var="tokenString" value="Apple,Banana.Orange;Grape,Cherry" />
+
+		<%-- 세미콜론을 구분자로 사용하여 토큰 반복 --%>
+		<c:forTokens items="${tokenString}" delims=",;." var="fruit">
+		    <p>${fruit}</p>
+		</c:forTokens>
+
 
 
 	3) 변수 설정 (Variable Tags)
@@ -123,8 +181,12 @@ o JSTL Core 태그 라이브러리
 				    기본적으로 변수는 페이지 범위(scope)에 저장됨.
 			 	다른 범위(예: request, session, application)의 변수 제거 가능
 
+
+
 	4) URL 처리 (URL Tags)
 	- <c:import>: 다른 페이지를 포함하거나 외부 리소스를 가져옴
+		- url 속성: 가져올 외부 페이지의 URL을 지정.
+			    이 페이지는 현재 JSP 페이지에 포함됨
 		ex) <c:import url="url" />
 	- <c:redirect>: URL 리다이렉션을 수행
 		ex) <c:redirect url="newPage.jsp" />

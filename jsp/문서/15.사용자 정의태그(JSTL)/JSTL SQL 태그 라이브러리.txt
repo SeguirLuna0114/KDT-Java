@@ -8,4 +8,79 @@
 	  JSP 프로젝트에서 널리 사용됨
 
 
-o SQL 태그 라이브러리: JSTL SQL 태그 라이브러리를 사용하면 JSP 페이지에서 데이터베이스에 대한 SQL 쿼리를 실행하고 결과를 처리할 수 있습니다.
+o SQL 태그 라이브러리
+: JSTL SQL 태그 라이브러리를 사용하면,
+  JSP 페이지에서 데이터베이스에 대한 SQL 쿼리를 실행하고 결과를 처리할 수 있음
+
+- 태그 라이브러리 선언
+<%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
+
+
+o 주요 태그
+-<sql:setDataSource>
+ : 데이터베이스 연결을 설정하고 JSP 페이지 내에서 사용할 데이터 소스를 정의
+ex) MySQL 연결  시
+	<sql:setDataSource var="myDataSource" driver="com.mysql.jdbc.Driver"
+			   url="jdbc:mysql://localhost:3306/mydb" 
+			   user="myuser" password="mypassword" />
+
+ex) OracleDB 연결시
+	<sql:setDataSource var="conn" driver="oracle.jdbc.driver.OracleDriver" 
+				url="jdbc:oracle:thin:@localhost:1521:xe"
+				user="totoro" 
+				password="totoro123"/>
+
+
+- <sql:query>: JSP 페이지에서 SQL 쿼리를 실행하고 결과를 가져오는 데 사용
+		SELECT 문을 실행하고 데이터베이스 결과를 처리하기 위해 사용되는 태그
+		- 주로 SELECT 쿼리를 실행하고 결과 집합을 처리하는 데 사용됨
+구문)	<sql:query dataSource="데이터소스이름" var="결과변수">
+	    SQL_쿼리_문;
+	</sql:query>
+	- dataSource: 데이터베이스 연결을 설정한 데이터 소스의 이름을 나타냄
+		      데이터베이스 연결 정보는 <sql:setDataSource> 태그를 사용하여 설정됨
+	- var: SQL 쿼리의 실행 결과를 저장할 변수의 이름
+		결과는 JSP 페이지 내에서 다른 부분에서 참조할 수 있음
+	- SQL_쿼리_문: 실행하려는 SQL 쿼리를 나타냄
+			대개 "SELECT * FROM 테이블명;" 이 작성됨
+
+
+- <sql:update>
+ : 데이터베이스에서 데이터를 업데이트, 삽입 또는 삭제하기 위한 SQL 쿼리를 실행하는 데 사용됨
+	- INSERT, UPDATE, DELETE 등의 문을 실행할 수 있음
+구문)	<sql:update dataSource="데이터소스이름">
+	    SQL_쿼리_문;
+	</sql:update>
+	- dataSource: 데이터베이스 연결을 설정한 데이터 소스의 이름을 나타냄
+		      데이터베이스 연결 정보는 <sql:setDataSource> 태그를 사용하여 설정됨
+	- SQL_쿼리_문: 실행하려는 SQL 쿼리를 나타냄
+			이 쿼리는 INSERT, UPDATE, DELETE 등의 데이터 변경 작업을 수행하는 쿼리
+
+
+- <sql:param>: SQL 쿼리의 매개변수를 정의/추가하는 데 사용됨
+	 	SQL 매개변수를 사용하면 동적 쿼리를 작성하거나
+		쿼리 내의 값을 동적으로 설정할 수 있으며 SQL 쿼리의 보안을 강화할 수 있음
+	-<sql:param> 태그는 실제 SQL 쿼리 내에 포함되는 것이 아니라,
+	  value 속성에 지정된 값이 쿼리로 전달됨
+
+구문)	<sql:param value="매개변수값" />
+		- value: 매개변수로 전달할 값을 나타냄
+
+ex) 동적으로 사용자 이름을 지정한 SQL 쿼리를 만들고 실행
+	<sql:query dataSource="myDataSource" var="result">
+	    SELECT * FROM users WHERE username = ?
+	    <sql:param value="${username}" />
+	</sql:query>
+
+
+
+- <sql:transaction>: 데이터베이스 트랜잭션을 관리하는 데 사용됨
+	- 여러 SQL 작업을 트랜잭션 내에서 묶어 롤백 또는 커밋할 수 있음
+
+- <sql:queryListener>: query 태그의 이벤트 리스너를 정의하는 데 사용됨
+	- 쿼리 실행 후의 작업을 처리할 수 있음
+
+
+
+
+

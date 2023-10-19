@@ -1,0 +1,128 @@
+* JSTL(JavaServer Pages Standard Tag Library)
+ : JSP(JavaServer Pages)에서 사용하는 표준 태그 라이브러리
+	- JSTL은 JSP 페이지에서 Java 코드를 줄이고
+	  더 간결하고 가독성 있는 코드를 작성할 수 있게 해주는 유용한 도구
+	- JSTL은 다양한 기능을 제공하는 여러 개의 태그 라이브러리로 구성됨
+
+	- JSTL 라이브러리는 대부분의 JSP 컨테이너(예: Apache Tomcat)에서 지원되므로
+	  JSP 프로젝트에서 널리 사용됨
+
+
+o Formatting(fmt) 태그 라이브러리
+: JSP 페이지에서 날짜 및 시간 형식화, 숫자 형식화 및 텍스트 형식화에 관련된 작업을
+ 처리하기 위한 태그들을 제공
+
+	- Formatting 태그 라이브러리를 사용하려면 먼저 태그 라이브러리를 선언
+	<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+	- 수행 가능 작업
+	1) 날짜 및 시간 형식화: 날짜 및 시간 값을 원하는 형식으로 표시할 수 있음
+	2) 숫자 형식화: 숫자를 원하는 형식으로 출력하고,
+		      소수점 처리 및 천 단위 구분자를 설정할 수 있음
+	3) 문자열 형식화: 텍스트 값을 변환하고 특수 문자를 이스케이프할 수 있음
+
+
+
+o fmt(Formatting) 태그 라이브러리 지시문
+: JSTL fmt(Formatting) 태그 라이브러리를 JSP 페이지에 추가하고
+  사용할 준비를 하는 태그 라이브러리 지시문
+구문)	<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+	- uri: 이 부분에서는 사용하려는 태그 라이브러리의 위치를 정의
+		JSTL fmt 태그 라이브러리의 URI는 "http://java.sun.com/jsp/jstl/fmt"
+	- prefix: 태그 라이브러리의 접두어(prefix)를 정의
+		  이것은 JSTL fmt 태그를 사용할 때 각 태그 앞에 붙이는 식별자
+		  대개 "fmt"와 같이 짧고 간결한 접두어를 사용
+
+
+
+o Formatting(fmt) 태그 라이브러리 주요 태그
+	1) <fmt:formatDate>: 날짜와 시간을 원하는 형식으로 형식화함(날짜 형식 지정)
+		- value: 형식화할 날짜 또는 시간 값을 지정
+			 보통 ${} 형태로 JSP 페이지의 변수나 표현식을 사용
+		- pattern: 날짜를 원하는 형식으로 표시하기 위한 패턴을 지정
+			   날짜와 시간 서식을 지정하는 문자열
+			   ("yyyy-MM-dd" 패턴: 연도, 월, 일을 "-"로 구분한 형식으로 표시)
+		- type : 날짜, 시간 또는 둘 다를 표시할 유형을 지정
+			 가능한 값은 "date"(날짜만 표시), "time"(시간만 표시),
+				    "both"(시간과 날짜 모두 표시)
+		- dateStyle : 날짜 서식을 지정
+			- default: 날짜를 기본 서식으로 표시
+			- short: 날짜를 짧은 형식으로 표시
+			- medium: 날짜를 중간 형식으로 표시
+			- long: 날짜를 긴 형식으로 표시
+			- full: 날짜를 완전한 형식으로 표시
+
+		- timeStyle : 시간 서식을 지정
+			      가능한 값은 "default"(기본), "short"(짧게), "medium"(중간),
+					 "long"(긴), "full"(완전한 형식)
+
+		ex) 현재 날짜를 "yyyy-MM-dd HH:mm:ss" 형식으로 출력
+		<fmt:formatDate value="${now}" pattern="yyyy-MM-dd HH:mm:ss" />
+
+
+
+	2) <fmt:formatNumber>: 숫자를 원하는 형식으로 서식화하여 출력
+		- 숫자를 표시할 때 자릿수 구분, 소수 자릿수, 퍼센트 등을 포함한
+		   다양한 서식을 적용할 수 있음
+
+		- value : 서식화할 숫자(값)를 지정
+			 보통 ${} 형태로 JSP 페이지의 변수나 표현식을 사용		
+		- type : 숫자 유형을 지정
+			- number: 일반 숫자를 나타내며, 일반적으로 소수점 이하의 숫자를 포함
+			- currency: 통화를 나타내며, 통화 서식을 사용하여 숫자를 표시
+				     통화 기호와 소수점 이하의 숫자를 포함
+			- percent: 백분율을 나타내며, 백분율 서식을 사용하여 숫자를 표시
+				   퍼센트 기호와 소수점 이하의 숫자를 포함
+			- integer: 정수를 나타내며, 소수점 이하의 숫자를 포함하지 않는 정수를 표시
+
+		- pattern : 숫자를 원하는 형식으로 표시하기 위한 패턴을 정의
+			    패턴은 숫자 서식을 지정하는 문자열
+
+		- currencyCode : 통화 서식을 사용하는 경우 해당 통화 코드를 지정
+				 숫자를 해당 국가 또는 지역의 통화로 표시할 수 있음
+		 <fmt:formatNumber value="${myNumber}" type="currency" currencyCode="USD" />
+
+		- currencySymbol : 통화 서식을 사용할 때 해당 통화 기호를 지정
+				   숫자를 특정 통화의 기호와 함께 표시할 수 있음
+		 <fmt:formatNumber value="${myNumber}" type="currency" currencySymbol="€" />
+
+
+		- groupingUsed : 천 단위 구분자(쉼표) 사용 여부를 지정
+		  <fmt:formatNumber value="${myNumber}" groupingUsed="true" />
+	
+
+		ex) 숫자 1234567.89를 "###,###.##" 형식으로 출력
+		<fmt:formatNumber value="1234567.89" pattern="###,###.##" />
+
+		ex) myNumber 변수에 있는 숫자를 "#,##0.00" 형식으로 표시
+		<fmt:formatNumber value="${myNumber}" pattern="#,##0.00" />
+
+
+	3) </fmt:timeZone>: 날짜 및 시간 형식화 시 특정 시간대(time zone)를 적용하기 위한 태그
+		- 날짜 및 시간을 원하는 시간대에 따라 서식화할 수 있음
+		- <fmt:timeZone> 태그는 주로 <fmt:formatDate> 또는 <fmt:parseDate>와
+				 함께 사용되며, 특정 시간대를 설정하고 해당 시간대를 기준으로
+				 날짜와 시간을 서식화 함
+		ex) 뉴욕 시간대("America/New_York")를 설정하고,
+		    now 변수에 저장된 현재 날짜와 시간을 해당 시간대를 기준으로
+		    전체적인 날짜와 시간 서식으로 표시
+		<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
+		<fmt:timeZone value="America/New_York">
+		    <fmt:formatDate value="${now}" type="both" 
+				     dateStyle="full" timeStyle="full" />
+		</fmt:timeZone>
+
+
+	4) <fmt:message>: 리소스 번들 파일에서 메시지를 가져와 출력
+			   이것은 국제화 및 다국어 지원을 위해 사용됨
+		ex) <fmt:message key="welcome.message" />
+
+	5)<fmt:setLocale>: 로케일(언어 및 지역 설정)을 설정
+			     언어 및 지역 설정에 따라 다른 메시지 및 형식을 사용할 때 유용
+		ex) <fmt:setLocale value="en_US" />
+
+
+
+
+
