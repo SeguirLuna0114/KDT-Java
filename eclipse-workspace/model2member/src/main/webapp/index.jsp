@@ -10,5 +10,9 @@
 
 모델2 회원관리
 
+<script>
+	location.href="./LoginForm.do";
+</script>
+
 </body>
 </html>

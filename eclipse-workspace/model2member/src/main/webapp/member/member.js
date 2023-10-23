@@ -1,8 +1,36 @@
 $(document).ready(function(){	
 	
 	// ID 중복검사
-	
-	
+	$("#idcheck").click(function(){
+		if($("#id").val() == ""){
+			alert("ID를 입력 하세요.");
+			$("#id").focus();
+			return false;
+		}else{
+			
+			var id = $("#id").val();
+			
+			$.ajax({
+				type : "post",
+				url : "/model2member/IdCheck.do",
+				data : {"id" : id},
+				success : function(data){
+					alert(data);
+					
+					if(data == 1){	// 중복 ID
+						$("#myid").text("중복 ID입니다.");
+						$("#id").val("").focus();
+					}else{			// 사용 가능한 ID
+						$("#myid").text("사용 가능한 ID입니다.");
+						$("#passwd").focus();
+					}					
+				}
+				
+			}); // $.ajax() end
+			
+		}// else end	
+		
+	});
 	
 	
 	// 주민번호 뒷자리로 포커스 이동

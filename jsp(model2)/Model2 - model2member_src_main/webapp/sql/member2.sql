@@ -4,6 +4,7 @@
 select * from tab;
 select * from model2member;
 
+delete from model2member;
 
 -- model2member 테이블 생성
 create table model2member( 

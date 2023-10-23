@@ -11,7 +11,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import service.Action;
 import service.ActionForward;
+import service.Delete;
+import service.IdCheck;
+import service.Login;
 import service.MemberInsert;
+import service.Update;
+import service.UpdateMember;
 
 /** MVC (Model-View-Controller) 아키텍처에서 컨트롤러 부분을 구현
  *  컨트롤러 클래스는 HTTP GET 및 POST 요청을 처리
@@ -37,32 +42,114 @@ public class MemberController extends HttpServlet {
 //		command: /MemberInsert.do
 		
 		// 중간에 흐름을 제어하며, 연결시켜주는 코드 작성
+		// 각 명령에 대한 Action 객체를 생성하고 해당 Action을 실행한 후 ActionForward를 설정
 		Action action = null;
 		ActionForward forward = null;
 		
-		// 회원가입
+		
+		// 회원가입 처리(URL 패턴인 /MemberInsert.do에 해당하는 요청을 처리)
 		if(command.equals("/MemberInsert.do")) {
 			try {
 				action = new MemberInsert();
+				// Action 객체가 회원 가입 처리를 수행하고, 그 결과를 ActionForward 객체에 설정
 				forward = action.execute(request, response);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		
+		//ID중복 검사(ajax)	
+		}else if(command.equals("/IdCheck.do")) {
+			try {
+				action = new IdCheck();
+				// Action 객체가 ID 중복 검사를 수행하고, 결과를 ActionForward 객체에 설정
+				forward = action.execute(request, response);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			
+		// 회원가입 폼	
+		}else if(command.equals("/MemberForm.do")) {
+			forward = new ActionForward();
+			// setRedirect를 false로 설정하여 리다이렉트 방식이 아니라 디스패처 방식으로 포워딩
+			forward.setRedirect(false);
+			forward.setPath("./member/memberform.jsp");
+		
+		// 로그인 폼
+		}else if(command.equals("/LoginForm.do")) {	
+			forward = new ActionForward();
+			// setRedirect를 false로 설정하여 리다이렉트 방식이 아니라 디스패처 방식으로 포워딩
+			forward.setRedirect(false);
+			forward.setPath("./member/loginform.jsp");
+			
+		// 로그인(회원인증)	
+		}else if(command.equals("/Login.do")) {
+			try {
+				action = new Login();
+				// Action 객체가 로그인 처리를 수행하고, 그 결과를 ActionForward 객체에 설정
+				forward = action.execute(request, response);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			
+		// 로그아웃			
+		}else if(command.equals("/Logout.do")) {
+			forward = new ActionForward();
+			// setRedirect를 false로 설정하여 리다이렉트 방식이 아니라 디스패처 방식으로 포워딩
+			forward.setRedirect(false);
+			forward.setPath("./member/logout.jsp");
+		
+			
+		// 회원정보 수정폼
+		}else if (command.equals("/UpdateMember.do")) {
+			try {
+				action = new UpdateMember();
+				forward = action.execute(request, response);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		
+		// 회원정보 수정
+		} else if(command.equals("/Update.do")){
+			try {
+				action = new Update();
+				forward = action.execute(request, response);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+
+			
+		// 회원 탈퇴 폼	
+		} else if(command.equals("/DeleteMember.do")) {
+			forward = new ActionForward();
+			forward.setRedirect(false);
+			forward.setPath("./member/deleteform.jsp");
+		
+		
+		// 회원 탈퇴
+		} else if(command.equals("/Delete.do")) {
+			try {
+				action = new Delete();
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
 		}
+		
 		
 		// null값이 아니기에, 포워딩 처리
 		if(forward != null) {
-			if(forward.isRedirect()) {
-				// redirect 방식으로 포워딩
+			if(forward.isRedirect()) {	// redirect방식으로 포워딩
 				response.sendRedirect(forward.getPath());
-			} else {
-				RequestDispatcher dispatcher = 
-						request.getRequestDispatcher(forward.getPath());
-				dispatcher.forward(request, response);
-			}
-		} 
+			}else {						// dispatcher방식으로 포워딩
+				RequestDispatcher dispatcher =
+				   request.getRequestDispatcher(forward.getPath());
+				dispatcher.forward(request, response);				
+			}			
+		}	
 		
-	}
+	} // doProcess() end	
+
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
