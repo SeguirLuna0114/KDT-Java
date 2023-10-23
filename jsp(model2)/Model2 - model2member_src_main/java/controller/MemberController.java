@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import service.Action;
 import service.ActionForward;
+import service.IdCheck;
+import service.Login;
 import service.MemberInsert;
 
 /** MVC (Model-View-Controller) 아키텍처에서 컨트롤러 부분을 구현
@@ -48,21 +50,58 @@ public class MemberController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		
+		//ID중복 검사(ajax)	
+		}else if(command.equals("/IdCheck.do")) {
+			try {
+				action = new IdCheck();
+				forward = action.execute(request, response);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			
+		// 회원가입 폼	
+		}else if(command.equals("/MemberForm.do")) {
+			forward = new ActionForward();
+			forward.setRedirect(false);
+			forward.setPath("./member/memberform.jsp");
+		
+		// 로그인 폼
+		}else if(command.equals("/LoginForm.do")) {	
+			forward = new ActionForward();
+			forward.setRedirect(false);
+			forward.setPath("./member/loginform.jsp");
+			
+		// 로그인(회원인증)	
+		}else if(command.equals("/Login.do")) {
+			try {
+				action = new Login();
+				forward = action.execute(request, response);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			
+		// 로그아웃			
+		}else if(command.equals("/Logout.do")) {
+			forward = new ActionForward();
+			forward.setRedirect(false);
+			forward.setPath("./member/logout.jsp");
 		}
+
 		
 		// null값이 아니기에, 포워딩 처리
 		if(forward != null) {
-			if(forward.isRedirect()) {
-				// redirect 방식으로 포워딩
+			if(forward.isRedirect()) {	// redirect방식으로 포워딩
 				response.sendRedirect(forward.getPath());
-			} else {
-				RequestDispatcher dispatcher = 
-						request.getRequestDispatcher(forward.getPath());
-				dispatcher.forward(request, response);
-			}
-		} 
+			}else {						// dispatcher방식으로 포워딩
+				RequestDispatcher dispatcher =
+				   request.getRequestDispatcher(forward.getPath());
+				dispatcher.forward(request, response);				
+			}			
+		}	
 		
-	}
+	} // doProcess() end	
+
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
