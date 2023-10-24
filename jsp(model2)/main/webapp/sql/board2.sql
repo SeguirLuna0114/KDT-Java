@@ -4,6 +4,12 @@
 select * from tab;
 select * from model2board;
 
+-- 데이터 갯수 확인
+select count(*) from MODEL2BOARD;
+
+-- 강제 insert
+insert into model2board values(model2board_seq.nextval, '홍길동',
+	'1234', '게시판 연습', '내용', '', model2board_seq.nextval, 0, 0, 0, sysdate);
 
 -- model2board 테이블 생성
 create table model2board (
