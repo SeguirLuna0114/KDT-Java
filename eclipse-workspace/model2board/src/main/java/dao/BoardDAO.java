@@ -319,4 +319,166 @@ public class BoardDAO {
 		
 		return board;
 	}
+
+	
+	// 댓글 작성 메소드
+	public int boardReply(BoardBean board) {
+		// TODO Auto-generated method stub
+		int result = 0;
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		// 부모글에 대한 정보를 변수로 받아서 설정
+		int re_ref = board.getBoard_re_ref();	// 글 그룹 번호
+		int re_lev = board.getBoard_re_lev();	// 댓글 깊이
+		int re_seq = board.getBoard_re_seq();	// 댓글 출력 순서
+		
+		try {
+			/* 커넥션풀에서 커넥션을 구해오는 메소드 호출 */
+			con = getConnection();
+			
+			/** 부모 글 re_seq값 1 증가시키는 update문 */
+			// re_seq값을 1 증가시키는 update문 작성
+			String sql = "update model2board set board_re_seq = board_re_seq + 1 ";
+				   sql += " where board_re_ref = ? and board_re_seq > ?";
+			// PreparedStatement 객체 생성
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, re_ref);
+			pstmt.setInt(2, re_seq);
+			// update SQL문 실행
+			pstmt.executeUpdate();
+			
+			/** 댓글 insert */
+			// insert SQL문 작성 - 시퀀스의 nextval을 사용하여 insert
+			sql = "insert into model2board values (model2board_seq.nextval, ";
+			sql += " ?, ?, ?, ?, ?, ?, ?, ?, ?, sysdate)";
+			// PreparedStatement 객체 생성
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, board.getBoard_name());
+			pstmt.setString(2, board.getBoard_pass());
+			pstmt.setString(3, board.getBoard_subject());
+			pstmt.setString(4, board.getBoard_content());
+			pstmt.setString(5, "");				// board_file
+			// board_re_ref 필드는 부모글과 같은 값으로 설정
+			pstmt.setInt(6, re_ref);			// board_re_ref
+			pstmt.setInt(7, re_lev + 1);		// board_re_lev
+			pstmt.setInt(8, re_seq + 1);		// board_re_seq
+			pstmt.setInt(9, 0);					// board_readcount
+			// sysdate로 작성
+			
+			// insert SQL문 실행
+			result = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return result;
+	}
+
+	
+	
+	// 글 수정 메소드
+	public int update(BoardBean board) {
+		// TODO Auto-generated method stub
+		int result = 0;
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			/* 커넥션풀에서 커넥션을 구해오는 메소드 호출 */
+			con = getConnection();
+			
+			// update SQL문 작성
+			String sql = "update model2board set board_name=?, board_subject=?, ";
+				   sql += " board_content=? where board_num = ?";
+			// PreparedStatement 객체 생성
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, board.getBoard_name());
+			pstmt.setString(2, board.getBoard_subject());
+			pstmt.setString(3, board.getBoard_content());
+			pstmt.setInt(4, board.getBoard_num());
+			
+			// update SQL문 실행
+			result = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return result;
+	}
+
+	
+	// 글 삭제
+	public int delete(int board_num) {
+		// TODO Auto-generated method stub
+		int result = 0;
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			/* 커넥션풀에서 커넥션을 구해오는 메소드 호출 */
+			con = getConnection();
+			
+			// delete SQL문 작성
+			String sql = "delete from model2board where board_num=?";
+			// PreparedStatement 객체 생성
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, board_num);
+			
+			// delete SQL문 실행
+			result = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if(con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return result;
+	}
 }

@@ -12,8 +12,13 @@ import javax.servlet.http.HttpServletResponse;
 import service.Action;
 import service.ActionForward;
 import service.BoardAddAction;
+import service.BoardDelete;
 import service.BoardDetailAction;
 import service.BoardListAction;
+import service.BoardModify;
+import service.BoardModifyForm;
+import service.BoardReply;
+import service.BoardReplyForm;
 
 @WebServlet("*.do")	// do 확장자로 요청하는 모든 요청을 받는다는 의미
 public class BoardController extends HttpServlet {
@@ -74,10 +79,72 @@ public class BoardController extends HttpServlet {
 				e.printStackTrace();
 			}
 			
-			
-			
 		
+		// 댓글 폼
+		} else if(command.equals("/BoardReplyForm.do")) {
+			try {
+				action = new BoardReplyForm();
+				// Action 객체가 댓글 폼 페이지 실행, 그 결과를 ActionForward 객체에 설정
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		
+			
+		// 댓글 작성 
+		} else if(command.equals("/BoardReply.do")) {
+			try {
+				action = new BoardReply();
+				// Action 객체가 댓글 폼 페이지 실행, 그 결과를 ActionForward 객체에 설정
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			
+		// 수정 폼 
+		} else if(command.equals("/BoardModifyForm.do")) {
+			try {
+				action = new BoardModifyForm();
+				// Action 객체가 댓글 폼 페이지 실행, 그 결과를 ActionForward 객체에 설정
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			
+		// 글 수정 
+		} else if(command.equals("/BoardModify.do")) {
+			try {
+				action = new BoardModify();
+				// Action 객체가 댓글 폼 페이지 실행, 그 결과를 ActionForward 객체에 설정
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			
+		// 글 삭제 폼 (DB연동하지 않기에, 서비스클래스로 이동할 필요X)
+		} else if(command.equals("/BoardDeleteForm.do")) {
+			forward = new ActionForward();
+			forward.setRedirect(false);		// dispatcher방식으로 포워딩(param으로 값을 받기 위함)
+			// 글 삭제를 위한 페이지 경로
+			forward.setPath("./board/board_delete.jsp");
+		
+			
+			
+		// 글 삭제
+		} else if(command.equals("/BoardDelete.do")) {
+			try {
+				action = new BoardDelete();
+				// Action 객체가 삭제 페이지 실행, 그 결과를 ActionForward 객체에 설정
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
+		
+		
 		
 		// 포워딩 처리
 		if(forward != null) {

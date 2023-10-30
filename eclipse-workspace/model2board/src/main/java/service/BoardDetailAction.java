@@ -25,7 +25,18 @@ public class BoardDetailAction implements Action{
 		System.out.println("상세정보: " + board);
 		
 		
+		// 글 내용 줄바꿈 기능
+		String content = board.getBoard_content().replace("\n", "<br>");
+		
+		// 공유 설정(상세정보 처리 시, 필요한 값 request 공유 설정)
+		request.setAttribute("board", board);
+		request.setAttribute("content", content);
+		request.setAttribute("page", page);
+		
+		// 포워딩 설정
 		ActionForward forward = new ActionForward();
+		forward.setRedirect(false); 	// dispatcher방식으로 포워딩
+		forward.setPath("./board/board_view.jsp");	// 상세정보 페이지로 이동
 		
 		return forward;
 	}
