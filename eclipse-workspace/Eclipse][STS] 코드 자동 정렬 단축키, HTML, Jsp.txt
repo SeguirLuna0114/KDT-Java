@@ -1,0 +1,7 @@
+Eclipse][STS] 코드 자동 정렬 단축키, HTML, JSP 자동 정렬
+
+
+Window - Preperences - Web - HTML Files - Editor 메뉴
+Line width  = 999로 변경
+Align final bracket in multi-line element tags 부분에 체크를 한다.
+하단의 Inline Elements 는 줄바꿈 하지 않는 엘리먼트를 지정하는 부분인데 여기서 a, td 와 select와 input 을 remove 해 준다. (여긴 입맛에따라 설정)
