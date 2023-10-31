@@ -47,8 +47,6 @@ oracle/program/*
 ## oracle/교재
 
 
-
-
 ## oracle/문서
 
 
@@ -97,14 +95,7 @@ jsp/program/*
 ## spring/program
 
 spring/program/spring-tool-suite-3.9.18.RELEASE-e4.21.0-win32-x86_64/*
-
-
-
-
-
-## 강의_zoom
-
-강의_zoom/*
+spring/program/spring-tool-suite-3.9.18.RELEASE-e4.21.0-win32-x86_64.zip
 
 
 
@@ -119,4 +110,13 @@ eclipse-workspace/**/.project
 
 
 
+
+## workspace-sts-3.9.18
+
+workspace-sts-3.9.18.RELEASE/.metadata/
+workspace-sts-3.9.18.RELEASE/.metadata/*
+
+workspace-sts-3.9.18.RELEASE/**/.settings/*
+workspace-sts-3.9.18.RELEASE/**/.classpath
+workspace-sts-3.9.18.RELEASE/**/.project
 
