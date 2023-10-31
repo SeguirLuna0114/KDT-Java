@@ -1,0 +1,166 @@
+* Setter DI(Setter Dependency Injection)
+: Bean의 속성 값을 설정하는 메서드(setter 메서드)를 통해 의존성을 주입하는 방식
+   이를 통해 Bean의 인스턴스 변수를 설정하거나 초기화할 수 있음
+
+
+o Setter DI를 구현하는 과정
+1.의존성을 주입 받을 Bean 클래스 생성 - 인터페이스 사용
+: 의존성을 주입받을 Bean 클래스를 생성하고,
+  해당 클래스에 의존성을 설정하기 위한 setter 메서드를 정의
+
+******** 방법1)*********************************************************************
+-1) Bean 클래스에 의존성을 주입하기 위한 메서드를 정의
+ex)	public interface MyBean {
+	    void doSomething();
+	}
+
+-2) Bean 클래스 정의
+ex)	public class MyBeanImpl implements MyBean {
+	    // property(멤버변수)
+	    private DependencyBean dependency;
+
+	    // Setter 메서드
+	    public void setDependency(DependencyBean dependency) {
+	        this.dependency = dependency;
+	    }
+
+	    // 다른 메서드 작성
+
+	    // 상속받은 부모 인터페이스의 메소드 오버라이딩
+ 	      @Override
+ 	    public void doSomething() {
+	        // 구체적인 동작을 정의
+	        System.out.println("Doing something...");
+	    }
+	}
+
+
+******** 방법2)*********************************************************************
+-1) 의존성을 주입받을 Bean 클래스에서 구현할 인터페이스를 정의
+	- 인터페이스: Bean클래스와 Bean을 설정하는 코드 간에 약속된 메서드를 정의하는 역할
+ex)	public interface MyDependency {
+	    void doSomething();
+	}
+
+	public interface Outputer {
+	    void output(String msg);
+	}	
+
+
+-2) 의존성을 주입받을 Bean 클래스를 만들고, 해당 인터페이스를 구현
+	- Bean 클래스에서는 인터페이스 메서드를 오버라이드하여 동작을 구현
+ex)	public class MyDependencyImpl implements MyDependency {
+	    // property(멤버변수)
+	    private String name;
+	    private String greet;
+	    private Outputer output;
+
+	    // Setter 메서드
+	    public void setName(String name) {
+	        this.name = name;
+	    }
+
+	    public void setGreet(String greet) {
+	        this.greet = greet;
+	    }
+	
+	    // 상속받지 않은 다른 인터페이스를 구현한 Bean클래스의 객체를 생성하는 것과 같음
+	    public void setOutput(Outputer output) {
+	        this.output = output;
+	    }
+
+
+	    // 부모 인터페이스의 메소드 오버라이딩
+	    public void doSomething() {
+	        // 구체적인 동작을 구현
+	        System.out.println("MyBean is doing something...");
+	        String msg = name + "님 " + greet;
+	        System.out.println(msg);
+
+		// 다른 인터페이스의 메소드 호출 가능
+	        output.output(msg);	
+	    }
+	}
+
+ex)	public class FileOutputer implements Outputer {
+	    private String fileName;
+
+	    public void setFileName(String fileName) {
+	        this.fileName = fileName;
+	    }
+
+	    public void output(String msg) {
+	        try {
+	            FileWriter fw = new FileWriter(fileName);
+	            fw.write(msg);
+	            fw.close();
+	        } catch (IOException e) {
+	            System.out.println(e.getMessage());
+	        }
+	    }
+	}
+
+
+
+2. Spring 설정 파일 작성
+: Spring 설정 파일(XML 또는 JavaConfig)을 작성하여
+   Bean 정의를 생성하고 의존성을 설정할 Bean을 등록
+	- 설정 파일에서 해당 Bean에 대한 property 값을 설정하고,
+	  해당 property 값에 주입할 Bean을 지정
+	- XML파일 내에서 파일 경로를 설정할 때, 상대경로는 프로젝트의 src 폴더가 기준
+ex)	<!-- Spring 설정 파일 (beans.xml) -->
+	<beans xmlns="http://www.springframework.org/schema/beans"
+	    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	    xsi:schemaLocation="http://www.springframework.org/schema/beans
+	        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	    <!-- 의존성을 주입할 Bean(MessageBeanImpl클래스) 정의 -->
+	    <bean id="myBean" class="com.example.MyDependencyImpl">
+	        <property name="name" value="홍길동" />
+	        <property name="greet" value="Hello !" />
+
+		<!-- output property는 out Bean을 참조 -->
+	        <property name="output" ref="out" />
+	    </bean>
+
+	    <!-- 의존성을 주입할 Bean(FileOutputer) 정의 -->
+	    <bean id="out" class="com.example.FileOutputer">
+	        <!-- 파일의 value값 경로는 프로젝트의 src폴더가 기준 -->
+	        <property name="fileName" value="test.txt" />
+	    </bean>
+	
+	</beans>
+
+
+
+3. 애플리케이션 코드 - Spring 컨테이너 설정 & Setter 메서드 호출
+: Spring 컨테이너를 초기화하고 설정 파일을 로드하여 Bean을 생성하고 관리,
+   설정 파일에서 지정한 property 값을 사용하여
+  해당 Bean의 setter 메서드를 호출하여 의존성을 주입
+
+	- Spring 설정 파일(XML(.xml) 또는 JavaConfig(.java))을 사용하여 수행
+	- 일반적으로는 ApplicationContext를 사용하여 컨테이너를 설정
+ex)	import org.springframework.context.ApplicationContext;
+	import org.springframework.context.support.ClassPathXmlApplicationContext;
+	// XML 방식의 설정
+
+	public class Main {
+	    public static void main(String[] args) {
+		// Spring 컨테이너 초기화
+		ApplicationContext ac
+			= new ClassPathXmlApplicationContext("beans.xml");
+
+	        // Bean클래스로 구현된 인터페이스 객체생성
+		// 방법1) Spring 컨테이너에서 Bean을 가져와서 인터페이스 타입으로 형변환
+	        MyDependency myBean = (MyDependency) ac.getBean("myBean");
+		// 방법2) Spring 컨테이너에서 해당 구현클래스로부터 생성된 Bean을 가져옴
+		// MyDependency myBean = ac.getBean(MyDependencyImpl.class);	
+
+	        // Bean 메서드 호출
+	        myBean.doSomething();
+	    }
+	}
+
+
+
+

@@ -1,0 +1,173 @@
+* IoC 컨테이너 관리의 주요 구현 방식
+
+1. XML 기반 설정
+- <beans> 요소
+ : Spring XML 설정 파일의 최상위 요소로, XML 네임스페이스 및 스키마 위치를 정의
+
+- <bean> 요소
+ : 각 <bean> 요소는 IoC 컨테이너에 등록할 객체를 정의
+	- id 속성은 빈의 식별자를 나타내고,
+	 class 속성은 해당 빈을 생성할 클래스를 지정
+
+- <property> 요소
+ : 객체 내의 속성(property)을 설정하는 데 사용됨
+	- 빈 객체의 속성 이름 (name) 및 속성 값 (value) 또는
+	  다른 빈 (ref)을 설정하는 데 사용됨
+
+- ref 속성
+ : ref 속성을 사용하여 다른 빈을 참조하고, 해당 빈을 의존성 주입하는 데 사용됨
+
+
+ex)	Spring Framework에서 XML을 사용한 설정
+	- `userService`와 `userDao`라는 두 개의 빈(Bean)을 정의
+	- `userService`의 `userDao` 속성에 `userDao` 빈을 주입
+   <!-- XML 설정 파일 -->
+   <beans xmlns="http://www.springframework.org/schema/beans"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://www.springframework.org/schema/beans
+                              http://www.springframework.org/schema/beans/spring-beans.xsd">
+   
+       <bean id="userService" class="com.example.UserService">
+           <property name="userDao" ref="userDao"/>
+       </bean>
+   
+       <bean id="userDao" class="com.example.UserDao"/>
+   
+   </beans>
+
+
+
+
+2. 어노테이션 기반 설정
+ : IoC(Inversion of Control) 컨테이너 관리에서
+   객체 및 의존성 설정을 자바 클래스에 어노테이션을 사용하여 정의하는 방식
+- @Service 및 @Repository 어노테이션
+ : 클래스를 Spring IoC 컨테이너의 빈으로 등록
+	- @Service는 서비스 클래스, @Repository는 데이터 액세스 클래스를 나타냄
+	- 어노테이션을 통해 Spring은 해당 클래스를 자동으로 감지하고 빈으로 등록
+
+- @Autowired 어노테이션
+: 해당 필드나 메서드 파라미터에 의존성을 주입
+
+
+ex)	Spring Framework에서 `@Component`와 `@Autowired` 어노테이션 사용
+   // 서비스 클래스
+   @Service
+   public class UserService {
+       @Autowired
+       private UserDao userDao;
+       // ...
+   }
+   
+   // 데이터 액세스 클래스
+   @Repository
+   public class UserDao {
+       // ...
+   }
+
+   
+
+
+3. 자바 기반 설정
+: 객체 및 의존성 설정을 자바 클래스를 사용하여 정의
+	- XML 설정 또는 어노테이션 설정과는 달리,
+	 자바 코드 내에서 설정 정보를 명시적으로 정의하고 관리
+
+- @Configuration 어노테이션
+ : Java Config 클래스를 나타내며,
+   IoC 컨테이너에게 이 클래스가 설정 정보를 제공하는 역할을 한다고 알림
+
+- @Bean 어노테이션
+ : 해당 메서드가 IoC 컨테이너에 의해 관리되는 빈(Bean)을 정의하는 데 사용됨
+	- 메서드 이름 = 빈의 이름
+
+- userService() 메서드
+ : UserService 빈을 정의하고, 필요한 의존성을 userDao() 빈을 통해 주입받음
+
+- userDao() 메서드: UserDao 빈을 정의
+
+
+ex)	Spring Framework의 Java Config
+   // Java 설정 클래스
+   @Configuration
+   public class AppConfig {
+       @Bean
+       public UserService userService() {
+           return new UserService(userDao());
+       }
+       
+       @Bean
+       public UserDao userDao() {
+           return new UserDao();
+       }
+   }
+
+
+
+
+4. 자동 검색 (Component Scanning)
+ : 컨테이너가 클래스 경로를 자동으로 스캔하여
+   특정 패키지 내에 있는 클래스를 자동으로 찾아서 빈으로 등록하는 방식
+	- 객체를 명시적으로 설정하지 않고도 빈을 자동으로 등록하고 관리 가능
+	- XML 설정이나 어노테이션 설정과 함께 사용됨
+
+ex)	Spring Framework의 `@ComponentScan` 어노테이션
+   	// 메인 애플리케이션 클래스
+	@Configuration
+	@ComponentScan(basePackages = "com.example")
+	public class AppConfig {
+	    // 이 설정 클래스에서 빈을 명시적으로 정의할 필요가 없음
+	}
+
+- @Configuration 어노테이션
+ : Java Config 클래스를 나타내며,
+    IoC 컨테이너에게 이 클래스가 설정 정보를 제공하는 역할을 한다고 알림
+
+- @ComponentScan 어노테이션
+  : 자동 검색을 활성화하며,
+   basePackages 또는 basePackageClasses 속성을 사용하여 검색할 패키지를 지정
+	- 컨테이너는 해당 패키지 내의 클래스를 스캔하고
+	   @Component 어노테이션이 부여된 클래스들을 빈으로 등록
+
+- @Component 어노테이션
+  : Spring Framework에서 사용되는 어노테이션 중 하나로,
+   해당 어노테이션이 부여된 클래스는 빈으로 등록
+
+
+
+
+
+5. 프로파일 및 환경 설정
+: 애플리케이션이 여러 환경 또는 프로파일에서 실행될 때
+  다른 설정을 사용할 수 있도록 하는 메커니즘을 제공
+- @Configuration 어노테이션
+ : Java Config 클래스를 나타내며,
+   IoC 컨테이너에게 이 클래스가 설정 정보를 제공하는 역할을 한다고 알림
+
+
+- @Bean 어노테이션
+ : 해당 메서드가 IoC 컨테이너에 의해 관리되는 빈(Bean)을 정의하는 데 사용됨
+	- 메서드 이름 = 빈의 이름
+
+- @Profile 어노테이션
+ : 해당 빈이 특정 프로파일에 속하도록 지정
+
+
+ex)	Spring 프로파일(Profile) 설정
+   @Configuration
+   public class AppConfig {
+       @Bean
+       @Profile("dev")
+       public DataSource devDataSource() {
+           // 개발 환경용 데이터 소스 설정
+       }
+       
+       @Bean
+       @Profile("prod")
+       public DataSource prodDataSource() {
+           // 프로덕션 환경용 데이터 소스 설정
+       }
+   }
+
+   
+

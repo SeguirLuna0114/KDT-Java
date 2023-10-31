@@ -1,0 +1,121 @@
+* ApplicationContext 인터페이스
+ : Spring Framework에서 Bean을 관리하고 설정하는 데 사용됨
+
+- 이 인터페이스를 구현한 클래스는 Bean(객체)의 라이프사이클을 관리하고,
+ 의존성 주입(Dependency Injection)을 처리하며, 애플리케이션 컴포넌트를 검색 및 제공함
+
+1. Bean 관리
+: ApplicationContext는 Bean을 관리하고, 필요한 경우 Bean을 생성하고 설정
+	- 개발자가 Bean의 인스턴스화와 설정에 대한 코드를
+	  작성하지 않아도 된다는 장점을 제공
+
+
+2. 의존성 주입(DI)
+: Spring 애플리케이션에서의 Bean 간의 의존성 관리를 처리함
+	- Bean이 필요로 하는 다른 Bean을 주입하거나 설정할 수 있음
+	 => 객체 간의 결합도를 줄이고 코드의 재사용성을 향상시킴
+
+3. AOP(Aspect-Oriented Programming) 지원
+: ApplicationContext는 관점 지향 프로그래밍(AOP)을 지원하며, 
+  AspectJ와 같은 AOP 라이브러리와 통합될 수 있음
+
+
+o ApplicationContext 인터페이스를 구현하는 클래스
+1) ClassPathXmlApplicationContext
+ : 클래스 패스(classpath) 상에 있는 XML 파일을 기반으로.
+     Spring Bean 정의를 찾는데 사용됨
+	- 클래스 패스에 있는 XML 파일을 로드할 때 주로 사용됨(클래스 패스 경로를 지정)
+	- 클래스 패스에는 JAR 파일, 클래스 파일 및 리소스 디렉토리 등이 포함됨
+
+	- JAR 파일 내의 리소스 또는 클래스 패스 상에 있는 설정 파일을 로드할 때 사용
+	- 라이브러리 또는 모듈화된 애플리케이션의 설정 파일을 로드할 때 유용
+
+
+2) FileSystemXmlApplicationContext
+ : 파일 시스템의 경로에 있는 XML 파일을 기반으로 Bean 정의를 사용
+	- 파일 시스템(프로젝트 디렉토리) 경로에 있는 XML 파일을 로드할 때 주로 사용됨
+	   (XML 파일의 절대 또는 상대 경로를 지정)
+
+	- 파일 시스템에서 직접 액세스할 수 있는 프로젝트 내의 설정 파일을 로드할 때 사용됨
+	- 개발 및 테스트 목적으로 로컬 파일 시스템에 있는 XML 파일을 로드할 때 주로 활용
+
+
+3) XmlWebApplicationContext
+ : 웹 애플리케이션에서 사용하는 ApplicationContext 구현
+	- 주로 Spring MVC와 같은 웹 애플리케이션 프레임워크와 함께 사용됨
+
+
+
+o ApplicationContext 인터페이스의 주요 메서드
+- getBean(String name)
+ : 주어진 이름(name)으로 Bean을 검색하여 해당 Bean의 인스턴스를 반환
+	- Spring 애플리케이션에서 Bean을 사용하고 Bean의 의존성을 주입할 때 주로 사용됨
+구문)	Object getBean(String name) throws BeansException;
+	- name: 검색하려는 Bean의 이름 또는 id
+		이는 Bean 설정 파일에서 정의된 빈의 id 속성 또는 name 속성과 일치해야 함
+	- 반환 값: name으로 지정된 Bean의 인스턴스
+		  반환 값은 Object 타입이기에, 원하는 Bean의 타입으로 다운캐스팅하여 사용
+	- BeansException: 빈을 찾을 수 없거나 빈의 설정이 유효하지 않을 때 발생할 수 있는 예외
+
+
+- getBean(String name, Class<T> requiredType)
+ : 지정된 이름(name)과 클래스 타입(requiredType)으로 Bean을 검색하여
+    해당 Bean의 인스턴스를 반환함
+	- 지정된 이름으로 Bean을 검색하고, 해당 Bean이 지정된 클래스 타입과 호환되는 경우
+	   해당 Bean의 인스턴스를 지정된 클래스 타입(requiredType)으로 반환
+	- Bean을 반환할 때 타입 캐스팅을 명시적으로 할 필요가 없음
+구문)	<T> T getBean(String name, Class<T> requiredType) throws BeansException;
+	- name: 검색하려는 Bean의 이름 또는 id
+		이는 Bean 설정 파일에서 정의된 빈의 id 속성 또는 name 속성과 일치해야 함
+	- requiredType: 검색하려는 Bean의 원하는 클래스 타입을 지정
+			 이 클래스 타입과 일치하는 Bean을 검색하고 해당 타입으로 반환
+	- 반환 값: name으로 지정된 Bean의 인스턴스
+		 지정된 클래스 타입(requiredType)으로 캐스팅되어 반환됨
+	- BeansException: 빈을 찾을 수 없거나 빈의 설정이 유효하지 않을 때 발생할 수 있는 예외
+
+
+- getBean(Class<T> requiredType)
+ :  지정된 클래스 타입(requiredType)과 일치하는 Bean을 검색하여
+    해당 Bean의 인스턴스를 반환
+	- Bean의 이름을 명시적으로 지정할 필요 없음
+	- 해당 클래스 타입과 호환되는 Bean이 여러 개인 경우 예외가 발생할 수 있음
+구문)	<T> T getBean(Class<T> requiredType) throws BeansException;
+	- requiredType: 검색하려는 Bean의 원하는 클래스 타입을 지정
+			이 클래스 타입과 일치하는 Bean을 검색하고 해당 타입으로 반환
+	-반환 값: 지정된 클래스 타입(requiredType)과 일치하는 Bean의 인스턴스로 반환됨
+	- BeansException: 일치하는 Bean을 찾을 수 없거나
+			  Bean의 설정이 유효하지 않을 때 발생할 수 있는 예외
+
+
+- containsBean(String name)
+ : 주어진 이름(name)으로 Bean이 컨테이너에 존재하는지 여부를 확인
+	- 컨테이너에 특정 Bean이 존재하는지 검사할 수 있음
+구문)	boolean containsBean(String name);
+	- name: 검색하려는 Bean의 이름 또는 id
+		이는 Bean 설정 파일에서 정의된 빈의 id 속성 또는 name 속성과 일치해야 함
+	- 반환 값: 주어진 이름(name)에 해당하는 Bean이 컨테이너에 존재하면 true를 반환하고,
+		  그렇지 않으면 false를 반환
+
+
+- isSingleton(String name)
+ : 주어진 이름(name)으로 지정된 Bean이 싱글톤인지 여부를 확인
+	- 싱글톤 Bean은 컨테이너 내에서 단 하나의 인스턴스만을 가짐
+구문)	boolean isSingleton(String name);
+	- name: 확인하려는 Bean의 이름 또는 id
+		이는 Bean 설정 파일에서 정의된 빈의 id 속성 또는 name 속성과 일치해야 함
+	- 반환 값: 주어진 이름(name)으로 지정된 Bean이 싱글톤인 경우 true를 반환하고,
+		  프로토타입인 경우 false를 반환
+
+
+- isPrototype(String name)
+ : 주어진 이름(name)으로 Bean이 프로토타입(prototype)인지 여부를 확인
+	- 프로토타입 Bean은 요청할 때마다 새로운 인스턴스를 생성함
+구문)	boolean isPrototype(String name);
+	- name: 확인하려는 Bean의 이름 또는 id
+		이는 Bean 설정 파일에서 정의된 빈의 id 속성 또는 name 속성과 일치해야 함
+	- 반환 값: 주어진 이름(name)으로 지정된 Bean이 프로토타입인 경우 true를 반환하고,
+		  프로토타입인 경우 false를 반환
+	
+
+
+
