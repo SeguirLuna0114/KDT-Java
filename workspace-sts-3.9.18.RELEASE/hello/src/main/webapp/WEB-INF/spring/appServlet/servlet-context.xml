@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
+	<!-- Enables the Spring MVC @Controller programming model -->
+	<annotation-driven />
+	
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
+	<resources mapping="/resources/**" location="/resources/" />
+	<resources mapping="/css/**" location="/WEB-INF/css/" />
+	<resources mapping="/fonts/**" location="/WEB-INF/fonts/" />
+	<resources mapping="/js/**" location="/WEB-INF/js/" />
+	
+	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
+	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<!-- prefix : view파일이 저장될 최상위 디렉토리를 설정 -->
+		<beans:property name="prefix" value="/WEB-INF/views/" />
+		
+		<!-- suffix : view파일의 확장자 -->
+		<beans:property name="suffix" value=".jsp" />
+	</beans:bean>
+	
+	<!-- 
+		1. com.ch.hello 패키지 하위 클래스를 스캔한다는 의미
+		2. @Component, @Controller, @Service, @Repository 어노테이션이
+           붙어있는 클래스는 @Autowired 어노테이션을 이용해서 필요한 빈 객체를  
+       	   setter 메소드 없이 주입을 받는다.
+	 -->
+	<context:component-scan base-package="com.ch.hello" />
+</beans:beans>

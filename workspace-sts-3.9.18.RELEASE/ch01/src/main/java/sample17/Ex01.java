@@ -40,6 +40,7 @@ public class Ex01 {
 		sc.close();
 	}
 
+	// 회원 가입
 	public static void insert(String[] str) {
 		if (str.length != 5) {
 			help();
@@ -60,6 +61,7 @@ public class Ex01 {
 		}
 	}
 
+	// 회원 조회
 	public static void select(String[] str) {
 		if (str.length != 2) {
 			help();
@@ -72,6 +74,7 @@ public class Ex01 {
 			System.out.println("없는 데이터 입니다");
 	}
 
+	// 전체 회원 목록 조회
 	public static void list() {
 		Collection<Member> list = ms.list();
 		if (list != null) {
@@ -81,6 +84,7 @@ public class Ex01 {
 		}
 	}
 
+	// 회원정보 삭제
 	public static void delete(String[] str) {
 		if (str.length != 2) {
 			help();
@@ -91,6 +95,7 @@ public class Ex01 {
 			System.out.println("삭제 성공");
 	}
 
+	// 회원정보 수정
 	public static void update(String[] str) {
 		if (str.length != 5) {
 			help();

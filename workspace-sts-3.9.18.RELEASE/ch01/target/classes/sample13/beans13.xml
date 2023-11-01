@@ -7,7 +7,7 @@
 <!-- 
 	1. sample13 패키지 하위 클래스를 스캔한다는 의미를 가진다.
     2. @Component, @Controller, @Service, @Repository 어노테이션이
-             붙어있는 클래스는 @Autowired 어노테이션을 이용해서 필요한 빈 객체를  
+       붙어있는 클래스는 @Autowired 어노테이션을 이용해서 필요한 빈 객체를  
        setter 메소드 없이 주입을 받는다.
  -->	
 	

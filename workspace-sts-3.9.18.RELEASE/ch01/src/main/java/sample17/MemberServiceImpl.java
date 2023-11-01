@@ -12,8 +12,10 @@ public class MemberServiceImpl implements MemberService {
 	@Autowired
 	private MemberDao md;
 
+	// 회원가입
 	public int insert(RegisterMember rm) {
 		int result = 0;
+		// Email 중복검사
 		Member member = md.selectByEmail(rm.getEmail());
 		if (member == null) {
 			member = new Member(rm.getPass(), rm.getEmail(), rm.getName(), new Date());
@@ -33,6 +35,7 @@ public class MemberServiceImpl implements MemberService {
 		return md.list();
 	}
 
+	// 회원 삭제
 	public int delete(String email) {
 		int result = 0; // 데이터가 이미 있는지 확인
 		Member member = md.selectByEmail(email);
@@ -45,6 +48,7 @@ public class MemberServiceImpl implements MemberService {
 		return result;
 	}
 
+	// 회원정보 수정
 	public int update(RegisterMember rm) {
 		int result = 0; // 데이터가 이미 있는지 확인
 		Member member = md.selectByEmail(rm.getEmail());

@@ -2,6 +2,7 @@ package sample17;
 
 import java.util.Date;
 
+// Member클래스도 DTO역할을 수행함
 public class Member {
 	private int id;
 	private String pass;
@@ -57,6 +58,6 @@ public class Member {
 	}
 
 	public String toString() {
-		return "id:" + id + ",패스:" + pass + ",이메일:" + email + ",이름:" + name + ",등록일" + reg_date;
+		return "id:" + id + ", 패스:" + pass + ", 이메일:" + email + ", 이름:" + name + ", 등록일" + reg_date;
 	}
 }
