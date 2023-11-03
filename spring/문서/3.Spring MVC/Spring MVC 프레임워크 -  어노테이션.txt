@@ -1,0 +1,59 @@
+* Spring MVC 프레임워크에서 주로 사용되는 어노테이션
+
+1. Controller 관련 어노테이션
+	: URL 매핑, 요청 처리, 모델 및 뷰 관리 등을 지원
+
+@Controller: 클래스에 사용되며, 해당 클래스가 Spring MVC의 컨트롤러임을 나타냄
+@RestController: 컨트롤러 클래스에 적용됨.
+		 @RestController= @Controller+ @ResponseBody
+		  RESTful 웹 서비스 컨트롤러 클래스를 정의
+		 (RESTful 웹 서비스에서 JSON 또는 XML과 같은 데이터 반환에 사용됨을 의미)
+@RequestMapping: 메서드 또는 클래스 수준에서 URL과 HTTP 요청 메서드와의 매핑 지정
+		  => 특정 URL 요청을 특정 메서드로 라우팅
+
+
+2. 요청 매핑 관련 어노테이션:
+
+@GetMapping: HTTP GET 요청을 처리하는 메서드를 정의합니다.
+@PostMapping: HTTP POST 요청을 처리하는 메서드를 정의합니다.
+@PutMapping: HTTP PUT 요청을 처리하는 메서드를 정의합니다.
+@DeleteMapping: HTTP DELETE 요청을 처리하는 메서드를 정의합니다.
+
+@PatchMapping: HTTP PATCH 요청을 처리하는 메서드를 정의합니다.
+모델 관련 어노테이션:
+
+@ModelAttribute: 모델에 추가하고 뷰에 데이터를 전달하는 메서드나 매개변수 수준에서 사용
+@SessionAttributes: 클래스 수준 어노테이션. 세션에 속성을 저장하는데 사용.
+		    모델 데이터를 세션에 유지하고 여러 요청 간에 데이터를 공유할 때 유용
+
+
+3. 매개변수 관련 어노테이션:
+
+@RequestParam: HTTP 요청 파라미터를 추출하여 메서드 매개변수로 바인딩
+		요청의 쿼리 문자열에서 파라미터 값을 추출할 때 사용됨
+@PathVariable: 메서드 매개변수에 사용. 동적 URL 경로 변수에서 값을 추출하여
+		메서드 매개변수로 URI 템플릿 변수를바인딩
+
+@RequestBody: 메서드 매개변수에 사용되어 HTTP 요청 본문(body 부분)을 자바 객체로 변환
+		JSON 또는 XML 데이터를 컨트롤러 메서드에서 파싱할 때 사용됨
+@RequestHeader: HTTP 요청 헤더를 메서드 매개변수로 바인딩합니다.
+@RequestAttribute: HTTP 요청 속성을 메서드 매개변수로 바인딩합니다.
+
+
+4. 응답 관련 어노테이션:
+
+@ResponseBody: 메서드 또는 반환 값에 사용됨.
+	       메서드가 자바 객체를 HTTP 응답 본문(body 부분)으로 매핑하고
+	       직렬화된 데이터를 클라이언트로 반환
+@ResponseStatus: 특정 HTTP 응답 상태 코드와 함께 예외를 선언합니다.
+
+
+5. 세션 및 인증 관련 어노테이션:
+
+@SessionAttribute: 클래스나 메서드에 사용.
+		    세션에 저장된 속성을 사용하고 뷰에서 해당 속성을 참조함
+		    특정 세션 속성을 메서드 매개변수로 가져올 수 있음
+@AuthenticationPrincipal: 현재 사용자의 인증된 주체(Principal)를 가져올 때 사용합니다.
+
+
+

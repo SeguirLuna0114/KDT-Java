@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class HomeController {
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
-	// @RequestMapping : 클라이언트의 요청을 받을 때 사용되는 어노테이션
 	@RequestMapping(value = "/hello", method = RequestMethod.GET)
 	public String hello(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);

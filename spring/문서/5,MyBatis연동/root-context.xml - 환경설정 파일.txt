@@ -1,0 +1,44 @@
+*  root-context.xml 파일
+: Spring의 설정 파일. 필요한 빈(Bean) 및 설정을 정의
+
+- Spring 애플리케이션 컨텍스트를 구성하고 데이터베이스 연결,
+  MyBatis 설정 및 SqlSession 객체를 구성하는 데 사용
+
+
+ex) MyBatis와 Spring을 연동
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="
+           http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!-- 데이터베이스 연결 설정 -->
+	<!-- HikariCP 데이터베이스 연결 풀을 설정하는 빈을 정의-->
+	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property> 
+		<property name="jdbcUrl" value="jdbc:oracle:thin:@localhost:1521:xe"></property>
+		<property name="username" value="scott"></property>
+		<property name="password" value="tiger"></property>
+	</bean>
+
+	<!-- HikariCP 데이터베이스 연결 풀을 구성하고 이를 데이터 소스로 정의 -->
+	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+		<constructor-arg ref="hikariConfig" />
+	</bean>
+
+	<!--  MyBatis와 Spring을 통합하고 MyBatis 설정 및 매퍼 파일의 위치를 설정 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="configLocation" value="classpath:configuration.xml" />
+		<property name="mapperLocations" value="classpath:sql/*.xml" />
+	</bean>	
+	
+	<!-- SqlSessionTemplate 객체 생성(MyBatis의 SqlSession 객체를 생성하는 빈) -->
+	<bean id="session" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sqlSessionFactory" />
+	</bean>	
+</beans>

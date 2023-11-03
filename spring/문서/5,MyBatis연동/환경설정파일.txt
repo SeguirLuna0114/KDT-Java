@@ -1,0 +1,67 @@
+*환경설정 파일
+
+1. pom.xml (maven의 환경 설정 파일)
+: 프로젝트가 어떤 라이브러리, 프레임워크, 플러그인 등을 사용하고 라이브러리의 버전을 명시하는데 사용
+	- 프로젝트의 "의존성 관리"를 담당
+	- 필요한 라이브러리를 중앙 저장소에서 다운로드하여 프로젝트 빌드에 포함
+	- "프로젝트를 빌드하고 패키징"
+	- 실행 가능한 JAR 또는 WAR 파일을 생성하는 데 필요한 정보를 정의
+
+
+2. web.xml (project의 환경 설정 파일)
+
+
+
+3. servlet-context.xml (spring spring의 환경 설정 파일)
+: 웹 계층(웹 컨트롤러, 뷰 해석, 핸들러 매핑 등)과 관련된 설정을 담당
+	- Spring의 DispatcherServlet과 관련된 설정을 정의
+	- 웹 애플리케이션의 구성을 다룸
+
+	1) 핸들러 매핑, 인터셉터, 리소스 핸들러와 같은 Spring MVC의 다양한 설정 요소 정의
+	2) 파일 업로드 기능을 사용하려면 multipartResolver 빈을 설정하여 파일 업로드를 처리
+	3) ViewResolver 설정
+	 : JSP, Thymeleaf, FreeMarker 등 다양한 뷰 템플릿 엔진을 설정하고 뷰와 관련된 설정을 포함
+
+
+4. root-context.xml (spring spring의 환경 설정 파일)
+: Spring 빈(Bean)의 정의, 데이터베이스 연결, MyBatis와 통합 설정, 
+  트랜잭션 관리 및 다른 Spring 관련 설정을 정의
+	- "Spring 애플리케이션의 런타임 동작"과 관련된 "설정"을 다룸
+	- Spring 컨테이너가 애플리케이션에서 사용할 빈들을 설정하고 관리하는 역할 수행
+	- Spring 애플리케이션의 구성과 데이터베이스와의 상호 작용을 관리
+	- 애플리케이션의 비즈니스 논리 및 데이터 액세스 레이어에 관한 설정을 제공
+
+
+5. configuration.xml (mybatismybatis의 환경 설정 파일)
+: MyBatis 프레임워크를 사용하여 데이터베이스와 상호 작용을 설정하는 MyBatis 설정 파일
+	- MyBatis의 주요 구성 요소와 매퍼 파일의 위치를 정의하는데 사용
+	- root-context.xml 파일에서 sqlSessionFactory 빈을 생성할 때
+	    configLocation 속성을 사용하여 configuration.xml 파일의 경로를 지정
+ex) 
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <!--  Java 클래스와 MyBatis 매퍼 XML 파일에서 사용되는 별칭을 정의-->
+    <typeAliases>
+        <!-- 클래스의 별칭 정의 -->
+        <typeAlias alias="dept" type="myBatis2.model.Dept" />
+        <typeAlias alias="emp" type="myBatis2.model.Emp" />
+    </typeAliases>
+
+   
+    <!-- 매퍼 파일 위치 지정 -->
+ <!--
+   <mappers>
+        <mapper resource="mybatis/mapper/UserMapper.xml" />
+        <mapper resource="mybatis/mapper/ProductMapper.xml" />
+    </mappers>
+-->
+</configuration>
+
+
+
+6. Mapper파일 (Dept.xml, Emp.xml)
+
+

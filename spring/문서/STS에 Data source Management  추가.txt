@@ -1,0 +1,15 @@
+* STS에 Data source Management  추가
+
+
+
+[Help] - Install New Software...
+
+
+Add 버튼 클릭
+
+
+Name :  DTP
+Location : http://download.eclipse.org/datatools/1.14.1.201712071719/repository/ 
+
+
+Contact all update sites during install to find required software 옵션 체크 해제 

@@ -9,7 +9,6 @@
 <title>Insert title here</title>
 <script>
 	function chk() {
-		/* select태그 값을 구해옴 */
 		var url = document.getElementById("url").value;
 		location.href = url;
 	}

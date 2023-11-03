@@ -70,8 +70,42 @@ Client -->  Dispatcher Servlet	<-- Model And View------- Controller
 	 : 클라이언트의 요청을 특정 컨트롤러 메서드와 매핑하고, 요청을 처리하는 메서드를 지정
 		- Handler Mapping 단계에서 어떤 컨트롤러 메서드가
 		  어떤 요청 URL과 HTTP 메서드에 매핑되는지 정의
+		- 생략하면 기본적으로 경로가 메서드 이름과 일치하는 URL로 매핑됨
 		-> DispatcherServlet은 Handler Mapping을 사용하여
 		   요청을 해당 컨트롤러 메서드로 라우팅하고 컨트롤러 메서드를 호출
+
+
+	o @RequestParam 어노테이션
+	 : HTTP 요청의 파라미터를 컨트롤러 메서드의 매개변수로 바인딩하는데 사용됨
+	@RequestMapping("/example")
+	public String exampleController(@RequestParam("paramName") String parameter) {
+		    // 컨트롤러 로직
+	}
+
+		=> 컨트롤러 호출 단계에서 HTTP 요청을 처리
+		    -> 요청 파라미터를 컨트롤러 메서드로 전달
+		   -> 메서드가 요청을 처리할 수 있도록 도움
+		- 클라이언트로부터 전달된 데이터를 컨트롤러 메서드에서 처리할 때 주로 사용
+		   => 요청 파라미터의 값을 메서드 내에서 사용할 수 있게 만들어줌
+		- 파라미터 이름과 메서드 매개변수 이름을 일치시키면,
+		   @RequestParam 어노테이션을 생략할 수 있음
+
+		- @RequestParam("paramName") String parameter
+		  : "paramName" 매개변수로 전달한 값 = HTTP 요청에서 해당 파라미터의 이름을 지정
+			- 클라이언트가 웹 브라우저의 주소 표시줄에 
+			   ?paramName=paramValue와 같이 파라미터를 전달하면
+			  이 값을 "paramName"과 일치시킴+메서드의 parameter매개변수에 바인딩
+
+
+	o @RestController 어노테이션
+	: 컨트롤러 클래스에 적용되며,
+	  해당 클래스가 RESTful 웹 서비스를 처리하는 컨트롤러임을 나타냄
+		- @RestController = @Controller + @ResponseBody
+		  : @Controller를 사용하여 웹 페이지를 렌더링하는 데 사용하는 경우에는 
+		      @ResponseBody를 별도로 추가해야 했지만,
+		    @RestController를 사용하면 이러한 별도의 설정을 필요로하지 않음
+		- 주로 JSON 또는 XML 형식의 데이터를 생성하고 반환하는 데 사용됨
+		- 컨트롤러 메서드의 리턴 값은 자동으로 직렬화되어 HTTP 응답으로 반환됨
 
 
 5. 모델 생성
@@ -79,6 +113,37 @@ Client -->  Dispatcher Servlet	<-- Model And View------- Controller
    이 모델은 이후 뷰에 전달되어 클라이언트에게 반환됨
 	- 모델 = 클라이언트에 반환할 데이터를 포함하는 객체
 	- 모델은 뷰가 사용하는 데이터를 포함
+
+	o @ModelAttribute 어노테이션
+	  : 컨트롤러 메서드에서 모델(DTO객체)에 데이터를 추가(저장)하는 데 사용됨
+	    @RequestMapping("/formSubmit")
+	    public String formSubmit(@ModelAttribute("formData") MyFormObject formData) {
+	        // 폼 데이터를 도메인 객체로 바인딩하고 모델에 추가
+	        return "formSubmitView";
+	    }
+		- 웹 폼에서 전송된 데이터를 Java 객체(DTO객체)에 바인딩(저장)하고,
+		   컨트롤러 메서드에서 이 데이터를 처리하는 데 사용됨
+		- 특정 뷰를 렌더링하기 전에 모델 객체에 초기 데이터를 추가하고
+		   이를 뷰에서 사용할 수 있도록 함
+		- 여러 컨트롤러 메서드에서 공통으로 사용하는 데이터를 중복 작성하지 않고
+		   모델에 추가하여 재사용할 수 있도록 함
+
+		o 사용 방식
+		1) 메서드 레벨에서 사용
+		: @ModelAttribute 어노테이션을 메서드에 적용
+		=> 해당 메서드는 모든 해당 컨트롤러 메서드가 실행되기 전에 호출됨
+		   이를 통해 여러 컨트롤러 메서드에서 공통 모델 데이터를 추가할 수 있음
+
+		2) 메서드 내부에서 사용
+		: @ModelAttribute 어노테이션을 특정 컨트롤러 메서드의 매개변수로 적용
+		=> 해당 메서드가 실행될 때 모델에 특정 데이터를 추가
+
+		3) 리턴 값으로 사용
+		: @ModelAttribute 어노테이션을 컨트롤러 메서드의 리턴 값으로 사용
+		=> 메서드가 종료될 때 해당 객체를 모델에 추가하고 뷰에서 사용할 수 있도록 함
+
+
+
 
 6. 뷰 선택
  : 모델이 생성되면 컨트롤러는 어떤 뷰를 사용하여 
