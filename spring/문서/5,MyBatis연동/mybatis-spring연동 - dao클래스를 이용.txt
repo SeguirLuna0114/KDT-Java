@@ -1,0 +1,212 @@
+* DAO(Data Access Object) 클래스를 이용한 mybatis-spring연동
+	- 데이터베이스 액세스 코드를 Spring의 트랜잭션 관리와 함께 사용하여
+	  데이터베이스 작업을 처리하는 데 유용
+
+o DAO 클래스를 사용한 MyBatis와 Spring의 연동 단계
+
+1. 프로젝트 설정
+필요한 의존성 설정: 먼저 Maven 또는 Gradle과 같은 빌드 도구를 사용하여
+		    MyBatis 및 Spring의 관련 의존성을 프로젝트에 추가
+ex) Maven 프로젝트의 "pom.xml 파일"에 다음과 같이 필요한 의존성을 추가
+	  : Spring Framework, Spring Web, Spring Web MVC, MyBatis, MyBatis-Spring,
+	   및 데이터베이스 드라이버에 대한 의존성을 추가
+<dependencies>
+    <!-- Spring Framework -->
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-core</artifactId>
+        <version>5.3.10</version> <!-- 사용하려는 Spring 버전으로 변경 -->
+    </dependency>
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-web</artifactId>
+        <version>5.3.10</version>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-webmvc</artifactId>
+        <version>5.3.10</version>
+    </dependency>
+
+    <!-- MyBatis -->
+    <dependency>
+        <groupId>org.mybatis</groupId>
+        <artifactId>mybatis</artifactId>
+        <version>3.5.7</version> <!-- 사용하려는 MyBatis 버전으로 변경 -->
+    </dependency>
+    <dependency>
+        <groupId>org.mybatis</groupId>
+        <artifactId>mybatis-spring</artifactId>
+        <version>2.0.7</version> <!-- 사용하려는 MyBatis-Spring 버전으로 변경 -->
+    </dependency>
+
+    <!-- 데이터베이스 드라이버 (예: H2, MySQL, PostgreSQL, 등) -->
+    <dependency>
+        <groupId>com.h2database</groupId>
+        <artifactId>h2</artifactId>
+        <version>1.4.200</version> <!-- 사용하려는 데이터베이스 드라이버 버전으로 변경 -->
+    </dependency>
+</dependencies>
+
+
+2. 매퍼 파일 작성
+: MyBatis 매퍼 XML 파일을 작성. 이 파일에는 SQL 쿼리와 결과 매핑이 정의됨
+ 각 SQL 쿼리는 유일한 id를 가져야 하며, 
+ 매퍼에서 사용될 Java 모델 클래스와의 결과 매핑을 포함해야 함
+
+1) 매퍼 파일 생성
+ : 프로젝트의 리소스 디렉토리에 MyBatis 매퍼 파일을 생성
+   파일 이름은 일반적으로 테이블 또는 엔티티 이름과 관련된 것으로 지정
+   (ex. "UserMapper.xml" 또는 "DepartmentMapper.xml"과 같이 명명)
+2) XML 네임스페이스 및 DTD 선언
+ : MyBatis 매퍼 XML 파일의 맨 위에 다음과 같은 XML 네임스페이스 및 DTD 선언을 추가
+ex)	<?xml version="1.0" encoding="UTF-8" ?>
+	<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+	<mapper namespace="your.mapper.namespace">
+	- namespace 속성: 매퍼 파일과 관련된 Java 인터페이스나 클래스의 경로와 이름을 지정
+3) resultMap 요소를 사용하여 결과 매핑을 설정
+ : resultMap 요소는 데이터베이스 결과를 Java 객체의 필드에 매핑
+ex) User 클래스와 "users" 테이블 간의 매핑을 설정
+	<resultMap id="userResultMap" type="your.package.User">
+	    <id property="id" column="user_id" />
+	    <result property="username" column="username" />
+	    <result property="email" column="email" />
+	</resultMap>
+4) select, insert, update, delete 등의 SQL 쿼리를 작성
+	- 각 쿼리는 고유한 id를 가져야 함
+	- 결과 매핑을 설정하려면 resultMap 속성을 사용
+ex) select 쿼리에 결과 매핑을 적용
+	<select id="getUserById" resultMap="userResultMap">
+	    SELECT * FROM users WHERE user_id = #{id}
+	</select>
+5) 파라미터 전달 및 반환 값 설정
+	- SQL 쿼리에 필요한 파라미터를 parameterType 속성을 사용하여 설정
+	- 결과를 반환하려면 resultType 또는 resultMap 속성을 사용
+		- resultType: 단일 값의 반환을 의미
+		- resultMap: 복수 개의 값을 매핑하는 데 사용
+ex) getUserById 쿼리에서 파라미터와 반환 값 설정
+	<select id="getUserById" parameterType="int" resultType="your.package.User">
+	    SELECT * FROM users WHERE user_id = #{id}
+	</select>
+6) 매퍼 파일 사용
+: MyBatis 설정 파일에서 매퍼 파일을 등록하고, DAO 또는 서비스 클래스에서 매퍼를 주입하여 사용
+
+
+
+3. 데이터베이스 연결 설정
+: 데이터베이스 연결 정보 및 MyBatis 설정을 설정하는 Spring 설정 파일을 구성합니다. 
+	- 일반적으로 root-context.xml 또는 application-context.xml라는 이름의 파일을 사용
+
+1) 데이터베이스 연결 정보 설정
+: 데이터베이스 드라이버, URL, 사용자 이름 및 암호를 포함한 DataSource 빈을 정의
+	- DataSource 빈은 데이터베이스에 연결하고 트랜잭션을 관리하는 데 사용됨
+ex) HikariCP 데이터베이스 커넥션 풀을 사용 - Oracle 데이터베이스에 연결
+<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+    <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+    <property name="jdbcUrl" value="jdbc:oracle:thin:@localhost:1521:xe" />
+    <property name="username" value="scott" />
+    <property name="password" value="tiger" />
+</bean>
+
+2) MyBatis 설정 설정
+: MyBatis와 Spring을 통합하는 SqlSessionFactory를 설정
+	- SqlSessionFactory빈은 MyBatis 설정 및 데이터베이스 연결 정보를 사용하여
+	   MyBatis와 Spring을 연결하는 역할 수행
+ex) SqlSessionFactory 빈 설정
+<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+    <property name="dataSource" ref="dataSource" />
+    <property name="configLocation" value="classpath:configuration.xml" />
+    <property name="mapperLocations" value="classpath:sql/*.xml" />
+</bean>
+	- dataSource: 앞서 정의한 데이터베이스 연결 정보를 참조
+	- configLocation: MyBatis의 설정 파일 경로를 지정
+			  이 파일은 MyBatis 구성을 추가로 정의하는 데 사용됨
+	- mapperLocations: MyBatis 매퍼 XML 파일의 경로를 지정
+			   이 경로에 있는 XML 파일들은 MyBatis 매퍼로 등록됨
+
+3) SqlSessionTemplate 빈 설정
+:SqlSessionTemplate빈은 MyBatis의 SqlSession 객체를 간편하게 사용할 수 있도록 도움
+ex) session 빈을 통해 MyBatis SqlSession 객체를 주입하고 사용
+<bean id="session" class="org.mybatis.spring.SqlSessionTemplate">
+    <constructor-arg index="0" ref="sqlSessionFactory" />
+</bean>
+
+
+4) 설정 파일에서 정의한 데이터베이스 연결 및 MyBatis 설정을 사용하기 위해,
+   설정 파일을 Spring 애플리케이션 컨텍스트에 등록
+	- Spring 애플리케이션 컨텍스트 파일에서 context:component-scan 또는
+	   context:annotation-config를 사용하여 설정 파일을 로드
+ex) root-context.xml을 로드
+<import resource="root-context.xml" />
+
+
+
+4. DAO 클래스 생성
+: DAO 클래스는 데이터베이스 액세스 작업을 수행하는 메서드를 정의
+
+1) DAO 인터페이스를 생성
+: DAO 인터페이스는 데이터베이스 작업에 필요한 메서드를 정의
+
+2) DAO 구현 클래스 생성
+ : 이 클래스는 MyBatis를 사용하여 SQL 쿼리를 실행하고 데이터베이스와 상호 작용
+	- Spring의 SqlSession을 사용하여 MyBatis와 통합
+	- SqlSession은 MyBatis의 핵심 객체로 SQL 쿼리를 실행하고 결과를 반환
+	- DAO 클래스는 Spring의 @Repository 어노테이션을 사용하여 빈으로 등록됨
+	  => @Repository 어노테이션: Spring이 해당 클래스를 검색하고 빈으로 만드는 역할
+
+3) 매퍼 네임스페이스와 SQL 쿼리
+ : DAO 클래스에서 SQL 쿼리를 실행할 때, MyBatis 매퍼 파일의 네임스페이스와 쿼리 ID를 참조
+ex) getUserById 메서드는 getUserById 쿼리를 실행
+<select id="getUserById" resultType="your.package.User">
+    SELECT * FROM users WHERE user_id = #{userId}
+</select>
+
+4) DAO 클래스를 Spring 빈으로 사용하려면
+    해당 클래스를 Spring 프레임워크에서 관리되는 빈으로 등록
+
+
+6. 서비스 또는 컨트롤러에서 DAO 사용
+: DAO 클래스를 서비스 또는 컨트롤러에서 사용하여
+  해당 클래스를 Spring에서 주입하고, 데이터베이스 액세스 작업을 수행
+	- @Autowired 어노테이션을 사용하여 DAO 클래스의 인스턴스를 주입받고,
+	  DAO 메서드를 호출하여 데이터베이스 액세스 작업을 수행
+	- DAO 클래스는 서비스 레이어에서 주입되어 사용됨
+
+방법1) 서비스 클래스에서 DAO 클래스를 주입하고, 비즈니스 로직을 구현
+ex)	@Service
+	public class UserService {
+	    @Autowired
+	    private UserDAO userDAO;
+
+	    // 다른 서비스 메서드
+	}
+
+방법2) 컨트롤러에서 DAO 주입
+ex)	@Controller
+	public class UserController {
+	    @Autowired
+	    private UserDAO userDAO;
+
+	    // 다른 컨트롤러 메서드
+	}
+
+
+
+
+7. 트랜잭션 관리
+: Spring은 트랜잭션 관리를 지원하므로, 데이터베이스 액세스 작업을 트랜잭션으로 묶을 수 있음
+ 이것은 여러 개의 데이터베이스 작업이 원자적으로 수행되도록 보장
+	- Spring의 @Transactional 어노테이션을 사용하여 트랜잭션을 설정하고 관리
+
+
+8. 테스트 및 디버깅
+: DAO 클래스와 서비스 또는 컨트롤러를 테스트하고 디버깅하여
+  데이터베이스 액세스 작업이 올바르게 수행되고 예외 처리가 적절히 이루어지는지 확인
+
+
+9.애플리케이션 배포
+ :애플리케이션을 배포하고 실행하여 실제 운영 환경에서
+  데이터베이스 액세스가 원활하게 작동하는지 확인
+

@@ -3,6 +3,7 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="empns">
+<!-- empns 네임스페이스에 대한 SQL 쿼리와 결과 매핑을 정의 -->
 
 	<!-- Use type aliases to avoid typing the full classname every time. -->
 	<resultMap id="empResult"    	type="emp">
@@ -44,7 +45,8 @@
 			comm=#{comm},deptno=#{deptno} where empno=#{empno}
 	</update>
 	
-	<select id="empAllList" resultMap="empResult">
+<!-- 	<select id="empAllList" resultMap="empResult"> -->
+	<select id="empAllList" resultType="emp">
 		select e.*,dname,loc from emp e, dept d 
 			where e.deptno=d.deptno order by empno
 	</select>
