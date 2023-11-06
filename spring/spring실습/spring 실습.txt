@@ -1,0 +1,66 @@
+spring 실습
+
+프로젝트 명 : spring
+
+
+계정생성
+sqlplus system/oracle
+
+create user spring identified by spring123;
+grant connect, resource to spring;
+
+
+테이블명 :  myboard
+         create table myboard(
+	  no number primary key,
+	  writer varchar2(20),
+          passwd varchar2(20),
+	  subject varchar2(50),
+	  content varchar2(100),
+	  readcount number,
+	  register date );
+
+시퀀스 : myboard_seq
+       create sequence myboard_seq
+           start with 1
+           increment by 1
+           nocache;
+
+
+java - myspring - controller - BoardController.java
+
+	           service - BoardService.java
+
+	           dao - BoardDao.java
+
+	           model - Board.java
+
+
+resources - util - configuration.xml
+  
+            sql - board.xml
+
+
+board - boardform.jsp (글작성 폼)
+	 
+           boardlist.jsp (글목록)
+
+           boardcontent.jsp (상세 페이지)
+
+           boardupdateform.jsp (글수정 폼)
+
+           boarddeleteform.jsp (글삭제 폼)
+
+
+환경 설정 파일 작성 순서
+1) pom.xml
+2) web.xml
+3) servlet-context.xml
+4) configuration.xml
+5) board.xml
+6) root-context.xml
+        
+
+
+
+

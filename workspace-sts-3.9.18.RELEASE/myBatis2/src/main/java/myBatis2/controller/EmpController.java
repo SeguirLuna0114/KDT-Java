@@ -20,9 +20,10 @@ public class EmpController {
 	@Autowired
 	private DeptService ds;
 
+	// 각 부서에 소속된 사원목록 구하기
 	@RequestMapping("empList.do")
 	public String empList(int deptno, Model model) {
-		Dept dept = ds.select(deptno);
+		Dept dept = ds.select(deptno);		// 부서 상세정보
 		List<Emp> list = es.list(deptno);
 		model.addAttribute("dept", dept);
 		model.addAttribute("list", list);
@@ -38,6 +39,7 @@ public class EmpController {
 		return "emp/empInsertForm";
 	}
 
+	// 사번 중복검사
 	@RequestMapping("dupCheck.do")
 	public String dupCheck(int empno, Model model) {
 		System.out.println("empno:"+empno);
@@ -48,9 +50,12 @@ public class EmpController {
 		else
 			msg = "사용 가능한 사번 입니다";
 		model.addAttribute("msg", msg);
+		
+		// 웹 브라우저에 출력되는 결과가 콜백함수로 리턴됨
 		return "emp/dupCheck";
 	}
 
+	// 사원 등록
 	@RequestMapping("empInsert.do")
 //	public String empInsert(Emp emp, String hiredate1, Model model) {
 	public String empInsert(Emp emp, Model model) {
@@ -61,6 +66,7 @@ public class EmpController {
 		return "emp/empInsert";
 	}
 
+	// 사원 상세정보 구하기
 	@RequestMapping("empView.do")
 	public String empView(int empno, Model model) {
 		Emp emp = es.select(empno);
