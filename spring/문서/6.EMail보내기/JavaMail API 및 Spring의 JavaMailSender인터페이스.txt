@@ -1,0 +1,118 @@
+* Spring Framework를 사용하여 이메일을 보내는 기능을 구현
+ : JavaMail API 및 Spring의 JavaMailSender 인터페이스를 활용
+	- POP3 서버는 이메일 수신을 위한 것
+	- 이메일을 보내는 데는 SMTP 서버가 사용됨
+
+1. 의존성 추가
+: 프로젝트의 의존성 관리 도구 (예: Maven 또는 Gradle)를 사용하여
+  Spring Framework 및 JavaMail API에 대한 의존성을 추가
+	- Spring Boot를 사용한다면, Spring Boot Starter를 활용할 수 있음
+
+ex) Maven을 사용하는 경우, pom.xml 파일에 다음 의존성을 추가
+<!-- javax.mail : mail라이브러리 추가 -->
+<dependency>
+	<groupId>javax.mail</groupId>
+	<artifactId>mail</artifactId>
+	<version>1.4.7</version>
+</dependency>
+
+<!-- 메일 전송을 위해 spring-context-support 라이브러리 추가 -->
+<dependency>
+	<groupId>org.springframework</groupId>
+	<artifactId>spring-context-support</artifactId>
+	<version>${org.springframework-version}</version>
+</dependency>
+
+
+2. Spring 빈 설정
+ : 이메일 발송을 위한 JavaMailSender 빈을 설정
+
+방법1) Spring의 빈 설정을 XML 파일(root-context.xml)을 사용하여 정의
+<!-- applicationContext.xml -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- SET default mail properties -->
+	<bean id="jMailSender" 
+			class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.naver.com" />
+		<property name="port" value="465" />			
+		<!-- 네이버 이메일의 SMTP 포트인 465 -->
+		
+		<property name="username" value="giduck23@naver.com" />	
+		<!-- 본인 네이버 이메일주소(사용자 이름)로 수정 -->
+		<property name="password" value="0000000" />	
+		<!-- 본인 네이버 비밀번호로 수정 -->
+
+		<property value="smtps" name="protocol" />		
+		<!-- "smtps"는 SMTP over SSL을 의미 -->
+		<property value="utf-8" name="defaultEncoding" />	
+		<!-- 이메일의 기본 인코딩을 UTF-8로 설정 -->
+
+		<property name="javaMailProperties">	
+		<!-- JavaMail의 추가 속성을 설정 -->
+			<props>
+				<prop key="mail.smtp.auth">true</prop>	
+				<!-- SMTP 서버와의 인증을 활성화 -->
+				<prop key="mail.smtp.starttls.enable">true</prop>	
+				<!-- STARTTLS를 사용하여 보안 연결을 활성화 -->
+				<prop key="mail.smtps.ssl.checkserveridentity">true</prop>
+				<!-- 서버 신뢰성 확인을 활성화 -->
+				<prop key="mail.smtps.ssl.trust">*</prop>	
+				<!-- 신뢰할 수 있는 인증서 설정("*"로 설정=> 모든 인증서) -->
+				<prop key="mail.debug">true</prop>	
+				<!-- 디버그 모드를 활성화 -->
+			</props>
+		</property>
+	</bean>
+</beans>
+
+
+
+3. 이메일을 발송하는 컨트롤러 클래스
+	- @Autowired 어노테이션을 사용하여 JavaMailSender빈을 주입받음
+	  : 해당 빈은 이메일 발송에 사용됨
+	- jMailSender.send(mms)를 호출하여 이메일을 발송
+	- 이메일의 내용은 Mail 객체에 의해 제공됨
+
+ex) 이메일을 보내는 컨트롤러 클래스인 MailController
+@Controller
+public class MailController {
+	
+	@Autowired
+	private JavaMailSender jMailSender;
+	
+	@RequestMapping(value="mailform.do", method=RequestMethod.GET)
+	public String mailform() {
+		return "mailform";
+	}
+	
+	@RequestMapping(value="mailsend.do", method=RequestMethod.POST)
+	public String mailsend(Mail mail, Model model) {
+		MimeMessage mms = jMailSender.createMimeMessage();
+		try {
+			MimeMessageHelper messageHelper 
+					= new MimeMessageHelper(mms, true, "utf-8");
+			messageHelper.setSubject(mail.getSubject());
+			messageHelper.setText(mail.getContent(), true);
+			messageHelper.setFrom(mail.getSendmail());
+			messageHelper.setTo(mail.getReceivemail());
+			jMailSender.send(mms);
+			
+			model.addAttribute("result", 1);
+			model.addAttribute("message", "입력하신 이메일로 발송");
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			model.addAttribute("result", -1);
+			model.addAttribute("message", "메일 보내기 실패");
+		}
+		return "mailresult";
+	}
+}
+
+
+
+
+

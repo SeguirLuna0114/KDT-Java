@@ -41,7 +41,7 @@ resources - util - configuration.xml
             sql - board.xml
 
 
-board - boardform.jsp (글작성 폼)
+board -    boardform.jsp (글작성 폼)
 	 
            boardlist.jsp (글목록)
 
