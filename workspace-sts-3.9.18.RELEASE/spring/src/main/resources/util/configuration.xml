@@ -4,17 +4,8 @@
 
 <configuration>
 
-	<!-- DTO클래스에 대한 alias(별칭) -->
 	<typeAliases>
-		<!-- type속성: DTO클래스 명 -->
 		<typeAlias alias="board" type="myspring.model.Board" />
 	</typeAliases>	
-	
-	
-	<!-- spring에서 mapper파일 설정함
-	<mappers>
-		<mapper resource="sql/Dept.xml" />
-		<mapper resource="sql/Emp.xml" />
-	</mappers>  -->	
 	
 </configuration>

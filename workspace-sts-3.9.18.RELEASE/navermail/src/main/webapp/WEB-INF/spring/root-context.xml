@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+		
+	<!-- SET default mail properties -->
+	<bean id="jMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.naver.com" />
+		<property name="port" value="465" />			<!-- 네이버 이메일의 SMTP 포트인 465 -->
+		<property name="username" value="giduck23@naver.com" />	<!-- 본인 네이버 이메일주소(사용자 이름)로 수정 -->
+		<property name="password" value="0000000" />	<!-- 본인 네이버 비밀번호로 수정 -->
+		<property value="smtps" name="protocol" />		<!-- "smtps"는 SMTP over SSL을 의미 -->
+		<property value="utf-8" name="defaultEncoding" />	<!-- 이메일의 기본 인코딩을 UTF-8로 설정 -->
+		<property name="javaMailProperties">	<!-- JavaMail의 추가 속성을 설정 -->
+			<props>
+				<prop key="mail.smtp.auth">true</prop>	<!-- SMTP 서버와의 인증을 활성화 -->
+				<prop key="mail.smtp.starttls.enable">true</prop>	<!-- STARTTLS를 사용하여 보안 연결을 활성화 -->
+				<prop key="mail.smtps.ssl.checkserveridentity">true</prop>	<!-- 서버 신뢰성 확인을 활성화 -->
+				<prop key="mail.smtps.ssl.trust">*</prop>	<!-- 신뢰할 수 있는 인증서를 설정("*"로 설정=> 모든 인증서 신뢰) -->
+				<prop key="mail.debug">true</prop>	<!-- 디버그 모드를 활성화 -->
+			</props>
+		</property>
+	</bean>	
+		
+		
+</beans>
