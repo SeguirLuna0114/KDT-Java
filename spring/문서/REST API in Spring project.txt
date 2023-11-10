@@ -1,0 +1,147 @@
+* Spring 프로젝트에서 REST API를 구현
+
+
+1. Spring 프로젝트 생성
+
+
+2. pom.xml 파일에 필요한 의존성을 추가
+ : web.xml 파일을 사용하여 서블릿을 설정하고,
+   REST API를 처리할 서블릿 클래스를 등록
+	- Spring의 DispatcherServlet을 사용하여 요청을 Spring 컨테이너로 라우팅할 수 있음
+
+	- Jackson 라이브러리 사용
+	  => Jackson 라이브러리를 추가하여 JSON 데이터를 처리할 수 있도록 설정
+	   Jackson은 Java 객체와 JSON 데이터 간의 변환을 지원
+	  구문) jackson-databind 의존성을 pom.xml에 추가
+		<!-- jackson -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.14.2</version>
+		</dependency>
+
+	- Servlet 설정
+	  => 서블릿을 설정하고 REST API를 처리할 서블릿 클래스를 등록하기 위해 web.xml 파일을 생성
+
+구문) web.xml파일
+	<dependencies>
+		<!-- Oracle -->
+		<dependency>
+			<groupId>com.oracle.database.jdbc</groupId>
+			<artifactId>ojdbc8</artifactId>
+			<version>21.5.0.0</version>
+		</dependency>
+		
+		<!-- Hikari CP -->
+		<dependency>
+			<groupId>com.zaxxer</groupId>
+			<artifactId>HikariCP</artifactId>
+			<version>2.7.4</version>
+		</dependency>
+
+		<!-- mysql -->
+		<dependency>
+			<groupId>com.mysql</groupId>
+			<artifactId>mysql-connector-j</artifactId>
+			<version>8.0.33</version>
+		</dependency>
+
+		<!-- mybatis -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+			<version>3.5.6</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis-spring</artifactId>
+			<version>1.3.2</version>
+		</dependency>
+		
+		<!-- transaction -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>	
+			<version>${org.springframework-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+
+		<!-- jackson -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.14.2</version>
+		</dependency>
+
+		<!-- Spring -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${org.springframework-version}</version>
+			<exclusions>
+				<!-- Exclude Commons Logging in favor of SLF4j -->
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				 </exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>        
+	</dependencies>
+</project>
+
+
+3. Spring 컨트롤러 생성
+	- REST API를 처리할 Spring 컨트롤러 클래스를 생성
+	  : 컨트롤러 클래스는 @Controller 어노테이션을 사용하여 정의
+ex)	
+@Controller
+@RequestMapping("/api/users")
+public class MyController {
+    @RequestMapping(value = "/api/resource", method = RequestMethod.GET)
+    @ResponseBody
+    public String getResource() {
+        return "This is a sample resource.";
+    }
+
+    @RequestMapping(value = "/api/create", method = RequestMethod.POST)
+    @ResponseBody
+    public String createResource(@RequestBody String data) {
+        // 데이터를 사용하여 새로운 리소스를 생성하는 로직을 구현
+        return "Resource created successfully";
+    }
+}
+
+
+
+4. REST API 엔드포인트 정의
+	- @RequestMapping 어노테이션을 사용하여 RESTful 엔드포인트를 정의하고
+	   HTTP 메서드(GET, POST, PUT, DELETE 등)를 지정
+	ex) @RequestMapping("/api/users")
+	   : "/api/users" 엔드포인트를 사용하여 사용자 관련 작업을 수행
+
+
+5. 데이터 전송과 수신
+ : 요청에서 데이터를 읽거나 응답 데이터를 반환할 때,
+    @RequestBody 및 @ResponseBody와 같은 기능을 사용하여 데이터를 처리
+
+
+6. 서비스 로직 구현
+ : 컨트롤러 클래스에 비즈니스 로직을 구현하여 RESTful 서비스의 동작을 정의
+
+
+
+7. 프로젝트 빌드 및 실행
+ : Maven을 사용하여 프로젝트를 빌드하고,
+   Apache Tomcat과 같은 서블릿 컨테이너를 사용하여 프로젝트를 실행
+
+
+
