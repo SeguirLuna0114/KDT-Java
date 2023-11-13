@@ -74,7 +74,7 @@ public class MemberAction {
 			String charSet = "utf-8";
 			String hostSMTP = "smtp.naver.com";
 			String hostSMTPid = "giduck23@naver.com";	// 본인 
-			String hostSMTPpwd = "000000"; 		// 비밀번호 입력해야함
+			String hostSMTPpwd = "000000"; 				// 비밀번호 입력해야함
 
 			// 보내는 사람 EMail, 제목, 내용
 			String fromEmail = "giduck23@naver.com";
