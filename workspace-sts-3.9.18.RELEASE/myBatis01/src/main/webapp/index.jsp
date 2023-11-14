@@ -9,8 +9,8 @@
 <body>
 
 <script>
-//	location.href="boardform";
-	location.href="boardlist";
+	location.href="boardform";
+//	location.href="boardlist";
 </script>
 
 </body>
