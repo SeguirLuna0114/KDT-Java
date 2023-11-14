@@ -1,0 +1,33 @@
+
+
+
+o Lombok 설치
+- STS를 종료한 상태에서 실행
+1. Lombok을 다운로드 받은 폴더에서 하위 코드를 실행
+		-- 터미널에서 실행
+
+PS C:\Users\user> cd .\Downloads\
+
+PS C:\Users\user\Downloads> ls
+
+    디렉터리: C:\Users\user\Downloads
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----      2023-11-14  오전 10:51        2011339 lombok.jar
+
+
+PS C:\Users\user\Downloads> java -jar lombok.jar
+
+
+
+2. specifylocation을 수동으로 해줌
+	- STS.exe가 존재하는 폴더위치를 잡아줌
+	(D:\spring-tool-suite-3.9.18.RELEASE-e4.21.0-win32-x86_64\sts-bundle\sts-3.9.18.RELEASE)
+
+3. Install/Update 실행
+
+4. 설치후, lombok.jar파일이 설치됨
+
+
+

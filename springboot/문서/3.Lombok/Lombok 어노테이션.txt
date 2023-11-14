@@ -1,0 +1,81 @@
+* 롬복(Lombok)
+: 자바 프로젝트에서 반복적이고 상용구 코드를 줄이기 위해 사용되는 라이브러리
+	- 어노테이션을 사용하여 컴파일 시점에 코드를 생성하며,
+	  이를 통해 개발자는 더 간결하고 유지보수가 쉬운 코드를 작성할 수 있음
+	- 롬복(Lombok)의 어노테이션들은 주로 클래스, 필드, 메서드 수준에서 사용됨
+
+1. @Getter 및 @Setter 어노테이션
+: 코드가 컴파일될 때 필드에 대한 자동으로 getter 및 setter 메서드를 생성
+	- 클래스 레벨에도 적용할 수 있음: 클래스 선언 부분에 직접 어노테이션을 사용가능
+	- 주로 필드 레벨에 적용: 필드의 접근 제어자에 따라 적절한 Getter 및 Setter 메서드가 생성됨
+	
+ex)	import lombok.Getter;
+	import lombok.Setter;
+
+	@Getter @Setter
+	public class MyClass {
+	    private String myField;
+	}
+
+
+
+2. @Data 어노테이션
+: @Getter, @Setter, @ToString, @EqualsAndHashCode, @RequiredArgsConstructor를
+   모두 포함한 종합적인 어노테이션
+	- 주로 클래스 레벨에서 사용 : 클래스 선언 부분에 직접 어노테이션을 사용가능
+
+ex)	import lombok.Data;
+
+	@Data
+	public class MyClass {
+	    private String field1;
+	    private int field2;
+	}
+
+
+
+
+3. @NoArgsConstructor, @RequiredArgsConstructor, @AllArgsConstructor 어노테이션
+: 각각 인자가 없는 생성자, 필수 인자만 있는 생성자, 모든 필드를 인자로 받는 생성자를 자동으로 생성
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
+
+@NoArgsConstructor
+@RequiredArgsConstructor
+@AllArgsConstructor
+public class MyClass {
+    private final String requiredField;
+    private String optionalField;
+}
+
+
+
+4. @ToString 어노테이션
+: 클래스에 대한 자동으로 toString() 메서드를 생성
+import lombok.ToString;
+
+@ToString
+public class MyClass {
+    private String field1;
+    private int field2;
+}
+
+
+
+5. @EqualsAndHashCode 어노테이션
+: equals() 및 hashCode() 메서드를 생성
+import lombok.EqualsAndHashCode;
+
+@EqualsAndHashCode
+public class MyClass {
+    private String field1;
+    private int field2;
+}
+
+
+
+
+
+
+
