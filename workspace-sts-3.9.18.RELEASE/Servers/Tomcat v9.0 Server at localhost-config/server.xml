@@ -160,7 +160,7 @@
              Note: The pattern used is equivalent to using pattern="common" -->
         <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" pattern="%h %l %u %t &quot;%r&quot; %s %b" prefix="localhost_access_log" suffix=".txt"/>
 
-      <Context docBase="myBatis02" path="/myBatis02" reloadable="true" source="org.eclipse.jst.j2ee.server:myBatis02"/><Context docBase="sbboard" path="/sbboard" reloadable="true" source="org.eclipse.jst.jee.server:sbboard"/></Host>
+      <Context docBase="myBatis02" path="/myBatis02" reloadable="true" source="org.eclipse.jst.j2ee.server:myBatis02"/><Context docBase="sbboard" path="/sbboard" reloadable="true" source="org.eclipse.jst.jee.server:sbboard"/><Context docBase="sbmapper" path="/sbmapper" reloadable="true" source="org.eclipse.jst.jee.server:sbmapper"/><Context docBase="mysqlboard01" path="/mysqlboard01" reloadable="true" source="org.eclipse.jst.jee.server:mysqlboard01"/><Context docBase="mysqlboard02" path="/mysqlboard02" reloadable="true" source="org.eclipse.jst.jee.server:mysqlboard02"/><Context docBase="mysqlboard03" path="/mysqlboard03" reloadable="true" source="org.eclipse.jst.j2ee.server:mysqlboard03"/><Context docBase="sbmember" path="/sbmember" reloadable="true" source="org.eclipse.jst.jee.server:sbmember"/><Context docBase="Thymeleaf" path="/Thymeleaf" reloadable="true" source="org.eclipse.jst.jee.server:Thymeleaf"/></Host>
     </Engine>
   </Service>
 </Server>
