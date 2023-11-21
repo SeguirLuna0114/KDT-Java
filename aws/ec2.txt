@@ -1,0 +1,142 @@
+* 아마존 사이트 접속
+  http://aws.amazon.com/ko
+
+
+EC2(Elastic  Computer  Cloud)
+RDS(Relational  Database  Service)
+S3(Simple  Storage  Service)
+
+
+* EC2 (Windows Server 2019)
+
+email : 
+password : 
+
+Public DNS: ec2-3-34-191-88.ap-northeast-2.compute.amazonaws.com
+Public IP : 13.125.99.245
+
+
+Amazon Machine Image (AMI) 설치시
+*.pem 파일을 저장한후에 Administrator 계정의 비밀번호를 구함.
+
+
+
+* 원격 데스크탑으로 접속
+Public IP :  15.164.99.0
+User name    Administrator
+Password     kkKQBf8EejYYC&6U0GcWTKp;EJiwuR5n
+
+cf. 만약 접속이 잘 안되면 Security Groups 에서 inbound 부분을 확인한다.
+
+
+
+* 원격 데스크탑 바탕화면 icon 출력
+  바탕화면 - 우클릭(Personalize) - Themes - Desktop icon settings
+
+
+
+
+* 지정된 컴퓨터에서만 접속 하도록
+NETWORK & SECURITY  (좌측메뉴)
+- Security Groups
+
+Group ID를 선택 (우측메뉴)
+
+Inbound
+Edit
+
+Type     		Protocol    Port Range    		Source
+RDP      		TCP         3389         		 My IP       
+HTTP     		TCP         80            		Anywhere           
+Oracle-RDS      	TCP         1521            		Anywhere 
+
+
+
+* 방화벽 설정(제어판)
+  방화벽 해제   
+
+
+
+* 웹브라우저로 접속 (웹서버 구동 되어 있을 경우)
+  http://13.209.3.58/index.jsp
+
+
+
+* 오라클 서버 접속
+   오라클 서버 ip주소: 3.36.123.111
+   DB Name : xe
+   system / ora123
+
+
+   sqlplus   system / ora123@3.36.123.111/xe
+
+
+
+
+
+* RDS ( Oracle )
+   엔드포인트 : orcl.ctbo7h4kv83k.ap-northeast-2.rds.amazonaws.com 
+   포트 : 1521
+   DB이름 : ORCL
+   사용자 이름 : master  
+
+  
+   엔드포인트에 대한 인바운드 권한이 없으면, 보안그룹 설정을 통해서  RDS에 대한 설정을 한다.
+   Oracle-RDS           1521   
+
+
+ < 콘솔 접속 >
+  c:\> sqlplus  master/oracle123@orcl.ctbo7h4kv83k.ap-northeast-2.rds.amazonaws.com/orcl
+
+
+ < SQL Developer로 접속 >
+   접속 이름: aws_rds
+   사용자 이름: master
+   비밀번호: oracle123
+
+   호스트 이름 :  orcl.ctbo7h4kv83k.ap-northeast-2.rds.amazonaws.com 
+   포트 : 1521
+   SID : ORCL
+
+
+
+* RDS ( MySQL )
+  인스턴스 식별자 : mydb
+  마스터 사용자 이름 : master
+  마스터 암호 : mysql123
+
+  데이터베이스 이름 : mydb
+  데이터베이스 포트 : 3306
+
+
+   엔드포인트 : mydb.ct5zet8of6gj.ap-northeast-2.rds.amazonaws.com   
+   포트 : 3306
+   DB이름 : mydb
+   사용자 이름 : master   
+
+
+ 
+   엔드포인트에 대한 인바운드 권한이 없으면, 보안그룹 설정을 통해서  RDS에 대한 설정을 한다.
+   MySQL         3306   
+
+
+  < MySQL 접속 >  
+  c:\> mysql  -h mydb.ct5zet8of6gj.ap-northeast-2.rds.amazonaws.com  -u master  -p mysql123
+
+   
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
