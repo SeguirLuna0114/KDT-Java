@@ -1,0 +1,19 @@
+﻿점프 투 파이썬
+
+https://wikidocs.net/book/1
+
+
+
+파이썬 
+https://www.python.org
+
+
+파이썬 API
+https://docs.python.org/3.7/
+
+
+내장 함수
+https://docs.python.org/3.7/library/functions.html
+
+
+
