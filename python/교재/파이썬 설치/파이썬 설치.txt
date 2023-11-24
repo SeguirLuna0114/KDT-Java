@@ -1,0 +1,24 @@
+# 아나콘다
+
+- 파이썬 설치를 한번에 해줌
+
+
+# 아나콘다 설치 위치
+
+C:\Users\user\anaconda3
+
+
+
+# 파이참 설치
+
+- Community Edition을 설치함
+
+
+# 파이참 설치 위치
+
+C:\Program Files\JetBrains\PyCharm Community Edition 2023.2.5
+
+
+# 파이참 프로젝트 저장 위치
+
+C:\Users\user\PycharmProjects\pythonProject
