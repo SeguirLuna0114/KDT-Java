@@ -13,3 +13,5 @@ spring/소스 filter=lfs diff=lfs merge=lfs -text
 spring/program filter=lfs diff=lfs merge=lfs -text
 workspace-sts-3.9.18.RELEASE filter=lfs diff=lfs merge=lfs -text
 springboot filter=lfs diff=lfs merge=lfs -text
+python filter=lfs diff=lfs merge=lfs -text
+PycharmProjects filter=lfs diff=lfs merge=lfs -text
