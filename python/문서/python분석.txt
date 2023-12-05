@@ -1,0 +1,16 @@
+python기초
+
+python 분석 : 	   numpy(배열)
+                   pandas(데이터 프레임)
+                   matplotlib(시각화)
+                   seaborn(정교한 시각화)
+                   wordcloud(비정형 데이터 시각화)
+
+                   folium(지도 시각화)
+
+                   크롤링(웹 데이터 수집) : urllib, requests
+                   웹 데이터 분석 : BeautifulSoup
+
+머신러닝 : sklearn (예측, 분류, 군집화)
+
+딥러닝 : tensorflow, keras, pytorch
