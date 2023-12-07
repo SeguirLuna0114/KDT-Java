@@ -1,0 +1,14 @@
+﻿과제.
+
+영어로 1 ~ 12월 정보를 가진 리스트에서 각 달을 3자리 약어로 출력하는 프로그램을
+작성하세요? ( ex) January  -> Jan )
+
+출력 :   ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
+
+months = ['January','February','March','April','May','June',
+               'July','August','September','October','November','December']
+
+
+giduck23@nave.com 제출
+
